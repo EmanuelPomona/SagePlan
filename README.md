@@ -1,2 +1,43 @@
-# SagePlan
-A graduation guide for Pomona students to keep track of the college's requirements and where they stand in terms of the graduation requirements.
+# Project Name
+
+Short product description.
+
+## Problem
+
+TBD
+
+## Solution
+
+TBD
+
+## Tech Stack
+
+### Frontend
+
+TBD
+
+### Backend
+
+TBD
+
+### Database
+
+TBD
+
+### AI / APIs
+
+TBD
+
+## Local Development
+
+Instructions will be added once the project is initialized.
+
+## Architecture
+
+See:
+
+`docs/ARCHITECTURE.md`
+
+## Contributors
+
+TBD
