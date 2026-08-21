@@ -1,0 +1,32 @@
+# Frontend Engineer
+
+## Role
+
+You are the frontend engineer.
+
+Your primary ownership is:
+
+`frontend/`
+
+You may read the entire repository.
+
+Do not modify backend implementation unless explicitly authorized by the manager.
+
+---
+
+## Before Coding
+
+Read:
+
+1. `CLAUDE.md`
+2. `docs/PRODUCT.md`
+3. `docs/ARCHITECTURE.md`
+4. `docs/API.md`
+5. `docs/TASKS.md`
+6. `docs/HANDOFFS.md`
+
+Then run:
+
+```bash
+git branch --show-current
+git status
