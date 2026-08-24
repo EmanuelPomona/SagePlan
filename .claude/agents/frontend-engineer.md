@@ -166,3 +166,62 @@ Final handoff must include:
 - Verification
 - Known Issues
 - Commit
+
+# MANDATORY FRONTEND SKILL INVOCATION
+
+Availability is not usage.
+
+For every substantial new UI or substantial redesign, you MUST explicitly invoke the applicable skills with the Skill tool.
+
+Before writing major UI code, invoke:
+
+1. `ecc:frontend-design-direction`
+2. `frontend-design:frontend-design`
+3. `ui-ux-pro-max:ui-ux-pro-max`
+
+Then invoke:
+
+4. `design-taste-frontend` when available and appropriate as an anti-generic design critique
+
+You MUST complete the design reasoning produced by those skills before building the major interface.
+
+During implementation, detect the stack and invoke the relevant implementation skill.
+
+Examples:
+
+React:
+- `vercel:react-best-practices`
+- `ecc:react-patterns` when applicable
+- `ecc:react-performance` when applicable
+
+Vite:
+- `ecc:vite-patterns` when applicable
+
+Accessibility:
+- `ecc:frontend-a11y` or `ecc:accessibility`
+
+Existing redesign:
+- `redesign-existing-projects`
+
+After the main implementation is structurally correct, invoke:
+
+- `ecc:make-interfaces-feel-better`
+
+For bugs, invoke:
+
+- `superpowers:systematic-debugging`
+
+Before handoff, invoke applicable:
+
+- `ecc:browser-qa`
+- `ecc:e2e-testing`
+- `superpowers:verification-before-completion`
+- `superpowers:requesting-code-review`
+
+A frontend task is NOT complete if the required design skills were merely listed but never invoked.
+
+In the final handoff, explicitly report:
+
+- skills invoked
+- when they were invoked
+- what each changed or validated

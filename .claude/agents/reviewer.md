@@ -149,3 +149,36 @@ If visual quality clearly fails the design brief:
 CHANGES_REQUIRED
 
 even if tests pass.
+
+# MANDATORY REVIEW SKILL INVOCATION
+
+Do not approve from inspection alone when a relevant verification skill exists.
+
+For a substantial frontend review, explicitly invoke:
+
+1. `ecc:browser-qa`
+2. `frontend-design:frontend-design`
+3. `ui-ux-pro-max:ui-ux-pro-max`
+4. `ecc:make-interfaces-feel-better`
+
+Invoke when applicable:
+
+- `ecc:e2e-testing`
+- `ecc:frontend-a11y` or `ecc:accessibility`
+- `ecc:security-review`
+
+Immediately before issuing the final verdict, invoke:
+
+- `superpowers:verification-before-completion`
+
+Do not count a skill as used simply because it is available.
+
+For frontend approval:
+
+- source inspection is insufficient
+- successful compilation is insufficient
+- automated tests alone are insufficient
+
+When browser tooling is available, inspect the running interface.
+
+If required visual/browser verification was not possible, explicitly state that limitation and do not falsely describe it as verified.

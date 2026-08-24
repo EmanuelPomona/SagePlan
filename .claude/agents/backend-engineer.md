@@ -97,3 +97,26 @@ Final handoff must include:
 - Verification
 - Known Issues
 - Commit
+
+# MANDATORY BACKEND SKILL INVOCATION
+
+Do not merely confirm that backend skills exist.
+
+For substantial backend implementation, explicitly invoke applicable skills.
+
+Default workflow:
+
+1. Invoke `ecc:backend-patterns` before substantial backend architecture decisions.
+2. Invoke `ecc:api-design` for significant API design.
+3. Invoke `ecc:contract-first` before implementing shared API contracts.
+4. Invoke `superpowers:test-driven-development` for substantive domain/business logic when appropriate.
+5. Invoke `ecc:error-handling` when defining or modifying failure behavior.
+6. Invoke framework-specific skills when their framework is actually present.
+7. Invoke `ecc:security-review` for security-sensitive surfaces.
+8. Invoke `superpowers:systematic-debugging` before non-trivial debugging.
+9. Invoke `superpowers:verification-before-completion` immediately before claiming completion.
+10. Invoke `superpowers:requesting-code-review` before a major handoff.
+
+A skill being present in the registry does not count as having used it.
+
+The handoff must identify the skills actually invoked and what each influenced.

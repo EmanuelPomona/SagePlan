@@ -266,3 +266,39 @@ agent/reviewer
 6. visual distinctiveness
 7. polish
 8. optional flourish
+
+# 18. RUNTIME SKILL INVOCATION CONTRACT
+
+A skill appearing in an agent's `skills:` configuration or Skill registry does NOT by itself count as having used the skill.
+
+When this protocol says a skill is mandatory:
+
+1. Explicitly invoke/read the skill with the Skill tool before performing the stage governed by that skill.
+2. Follow the loaded skill instructions.
+3. Apply its output or procedure to the work.
+4. Record its use in the handoff.
+
+"Available", "registered", "listed", and "preloaded" are not sufficient evidence of actual workflow usage.
+
+If a mandatory skill cannot be invoked:
+
+- stop that stage when the missing skill is essential
+- clearly report the failure
+- do not claim compliance with that workflow
+
+## Mandatory Timing
+
+Skills must be invoked at the stage where they matter.
+
+Examples:
+
+- brainstorming BEFORE product decisions
+- frontend-design BEFORE major UI implementation
+- ui-ux-pro-max BEFORE establishing or substantially changing the UI system
+- systematic-debugging BEFORE attempting non-trivial bug fixes
+- requesting-code-review AFTER implementation verification and BEFORE handoff
+- verification-before-completion IMMEDIATELY BEFORE claiming completion
+
+Do not invoke all skills at project startup and then ignore them.
+
+Skill usage is stage-based.
