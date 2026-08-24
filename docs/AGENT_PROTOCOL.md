@@ -302,3 +302,33 @@ Examples:
 Do not invoke all skills at project startup and then ignore them.
 
 Skill usage is stage-based.
+
+# 19. HARD ANTI-AI-SLOP DESIGN CONSTRAINTS
+
+Frontend implementations must avoid the following default patterns unless the project's design brief explicitly calls for them:
+
+- harsh gradients
+- pure white backgrounds
+- rainbow coloring
+- drop shadows
+- generic three-feature-card rows
+- emojis as UI visuals
+- liquid glass / glassmorphism
+- em dashes in interface copy
+- Inter, Geist, or Space Grotesk as default identity fonts
+- bento grids
+- decorative colored left stripes
+- "It's not X, it's Y" copy
+- radial orbs
+- dot-grid backgrounds
+- sparkle icons
+- neon colors
+- robotic fonts
+- strong robotic/futuristic visual systems
+- decorative grid backgrounds
+
+The burden of justification is on the design.
+
+If a prohibited pattern is intentionally used, DESIGN_BRIEF.md should explain why it fits the product.
+
+The reviewer must treat unjustified use as a UI/UX defect.

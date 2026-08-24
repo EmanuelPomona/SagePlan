@@ -225,3 +225,67 @@ In the final handoff, explicitly report:
 - skills invoked
 - when they were invoked
 - what each changed or validated
+
+# HARD ANTI-AI-SLOP VISUAL RULES
+
+These patterns are prohibited by default.
+
+Do NOT use them unless the product brief explicitly and intentionally requires them.
+
+## MUST AVOID
+
+1. Harsh gradients
+2. Pure white backgrounds
+3. Rainbow coloring
+4. Drop shadows
+5. Three generic feature cards in one row
+6. Emojis as interface visuals/icons
+7. Liquid glass / glassmorphism
+8. Em dashes in interface copy
+9. Inter, Geist, or Space Grotesk as the default visual identity
+10. Bento grids
+11. Colored left-edge stripes as a generic accent pattern
+12. Copy using the formula "It's not X, it's Y"
+13. Radial gradient orbs
+14. Dot-grid backgrounds
+15. Sparkle icons
+16. Neon colors
+17. Robotic / sci-fi fonts unless explicitly required by the product
+18. Strong robotic / futuristic visual language unless explicitly required
+19. Grid backgrounds used as generic decoration
+
+## ADDITIONAL INTERPRETATION
+
+These are not merely stylistic preferences.
+
+They are anti-default constraints intended to prevent generic AI-generated visual language.
+
+When designing:
+
+- choose warm/off-white, tinted, dark, or contextual canvas colors instead of pure white where appropriate
+- prefer flat hierarchy, borders, tonal contrast, spacing, typography, and composition over drop shadows
+- use restrained color systems instead of multi-hue/rainbow palettes
+- create product-specific layouts instead of automatically choosing bento/card grids
+- choose typography because it supports the product's identity, not because it is a common AI/frontend default
+- use icons from a coherent icon system rather than emojis or sparkle motifs
+- avoid decorative backgrounds unless they communicate something
+- avoid futuristic aesthetics unless the product itself genuinely calls for them
+
+## REQUIRED SELF-CHECK
+
+Before implementation and again before handoff, ask:
+
+- Did I use a gradient where a flat tone would be stronger?
+- Is the canvas pure white without a product-specific reason?
+- Did I accidentally create a generic three-card feature row?
+- Did I default to a bento grid?
+- Did I rely on shadows instead of hierarchy?
+- Did I use Inter, Geist, or Space Grotesk because they were convenient rather than appropriate?
+- Did I add orbs, grids, dots, sparkles, glass, or neon merely to make the interface look "designed"?
+- Does any copy use "It's not X, it's Y"?
+- Does the page feel robotic, futuristic, or synthetic without the product requiring that?
+- Could the exact same visual system be pasted onto an unrelated AI startup?
+
+If any answer indicates generic AI styling:
+
+revise the design before handoff.

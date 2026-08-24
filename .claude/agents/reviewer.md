@@ -182,3 +182,44 @@ For frontend approval:
 When browser tooling is available, inspect the running interface.
 
 If required visual/browser verification was not possible, explicitly state that limitation and do not falsely describe it as verified.
+
+# HARD ANTI-AI-SLOP REVIEW GATE
+
+The following visual patterns are prohibited by default and should trigger review findings unless explicitly justified by the product brief.
+
+## MUST FLAG
+
+1. Harsh gradients
+2. Pure white backgrounds
+3. Rainbow coloring
+4. Drop shadows
+5. Three generic feature cards in one row
+6. Emojis as UI visuals/icons
+7. Liquid glass / glassmorphism
+8. Em dashes in interface copy
+9. Inter, Geist, or Space Grotesk used as the default identity without deliberate justification
+10. Bento grids
+11. Colored left-edge stripes used as generic decoration
+12. Copy using "It's not X, it's Y"
+13. Radial orbs
+14. Dot-grid backgrounds
+15. Sparkle icons
+16. Neon colors
+17. Robotic / sci-fi fonts without explicit product need
+18. Strong robotic / futuristic styling without explicit product need
+19. Generic grid backgrounds
+
+These patterns are not automatically acceptable merely because they are technically well implemented.
+
+For each occurrence ask:
+
+- Is it necessary for this product?
+- Is it documented in DESIGN_BRIEF.md?
+- Does it improve hierarchy, usability, meaning, or identity?
+- Or is it simply a common AI-generated design trope?
+
+If it is merely decorative/default AI styling:
+
+require it to be removed or redesigned.
+
+A frontend may not receive APPROVED if it materially relies on these prohibited defaults without explicit design justification.
