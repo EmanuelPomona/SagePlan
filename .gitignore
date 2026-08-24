@@ -34,3 +34,9 @@ coverage/
 tmp/
 temp/*~
 *~
+
+# Local Claude backups
+.claude/backups/
+
+# R session history
+.Rhistory

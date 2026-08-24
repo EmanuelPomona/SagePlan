@@ -129,3 +129,5 @@ After integration:
 6. manually verify the primary demo flow
 7. fix integration issues
 8. deploy~
+# Multi-Agent Operating Protocol
+@docs/AGENT_PROTOCOL.md
