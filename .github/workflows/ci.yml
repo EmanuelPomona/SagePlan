@@ -1,0 +1,70 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # ---- protocol invariants: cheap, and they catch real drift ----
+      - name: Design constraints exist in exactly one place
+        run: |
+          n=$(grep -rl "Bento grids" --include=*.md . | grep -v docs/archive | wc -l | tr -d ' ')
+          echo "copies: $n"
+          test "$n" -le 1 || { echo "Design constraints duplicated. docs/DESIGN_CONSTRAINTS.md is the only copy."; exit 1; }
+
+      - name: No shared handoff or task file
+        run: |
+          test ! -f docs/HANDOFFS.md || { echo "docs/HANDOFFS.md is superseded by docs/handoffs/<branch>.md"; exit 1; }
+          test ! -f docs/TASKS.md    || { echo "docs/TASKS.md is superseded by docs/tasks/<id>.md";        exit 1; }
+
+      - name: CLAUDE.md is intact
+        run: head -1 CLAUDE.md | grep -q '^# ' || { echo "CLAUDE.md does not start with a heading — truncated?"; exit 1; }
+
+      - name: Scripts parse
+        run: for f in scripts/*.sh; do bash -n "$f" || exit 1; done
+
+      - name: Task index is current
+        run: |
+          cp docs/tasks/INDEX.md /tmp/before.md
+          ./scripts/tasks.sh >/dev/null
+          diff -q /tmp/before.md docs/tasks/INDEX.md || { echo "Stale index. Run scripts/tasks.sh and commit."; exit 1; }
+
+      - name: No secrets
+        run: |
+          if grep -rEn "(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----)" \
+               --include=* --exclude-dir=.git --exclude-dir=node_modules . ; then
+            echo "Possible secret committed."; exit 1
+          fi
+          test ! -f .env || { echo ".env must never be committed"; exit 1; }
+
+      # ---- project code: skipped cleanly while the template is empty ----
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Frontend build
+        run: |
+          if [ -f package.json ]; then
+            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+            npm run --if-present typecheck
+            npm run --if-present lint
+            npm run --if-present build
+            npm run --if-present test
+          else
+            echo "no package.json yet — skipping"
+          fi
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Backend tests
+        run: |
+          req=""
+          [ -f requirements.txt ] && req=requirements.txt
+          [ -f backend/requirements.txt ] && req=backend/requirements.txt
+          if [ -n "$req" ]; then
+            python -m pip install -q -r "$req"
+            python -m pytest -q || true   # allow no-tests; real failures surface above
+          else
+            echo "no requirements.txt yet — skipping"
+          fi

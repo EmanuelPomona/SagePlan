@@ -1,0 +1,13 @@
+# Per-agent files: concurrent appends from different branches combine instead of conflicting.
+docs/handoffs/*.md  merge=union
+docs/status/*.md    merge=union
+docs/tasks/*.md     merge=union
+
+# Lockfiles must never be auto-merged. Regenerate after integration instead.
+package-lock.json   -merge
+pnpm-lock.yaml      -merge
+yarn.lock           -merge
+poetry.lock         -merge
+
+# Review evidence is binary.
+docs/review/*.png   binary

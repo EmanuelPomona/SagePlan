@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: Project API
+  version: 0.1.0
+  description: |
+    Machine-readable twin of docs/API.md. This file is what
+    scripts/contract-test.sh checks the implementation against, so it is the
+    contract that actually gets enforced — keep it in step with the prose.
+    Manager owns it. Backend proposes changes via AGENT_PROTOCOL section 6.
+servers:
+  - url: http://localhost:8000
+    description: local (BACKEND_PORT from .env)
+paths:
+  /api/health:
+    get:
+      summary: Liveness probe
+      responses:
+        '200':
+          description: service is up
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, enum: [ok] }
+components:
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:   { type: string, description: machine-readable code }
+        message: { type: string, description: human-readable detail }
+        field:   { type: string, description: offending field, when applicable }

@@ -1,119 +1,82 @@
 # Skill Routing Matrix
 
+Which skill applies at which stage. Names are **scoped** because unscoped names
+can collide — `code-review` exists as both `ecc:code-review` and
+`code-review:code-review`, and `frontend-design` as both a skill and a plugin.
+
+Installed is not the same as registered. If a Skill call fails with an unknown
+name, check what this session actually has rather than assuming the name is wrong,
+and say so in your handoff instead of silently skipping the stage.
+
+---
+
 ## UNIVERSAL
 
-New ambiguous product:
-- brainstorming
-- writing-plans
+| Situation | Skill |
+|---|---|
+| New ambiguous product | `superpowers:brainstorming` |
+| Producing a plan | `superpowers:writing-plans` |
+| Executing an established plan | `superpowers:executing-plans` |
+| Any bug or unexplained behavior | `superpowers:systematic-debugging` |
+| Logic with rules, math, parsing, or state | `superpowers:test-driven-development` |
+| Before claiming completion | `superpowers:verification-before-completion` |
+| Before handoff | `superpowers:requesting-code-review` |
+| Responding to a verdict | `superpowers:receiving-code-review` |
+| Worktrees | `superpowers:using-git-worktrees` |
 
-Parallel work:
-- dispatching-parallel-agents
-- team-agent-orchestration when appropriate
+## MANAGER
 
-Established plan:
-- executing-plans
-- subagent-driven-development when appropriate
-
-Bug:
-- systematic-debugging
-
-Substantive logic:
-- test-driven-development or tdd-workflow
-
-Before completion:
-- verification-before-completion
-
-Before review:
-- requesting-code-review
-
-Responding to review:
-- receiving-code-review
-
-Worktrees:
-- using-git-worktrees
-- finishing-a-development-branch
+| Situation | Skill |
+|---|---|
+| Product, user, value, MVP | `ecc:product-lens` |
+| Shared interfaces | `ecc:contract-first` |
+| Consequential cross-cutting decision | `ecc:architecture-decision-records` |
 
 ## FRONTEND DESIGN
 
-New visually meaningful frontend:
-- frontend-design-direction
-- frontend-design
-- ui-ux-pro-max
-- design-taste-frontend when appropriate
+Mandatory before major UI, in order:
 
-Existing redesign:
-- redesign-existing-projects
-- frontend-design-direction
-- frontend-design
-- ui-ux-pro-max
+1. `ecc:frontend-design-direction`
+2. `frontend-design:frontend-design`
+3. `ui-ux-pro-max:ui-ux-pro-max`
+4. `design-taste-frontend`
 
-Design system:
-- design-system
-
-React:
-- react-best-practices
-- react-patterns
-- react-performance when relevant
-
-Vite:
-- vite-patterns
-
-Next.js:
-- nextjs and relevant Next-specific skills
-
-Accessibility:
-- frontend-a11y or accessibility
-
-Polish:
-- make-interfaces-feel-better
-
-Motion when justified:
-- motion-foundations
-- motion-patterns
-- motion-advanced
-- motion-ui
-- find-animation-opportunities
-- improve-animations
-- review-animations
-
-Reference screenshot:
-- image-to-code
-
-UI library choice:
-- pick-ui-library
-
-Frontend verification:
-- browser-qa
-- e2e-testing
-- verification-before-completion
+| Situation | Skill |
+|---|---|
+| Existing redesign | `redesign-existing-projects` |
+| Design system | `ecc:design-system` |
+| React | `vercel:react-best-practices`, `ecc:react-patterns`, `ecc:react-performance` |
+| Vite | `ecc:vite-patterns` |
+| Next.js | `ecc:nextjs` |
+| Accessibility | `ecc:frontend-a11y`, `ecc:accessibility` |
+| Polish, after structure is right | `ecc:make-interfaces-feel-better` |
+| Motion, when justified | `ecc:motion-foundations`, `ecc:motion-patterns`, `ecc:motion-ui` |
+| Reference screenshot | `image-to-code` |
+| Frontend verification | `ecc:browser-qa`, `ecc:e2e-testing` |
 
 ## BACKEND
 
-General:
-- backend-patterns
+| Situation | Skill |
+|---|---|
+| General architecture | `ecc:backend-patterns` |
+| API design | `ecc:api-design` |
+| Shared contract | `ecc:contract-first` |
+| Failure behavior | `ecc:error-handling` |
+| Auth, user input, uploads, secrets | `ecc:security-review` |
+| Deeper scan | `ecc:security-scan` |
 
-API:
-- api-design
-- contract-first
-
-Errors:
-- error-handling
-
-Security:
-- security-review
-- security-scan when appropriate
-
-Framework-specific skills should be used only if that framework is present.
+Framework skills only when that framework is actually present:
+`ecc:fastapi-patterns`, `ecc:django-patterns`, `ecc:nestjs-patterns`,
+`ecc:postgres-patterns`, `ecc:prisma-patterns`, `ecc:redis-patterns`,
+`ecc:database-migrations`.
 
 ## REVIEWER
 
-Core:
-- verification-before-completion
-- browser-qa
-- e2e-testing
-- security-review
+Mandatory for a substantial frontend review, all four:
 
-Frontend review:
-- frontend-design
-- ui-ux-pro-max
-- make-interfaces-feel-better
+1. `ecc:browser-qa`
+2. `frontend-design:frontend-design`
+3. `ui-ux-pro-max:ui-ux-pro-max`
+4. `ecc:make-interfaces-feel-better`
+
+When applicable: `ecc:e2e-testing`, `ecc:frontend-a11y`, `ecc:security-review`.

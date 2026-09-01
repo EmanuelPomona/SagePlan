@@ -40,3 +40,7 @@ temp/*~
 
 # R session history
 .Rhistory
+
+# Local agent scratch (evidence in docs/review/ IS tracked on purpose)
+.venv-*/
+*.local.json

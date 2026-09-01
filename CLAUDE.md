@@ -1,133 +1,98 @@
-d API behavior.
+# Multi-Agent Engineering Rules
 
-Backend must not silently change request or response formats.
+Project-wide rules for every agent. The full operating protocol is in
+`docs/AGENT_PROTOCOL.md`, imported at the bottom of this file.
 
-Any API change must update `docs/API.md`.
+This file is deliberately short. Anything that belongs to one role lives in that
+role's agent definition; anything cross-cutting lives in the protocol. Rules
+stated twice drift, so they are stated once.
 
 ---
 
-## Database Rules
+## Source of Truth
 
-`docs/DATABASE.md` is the source of truth for database structure.
+| Topic | File |
+|---|---|
+| API behavior | `docs/API.md` + `docs/openapi.yaml` |
+| Database structure | `docs/DATABASE.md` |
+| Visual constraints | `docs/DESIGN_CONSTRAINTS.md` |
+| Definition of Done | `docs/AGENT_PROTOCOL.md` section 5 |
+| Handoff format | `docs/AGENT_PROTOCOL.md` section 16 |
 
-Schema changes must be documented.
-
-Never delete production-style data or destructive migrations without explicit approval.
+No agent silently changes a contract another agent consumes. The procedure for
+changing one is `docs/AGENT_PROTOCOL.md` section 6.
 
 ---
 
 ## Secrets
 
-Never commit:
+Never commit API keys, passwords, access tokens, service account credentials,
+`.env`, or private certificates.
 
-- API keys
-- passwords
-- access tokens
-- service account credentials
-- `.env`
-- private certificates
-
-Use environment variables.
-
-Provide `.env.example` when necessary.
+Use environment variables. `.env.example` is committed; `.env` is not.
+`scripts/bootstrap.sh` materializes `.env` per worktree with non-colliding ports.
 
 ---
 
 ## MVP Philosophy
 
-For hackathons:
+Prefer working functionality, simple architecture, fast iteration, a clear user
+experience, and reliable demo paths.
 
-Prefer:
+Avoid premature optimization, unnecessary services, elaborate abstractions,
+out-of-scope features, and large refactors during final integration.
 
-- working functionality
-- simple architecture
-- fast iteration
-- clear user experience
-- reliable demo paths
-
-Avoid:
-
-- premature optimization
-- unnecessary microservices
-- elaborate abstractions
-- features outside MVP scope
-- large refactors during final integration
-- building infrastructure that the demo does not require
+This is a bias, not a prohibition. On a project running longer than a few days,
+the cost of skipped tests and skipped abstractions arrives before the deadline
+does — see `docs/AGENT_PROTOCOL.md` section 14 for where the line actually sits.
 
 ---
 
 ## Before Coding
 
-Every agent should:
-
-1. Read `CLAUDE.md`.
-2. Read its assigned task.
-3. Read relevant architecture/API/database documentation.
-4. Confirm its branch.
-5. Inspect existing code before modifying anything.
-6. Identify dependencies on another agent's work.
-
----
-
-## Definition of Done
-
-A task is not complete simply because code was written.
-
-Before completion:
-
-1. Implementation satisfies the task requirements.
-2. Relevant tests pass.
-3. Type checking passes if applicable.
-4. Linting passes if applicable.
-5. Application builds successfully if applicable.
-6. No secrets were added.
-7. No unrelated files were modified.
-8. Documentation is updated when behavior changed.
-9. Changes are committed.
-10. Integration notes are added to `docs/HANDOFFS.md` when another agent must consume the work.
+1. Read this file and `docs/AGENT_PROTOCOL.md`.
+2. Read `docs/status/<your-branch-slug>.md`. If it exists, you are resuming — it
+   is the record, not your context summary.
+3. Read your assigned task in `docs/tasks/`.
+4. Read the source-of-truth documents your role needs.
+5. Confirm your branch: `git rev-parse --abbrev-ref HEAD`.
+6. Inspect existing code before modifying anything.
+7. Identify dependencies on another agent's work.
 
 ---
 
 ## Communication
 
-Agents communicate through:
+Agents communicate through files, never through the human:
 
-- `docs/TASKS.md`
-- `docs/HANDOFFS.md`
-- `docs/DECISIONS.md`
+| Purpose | Where |
+|---|---|
+| Task definition and status | `docs/tasks/<id>.md` |
+| Integration info for consumers | `docs/handoffs/<your-branch-slug>.md` |
+| Your own working state | `docs/status/<your-branch-slug>.md` |
+| Cross-cutting decisions | `docs/DECISIONS.md` |
+| Verification evidence | `docs/review/` |
 
-Do not use documentation as a giant conversation log.
+**Write only to files that carry your own branch slug.** Never append to a shared
+document from a branch — that is a merge conflict a human has to resolve.
 
-Write concise, structured information that another engineer can act on.
+Keep entries structured and concise. These are engineering records, not
+conversation logs. Move anything older than the current round to `docs/archive/`.
 
 ---
 
 ## When Blocked
 
-If blocked:
-
 1. Determine the exact blocker.
-2. Check project documentation.
+2. Check the project documentation.
 3. Check whether another agent owns the dependency.
-4. Record the blocker clearly.
-5. Avoid inventing an incompatible workaround.
-6. Escalate architectural decisions to the manager.
+4. Record it in `docs/status/<your-branch-slug>.md` under `## Blocked on`, and set
+   `status: BLOCKED` in the task file.
+5. Do not invent an incompatible workaround.
+6. Commit and push so the blocker is visible outside your session.
+7. Continue with unaffected work.
 
 ---
 
-## Final Integration
-
-Only the manager/integration owner should combine completed work into `main`.
-
-After integration:
-
-1. install dependencies
-2. run tests
-3. run lint
-4. run typecheck
-5. build the application
-6. manually verify the primary demo flow
-7. fix integration issues
-8. deploy~
 # Multi-Agent Operating Protocol
 @docs/AGENT_PROTOCOL.md
