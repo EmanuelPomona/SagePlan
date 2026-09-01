@@ -11,9 +11,14 @@ jobs:
       # ---- protocol invariants: cheap, and they catch real drift ----
       - name: Design constraints exist in exactly one place
         run: |
-          n=$(grep -rl "Bento grids" --include=*.md . | grep -v docs/archive | wc -l | tr -d ' ')
+          n=$(grep -rl "Bento grids" --include="*.md" . | grep -v docs/archive | wc -l | tr -d ' ')
           echo "copies: $n"
           test "$n" -le 1 || { echo "Design constraints duplicated. docs/DESIGN_CONSTRAINTS.md is the only copy."; exit 1; }
+
+      - name: Handoff schema defined once
+        run: |
+          n=$(grep -rl "### Tasks Completed" --include="*.md" . | grep -v docs/archive | wc -l | tr -d ' ')
+          test "$n" -le 1 || { echo "Handoff schema duplicated; AGENT_PROTOCOL section 16 is the only copy."; exit 1; }
 
       - name: No shared handoff or task file
         run: |
@@ -35,7 +40,7 @@ jobs:
       - name: No secrets
         run: |
           if grep -rEn "(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----)" \
-               --include=* --exclude-dir=.git --exclude-dir=node_modules . ; then
+               --include="*" --exclude-dir=.git --exclude-dir=node_modules . ; then
             echo "Possible secret committed."; exit 1
           fi
           test ! -f .env || { echo ".env must never be committed"; exit 1; }

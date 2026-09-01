@@ -17,20 +17,17 @@ these files, so unbounded growth is a context tax paid by everyone.
 
 ## Schema
 
-```markdown
-## HANDOFF-<n> — <branch> — <ISO date>
+The handoff schema is defined once, in `docs/AGENT_PROTOCOL.md` section 16. It is
+deliberately not restated here — a second copy is a second thing to drift.
 
-### Summary
-### Tasks Completed
-### Files Changed
-### Contracts
-### Skills Used
-| Skill | Stage invoked | What it actually changed |
-### Verification
-### What Was NOT Verified
-### Known Issues
-### Commit
-```
+Two sections people skip and should not:
+
+- `### Skills Used` — a table, one row per skill, with the stage it was invoked at
+  and what it actually changed. `scripts/audit-skills.sh` cross-checks this table
+  against the session transcript, and a row with no matching invocation is a
+  CRITICAL finding.
+- `### What Was NOT Verified` — required. It may not be empty without
+  justification. It is the most useful line in any handoff.
 
 To request a contract change, add a `## CONTRACT CHANGE REQUEST` section — see
-protocol section 6.
+`docs/AGENT_PROTOCOL.md` section 6.
