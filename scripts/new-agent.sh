@@ -39,6 +39,10 @@ Last updated: $(date -u +%Y-%m-%dT%H:%M:%SZ)
 - nothing
 EOF
 
+git -C "$DEST" add -A
+git -C "$DEST" -c user.email="agent@local" -c user.name="template" \
+  commit -q -m "chore: seed status for $BR"
+
 cat <<EOF
 
 created  $DEST   on $BR

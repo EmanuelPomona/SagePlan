@@ -17,7 +17,7 @@ while IFS= read -r wt; do
   LABELS+=("$br"); CMDS+=("cd \"$wt\" && scripts/bootstrap.sh && claude --agent $a")
 done < <(worktree_paths)
 
-echo "Four sessions. Manager goes first and alone until docs/tasks/ has READY tasks."
+echo "${#CMDS[@]} sessions. Manager goes first and alone until docs/tasks/ has READY tasks."
 echo
 for i in "${!CMDS[@]}"; do printf '# %s\n%s\n\n' "${LABELS[$i]}" "${CMDS[$i]}"; done
 
