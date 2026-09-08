@@ -1,7 +1,7 @@
 ---
 id: TASK-021
 title: Web app shell — single page, data loading and failure states, masthead, theme and type, persistence, useful empty state
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

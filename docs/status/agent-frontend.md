@@ -1,7 +1,7 @@
 # STATUS: agent/frontend
-Task: TASK-020 COMPLETE (pending review) — next TASK-021
+Task: TASK-020 + TASK-021 COMPLETE (both REVIEW) — next TASK-022
 Round: 0
-Last updated: 2026-09-08T20:57:51Z
+Last updated: 2026-09-08T21:33:12Z
 
 ## Skills invoked so far
 - superpowers:verification-before-completion @ round-0 blocked record -> forced
@@ -64,13 +64,44 @@ reporter to find. F-09 requires the row to name the constraint. (3068de8)
   assignment that leaves the most courses unassigned") actually favours the
   shared answer. Raised for the manager rather than silently changed.
 
+## TASK-021 — apps/web — COMPLETE
+185 tests (engine 149, shared 13, web 23). Typecheck, lint clean. Build guard
+proven: exit 1 with "Fixture data must never ship as the catalog."
+
+Design pipeline ran in full before any UI code; direction and the palette
+contrast defect are recorded above.
+
+Browser QA found four defects that reading the code would not have:
+"1 courses still needed"; the candidate count wrapping and destroying the dense
+32px row; "1 more credits"; and the transfer-only PE requirement rendering as a
+plain green "satisfied" to a first-year, which reads as "you have done PE".
+Waived rows now say "not required" in plum and recede.
+
+Evidence: docs/review/F-01..F-05 plus F-console.txt and F-network.txt
+(68 requests, every one same-origin, fonts included).
+
+### TASK-020 review response
+Independent review returned "not ready to hand off": 2 Critical, 4 Important.
+All reproduced as failing tests first, all fixed in 720becb. I was WRONG about
+open item 5: I scoped the greedy assignment's local optimality as cosmetic from
+the one fixture I had looked at, and the reviewer built a plan where it puts a
+wrong number on a partial row. Contract change request filed for the gpa rule's
+undefined .
+
 ## In progress
-- [ ] TASK-021 web app shell. Not started. NOTE: data/catalog.json does not exist
-      yet (backend TASK-010), so there is no catalog for the app to load; the
-      data-unavailable state is itself one of the states TASK-021 must build.
+- [ ] TASK-022 record entry (course autocomplete, spreadsheet paste, external
+      credit). Depends on 020 + 021, both complete.
 
 ## Blocked on
 - nothing
+
+## For the manager
+- CONTRACT CHANGE REQUEST: gpa  is undefined in API.md.
+- F-06 fixture proves nothing; the constrained-first guarantee has no test.
+- F-12's row in ACCEPTANCE is stale; API.md 2.4 requires what the golden shows.
+-  deviates from the brief at #8C5C15 (the brief's value fails AA).
+-  defaults to the deleted  directory, so a
+  bare run silently checks nothing.
 
 ---
 
