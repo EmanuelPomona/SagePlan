@@ -8,7 +8,7 @@ import type {
   ExternalCreditRules,
   GeAttribute,
 } from "@gradguide/shared";
-import { courseKey } from "@gradguide/shared";
+import { courseKey, sameCourse } from "@gradguide/shared";
 import type { EvalContext } from "./context.ts";
 import { round2 } from "./ordering.ts";
 import type { ResolvedCourse } from "./resolvedCourse.ts";
@@ -28,7 +28,7 @@ export const EXAM_PSEUDO_ID: CourseId = {
 export const EXAM_PSEUDO_KEY = courseKey(EXAM_PSEUDO_ID);
 
 export function isExamPseudo(course: ResolvedCourse): boolean {
-  return course.key === EXAM_PSEUDO_KEY;
+  return sameCourse(course.completed.course, EXAM_PSEUDO_ID);
 }
 
 /**
@@ -59,7 +59,9 @@ function examGrantCourse(ec: ExternalCredit, ctx: EvalContext): ResolvedCourse {
       credits: ec.credits,
       attributes: ec.grantsAttributes,
     },
-    key: EXAM_PSEUDO_KEY,
+    // Every exam REPORTS as EXAM 000 EXT, but two exams are not the same course:
+    // a shared key would let one grant block another during assignment.
+    key: `${EXAM_PSEUDO_KEY}#${ec.subjectKey}`,
     credits: ec.credits,
     attributes: ec.grantsAttributes,
     inCatalog: false,

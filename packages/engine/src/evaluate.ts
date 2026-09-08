@@ -54,10 +54,11 @@ function evaluateProgram(plan: StudentPlan, program: Program, ctx: EvalContext):
 
   // 4. Settle every requirement and stamp the shared fields.
   return program.requirements.map((req) => {
-    const settlement = manual.get(req.id) ?? settleRule(req, assignment.get(req.id) ?? [], ctx, used);
+    const settlement = manual.get(req.id) ?? settleRule(req, assignment.get(req.id) ?? [], ctx, used, eligible.get(req.id) ?? []);
     const flags = manualFlags(req, plan, manual.has(req.id));
     const reqViolations = violations.get(req.id);
-    const note = noteFor(settlement, reqViolations, bounded);
+    const affectedByBound = bounded && isCourseSelecting(req) && settlement.status !== "satisfied";
+    const note = noteFor(settlement, reqViolations, affectedByBound);
 
     return {
       programId: program.id,
@@ -80,12 +81,13 @@ function settleRule(
   assigned: ResolvedCourse[],
   ctx: EvalContext,
   used: ReadonlySet<string>,
+  eligible: ResolvedCourse[],
 ): Settlement {
   switch (req.rule.kind) {
     case "course":
       return settleCourse(req.rule, assigned, ctx);
     case "attribute":
-      return settleAttribute(req.rule, assigned, ctx, used);
+      return settleAttribute(req.rule, assigned, ctx, used, eligible);
     case "credits":
       return settleCredits(req.rule, ctx);
     case "gpa":

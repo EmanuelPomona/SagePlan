@@ -52,13 +52,34 @@ export function assignCourses(
     return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
   });
 
-  const current: Assignment = new Map();
-  for (const req of requirements) current.set(req.id, []);
+  const empty = (): Assignment => new Map(requirements.map((r) => [r.id, [] as ResolvedCourse[]]));
 
+  // Phase 1 — greedy, constrained first. Each requirement takes its locally
+  // best selection: close the requirement, make the most progress, and add the
+  // fewest NEW courses, so a course that already counts elsewhere is reused
+  // before a fresh one is spent (docs/API.md 2.3 step 4).
+  const greedy = empty();
+  for (const req of order) {
+    const options = selectionsFor(req, eligible.get(req.id) ?? [], greedy, byId, program);
+    let best = options[0] ?? [];
+    for (const option of options.slice(1)) {
+      if (localBetter(req, option, best, greedy)) best = option;
+    }
+    greedy.set(req.id, best);
+  }
+
+  // A requirement whose entire eligible set still cannot close it is not
+  // "unsatisfied because of a bad assignment" — no backtracking can help it.
+  const reachable = order.filter((r) => meetsDemand(r, eligible.get(r.id) ?? []));
+  const greedySatisfied = order.filter((r) => meetsDemand(r, greedy.get(r.id) ?? [])).length;
+  if (greedySatisfied >= reachable.length) return { assignment: greedy, bounded: false };
+
+  // Phase 2 — bounded backtracking, seeded with the greedy answer.
+  const current = empty();
   let nodes = 0;
   let bounded = false;
-  let best: { assignment: Assignment; satisfied: number; used: number } | null = null;
   let done = false;
+  let best = { assignment: greedy, ...scoreOf(order, greedy) };
 
   const search = (index: number): void => {
     if (done) return;
@@ -69,14 +90,9 @@ export function assignCourses(
     }
 
     if (index === order.length) {
-      const satisfied = order.filter((r) => meetsDemand(r, current.get(r.id) ?? [])).length;
-      const used = distinctUsed(current);
-      if (best === null || satisfied > best.satisfied || (satisfied === best.satisfied && used < best.used)) {
-        best = { assignment: cloneAssignment(current), satisfied, used };
-      }
-      // Every requirement that can be closed is closed, using the fewest
-      // courses the constrained-first order allows: nothing better exists.
-      if (satisfied === order.length) done = true;
+      const score = scoreOf(order, current);
+      if (betterScore(score, best)) best = { assignment: cloneAssignment(current), ...score };
+      if (score.satisfied >= reachable.length) done = true;
       return;
     }
 
@@ -90,8 +106,67 @@ export function assignCourses(
   };
 
   search(0);
+  return { assignment: best.assignment, bounded };
+}
 
-  return { assignment: best?.assignment ?? cloneAssignment(current), bounded };
+type Score = { satisfied: number; progress: number; used: number };
+
+/**
+ * Ranking, in order: close the most requirements; then make the most progress
+ * toward the ones left open (so a lone PE course still reports "1 of 2" rather
+ * than vanishing); then spend the fewest distinct courses.
+ */
+function scoreOf(order: Requirement[], assignment: Assignment): Score {
+  let satisfied = 0;
+  let progress = 0;
+  for (const req of order) {
+    const selection = assignment.get(req.id) ?? [];
+    if (meetsDemand(req, selection)) satisfied += 1;
+    progress = round2(progress + progressOf(req, selection));
+  }
+  return { satisfied, progress, used: distinctUsed(assignment) };
+}
+
+function betterScore(a: Score, b: Score): boolean {
+  if (a.satisfied !== b.satisfied) return a.satisfied > b.satisfied;
+  if (a.progress !== b.progress) return a.progress > b.progress;
+  return a.used < b.used;
+}
+
+/** How much of this requirement the selection closes, never more than it asks for. */
+function progressOf(req: Requirement, selection: ResolvedCourse[]): number {
+  if (req.rule.kind === "course") return selection.length > 0 ? 1 : 0;
+  if (req.rule.kind !== "attribute") return 0;
+
+  const rule = req.rule;
+  const counted = rule.distinctTerms ? distinctTermSubset(selection) : selection;
+  const have = (rule.unit ?? "courses") === "credits"
+    ? round2(counted.reduce((sum, c) => sum + c.credits, 0))
+    : counted.length;
+  return Math.min(have, rule.n);
+}
+
+/** Local comparison used by the greedy pass. */
+function localBetter(
+  req: Requirement,
+  option: ResolvedCourse[],
+  incumbent: ResolvedCourse[],
+  current: Assignment,
+): boolean {
+  const satOption = meetsDemand(req, option) ? 1 : 0;
+  const satIncumbent = meetsDemand(req, incumbent) ? 1 : 0;
+  if (satOption !== satIncumbent) return satOption > satIncumbent;
+
+  const progressDelta = progressOf(req, option) - progressOf(req, incumbent);
+  if (progressDelta !== 0) return progressDelta > 0;
+
+  const already = new Set<string>();
+  for (const [id, courses] of current) {
+    if (id === req.id) continue;
+    for (const c of courses) already.add(c.key);
+  }
+  const fresh = (sel: ResolvedCourse[]) => sel.filter((c) => !already.has(c.key)).length;
+  return fresh(option) < fresh(incumbent);
 }
 
 /** Does this selection fully close the requirement? */

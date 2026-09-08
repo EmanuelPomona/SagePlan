@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [
+    {
+      "kind": "AP",
+      "subjectKey": "ap-french-language",
+      "score": 3,
+      "grade": null,
+      "level": null,
+      "label": "AP French Language and Culture",
+      "credits": 0,
+      "grantsAttributes": [],
+      "qualifies": false,
+      "duplicateKey": "french-language",
+      "ruleIds": [],
+      "notes": [
+        "A score of 4 or higher is required."
+      ]
+    },
+    {
+      "kind": "AP",
+      "subjectKey": "ap-german-language",
+      "score": 4,
+      "grade": null,
+      "level": null,
+      "label": "AP German Language and Culture",
+      "credits": 1,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "german-language",
+      "ruleIds": [
+        "ap-advanced-standing-credit",
+        "ap-language-requirement"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "IB",
+      "subjectKey": "ib-spanish-b",
+      "score": 7,
+      "grade": null,
+      "level": "SL",
+      "label": "IB Spanish B",
+      "credits": 0,
+      "grantsAttributes": [],
+      "qualifies": false,
+      "duplicateKey": "spanish-language",
+      "ruleIds": [],
+      "notes": [
+        "IB Standard Level earns no advanced standing credit.",
+        "This exam satisfies the language requirement only at Higher Level."
+      ]
+    },
+    {
+      "kind": "IB",
+      "subjectKey": "ib-french-b",
+      "score": 6,
+      "grade": null,
+      "level": "HL",
+      "label": "IB French B",
+      "credits": 1,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "french-language",
+      "ruleIds": [
+        "ib-hl-advanced-standing-credit",
+        "ib-language-b-hl-requirement"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "IB",
+      "subjectKey": "ib-spanish-a",
+      "score": 7,
+      "grade": null,
+      "level": "SL",
+      "label": "IB Spanish A",
+      "credits": 0,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "spanish-language",
+      "ruleIds": [
+        "ib-language-a-requirement"
+      ],
+      "notes": [
+        "IB Standard Level earns no advanced standing credit."
+      ]
+    },
+    {
+      "kind": "SATII",
+      "subjectKey": "satii-chinese",
+      "score": 800,
+      "grade": null,
+      "level": null,
+      "label": "SAT Subject Test: Chinese with Listening",
+      "credits": 0,
+      "grantsAttributes": [],
+      "qualifies": false,
+      "duplicateKey": "satii-chinese",
+      "ruleIds": [],
+      "notes": [
+        "SAT-II exams tested in Romanized script do not satisfy the language requirement."
+      ]
+    },
+    {
+      "kind": "SATII",
+      "subjectKey": "satii-french",
+      "score": 650,
+      "grade": null,
+      "level": null,
+      "label": "SAT Subject Test: French",
+      "credits": 0,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "satii-french",
+      "ruleIds": [
+        "satii-language-requirement"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "ALEVEL",
+      "subjectKey": "alevel-chinese",
+      "score": null,
+      "grade": "A",
+      "level": null,
+      "label": "A-Level Chinese",
+      "credits": 1,
+      "grantsAttributes": [],
+      "qualifies": true,
+      "duplicateKey": "chinese-language",
+      "ruleIds": [
+        "alevel-advanced-standing-credit"
+      ],
+      "notes": [
+        "This subject is excluded from the A-Level language provision."
+      ]
+    },
+    {
+      "kind": "ALEVEL",
+      "subjectKey": "alevel-german",
+      "score": null,
+      "grade": "B",
+      "level": null,
+      "label": "A-Level German",
+      "credits": 1,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "german-language",
+      "ruleIds": [
+        "alevel-advanced-standing-credit",
+        "alevel-language-requirement"
+      ],
+      "notes": []
+    }
+  ],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

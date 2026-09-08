@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [
+    {
+      "requirementId": "speaking-intensive",
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "reason": "Section was run as a speaking-intensive seminar in Fall 2025.",
+      "approvedBy": "Chair of History"
+    }
+  ],
+  "declarations": []
+}

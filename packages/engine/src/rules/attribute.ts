@@ -25,6 +25,7 @@ export function settleAttribute(
   assigned: ResolvedCourse[],
   ctx: EvalContext,
   used: ReadonlySet<string> = new Set(),
+  eligible: ResolvedCourse[] = assigned,
 ): Settlement {
   const unit = rule.unit ?? "courses";
   let counted = assigned;
@@ -45,6 +46,13 @@ export function settleAttribute(
 
   const have = unit === "credits" ? round2(counted.reduce((sum, c) => sum + c.credits, 0)) : counted.length;
   const status = have >= rule.n ? "satisfied" : have > 0 ? "partial" : "unmet";
+
+  // The assignment already dropped same-term duplicates, so the shortfall is
+  // only explicable from the eligible set: the student HAS another course, it
+  // just falls in a semester that is already counted.
+  if (!note && rule.distinctTerms && status !== "satisfied" && sharesTermWithCounted(eligible, counted)) {
+    note = "These courses must be taken in different semesters, and another course you have taken falls in a semester that already counts.";
+  }
   const examNote = counted.filter(isExamPseudo).map((c) => c.completed.title).filter(Boolean);
   if (examNote.length > 0) note = `Satisfied by ${examNote.join(", ")}.`;
 
@@ -55,6 +63,12 @@ export function settleAttribute(
     candidates: status === "satisfied" ? [] : candidatesFor(rule, ctx, used),
     ...(note ? { note } : {}),
   };
+}
+
+function sharesTermWithCounted(eligible: ResolvedCourse[], counted: ResolvedCourse[]): boolean {
+  const countedKeys = new Set(counted.map((c) => c.key));
+  const countedTerms = new Set(counted.map((c) => termCode(c.completed.term)));
+  return eligible.some((c) => !countedKeys.has(c.key) && countedTerms.has(termCode(c.completed.term)));
 }
 
 /** Catalog courses carrying the attribute that the student has not taken. */
