@@ -155,3 +155,26 @@ describe("runSections when a term is not published yet", () => {
     expect((err as PipelineError).code).toBe("SECTIONS_EMPTY");
   });
 });
+
+describe("catalog provenance across the sections merge", () => {
+  test("the catalog keeps its own Coursedog provenance, not a Hyperschedule URL", async () => {
+    seedCatalog([poCourse]);
+    const before = JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")).meta;
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const after = JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")).meta;
+    expect(after).toEqual(before);
+    expect(after.sourceUrl).not.toContain("hyperschedule");
+  });
+
+  test("falls back to a fresh stamp when there is no prior meta to keep", async () => {
+    writeFileSync(join(dir, "data", "catalog.json"), JSON.stringify({
+      meta: { schemaVersion: 1, generator: "seed", generatedAt: "2026-09-01T00:00:00Z", fetchedAt: "2026-09-01T00:00:00Z", sourceUrl: "https://catalog.pomona.edu/seed", catalogYear: "2026-2027" },
+      courses: [poCourse],
+    }));
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const meta = JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")).meta;
+    expect(meta.sourceUrl).toBe("https://catalog.pomona.edu/seed");
+  });
+});

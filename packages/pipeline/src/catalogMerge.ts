@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
-import { CatalogArtefactSchema, courseKey, type Course } from "@gradguide/shared";
+import { CatalogArtefactSchema, courseKey, type ArtefactMeta, type Course } from "@gradguide/shared";
 
 /** Read an existing catalog if there is a valid one; otherwise start empty. */
 export function readExistingCourses(path: string): Course[] {
@@ -24,4 +24,15 @@ export function mergeCourses(existing: readonly Course[], incoming: readonly Cou
   for (const c of preserved) byKey.set(courseKey(c.id), c);
   for (const c of incoming) byKey.set(courseKey(c.id), c);
   return [...byKey.values()].sort((a, b) => courseKey(a.id).localeCompare(courseKey(b.id)));
+}
+
+/** The catalog's own provenance stamp, if the file exists and is valid. */
+export function readExistingMeta(path: string): ArtefactMeta | null {
+  if (!existsSync(path)) return null;
+  try {
+    const parsed = CatalogArtefactSchema.safeParse(JSON.parse(readFileSync(path, "utf8")));
+    return parsed.success ? parsed.data.meta : null;
+  } catch {
+    return null;
+  }
 }

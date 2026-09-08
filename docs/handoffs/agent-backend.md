@@ -257,7 +257,9 @@ are implemented against my proposals on the owner's instruction to proceed.
 - `packages/pipeline/**` — 26 source modules, 19 test files, 6 fixtures
 - `data/catalog.json`, `data/sections-FA2026.json`, `data/offering-history.json`,
   `data/manifest.json`, `data/reports/*` (generated)
-- `.github/workflows/pipeline.yml` (new)
+- `.github/workflows/pipeline.yml` (new; its change detector compares artefacts
+  with `generatedAt`/`fetchedAt`/`lastVerified` stripped, so the nightly opens a PR
+  only when the data moved rather than every night on the clock)
 - `docs/status/agent-backend.md`, `docs/handoffs/agent-backend.md`,
   `docs/tasks/TASK-010..013` (frontmatter → REVIEW)
 - Not touched: `packages/shared`, `docs/API.md`, `docs/openapi.yaml`,
@@ -353,8 +355,18 @@ scripts/contract-test.sh -> exit 0
   6 check(s), 0 failed
   CONTRACT OK
 
-scripts/audit-skills.sh -> 5 invocations at 24%,25%,33%,34%,96% through the session;
+scripts/audit-skills.sh -> invocations at 24%,25%,33%,34%,96% through the session;
   all claims corroborated
+
+Idempotency (found and fixed while verifying):
+  pipeline:all run twice with no upstream change -> all 5 artefacts rewritten,
+  because each carries a fresh generatedAt/fetchedAt/lastVerified. The workflow's
+  change detector now strips those three fields before comparing.
+  with only timestamps differing  -> manifest, offering-history, validation.json
+                                     correctly reported NOT substantive
+  after mutating one course title -> data/catalog.json correctly flagged
+  data/sections-FA2026.json flagged between runs -> real: one section's
+                                     seatsFilled and status moved; ordering identical
 ```
 Artefacts for the reviewer: `data/reports/validation.json`,
 `ge-divergences.md`, `exclusion-anomalies.md`, `hyperschedule-attribute-diff.md`,
@@ -402,5 +414,9 @@ Artefacts for the reviewer: `data/reports/validation.json`,
   `LPO`/`PPO` + that range. Not a defect, but the figures differ by design.
 
 ### Commit
-`e3a87d8` (TASK-012, TASK-013), on top of `ef81a0f` (TASK-010, TASK-011) and
-`d162e78` (the contract change request). Branch `agent/backend`. No remote configured.
+Branch `agent/backend`, no remote configured (so "push" is a commit here):
+- `d162e78` CONTRACT CHANGE REQUEST, TASK-010 blocked on contract
+- `ef81a0f` TASK-010 + TASK-011
+- `e3a87d8` TASK-012 + TASK-013
+- `fd5cc06` handoff, status, task frontmatter
+- `1acb4e6` nightly PR only on substantive change

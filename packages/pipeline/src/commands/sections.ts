@@ -6,7 +6,7 @@ import type { FetchImpl } from "../http.ts";
 import { makeMeta } from "../meta.ts";
 import { log } from "../reports.ts";
 import { writeArtefact } from "../write.ts";
-import { readExistingCourses } from "../catalogMerge.ts";
+import { readExistingCourses, readExistingMeta } from "../catalogMerge.ts";
 import { fetchSections, sectionsUrl } from "../hyperschedule/client.ts";
 import { courseFromSection, isSectionIssue, normaliseSection } from "../hyperschedule/normalise.ts";
 import { mapGeCodes } from "../hyperschedule/geCodes.ts";
@@ -100,7 +100,14 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
   }
   const merged = [...byKey.values()].sort((a, b) => courseKey(a.id).localeCompare(courseKey(b.id)));
 
-  const meta = makeMeta({ generator: "sections merge", sourceUrl: sectionsUrl(env, terms[0] ?? "FA2026"), fetchedAt, catalogYear: env.catalogYear });
+  // Keep the catalog's OWN provenance. This merge only tops the file up with
+  // non-Pomona courses seen in the schedule; the catalog is fundamentally the
+  // Coursedog artefact, and the UI renders meta.fetchedAt as "catalog data as
+  // of". Stamping it with a Hyperschedule sourceUrl would make 2,005 Pomona
+  // courses claim a source they did not come from. ArtefactMeta holds a single
+  // sourceUrl, so the honest choice is the catalog's own.
+  const existingMeta = readExistingMeta(catalogPath);
+  const meta = existingMeta ?? makeMeta({ generator: "sections merge", sourceUrl: sectionsUrl(env, terms[0] ?? "FA2026"), fetchedAt, catalogYear: env.catalogYear });
   writeArtefact(catalogPath, { meta, courses: merged }, CatalogArtefactSchema);
 
   const byAff: Record<string, number> = {};
