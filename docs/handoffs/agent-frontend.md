@@ -453,3 +453,149 @@ npm run lint        clean
 grep -rn "document\.\|window\.\|Date\.now\|Math\.random" packages/engine/src   (empty)
 no golden carries an "assignment search bounded" note; suite runs in 66ms
 ```
+
+---
+
+## HANDOFF-3 — agent/frontend — TASK-021 web app shell — 2026-09-08
+
+### Summary
+
+`apps/web` exists: one scrolling page (masthead, record, audit, footer), no
+router, with the design system from `docs/DESIGN_BRIEF.md`, every artefact
+failure state, `localStorage` persistence with migration, the CSP, and the
+useful empty state. 185 tests across the three workspaces.
+
+### Tasks Completed
+
+**TASK-021.** AC-P12 (no router), AC-P13 (catalog year, data as of, exact
+disclaimer, attribution), AC-P14 (empty state shows every requirement with a
+real candidate count and the "0 of 6 breadth areas" line), AC-F07 (light and
+dark, status never carried by colour alone), AC-F08 (console clean), AC-U05 (no
+Pomona blue, "unofficial" in the masthead), AC-U07 (three faces self-hosted, no
+runtime font request), AC-B08 (no external API reference outside attribution),
+and the build-refuses-without-manifest criterion.
+
+### Files Changed
+
+`apps/web/`: package.json, tsconfig.json, vite.config.ts, vitest.config.ts,
+index.html, `vite-plugins/serveData.ts`, four `dev-fixtures/*.json`, and
+`src/` (App, main, layout/{Page,Masthead,ThemeToggle,Footer},
+record/RecordSection, audit/{AuditSection,StatusGlyph,useAudit},
+data/{loadData,DataProvider}, plan/{planStore,migratePlan}, theme/useTheme,
+styles/{tokens,global}.css, test/{setup,migratePlan,planStore,loadData}).
+Evidence in `docs/review/F-*`.
+
+### Contracts
+
+TASK-022 to TASK-025 consume these, at the names the task specified:
+
+```ts
+usePlan(): PlanStore     // plan, status, setProfile, addCompleted,
+                         // updateCompleted, removeCompleted, addExternalCredit,
+                         // removeExternalCredit, setAttestation, addOverride,
+                         // removeOverride, replacePlan, rawStored
+useData(): DataState     // loading | error | ready{manifest,catalog,programs,rules,fixture}
+useAudit(plan, programs, catalog): Result[]
+loadSections(term), loadHistory()      // for TASK-024's lazy load
+migratePlan(raw)                       // for TASK-025's import and share link
+PLAN_STORAGE_KEY = "gradguide:plan:v1"
+StatusGlyph, STATUS_WORD, verdictOf    // the four verdicts plus the manual ones
+```
+
+`verdictOf` is an addition beyond the task's list. TASK-023 needs it: a result
+carrying `waived`, `viaOverride` or `viaAttestation` must not render as an
+automatic match, and that decision belongs in one place rather than in each
+section that draws a row.
+
+### Skills Used
+
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `ecc:frontend-design-direction` | Before any UI code | Fixed the direction as a dense document for an anxious student at 11pm, and confirmed the first screen must be the student's own record, not an explanation of the product. |
+| `frontend-design:frontend-design` | Before any UI code | Named the brief's own palette as the commonest tell of AI-generated design. Since the brief pins that direction it stays, but this is why every free axis was spent away from the defaults: the middle-dot chain and the all-caps eyebrows are gone. |
+| `ui-ux-pro-max:ui-ux-pro-max` | Before any UI code | Its accessibility rules sent me to measure the palette rather than trust it, which is how the `partial` contrast failure was found. |
+| `design-taste-frontend` | As the anti-generic critique | Declares itself out of scope for dense product UI, so only its anti-generic rules were applied. It supplied the middle-dot and eyebrow bans and the "one border direction, not two" rule that produced rule-kind clustering. |
+| `vercel:react-best-practices` | Before the hooks | Lazy `useState` initialiser so storage is read once; functional `setState` so every edit callback is stable; `useMemo` for the audit rather than an effect, which would render one frame of stale verdicts on every keystroke. |
+| `ecc:frontend-a11y` | Before the components | Marks are `aria-hidden` with the status word as real text; `role="status"` on async and summary regions, `role="alert"` on failures; `aria-pressed` on the theme buttons; `prefers-reduced-motion` honoured. |
+| `superpowers:test-driven-development` | Before the data and plan layer | 23 web tests written first. |
+| `superpowers:systematic-debugging` | On the jsdom failure | My first hypothesis (jsdom opaque origin) was wrong. Instrumenting showed Node 26's own experimental `localStorage` getter shadowing jsdom's Storage. Fixed at the cause with a conditional shim. |
+| `superpowers:receiving-code-review` | On the TASK-020 review | Every finding reproduced as a failing test before any fix, including the two Critical ones. |
+| `superpowers:verification-before-completion` | Immediately before this handoff | Re-ran the whole gate fresh; no implementation work after it. |
+
+### Verification
+
+```
+npm test        engine 149 | shared 13 | web 23      exit 0
+npm run typecheck                                    exit 0
+npm run lint                                         exit 0
+npm run build                                        exit 1  <- CORRECT
+  "Refusing to build: data/manifest.json is missing, so only dev fixtures are
+   available. Fixture data must never ship as the catalog."
+scripts/slop-check.sh apps/web                       0 mechanical hits
+grep -rn "react-router\|createBrowserRouter" apps/web/src     (empty)
+grep -rn "document\.\|window\.\|Date.now\|Math.random" packages/engine/src  (empty)
+```
+
+Browser QA, Chrome, dev server on `FRONTEND_PORT=3001` from `.env`:
+
+| Artefact | Shows |
+|---|---|
+| `docs/review/F-01-desktop-1440.jpg` | 1440, dark, empty state, evidence margin on every row |
+| `docs/review/F-02-tablet-768.jpg` | 768, sidenote collapsed beneath its row |
+| `docs/review/F-03-mobile-390.jpg` | 390, single column, no horizontal overflow |
+| `docs/review/F-04-light-1440.jpg` | light theme, cream canvas |
+| `docs/review/F-05-state-error-data-unavailable.jpg` | manifest removed: the page names the missing file and says the student's own record is safe |
+| `docs/review/F-console.txt` | 10 messages, zero errors, zero CSP violations |
+| `docs/review/F-network.txt` | 68 requests, every one same-origin, fonts included |
+
+Measured contrast on the cream canvas: ink 14.97, secondary 5.02, satisfied
+5.62, unmet 5.55, unverifiable 5.86, override 6.28, focus 4.10. Every role
+passes on the dark canvas too.
+
+### What Was NOT Verified
+
+- **The 390px screenshot was taken in a same-origin iframe, not a 390px browser
+  window.** Chrome on macOS clamps window width to about 500px, and I confirmed
+  by measurement that a window "resized to 390" still reported
+  `innerWidth: 500` with the mobile media query NOT matching. The iframe gives a
+  genuine 390px viewport (`innerWidth: 390`, `max-width: 30rem` matching,
+  `scrollWidth === innerWidth`), but it is not a device and not a real window.
+  A reviewer with device emulation should confirm.
+- **No production build has ever been run**, so nothing about the built output is
+  verified: not its console, not its network profile, not that the fonts are
+  emitted same-origin, not the CSP under a real build. The build cannot run until
+  `data/manifest.json` exists (backend TASK-010). Every browser observation above
+  is from the dev server, where Vite adds its own module requests.
+- **Three of AC-F01's states are not screenshotted:** loading (it resolves too
+  fast against local fixtures to capture), corrupt-plan, and storage-quota. All
+  three are covered by unit tests, which is not the same as seeing them.
+- **No axe or automated accessibility scan was run.** The contrast figures above
+  are my own computation from the hex values, not a tool's. Keyboard navigation
+  was not walked end to end, and no screen reader was used.
+- **The catalog is 40 fixture courses, not 2,811.** Nothing about performance,
+  candidate-list length, or layout under real data is known. `candidatesFor`
+  scans the whole catalog per requirement.
+- **`scripts/bootstrap.sh` was not run from a clean clone** (AC-D01). I used the
+  existing `.env`.
+- The dev server was verified on this machine only, Node 26. CI pins Node 22.
+
+### Known Issues
+
+1. **`scripts/slop-check.sh` defaults to a directory that no longer exists.** It
+   takes `${1:-frontend}`, and the manager's restructure replaced `frontend/`
+   with `apps/web/`. Running it bare prints "no such directory: frontend" and
+   checks nothing. I passed the path explicitly rather than edit shared tooling.
+   **Anyone running it without an argument gets a false pass.**
+2. The tablet quote is clamped to two lines rather than one with tap-to-expand;
+   the disclosure belongs to TASK-023.
+3. `/data/manifest.json` is fetched twice in development because React
+   StrictMode double-invokes effects. Development only, and the in-flight guard
+   handles it.
+4. `RecordSection` and `AuditSection` are the shell versions the task specifies.
+   TASK-022 fills the record, TASK-023 replaces the row internals.
+5. A Vite dev server serves project files outside `/data` by design, so
+   `/package.json` is reachable in development. Production ships only `dist/`.
+
+### Commit
+
+`a8d4b1b`. Branch `agent/frontend`, still no remote to push to.
