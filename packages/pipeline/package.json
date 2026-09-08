@@ -1,0 +1,21 @@
+{
+  "name": "@gradguide/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Ingestion scripts run by CI. Fetches Coursedog and Hyperschedule, normalises to the shared contract, validates, and writes /data. No server, no database. Owner: backend.",
+  "scripts": {
+    "catalog": "tsx src/cli.ts catalog",
+    "sections": "tsx src/cli.ts sections",
+    "history": "tsx src/cli.ts history",
+    "validate": "tsx src/cli.ts validate",
+    "manifest": "tsx src/cli.ts manifest",
+    "all": "tsx src/cli.ts all",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@gradguide/shared": "*",
+    "zod": "^4.1.0"
+  }
+}

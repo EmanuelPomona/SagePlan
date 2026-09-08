@@ -1,0 +1,122 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { CatalogArtefactSchema } from "@gradguide/shared";
+import { readEnv, type PipelineEnv } from "../env.ts";
+import { PipelineError } from "../errors.ts";
+import type { FetchImpl } from "../http.ts";
+import { makeMeta } from "../meta.ts";
+import { log, writeReport } from "../reports.ts";
+import { writeArtefact } from "../write.ts";
+import { mergeCourses, readExistingCourses } from "../catalogMerge.ts";
+import { fetchCoursedogCourses, coursedogSearchUrl } from "../coursedog/client.ts";
+import { parseCoursedogCsv } from "../coursedog/csvFallback.ts";
+import { normaliseAll, type NormaliseIssue } from "../coursedog/normalise.ts";
+import { dedupeCourses } from "../coursedog/dedupe.ts";
+import type { RawCoursedogCourse } from "../coursedog/raw.ts";
+
+export interface CatalogOptions {
+  env?: PipelineEnv;
+  fetchImpl?: FetchImpl;
+  /**
+   * Non-empty sanity floor. Default 2000: the live catalog yields ~2,093 Pomona
+   * courses after the Active filter and de-duplication, and the guard exists to
+   * catch a truncated or broken fetch, not to assert an exact figure.
+   * (TASK-010 AC-B01 said 2,700, which counts Banked/Inactive placeholder rows;
+   * raised as CONTRACT CHANGE REQUEST item 1.)
+   */
+  minCourses?: number;
+}
+
+function summariseIssues(issues: readonly NormaliseIssue[]): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const i of issues) counts[i.reason] = (counts[i.reason] ?? 0) + 1;
+  return counts;
+}
+
+export async function runCatalog(argv: readonly string[], opts: CatalogOptions = {}): Promise<void> {
+  const env = opts.env ?? readEnv();
+  const minCourses = opts.minCourses ?? 2000;
+  const fromCsvIndex = argv.indexOf("--from-csv");
+  const fetchedAt = new Date().toISOString();
+
+  let records: RawCoursedogCourse[];
+  let sourceUrl: string;
+
+  if (fromCsvIndex !== -1) {
+    const path = argv[fromCsvIndex + 1];
+    if (!path) throw new PipelineError("--from-csv needs a file path", "CLI_BAD_ARGS");
+    records = parseCoursedogCsv(readFileSync(path, "utf8"));
+    sourceUrl = coursedogSearchUrl(env, 0);
+    log("catalog", { source: "csv", file: path, records: records.length });
+  } else {
+    const fetched = await fetchCoursedogCourses(env, { fetchImpl: opts.fetchImpl });
+    records = fetched.records;
+    sourceUrl = fetched.sourceUrl;
+    log("catalog", { source: "coursedog", records: records.length, origin: env.coursedogOrigin });
+  }
+
+  if (records.length === 0) {
+    throw new PipelineError("Coursedog returned zero records; keeping yesterday's catalog", "CATALOG_EMPTY");
+  }
+
+  const { courses: normalised, issues } = normaliseAll(records, { catalogYear: env.catalogYear, fetchedAt });
+  const issueCounts = summariseIssues(issues);
+  log("catalog.normalise", { in: records.length, out: normalised.length, ...issueCounts });
+
+  // A GE-shaped attribute we do not recognise means a requirement tag would be
+  // silently dropped. Fail instead — the mapping is a human decision.
+  const unmapped = issues.filter((i) => i.reason === "unmapped-attribute");
+  if (unmapped.length > 0) {
+    throw new PipelineError(
+      `${unmapped.length} course(s) carry an unmapped GE-looking attribute: ${unmapped.slice(0, 5).map((i) => `${i.code} (${i.detail})`).join("; ")}`,
+      "UNMAPPED_ATTRIBUTES",
+    );
+  }
+
+  const { courses: deduped, discarded } = dedupeCourses(normalised);
+  log("catalog.dedupe", { in: normalised.length, out: deduped.length, discarded: discarded.length });
+
+  if (deduped.length === 0) {
+    throw new PipelineError("no courses survived normalisation; keeping yesterday's catalog", "CATALOG_EMPTY");
+  }
+  if (deduped.length < minCourses) {
+    throw new PipelineError(
+      `only ${deduped.length} courses after normalisation, below the floor of ${minCourses}; keeping yesterday's catalog`,
+      "CATALOG_TOO_SMALL",
+    );
+  }
+
+  const catalogPath = join(env.dataDir, "catalog.json");
+  const merged = mergeCourses(readExistingCourses(catalogPath), deduped, "PO");
+  const preserved = merged.length - deduped.length;
+
+  writeArtefact(
+    catalogPath,
+    { meta: makeMeta({ generator: "catalog", sourceUrl, fetchedAt, catalogYear: env.catalogYear }), courses: merged },
+    CatalogArtefactSchema,
+  );
+
+  if (discarded.length > 0) {
+    writeReport(
+      "catalog-duplicates",
+      [
+        "# Catalog duplicate editions",
+        "",
+        `Coursedog returned ${discarded.length} duplicate course record(s). Where two editions`,
+        "of one course disagree, the pipeline keeps the **most complete** record (more GE",
+        "attributes first, then more catalog detail). Newest does NOT win: the newer edition",
+        "is frequently the one with an empty `attributes` array.",
+        "",
+        "| Course | Title | Attributes kept | Attributes discarded | Reason |",
+        "|---|---|---|---|---|",
+        ...discarded.map((d) =>
+          `| ${d.key} | ${d.title} | ${d.keptAttributes.join(", ") || "—"} | ${d.discardedAttributes.join(", ") || "—"} | ${d.reason} |`,
+        ),
+        "",
+      ].join("\n"),
+      env.dataDir,
+    );
+  }
+
+  log("catalog.write", { path: catalogPath, courses: merged.length, po: deduped.length, preserved, unmapped: 0 });
+}

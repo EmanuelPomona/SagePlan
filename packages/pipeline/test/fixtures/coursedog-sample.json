@@ -1,0 +1,2281 @@
+{
+ "listLength": 23,
+ "data": [
+  {
+   "_id": "ID 001 PO -2023",
+   "archived": false,
+   "attributes": [
+    "Interdisciplinry Studies"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "ID 001 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "ID 001 PO",
+   "courseNumber": "001 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908686188,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "bc7Fj": "PO  ",
+    "ydovU": "ID",
+    "4vWJk": [
+     "ID"
+    ],
+    "mAA78": [
+     "Interdisciplinry Studies"
+    ]
+   },
+   "departments": [
+    "PINT"
+   ],
+   "dependents": [],
+   "description": "Critical Inquiry. Critical Inquiry (ID1) is a program of seminars for first-year students in their first semester at the College. Seminars are taught by faculty from across the disciplines and engage students in rigorous reading, writing and discussion on varied topics. The goal of ID1 is to prepare students to participate fully and successfully in the intellectual community that is Pomona College. Critical writing is an essential component of that participation, and to that end all sections of ID1 focus on writing as a recursive process of drafting and revision. [See Critical Inquiry section of this catalog for course listings.]",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2005-06-10",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "ID 001 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047431616,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Critical Inquiry  Seminar",
+   "name": "Critical Inquiry Seminar",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "ID",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 1,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "ID 001 PO"
+  },
+  {
+   "_id": "PE 175W PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Phys Ed Requirement ;Physical Education"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LX",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PE 175W PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PE 175W PO",
+   "courseNumber": "175W PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908634157,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": true,
+    "numberOfRepeats": 8,
+    "creditHours": {
+     "min": 0.25,
+     "max": 0.25,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Cum Course              ",
+    "4AKua": "UL",
+    "n5Emn": "Cum Courses - Letter",
+    "dKAhW": "A",
+    "ydovU": "1PE ;PE",
+    "4vWJk": [
+     "1PE",
+     "PE"
+    ],
+    "mAA78": [
+     "PO Phys Ed Requirement",
+     "Physical Education"
+    ]
+   },
+   "departments": [
+    "PPED"
+   ],
+   "dependents": [],
+   "description": "Vars Team: Track & Field Women. Varsity team participation encourages the development of positive values such as sportsmanship, teamwork, leadership, confidence, courage, and dedication. It also provides opportunities for positive social growth and development with an efficiency that is difficult, if not impossible, to duplicate in other educational settings. The College fields 21 intercollegiate varsity teams and competes in the Southern California Intercollegiate Athletic Conference. Interested students should contact individual coaches for information on practice start dates, practice hours and days, competition dates, and location of meetings and practices. These courses may be repeated for credit.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2008-10-03",
+   "equivalentCourseGroup": "",
+   "gradeMode": "UP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PE 175W PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047469997,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Vars Team: Track and Field Women",
+   "name": "Vars Team: Track & Field Women",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "PE",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PE 175W PO"
+  },
+  {
+   "_id": "POLI193 PO -2023",
+   "archived": false,
+   "attributes": [
+    "All Government/Politics ;Politics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI193 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI193 PO",
+   "courseNumber": "193 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 0.5,
+     "max": 0.5,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Pass/No Credit          ",
+    "4AKua": "LP",
+    "n5Emn": "Letter Grade",
+    "dKAhW": "A",
+    "ydovU": "AGPL;POLI",
+    "4vWJk": [
+     "AGPL",
+     "POLI"
+    ],
+    "mAA78": [
+     "All Government/Politics",
+     "Politics"
+    ]
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "Students compile a 12-text bibliography of their choosing, compose three short essays and take a one-hour examination based on their work. P/NP only. Half-credit.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2008-04-22",
+   "equivalentCourseGroup": "",
+   "gradeMode": "PP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI193 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Senior Oral Comprehensive Exam",
+   "name": "Senior Oral Comprehensive Exam",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI193 PO"
+  },
+  {
+   "_id": "POLI130 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 2 Requirement ;All Government/Politics ;American Studies ;Politics"
+   ],
+   "campus": "PO",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI130 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI130 PO",
+   "courseNumber": "130 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 0,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "value": 1,
+     "operator": ""
+    },
+    "billingHours": {
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "dKAhW": "A",
+    "mAA78": [
+     "PO Area 2 Requirement",
+     "All Government/Politics",
+     "American Studies",
+     "Politics"
+    ],
+    "4vWJk": [
+     "1A2",
+     "AGPL",
+     "AMST",
+     "POLI"
+    ],
+    "bc7Fj": "PO  ",
+    "ydovU": "1A2 ;AGPL;AMST;POLI"
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "A course on how electoral politics works (or doesn't) in the contemporary United States. On one hand, the nuts and bolts of campaigns and election processes and organizations. On the other hand, the issues, interests and values at stake at the time the course is offered. Class discussions will focus on sustained individual case studies. Prerequisite: POLI003 PO or equivalent.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2012-02-27",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI130 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1770922256672,
+   "lastEditedBy": "gmta2020@pomona.edu",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Campaigns and Elections",
+   "name": "Campaigns & Elections",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {
+    "requisitesSimple": [
+     {
+      "id": "NAdQ4Yx1",
+      "name": "POLI130 PO Prerequisite",
+      "type": "Completion Requirement",
+      "showInCatalog": true,
+      "rules": [
+       {
+        "id": "bOTIiDwi",
+        "condition": "completedAllOf",
+        "value": {
+         "condition": "courses",
+         "values": [
+          {
+           "value": [
+            "POLI003 PO"
+           ],
+           "logic": "and"
+          }
+         ],
+         "id": "SL7fqpoZ",
+         "subSelections": []
+        }
+       }
+      ],
+      "sisId": ""
+     }
+    ]
+   },
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 2,
+   "allowIntegration": false,
+   "careers": [],
+   "collegesAllowedToOffer": [],
+   "endTerm": null,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI130 PO"
+  },
+  {
+   "_id": "POLI161 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 2 Requirement ;PO Writing Intensive Req;Asian Studies ;International Relations ;Politics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI161 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI161 PO",
+   "courseNumber": "161 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "ydovU": "1A2 ;1WIR;ASIA;IR ;POLI",
+    "4vWJk": [
+     "1A2",
+     "1WIR",
+     "ASIA",
+     "IR",
+     "POLI"
+    ],
+    "mAA78": [
+     "PO Area 2 Requirement",
+     "PO Writing Intensive Req",
+     "Asian Studies",
+     "International Relations",
+     "Politics"
+    ]
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "There is a tendency in some corners of American politics to gaze longingly across the Atlantic and wonder: why don't we have universal health care? Free college tuition? State-subsidized child care? The perception is that Europeans, via robust welfare states, enjoy social benefits that remain out of reach for Americans (or at least those Americans who cannot procure them from the market). This class takes a comparative approach to social policy in order to better identify why there are differences in approaches to the welfare state, not just between Europe and the US, but within Europe as well. In addition to exploring key cases and areas of policy coverage, we will also consider how policy feedback loops, neoliberalism, globalization, and demographic change (in particular, aging and immigration) all affect the scope and stability of the welfare state on both sides of the Atlantic.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2023-02-06",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI161 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Comparative Social Policy",
+   "name": "Comparative Social Policy",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI161 PO"
+  },
+  {
+   "_id": "POLI177 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 2 Requirement ;PO Analyzing Difference ;PO Speaking Intensive ;All Government/Politics ;International Relations ;Politics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI177 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI177 PO",
+   "courseNumber": "177 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "ydovU": "1A2 ;1ADR;1SIR;AGPL;IR ;POLI",
+    "4vWJk": [
+     "1A2",
+     "1ADR",
+     "1SIR",
+     "AGPL",
+     "IR",
+     "POLI"
+    ],
+    "mAA78": [
+     "PO Area 2 Requirement",
+     "PO Analyzing Difference",
+     "PO Speaking Intensive",
+     "All Government/Politics",
+     "International Relations",
+     "Politics"
+    ]
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "This course will examine domestic politics and international relations through the lens of sports. Subjects discussed include nationalism, economic inequality, gender, development, ethics, among others. Letter grade only.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2019-09-27",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI177 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Sports and Politics",
+   "name": "Sports and Politics",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI177 PO"
+  },
+  {
+   "_id": "NRTS2lZoTugRlRK6KRgE",
+   "archived": false,
+   "campus": "PO",
+   "campuses": [],
+   "canSchedule": true,
+   "career": "UL",
+   "careers": [],
+   "cipCode": "",
+   "code": "ART126D PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "vMijxutwDPcDpLjohfAP",
+   "courseNumber": "126D PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1758751351219,
+   "createdBy": "mpo04747@pomona.edu",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 0,
+    "creditHours": {
+     "value": 1,
+     "operator": ""
+    },
+    "billingHours": {
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Letter Grade Only",
+    "4AKua": "GP",
+    "n5Emn": "Credit/No Credit",
+    "dKAhW": "A",
+    "2hI0u": "NONE",
+    "oouNL": "Having an upper level casting course that allows majors to develop their introductory casting experience while learning new technologies  in object making.",
+    "RJrvA": "<p>this is a smart pivot with a great idea. </p>",
+    "mAA78": [
+     "PO Area 6 Requirement",
+     "Art"
+    ],
+    "hCJPO": {
+     "ve9mV": [
+      "4 (Class w/ 1-hour lab)"
+     ],
+     "c41Rl": 8,
+     "mLBeC": [
+      "Practice, Rehearsal, Performance"
+     ]
+    }
+   },
+   "departments": [
+    "PARS"
+   ],
+   "dependents": [],
+   "description": "This is an upper level casting course. Students will work primarily with digital processes to create experimental, sculptural works that site to the body as a way to elicit provisional, speculative, and performative narratives.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2026-01-20",
+   "endTerm": {},
+   "equivalentCourseGroup": "",
+   "files": [
+    {
+     "name": "Casting - The Unfashionable Digital Body.doc",
+     "path": "files/form/1758112414826/EbfiZXrwaivd.doc",
+     "public": true
+    }
+   ],
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "NRTS2lZoTugRlRK6KRgE",
+   "instructionMode": "In Person",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1758751371720,
+   "lastEditedBy": "mpo04747@pomona.edu",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Casting: The Unfashionable,  Digital Body",
+   "name": "Casting: The Unfashionable",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requestId": "NRTS2lZoTugRlRK6KRgE",
+   "requestStatus": "approved",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {
+    "requisitesSimple": [
+     {
+      "id": "SzG0EJup",
+      "name": "Narrative Text",
+      "type": "Narrative Text",
+      "showInCatalog": true,
+      "notes": "<p>Must have taken a Casting class  or Wood Sculpture with Professor O'Malley</p>",
+      "rules": [],
+      "sisId": ""
+     },
+     {
+      "id": "g28KsC9I",
+      "name": "Prior Casting or Wood Sculpture Class",
+      "type": "Completion Requirement",
+      "showInCatalog": true,
+      "rules": [
+       {
+        "id": "PCpd90pO",
+        "condition": "completedAnyOf",
+        "value": {
+         "condition": "courses",
+         "values": [
+          {
+           "value": [
+            "ART 025A PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 025R PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 027 PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 029B PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "A6o6mfs63ROp1m57IVkN"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 126B PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 127 PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 128 PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 131 PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 131C PO"
+           ],
+           "logic": "and"
+          },
+          {
+           "value": [
+            "ART 140 PO"
+           ],
+           "logic": "and"
+          }
+         ],
+         "id": "DHQF80BF",
+         "subSelections": []
+        }
+       }
+      ],
+      "sisId": ""
+     }
+    ]
+   },
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "schedulePrint": true,
+   "startTerm": {
+    "year": "2026",
+    "semester": 1,
+    "id": "5e736478-5b56-4c95-99c0-0f9b142fb4d4"
+   },
+   "status": "Active",
+   "subjectCode": "ART",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 1,
+   "alternativeCode": null,
+   "orderByKeyForCode": "ART126D PO"
+  },
+  {
+   "_id": "PSYC098 PO -2023",
+   "archived": false,
+   "attributes": [
+    "Psychology"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PSYC098 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PSYC098 PO",
+   "courseNumber": "098 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": true,
+    "numberOfRepeats": 4,
+    "creditHours": {
+     "min": 0.5,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "PSYC",
+    "4vWJk": [
+     "PSYC"
+    ],
+    "mAA78": [
+     "Psychology"
+    ]
+   },
+   "departments": [
+    "PPSY"
+   ],
+   "dependents": [],
+   "description": "",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2002-06-26",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PSYC098 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "",
+   "name": "Summer Reading & Research",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "PSYC",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PSYC098 PO"
+  },
+  {
+   "_id": "PPA 195 PO -2023",
+   "archived": false,
+   "attributes": [
+    "All Government/Politics ;Public Policy Analysis"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PPA 195 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PPA 195 PO",
+   "courseNumber": "195 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": true,
+    "numberOfRepeats": 2,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Pass/No Credit          ",
+    "4AKua": "LP",
+    "n5Emn": "Letter Grade",
+    "dKAhW": "A",
+    "ydovU": "AGPL;PPA",
+    "4vWJk": [
+     "AGPL",
+     "PPA"
+    ],
+    "mAA78": [
+     "All Government/Politics",
+     "Public Policy Analysis"
+    ]
+   },
+   "departments": [
+    "PPPA"
+   ],
+   "dependents": [],
+   "description": "Internship in Public Affairs. A 216-hour internship in a policy-relevant position in the private, non-profit, or the public sector. Pass/No Credit only.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2005-04-07",
+   "equivalentCourseGroup": "",
+   "gradeMode": "PP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PPA 195 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "",
+   "name": "Internship in Public Affairs",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "PPA",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PPA 195 PO"
+  },
+  {
+   "_id": "RUSS033 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Language Requirement ;All Languages ;Russian"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LX",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "RUSS033 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "RUSS033 PO",
+   "courseNumber": "033 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908689507,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "1FL ;ALAN;RUSS",
+    "4vWJk": [
+     "1FL",
+     "ALAN",
+     "RUSS"
+    ],
+    "mAA78": [
+     "PO Language Requirement",
+     "All Languages",
+     "Russian"
+    ]
+   },
+   "departments": [
+    "PGRU"
+   ],
+   "dependents": [],
+   "description": "Intermediate Russian. Further study in the Russian language, including reading, conversation, grammar and composition. Prerequisite: 2.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2002-03-04",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "RUSS033 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047504523,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Intermediate Russian",
+   "name": "Intermediate Russian",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "RUSS",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "RUSS033 PO"
+  },
+  {
+   "_id": "RLST025 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 3 Requirement ;PO Analyzing Difference ;PO Community Partnership;Inside Out ;Organizational Studies ;Religious Studies"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "RLST025 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "RLST025 PO",
+   "courseNumber": "025 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "ydovU": "1A3 ;1ADR;1CP ;INSO;ORST;RLST",
+    "4vWJk": [
+     "1A3",
+     "1ADR",
+     "1CP",
+     "INSO",
+     "ORST",
+     "RLST"
+    ],
+    "mAA78": [
+     "PO Area 3 Requirement",
+     "PO Analyzing Difference",
+     "PO Community Partnership",
+     "Inside Out",
+     "Organizational Studies",
+     "Religious Studies"
+    ]
+   },
+   "departments": [
+    "PRST"
+   ],
+   "dependents": [],
+   "description": "This course explores the influence of religion on the secular sphere of criminal justice. Questions raised may include: How has religion shaped ideals and practices of punishment and rehabilitation in the U.S., past and present? Has religion impacted the duration, extremity, and social effects of punishment? What are religious arguments for and against the death penalty? What is the relation between religious ideas and existing practices of rehabilitation, including restorative and transformative justice? This class will be taught in the Inside-Out Prison Exchange format, alongside incarcerated students at the California Rehabilitation Center men's prison. Letter grade only. Course is equivalent to RLST181 PO.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2018-10-12",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "RLST025 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Religion, Punishment, and Restoration in the U.S. (CP)",
+   "name": "Relig, Punish, Restoration (CP)",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "RLST",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "RLST025 PO"
+  },
+  {
+   "_id": "POLI190D PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Speaking Intensive ;All Government/Politics ;Politics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI190D PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI190D PO",
+   "courseNumber": "190D PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "mAA78": [
+     "All Government/Politics",
+     "Politics"
+    ],
+    "4vWJk": [
+     "AGPL",
+     "POLI"
+    ],
+    "bc7Fj": "PO  ",
+    "ydovU": "1SIR;AGPL;POLI"
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "This course will satisfy the Senior Seminar requirement for Politics majors. Topics will vary from year to year and might include, for example, constitutional issues relating to the War on Terror (the \"imperial presidency,\" privacy and surveillance, torture and enemy combatants, drones) or a comparative examination of how Americans regulate certain hot-button issues and why (guns, abortion, drugs, sex, marriage, etc), The seminar will be writing intensive and discussion-based. Students should anticipate reading a book every week. Letter grade only.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2015-03-07",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI190D PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1741888317149,
+   "lastEditedBy": "gmta2020@pomona.edu",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Senior Seminar in Politics: Contemporary Topics in American Law and Politics",
+   "name": "Senior Seminar in Politics",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 1,
+   "allowIntegration": false,
+   "careers": [],
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI190D PO"
+  },
+  {
+   "_id": "PSYC125 AF -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 2 Requirement ;PO Analyzing Difference ;PO Speaking Intensive ;PO Writing Intensive Req;Africana Studies ;Psychology"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PSYC125 AF",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PSYC125 AF",
+   "courseNumber": "125 AF",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "1A2 ;1ADR;1SIR;1WIR;AFRI;PSYC",
+    "4vWJk": [
+     "1A2",
+     "1ADR",
+     "1SIR",
+     "1WIR",
+     "AFRI",
+     "PSYC"
+    ],
+    "mAA78": [
+     "PO Area 2 Requirement",
+     "PO Analyzing Difference",
+     "PO Speaking Intensive",
+     "PO Writing Intensive Req",
+     "Africana Studies",
+     "Psychology"
+    ]
+   },
+   "departments": [
+    "PPSY"
+   ],
+   "dependents": [],
+   "description": "Situating the study of development in the context of culture has gained tremendous momentum recently. This course explores this movement. We will examine cross-cultural research, but the focus is not on cross-cultural appreciation. Methodological issues pertaining to research across cultures, and theories important in culture and development will be explored. Scholarship & research, examples given and phenomenon examined will relate to peoples of the global African diaspora. Prerequisites: PSYC051 PO, or AFRI010B PO, or instructor's permission.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2016-10-05",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PSYC125 AF -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Culture & Human Development: The African Diaspora",
+   "name": "Culture/Hum Dev:African Diaspora",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "PSYC",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PSYC125 AF"
+  },
+  {
+   "_id": "POLI010 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 2 Requirement ;PO DDP Courses ;All Government/Politics ;Politics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI010 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI010 PO",
+   "courseNumber": "010 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "1A2 ;1DDP;AGPL;POLI",
+    "4vWJk": [
+     "1A2",
+     "1DDP",
+     "AGPL",
+     "POLI"
+    ],
+    "mAA78": [
+     "PO Area 2 Requirement",
+     "PO DDP Courses",
+     "All Government/Politics",
+     "Politics"
+    ]
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "A theoretical study of the pursuit of freedom through politics. Topics include freedom and authority; equality and liberty; rights, dissent, revolution; community versus individuality; excitable speech; considerations of culture, class, gender, race, embodiment; and technology. Readings from Toni Morrison, bell hooks, Angela Davis, J.S. Mill, Isiah Berlin, Philip Pettit, Orlando Patterson, Neil Roberts, Shatema Threadcraft, Saidiya Hartman, Frederick Douglass, Ralph Ellison, Franz Fanon, Malcolm X, Henry David Thoreau, Donna Haraway, Audre Lorde, Sara Ahmed, Saba Mahmood, and others; films, paintings; music.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2015-03-07",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI010 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Political Freedom",
+   "name": "Political Freedom",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI010 PO"
+  },
+  {
+   "_id": "RUSS191 PO -2023",
+   "archived": false,
+   "attributes": [
+    "All Languages ;Russian"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "RUSS191 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "RUSS191 PO",
+   "courseNumber": "191 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908689507,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": true,
+    "numberOfRepeats": 2,
+    "creditHours": {
+     "min": 0.5,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "2 Sem Courses           ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "ALAN;RUSS",
+    "4vWJk": [
+     "ALAN",
+     "RUSS"
+    ],
+    "mAA78": [
+     "All Languages",
+     "Russian"
+    ]
+   },
+   "departments": [
+    "PGRU"
+   ],
+   "dependents": [],
+   "description": "Senior Thesis. Course or half-course.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2002-03-04",
+   "equivalentCourseGroup": "",
+   "gradeMode": "2P",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "RUSS191 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047504523,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Senior Thesis",
+   "name": "Senior Thesis in Russian",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "RUSS",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "RUSS191 PO"
+  },
+  {
+   "_id": "PE 094 PO -2023",
+   "archived": false,
+   "attributes": [
+    "Physical Education"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PE 094 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PE 094 PO",
+   "courseNumber": "094 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908634157,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 0.5,
+     "max": 0.5,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Pass/No Credit          ",
+    "4AKua": "LP",
+    "n5Emn": "Letter Grade",
+    "dKAhW": "A",
+    "ydovU": "PE",
+    "4vWJk": [
+     "PE"
+    ],
+    "mAA78": [
+     "Physical Education"
+    ]
+   },
+   "departments": [
+    "PPED"
+   ],
+   "dependents": [],
+   "description": "This course will teach students theories, applications, and principles of sport, exercise, and performance psychology. Students will also gain a deeper understanding of exercise physiology and will learn to design personal exercise programs to increase health, flexibility, and performance. Mental Skills and Exercise Performance is a classroom-based physical education course. Physical movement will also be a part of the course.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2021-10-19",
+   "equivalentCourseGroup": "",
+   "gradeMode": "PP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PE 094 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047469997,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "",
+   "name": "Mental Skills/Exerc. Performance",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "PE",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PE 094 PO"
+  },
+  {
+   "_id": "POLI090 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 5 Requirement ;Do Not Display - PAC 4 ;All Government/Politics ;International Relations ;Politics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI090 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "POLI090 PO",
+   "courseNumber": "090 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "1A5 ;1P4 ;AGPL;IR ;POLI",
+    "4vWJk": [
+     "1A5",
+     "1P4",
+     "AGPL",
+     "IR",
+     "POLI"
+    ],
+    "mAA78": [
+     "PO Area 5 Requirement",
+     "Do Not Display - PAC 4",
+     "All Government/Politics",
+     "International Relations",
+     "Politics"
+    ]
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "Statistics for Politics and International Relations. Using data from politics and international relations, this course builds basic numeracy skills for social scientists. It develops knowledge of descriptive statistics and introduces students to inferential (parametric and non-parametric) statistical techniques, including rudiments of multiple regression analysis. Emphasis on computer applications. Fulfills Area 5 of the Breadth of Study Requirements.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2002-02-18",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI090 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Statistics for Politics and International Relations",
+   "name": "Statistics",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI090 PO"
+  },
+  {
+   "_id": "POLI161 PO -2024",
+   "archived": false,
+   "campus": "PO",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "POLI161 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "iUharmF33cN6wZQo4Hv6",
+   "courseNumber": "161 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1721154072132,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Letter Grade            ",
+    "4AKua": [
+     "GP"
+    ],
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": [
+     "A"
+    ],
+    "4vWJk": [
+     "1A2",
+     "1WIR",
+     "ASIA",
+     "IR",
+     "POLI"
+    ],
+    "mAA78": [
+     "PO Area 2 Requirement",
+     "PO Writing Intensive Req",
+     "Asian Studies",
+     "International Relations",
+     "Politics"
+    ]
+   },
+   "departments": [
+    "PPOL"
+   ],
+   "dependents": [],
+   "description": "There is a tendency in some corners of American politics to gaze longingly across the Atlantic and wonder: why don't we have universal health care? Free college tuition? State-subsidized child care? The perception is that Europeans, via robust welfare states, enjoy social benefits that remain out of reach for Americans (or at least those Americans who cannot procure them from the market). This class takes a comparative approach to social policy in order to better identify why there are differences in approaches to the welfare state, not just between Europe and the US, but within Europe as well. In addition to exploring key cases and areas of policy coverage, we will also consider how policy feedback loops, neoliberalism, globalization, and demographic change (in particular, aging and immigration) all affect the scope and stability of the welfare state on both sides of the Atlantic.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2023-02-06",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "POLI161 PO -2024",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Comparative Social Policy",
+   "name": "Comparative Social Policy",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "POLI",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "alternativeCode": null,
+   "orderByKeyForCode": "POLI161 PO"
+  },
+  {
+   "_id": "RLIT181 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 1 Requirement ;All Languages ;French ;Linguistics & Cog Sci ;Romance Literatures ;Spanish"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "UL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "RLIT181 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "RLIT181 PO",
+   "courseNumber": "181 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "ydovU": "1A1 ;ALAN;FREN;LGCS;RLIT;SPAN",
+    "4vWJk": [
+     "1A1",
+     "ALAN",
+     "FREN",
+     "LGCS",
+     "RLIT",
+     "SPAN"
+    ],
+    "mAA78": [
+     "PO Area 1 Requirement",
+     "All Languages",
+     "French",
+     "Linguistics & Cog Sci",
+     "Romance Literatures",
+     "Spanish"
+    ]
+   },
+   "departments": [
+    "PRLL"
+   ],
+   "dependents": [],
+   "description": "This course critically explores the intersection of the arts and experimental psychology, linguistics, neuroscience, behavioral economics and decision theory. We will read some of the major statements regarding fiction, narrative, metaphorical language, analogical and inductive reasoning, various behavioral and judgmental biases and examine how these cognitive insights contribute to our understanding of the experience of reading fiction, attending plays, watching movies, playing computerized games. Letter grade only.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2014-04-08",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "RLIT181 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "",
+   "name": "Lit, Film & Cognitive Science",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "RLIT",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "RLIT181 PO"
+  },
+  {
+   "_id": "PHYS041 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 4 Requirement ;Molecular Biology ;Physics"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PHYS041 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PHYS041 PO",
+   "courseNumber": "041 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704909022182,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 1,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "bc7Fj": "PO  ",
+    "NVOex": "Letter Grade            ",
+    "4AKua": "  ",
+    "n5Emn": "Blank",
+    "dKAhW": "A",
+    "ydovU": "1A4 ;MOBI;PHYS",
+    "4vWJk": [
+     "1A4",
+     "MOBI",
+     "PHYS"
+    ],
+    "mAA78": [
+     "PO Area 4 Requirement",
+     "Molecular Biology",
+     "Physics"
+    ]
+   },
+   "departments": [
+    "PPHY"
+   ],
+   "dependents": [],
+   "description": "General Physics with Laboratory. Calculus-based introductory Physics for non-majors. 41 focuses on Newtonian Mechanics and Thermodynamics; 42 focuses on Electricity & Magnetism and Waves. Both courses highlight the physical principles behind modern instrumentation in geology, chemistry, biology and other scientific disciplines and biomedical applications are discussed. Prerequisites: completion of/or concurrent enrollment in MATH 30 for 41; MATH 31 and PHYS 41 for 42.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2008-10-06",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PHYS041 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1725047490407,
+   "lastEditedBy": "wsilva@coursedog.com",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "General Physics with Laboratory",
+   "name": "General Physics with Laboratory",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "PHYS",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 0,
+   "allowIntegration": false,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PHYS041 PO"
+  },
+  {
+   "_id": "MUS 040 PO -2023",
+   "archived": false,
+   "attributes": [
+    "PO Area 6 Requirement ;Music"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "MUS 040 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "MUS 040 PO",
+   "courseNumber": "040 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908634157,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": true,
+    "numberOfRepeats": 8,
+    "creditHours": {
+     "min": 0.25,
+     "max": 0.25,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Cum Course              ",
+    "4AKua": "UL",
+    "n5Emn": "Cum Courses - Letter",
+    "dKAhW": "A",
+    "mAA78": [
+     "Music"
+    ],
+    "4vWJk": [
+     "MUS"
+    ],
+    "bc7Fj": "PO  ",
+    "ydovU": "1A6 ;MUS"
+   },
+   "departments": [
+    "PMUS"
+   ],
+   "dependents": [],
+   "description": "Program for vocal and instrumental students who participate in small ensembles under the direction of a faculty coach. Students should form ensembles before enrolling. The department will ensure that an appropriate coach is assigned. Weekly rehearsals and at least one performance required. Cumulative credit. (May not be taken more than once per semester, regardless of participation.) P/NP grading only. Not open to first-semester students.",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2020-04-30",
+   "equivalentCourseGroup": "",
+   "gradeMode": "UP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "MUS 040 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1744828362940,
+   "lastEditedBy": "gmta2020@pomona.edu",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "Chamber Music",
+   "name": "Chamber Music",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Active",
+   "subjectCode": "MUS",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 1,
+   "allowIntegration": false,
+   "careers": [],
+   "alternativeCode": null,
+   "orderByKeyForCode": "MUS 040 PO"
+  },
+  {
+   "_id": "PE WAIVER -2023",
+   "archived": false,
+   "attributes": [
+    "PO Phys Ed Requirement"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "PE WAIVER",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "PE WAIVER",
+   "courseNumber": "WAIVER",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908634157,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": false,
+    "numberOfRepeats": 1,
+    "creditHours": {
+     "min": 0,
+     "max": 0,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Waived Course           ",
+    "4AKua": "  ",
+    "dKAhW": "B",
+    "mAA78": [
+     "PO Phys Ed Requirement"
+    ],
+    "4vWJk": [
+     "1PE"
+    ],
+    "bc7Fj": "PO  ",
+    "ydovU": "1PE"
+   },
+   "departments": [
+    "PREG"
+   ],
+   "dependents": [],
+   "description": "",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2019-11-13",
+   "equivalentCourseGroup": "",
+   "gradeMode": "VP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "PE WAIVER -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1754522213433,
+   "lastEditedBy": "gmta2020@pomona.edu",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "",
+   "name": "PE Waiver",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Banked",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 1,
+   "allowIntegration": false,
+   "careers": [],
+   "endTerm": null,
+   "alternativeCode": null,
+   "orderByKeyForCode": "PE0000000000WAIVER"
+  },
+  {
+   "_id": "TEST001 PO -2023",
+   "archived": false,
+   "attributes": [
+    "Romance Literatures"
+   ],
+   "campus": "",
+   "campuses": [],
+   "career": "LL",
+   "catalogPrint": true,
+   "cipCode": "",
+   "code": "TEST001 PO",
+   "college": "",
+   "consent": "",
+   "courseDependents": [],
+   "courseGroupId": "TEST001 PO",
+   "courseNumber": "001 PO",
+   "courseTypicallyOffered": "",
+   "createdAt": 1704908689507,
+   "createdBy": "wsilva@coursedog.com",
+   "credits": {
+    "repeatable": true,
+    "numberOfRepeats": 99,
+    "creditHours": {
+     "min": 0.5,
+     "max": 1,
+     "operator": ""
+    }
+   },
+   "customFields": {
+    "NVOex": "Letter Grade            ",
+    "4AKua": "GP",
+    "n5Emn": "Pass/No Credit",
+    "dKAhW": "A",
+    "mAA78": [
+     "Romance Literatures"
+    ],
+    "4vWJk": [
+     "RLIT"
+    ],
+    "bc7Fj": "PO  ",
+    "ydovU": "RLIT"
+   },
+   "departments": [
+    "PREG"
+   ],
+   "dependents": [],
+   "description": "nn Dscrptn",
+   "designation": "",
+   "division": "",
+   "dropConsent": "",
+   "dynamicClassDateRule": "",
+   "effectiveEndDate": null,
+   "effectiveStartDate": "2004-09-23",
+   "equivalentCourseGroup": "",
+   "gradeMode": "LP",
+   "gradedComponent": "",
+   "hegisCode": "",
+   "id": "TEST001 PO -2023",
+   "instructionMode": "",
+   "instructionalMethods": [],
+   "instructorEdit": "",
+   "lastEditedAt": 1742935214294,
+   "lastEditedBy": "emla2021@pomona.edu",
+   "learningOutcomes": [],
+   "location": "",
+   "longName": "",
+   "name": "Your Course 101",
+   "notes": "",
+   "primaryComponent": "",
+   "programDependents": [],
+   "registrationMode": "",
+   "requirementDesignation": "",
+   "requirementGroup": "",
+   "requirementLevels": [],
+   "requisites": {},
+   "rolloverSetting": "",
+   "scheduleDisplayName": "",
+   "status": "Inactive",
+   "topics": [],
+   "tuitionGroup": "",
+   "type": "",
+   "version": 1,
+   "allowIntegration": false,
+   "careers": [],
+   "alternativeCode": null,
+   "orderByKeyForCode": "TEST001 PO"
+  }
+ ],
+ "limit": 3000,
+ "skip": 0
+}
