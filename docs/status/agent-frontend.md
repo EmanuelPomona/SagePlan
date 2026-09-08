@@ -1,72 +1,46 @@
 # STATUS: agent/frontend
-Task: none assigned
+Task: TASK-020 (engine) — then 021, 022, 023, 024, 025
 Round: 0
-Last updated: 2026-09-08T20:22:15Z
+Last updated: 2026-09-08T20:32:34Z
 
 ## Skills invoked so far
-- superpowers:verification-before-completion @ before committing this blocked
-  record -> forced mechanical proof of every claim below. It caught three
-  sub-checks that silently failed on macOS (`cat -A` is GNU-only), which I had
-  already written up as verified. Those were re-run portably before asserting.
+- superpowers:verification-before-completion @ round-0 blocked record -> forced
+  mechanical proof of every claim; caught 3 sub-checks that silently failed on
+  macOS (`cat -A` is GNU-only) and a skill I had listed as invoked when it was
+  only preloaded.
 
-Not invoked, stated for the audit: superpowers:using-superpowers was preloaded by
-the SessionStart hook, not called via the Skill tool. Protocol section 18 says
-preloaded is not evidence of usage, so it is not claimed as invoked.
+## Unblocked (was BLOCKED round 0)
+The manager landed the plan in 5c3d4e8, merged to this branch in 8db0aec. All
+four round-0 blockers are cleared, verified by reading the files:
+- brief -> DESIGN_BRIEF.md now names 3 reference points (Tufte sidenotes, printed
+  transcript, Hyperschedule), a 3-face type pairing with reasoning, a 10-role
+  semantic palette with light+dark, a signature element (margin of evidence +
+  term ribbon), and a 4-part anti-character.
+- task -> 6 tasks own `frontend`: TASK-020..025, chain 020 -> 021 -> 022 ->
+  {023 -> 024, 025}.
+- architecture -> React 19 + Vite 7 + TS strict, no router, npm workspaces.
+- product -> PRODUCT.md and ACCEPTANCE.md are concrete (AC-P01..AC-D03).
 
-## Done
-- [x] Confirmed branch: `git rev-parse --abbrev-ref HEAD` -> `agent/frontend`
-- [x] Confirmed worktree: `pwd` -> /Users/emanuel/Documents/Pomona-College-GradGuide-Frontend
-- [x] Read CLAUDE.md, docs/AGENT_PROTOCOL.md, docs/SKILL_ROUTING.md,
-      docs/DESIGN_CONSTRAINTS.md, docs/DESIGN_BRIEF.md, docs/PRODUCT.md,
-      docs/API.md, docs/ACCEPTANCE.md, docs/ARCHITECTURE.md
-- [x] Read this status file (was: "awaiting task assignment")
-- [x] Searched docs/tasks/ for an assigned task -> none exists
+## Dependencies verified present
+- packages/shared (the contract, manager-owned, TASK-001 DONE) -> 9 modules read
+- data/programs/general-education-2026.json -> 18 requirements, 1 constraint
+  (distinctDepartments over area-1..area-6), 7 advisories
+- data/external-credit-rules.json -> 83 subjects, 8 rules, caps {AS 2, ext 16}
+- NOT present: data/catalog.json (backend TASK-010). Engine takes catalog as a
+  parameter, so TASK-020 is unaffected; TASK-021 data loading will need it.
 
 ## In progress
-- [ ] Nothing. All frontend work is blocked below. Next concrete action is the
-      manager's: populate PRODUCT.md, DESIGN_BRIEF.md, ARCHITECTURE.md, and file
-      a task with `owner: frontend`.
+- [ ] TASK-020 packages/engine. Next: scaffold package, then TDD in the task's
+      stated order (filters -> attribute -> credits -> gpa -> externalCredit ->
+      assignment -> golden).
+
+## Done
+- [x] Confirmed branch `agent/frontend`; read CLAUDE.md, AGENT_PROTOCOL.md,
+      SKILL_ROUTING.md, DESIGN_CONSTRAINTS.md, DESIGN_BRIEF.md, PRODUCT.md,
+      ARCHITECTURE.md, API.md, ACCEPTANCE.md, TASK-020..025, packages/shared/src
 
 ## Verified
-- No task is assigned to this branch -> `bash scripts/tasks.sh` prints
-  "docs/tasks/INDEX.md regenerated — 0 task(s)". The only `owner: frontend`
-  match in docs/tasks/ is TASK-000-template.md, which is the template itself.
-- docs/DESIGN_BRIEF.md is an unfilled template -> grep for filled reference
-  points, display/text faces, and palette rows returns only the empty row
-  `| canvas | | |` (line 48). No reference points, no type pairing, no semantic
-  palette, no signature element, no anti-character.
-- docs/PRODUCT.md is an unfilled template -> "## Product Name" is "TBD"; MVP
-  Goal, Primary Demo Flow, and Must-Have Features are empty.
-- docs/ARCHITECTURE.md names no frontend framework, language, styling, or state
-  approach -> all fields under "## Frontend" are empty.
-- docs/API.md defines one endpoint, `GET /api/health`, returning
-  `{"status":"ok"}`. There is no product data contract to integrate against.
-- frontend/ contains no application -> `find frontend -type f` returns only
-  `frontend/.gitkeep`.
+- (round 0 evidence retained in git history at 88133f2)
 
 ## Blocked on
-- **brief** — docs/DESIGN_BRIEF.md is empty. My agent definition requires named
-  reference points, a type pairing with a reason, a semantic palette, a signature
-  element, and an anti-character before any design work. Designing around an
-  empty brief produces exactly the generic output docs/DESIGN_CONSTRAINTS.md
-  section 1 exists to prevent, and no skill invocation rescues it.
-- **task** — docs/tasks/ contains 0 tasks. Nothing is assigned to agent/frontend.
-- **architecture** — no frontend framework is chosen, so even scaffolding is
-  blocked. The manager owns stack selection (protocol section 4); picking one
-  here would silently set a contract other agents consume. `.env` carries
-  `VITE_API_BASE_URL`, which hints Vite, but that is template boilerplate and
-  docs/ARCHITECTURE.md is the authoritative file.
-- **product** — protocol section 7 requires real product content. PRODUCT.md
-  provides none, so any interface built now would be placeholder-filled.
-
-Not pushed: `git remote -v` returns nothing, so this branch has no upstream.
-Protocol step 6 of the blocked procedure ("commit and push so the blocker is
-visible outside your session") is only half-satisfied. The commit exists locally;
-whoever adds a remote should push agent/frontend so the manager sees this.
-
-Deliberately NOT done: the mandatory four-skill design pipeline
-(`ecc:frontend-design-direction`, `frontend-design:frontend-design`,
-`ui-ux-pro-max:ui-ux-pro-max`, `design-taste-frontend`) was not invoked.
-Running it against an empty brief would burn the stage and let a later handoff
-claim a design direction that was never grounded in a product. It runs when the
-brief is concrete, per protocol section 18 mandatory timing.
+- nothing
