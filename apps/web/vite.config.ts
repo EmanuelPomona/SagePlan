@@ -32,9 +32,4 @@ export default defineConfig({
   },
   server: { port: frontendPort(), strictPort: true },
   preview: { port: frontendPort(), strictPort: true },
-  test: {
-    environment: "jsdom",
-    setupFiles: ["./src/test/setup.ts"],
-    globals: true,
-  },
 });
