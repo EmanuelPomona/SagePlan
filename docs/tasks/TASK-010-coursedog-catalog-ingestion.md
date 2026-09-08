@@ -1,13 +1,13 @@
 ---
 id: TASK-010
 title: Pipeline scaffold and Coursedog catalog ingestion into data/catalog.json
-status: READY
+status: BLOCKED
 owner: backend
 branch: agent/backend
 priority: HIGH
 round: 0
 depends_on: []
-blocked_on: ""
+blocked_on: "contract"
 ---
 
 # TASK-010 — Pipeline scaffold and Coursedog catalog ingestion
