@@ -44,3 +44,6 @@ temp/*~
 # Local agent scratch (evidence in docs/review/ IS tracked on purpose)
 .venv-*/
 *.local.json
+.vite/
+*.tsbuildinfo
+apps/web/public/data/

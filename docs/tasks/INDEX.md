@@ -5,6 +5,18 @@ Do not edit by hand — edit the task files and regenerate.
 
 | ID | Status | Owner | Round | Title |
 |---|---|---|---|---|
-| — | — | — | — | _no tasks yet_ |
+| TASK-010 | READY | backend | 0 | Pipeline scaffold and Coursedog catalog ingestion into data/catalog.json |
+| TASK-011 | READY | backend | 0 | Registrar GE CSV parser, cross-source GE validator, exclusion-anomaly report |
+| TASK-012 | READY | backend | 0 | Hyperschedule sections and offering-history ingestion; merge non-Pomona courses into the catalog |
+| TASK-013 | READY | backend | 0 | Manifest, validation report, source-quote validator, and the nightly pipeline workflow |
+| TASK-020 | READY | frontend | 0 | Requirement engine — P0 rule kinds, constrained-first assignment, external credit, golden fixtures |
+| TASK-021 | READY | frontend | 0 | Web app shell — single page, data loading and failure states, masthead, theme and type, persistence, useful empty state |
+| TASK-022 | READY | frontend | 0 | Record section — profile, course autocomplete, spreadsheet paste, non-catalog courses, external credit entry |
+| TASK-023 | READY | frontend | 0 | Audit section — requirement rows with four states, margin of evidence, in-place detail, overrides and attestations |
+| TASK-024 | READY | frontend | 0 | "What satisfies this?" — candidates filtered to an upcoming term, dual-purpose marking, term ribbon |
+| TASK-025 | READY | frontend | 0 | Export, import, share link (URL fragment), demo plans, and the no-student-data-leaves-the-browser proof |
+| TASK-090 | BACKLOG | reviewer | 0 | P0 acceptance review — all criteria, privacy audit, engine golden review |
+| TASK-001 | DONE | manager | 0 | Shared contract package (zod schemas, codecs, OpenAPI emitter, artefact validator) |
+| TASK-002 | DONE | manager | 0 | Encode General Education 2026-27 and external credit rules as data with verbatim quotes |
 
-**Counts:** none
+**Counts:** BACKLOG 1, DONE 2, READY 10

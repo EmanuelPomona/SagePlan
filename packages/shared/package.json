@@ -1,0 +1,18 @@
+{
+  "name": "@gradguide/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The contract: zod schemas and inferred types shared by the pipeline, the engine and the web app. Owner: manager.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json",
+    "emit:openapi": "tsx scripts/emit-openapi.ts",
+    "validate:artefacts": "tsx scripts/validate-artefacts.ts"
+  },
+  "dependencies": { "zod": "^4.1.0" },
+  "devDependencies": { "yaml": "^2.6.0" }
+}

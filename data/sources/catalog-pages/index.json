@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "degree-requirements",
+    "pageId": "D3W4Xk0UrEr5WCruEh1T",
+    "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
+    "title": "Degree Requirements | Pomona College Catalog",
+    "fetchedAt": "2026-09-08T19:32:19Z",
+    "sha256": "b288760b53215815f87b352e88480fe6c436cc6624f1d375bb5b9e7b5a4dc6e7",
+    "chars": 3946
+  },
+  {
+    "slug": "academic-standing-credit",
+    "pageId": "88p6CaMLyq7qCKR2TsNi",
+    "url": "https://catalog.pomona.edu/pages/88p6CaMLyq7qCKR2TsNi",
+    "title": "Advanced Standing Credit | Pomona College Catalog",
+    "fetchedAt": "2026-09-08T19:32:19Z",
+    "sha256": "7b7e47b642556c9d1795aed2026453028c8274478b458699210b14181cd6358a",
+    "chars": 2434
+  },
+  {
+    "slug": "transfer-credit-policy",
+    "pageId": "YI3pqNzTEK7ZWPumycfc",
+    "url": "https://catalog.pomona.edu/pages/YI3pqNzTEK7ZWPumycfc",
+    "title": "Transfer Credit Policy | Pomona College Catalog",
+    "fetchedAt": "2026-09-08T19:32:20Z",
+    "sha256": "5050d25c9da56db9a06a9008b490f21e1248e0d5df4469ffc933a2189de1afc5",
+    "chars": 4643
+  },
+  {
+    "slug": "grades-credit-academic-record",
+    "pageId": "mWasqYsuwUvN0sQ2maPw",
+    "url": "https://catalog.pomona.edu/pages/mWasqYsuwUvN0sQ2maPw",
+    "title": "Grades, Credit and the Academic Record | Pomona College Catalog",
+    "fetchedAt": "2026-09-08T19:32:21Z",
+    "sha256": "50f744fc229adf888b5d733b14b49bd21c1c0a3a071450755ddd77c6d0e5cd9f",
+    "chars": 10159
+  },
+  {
+    "slug": "academic-standards",
+    "pageId": "qpzC9ZeFmO79Fo1ki1JE",
+    "url": "https://catalog.pomona.edu/pages/qpzC9ZeFmO79Fo1ki1JE",
+    "title": "Academic Standards | Pomona College Catalog",
+    "fetchedAt": "2026-09-08T19:32:23Z",
+    "sha256": "02db8fa2b001ebdeb2efd6be39d48bee89f6c31e29b3935508f2c99f009f7054",
+    "chars": 12717
+  },
+  {
+    "slug": "degree-requirements-tab-degree-requirements",
+    "pageId": "D3W4Xk0UrEr5WCruEh1T",
+    "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
+    "title": "Degree Requirements (tab content from page hydration payload; course links rendered as their course id)",
+    "fetchedAt": "2026-09-08T19:47:35Z",
+    "sha256": "92b309dec4c5fd2584660f45a36a8a9b9e997da1140a0c86259ef11b96a1354c",
+    "chars": 2551
+  },
+  {
+    "slug": "degree-requirements-tab-general-education-requirements",
+    "pageId": "D3W4Xk0UrEr5WCruEh1T",
+    "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
+    "title": "General Education Requirements (tab content from page hydration payload; course links rendered as their course id)",
+    "fetchedAt": "2026-09-08T19:47:35Z",
+    "sha256": "0254a93246200d8d83e72f4ac4895019b5b4bb2c8584c100837ffd978d4a5763",
+    "chars": 11708
+  },
+  {
+    "slug": "degree-requirements-tab-credit-requirements",
+    "pageId": "D3W4Xk0UrEr5WCruEh1T",
+    "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
+    "title": "Credit Requirements (tab content from page hydration payload; course links rendered as their course id)",
+    "fetchedAt": "2026-09-08T19:47:35Z",
+    "sha256": "b889e7b2234df6533cb654bf19c73a34b3dca280ffc5da72ce95c6d5adb879c2",
+    "chars": 1878
+  },
+  {
+    "slug": "degree-requirements-tab-grade-point-average-requirement",
+    "pageId": "D3W4Xk0UrEr5WCruEh1T",
+    "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
+    "title": "Grade Point Average Requirement (tab content from page hydration payload; course links rendered as their course id)",
+    "fetchedAt": "2026-09-08T19:47:35Z",
+    "sha256": "dfd4d995bd5a6dcd9243e352d9a019fc753f769907b522252fdf29a7758103f9",
+    "chars": 494
+  },
+  {
+    "slug": "degree-requirements-tab-major-requirements",
+    "pageId": "D3W4Xk0UrEr5WCruEh1T",
+    "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
+    "title": "Major Requirements (tab content from page hydration payload; course links rendered as their course id)",
+    "fetchedAt": "2026-09-08T19:47:35Z",
+    "sha256": "92f7fe17fb6b78792606814abb685dc16245a96bba0275354793476eb1cfe415",
+    "chars": 1147
+  }
+]

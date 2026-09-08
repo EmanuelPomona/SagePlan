@@ -47,18 +47,23 @@ jobs:
 
       # ---- project code: skipped cleanly while the template is empty ----
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - name: Frontend build
+        with: { node-version: 22 }
+      - name: Install
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+      - name: Contract is current and hand-written data is valid
         run: |
-          if [ -f package.json ]; then
-            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
-            npm run --if-present typecheck
-            npm run --if-present lint
-            npm run --if-present build
-            npm run --if-present test
-          else
-            echo "no package.json yet — skipping"
-          fi
+          npx tsx packages/shared/scripts/emit-openapi.ts --check
+          npx tsx packages/shared/scripts/validate-artefacts.ts; rc=$?
+          # 2 = generated artefacts not present yet (pre-pipeline). 1 = invalid. Fail on 1 only.
+          [ "$rc" -ne 1 ] || exit 1
+
+      - name: Typecheck, lint, test, build (all workspaces)
+        run: |
+          npm run --if-present typecheck
+          npm run --if-present lint
+          npm run --if-present test
+          npm run --if-present build
 
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
