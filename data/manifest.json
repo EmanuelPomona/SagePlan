@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-08T21:13:09.919Z",
+  "catalogYear": "2026-2027",
+  "catalog": {
+    "path": "/data/catalog.json",
+    "fetchedAt": "2026-09-08T21:13:05.633Z",
+    "courseCount": 2989
+  },
+  "sections": [
+    {
+      "term": "FA2026",
+      "path": "/data/sections-FA2026.json",
+      "fetchedAt": "2026-09-08T21:13:05.633Z",
+      "sectionCount": 2159
+    }
+  ],
+  "offeringHistory": {
+    "path": "/data/offering-history.json",
+    "fetchedAt": "2026-09-08T21:13:06.054Z",
+    "courseCount": 1416
+  },
+  "programs": [
+    {
+      "id": "general-education-2026",
+      "path": "/data/programs/general-education-2026.json",
+      "kind": "general-education",
+      "name": "General Education",
+      "confidence": "verified"
+    }
+  ],
+  "externalCreditRules": {
+    "path": "/data/external-credit-rules.json"
+  },
+  "upcomingTerms": [
+    "FA2026"
+  ]
+}

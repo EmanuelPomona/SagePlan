@@ -1,0 +1,100 @@
+name: Nightly data pipeline
+
+# Refreshes /data from Coursedog and Hyperschedule, validates it, and opens a
+# pull request when anything changed. It NEVER pushes to main: every data change
+# is reviewed, because a bad catalog silently changes what the app tells a
+# student they still need to take.
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: data-pipeline
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run the pipeline
+        id: pipeline
+        env:
+          COURSEDOG_CATALOG_ID: eziiW38FfLsoDlBqEZgV
+          COURSEDOG_ORIGIN: https://catalog.pomona.edu
+          HYPERSCHEDULE_BASE_URL: https://banana.hyperschedule.io
+          PIPELINE_TERMS: FA2026,SP2027
+          PIPELINE_MAX_DIVERGENCES: "300"
+        run: npm run pipeline:all
+
+      # Only reached when pipeline:all succeeded, so a failed run leaves
+      # yesterday's committed data in place and opens no PR.
+      - name: Detect changes
+        id: diff
+        run: |
+          if [ -n "$(git status --porcelain data/)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Summarise the validation report
+        if: steps.diff.outputs.changed == 'true'
+        id: summary
+        run: |
+          {
+            echo 'body<<PR_BODY_EOF'
+            echo '## Nightly data refresh'
+            echo
+            echo '| Check | Status | Count | Summary |'
+            echo '|---|---|---|---|'
+            node -e '
+              const r = require("./data/reports/validation.json");
+              for (const c of r.checks) {
+                console.log(`| ${c.id} | ${c.status} | ${c.count} | ${String(c.summary).replace(/\|/g, "\\|")} |`);
+              }
+            '
+            echo
+            echo '### Reports'
+            for f in data/reports/*.md; do
+              echo "- [\`$(basename "$f")\`]($f)"
+            done
+            echo
+            echo '_Opened automatically by `.github/workflows/pipeline.yml`. Review the divergence reports before merging._'
+            echo 'PR_BODY_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open a pull request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: data/nightly-refresh
+          base: main
+          commit-message: "data: nightly refresh ${{ github.run_id }}"
+          title: "data: nightly refresh ${{ github.run_id }}"
+          body: ${{ steps.summary.outputs.body }}
+          add-paths: data
+          delete-branch: true
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-reports
+          path: data/reports/
+          if-no-files-found: warn

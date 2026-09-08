@@ -1,0 +1,1342 @@
+[
+ {
+  "code": {
+   "department": "GERM",
+   "courseNumber": 104,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "SP"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "POLI",
+   "courseNumber": 121,
+   "suffix": "",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "POST",
+   "courseNumber": 179,
+   "suffix": "D",
+   "affiliation": "HM"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "HIST",
+   "courseNumber": 143,
+   "suffix": "",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "SP"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "CSCI",
+   "courseNumber": 51,
+   "suffix": "L",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "SP"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "SP"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "SP"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "SP"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "SP"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "POLI",
+   "courseNumber": 100,
+   "suffix": "",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "SP"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "SP"
+   },
+   {
+    "year": 2014,
+    "term": "SP"
+   },
+   {
+    "year": 2013,
+    "term": "SP"
+   },
+   {
+    "year": 2011,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "FREN",
+   "courseNumber": 44,
+   "suffix": "L",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "SP"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "GOVT",
+   "courseNumber": 151,
+   "suffix": "",
+   "affiliation": "CM"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "BIOL",
+   "courseNumber": 57,
+   "suffix": "L",
+   "affiliation": "KS"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "CSCI",
+   "courseNumber": 191,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "SP"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "SP"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "SP"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "SP"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "SP"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "SP"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "SP"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "RLST",
+   "courseNumber": 190,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "FREN",
+   "courseNumber": 1,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "EA",
+   "courseNumber": 30,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "PE",
+   "courseNumber": 38,
+   "suffix": "A",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "SP"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "MUS",
+   "courseNumber": 89,
+   "suffix": "",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "SP"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "ART",
+   "courseNumber": 105,
+   "suffix": "",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2026,
+    "term": "SP"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "SP"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "SP"
+   },
+   {
+    "year": 2021,
+    "term": "SP"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "SP"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "SP"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "FREN",
+   "courseNumber": 22,
+   "suffix": "L",
+   "affiliation": "CM"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "SP"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "PE",
+   "courseNumber": 120,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "SP"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "POLI",
+   "courseNumber": 121,
+   "suffix": "",
+   "affiliation": "SC"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "SP"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "SP"
+   },
+   {
+    "year": 2017,
+    "term": "SP"
+   }
+  ]
+ },
+ {
+  "code": {
+   "department": "CHIN",
+   "courseNumber": 2,
+   "suffix": "",
+   "affiliation": "PO"
+  },
+  "terms": [
+   {
+    "year": 2026,
+    "term": "FA"
+   },
+   {
+    "year": 2025,
+    "term": "FA"
+   },
+   {
+    "year": 2024,
+    "term": "FA"
+   },
+   {
+    "year": 2023,
+    "term": "FA"
+   },
+   {
+    "year": 2022,
+    "term": "FA"
+   },
+   {
+    "year": 2021,
+    "term": "FA"
+   },
+   {
+    "year": 2020,
+    "term": "FA"
+   },
+   {
+    "year": 2019,
+    "term": "FA"
+   },
+   {
+    "year": 2018,
+    "term": "FA"
+   },
+   {
+    "year": 2017,
+    "term": "FA"
+   },
+   {
+    "year": 2016,
+    "term": "FA"
+   },
+   {
+    "year": 2015,
+    "term": "FA"
+   },
+   {
+    "year": 2014,
+    "term": "FA"
+   },
+   {
+    "year": 2013,
+    "term": "FA"
+   },
+   {
+    "year": 2012,
+    "term": "FA"
+   },
+   {
+    "year": 2011,
+    "term": "FA"
+   }
+  ]
+ }
+]

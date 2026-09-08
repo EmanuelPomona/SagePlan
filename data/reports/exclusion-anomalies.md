@@ -1,9 +1,9 @@
 # Exclusion anomalies
 
-**8** anomaly/anomalies across 2087 catalog courses.
+**10** anomaly/anomalies across 2989 catalog courses.
 
 - partial credit with a non-Area-6 Area tag: **5**
-- senior exercise (190–199) with an Area tag: **2**
+- senior exercise (190–199) with an Area tag: **4**
 - two areas: **1**
 
 ## How to resolve
@@ -18,9 +18,11 @@ these are fixed upstream or accepted as genuine exceptions — not patched in co
 |---|---|---|---|---|---|
 | CHEM 150 PO | Adv. Synthesis Lab | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | coursedog |
 | CHEM 165 PO | Adv. Biochemistry Lab | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | coursedog |
+| ENGL 193 SC | Intro to Fiction Writing | 1 | AREA_6 | senior exercise (190–199) with an Area tag | both |
 | ENGL 195 PO | Criticism: Advanced Methods | 1 | AREA_1 | senior exercise (190–199) with an Area tag | both |
 | ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag | both |
 | ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | senior exercise (190–199) with an Area tag | both |
 | GRMT 180H PO | Germany Black and White | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag | both |
+| HIST 197 PZ | Seminar in History | 1 | AREA_3 | senior exercise (190–199) with an Area tag | both |
 | PHYS 072 PO | Introduc Electricity & Magnetism | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | both |
 | THEA 085 PO | Advanced Lighting Design | 1 | AREA_1, AREA_6 | two areas | registrar |

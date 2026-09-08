@@ -1,0 +1,125 @@
+{
+  "generatedAt": "2026-09-08T21:13:09.885Z",
+  "generator": "@gradguide/pipeline@0.1.0 validate",
+  "checks": [
+    {
+      "id": "ge-agreement",
+      "status": "warn",
+      "summary": "257 Coursedog/Registrar GE divergence(s) across Pomona courses",
+      "count": 257,
+      "details": [
+        "AMST 103 PO: coursedog=— registrar=AREA_3 (attribute sets differ)",
+        "ANTH 080 PO: coursedog=— registrar=AREA_2 (attribute sets differ)",
+        "ANTH 105 PO: coursedog=AREA_2, SPEAKING_INTENSIVE registrar=AREA_2 (attribute sets differ)",
+        "ANTH 107 PO: coursedog=ANALYZING_DIFFERENCE, AREA_2 registrar=ANALYZING_DIFFERENCE, AREA_2, SPEAKING_INTENSIVE (attribute sets differ)",
+        "ANTH 136 PO: coursedog=— registrar=AREA_2 (attribute sets differ)",
+        "ANTH 184 PO: coursedog=— registrar=AREA_2 (attribute sets differ)",
+        "ARHI 001 PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ARHI 114 PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ARHI 126 PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ARHI 127 PO: coursedog=— registrar=AREA_1, SPEAKING_INTENSIVE (attribute sets differ)",
+        "ARHI 139 PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ARHI 171 PO: coursedog=AREA_1 registrar=AREA_1, WRITING_INTENSIVE (attribute sets differ)",
+        "ARHI 186P PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ARHI 186U PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ARHI 186Y PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
+        "ART 024 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
+        "ART 026 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
+        "ART 027A PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
+        "ART 082 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
+        "ART 110 PO: coursedog=— registrar=AREA_6 (attribute sets differ)"
+      ]
+    },
+    {
+      "id": "exclusion-anomalies",
+      "status": "warn",
+      "summary": "10 exclusion anomaly/anomalies for human review",
+      "count": 10,
+      "details": [
+        "CHEM 150 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
+        "CHEM 165 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
+        "ENGL 193 SC: senior exercise (190–199) with an Area tag (AREA_6)",
+        "ENGL 195 PO: senior exercise (190–199) with an Area tag (AREA_1)",
+        "ENGL 195B PO: partial credit with a non-Area-6 Area tag (AREA_1)",
+        "ENGL 195B PO: senior exercise (190–199) with an Area tag (AREA_1)",
+        "GRMT 180H PO: partial credit with a non-Area-6 Area tag (AREA_1)",
+        "HIST 197 PZ: senior exercise (190–199) with an Area tag (AREA_3)",
+        "PHYS 072 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
+        "THEA 085 PO: two areas (AREA_1, AREA_6)"
+      ]
+    },
+    {
+      "id": "hyperschedule-attributes",
+      "status": "warn",
+      "summary": "83 catalog/Hyperschedule GE disagreement(s)",
+      "count": 83,
+      "details": [
+        "AFRI 010A AF: catalog=— sections=AREA_3",
+        "AFRI 145 PO: catalog=— sections=AREA_3",
+        "ANTH 080 PO: catalog=— sections=AREA_2",
+        "ANTH 125 PO: catalog=— sections=AREA_2",
+        "ARHI 186Q PO: catalog=— sections=AREA_1",
+        "ARHI 186R PO: catalog=— sections=AREA_1",
+        "ART 110 PO: catalog=— sections=AREA_6",
+        "ART 123 PO: catalog=— sections=AREA_6",
+        "ASAM 070 PO: catalog=— sections=AREA_3",
+        "BIOL 104A PO: catalog=— sections=AREA_4, SPEAKING_INTENSIVE",
+        "BIOL 189S PO: catalog=— sections=AREA_4",
+        "CHEM 010A PO: catalog=— sections=AREA_4",
+        "CHEM 020A PO: catalog=— sections=AREA_4",
+        "CHEM 050 PO: catalog=— sections=AREA_4",
+        "CHEM 101 PO: catalog=— sections=AREA_4",
+        "CHEM 103 PO: catalog=— sections=AREA_4",
+        "CHEM 105 PO: catalog=— sections=AREA_4, WRITING_INTENSIVE",
+        "CHIN 111H PO: catalog=— sections=AREA_1, LANGUAGE",
+        "CHST 015 CH: catalog=— sections=AREA_3",
+        "CHST 102 PO: catalog=— sections=AREA_3"
+      ]
+    },
+    {
+      "id": "artefact-schemas",
+      "status": "pass",
+      "summary": "4 generated artefact(s) checked, 0 schema issue(s)",
+      "count": 0,
+      "details": []
+    },
+    {
+      "id": "non-empty",
+      "status": "pass",
+      "summary": "every generated artefact is non-empty (4 collection(s))",
+      "count": 0,
+      "details": [
+        "catalog.json: 2989 courses",
+        "offering-history.json: 1416 history",
+        "manifest.json: 1 sections",
+        "sections-FA2026.json: 2159 sections"
+      ]
+    },
+    {
+      "id": "provenance",
+      "status": "pass",
+      "summary": "3 artefact(s) checked for provenance, 0 issue(s)",
+      "count": 0,
+      "details": []
+    },
+    {
+      "id": "source-quotes",
+      "status": "warn",
+      "summary": "34 quote(s): 0 not found in snapshot, 3 warning(s)",
+      "count": 3,
+      "details": [
+        "degree-requirements-tab-general-education-requirements: none of its 23 quote(s) appear in the served HTML, so this page's text is rendered client-side and cannot be verified live; the committed snapshot remains the gate",
+        "degree-requirements-tab-credit-requirements: none of its 6 quote(s) appear in the served HTML, so this page's text is rendered client-side and cannot be verified live; the committed snapshot remains the gate",
+        "degree-requirements-tab-grade-point-average-requirement: none of its 1 quote(s) appear in the served HTML, so this page's text is rendered client-side and cannot be verified live; the committed snapshot remains the gate"
+      ]
+    },
+    {
+      "id": "manifest",
+      "status": "pass",
+      "summary": "manifest is consistent with what is on disk",
+      "count": 0,
+      "details": []
+    }
+  ],
+  "ok": true
+}

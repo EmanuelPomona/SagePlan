@@ -1,0 +1,1987 @@
+[
+ {
+  "courseAreas": [
+   "1A2",
+   "1ADR",
+   "1SIR",
+   "2SS",
+   "4HSS",
+   "5IUG",
+   "5SOC",
+   "ANTH"
+  ],
+  "credits": 1,
+  "permCount": 17,
+  "seatsTotal": 16,
+  "seatsFilled": 22,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Alexandra Lippman"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ANTH",
+    "courseNumber": 2,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Intro to Sociocultural Anth",
+   "description": "Study of the structure and dynamics of human culture and social institutions from a comparative perspective. Diversity in ways of life and patterns of social organization explored through ethnographic materials from societies around the world.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 39600,
+    "endTime": 44100,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Hahn Social Science Bldg 214"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ANTH",
+   "courseNumber": 2,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 2,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A2",
+   "1SIR",
+   "2SS",
+   "4HSS",
+   "5SOC",
+   "ANTH",
+   "MS"
+  ],
+  "credits": 1,
+  "permCount": 19,
+  "seatsTotal": 16,
+  "seatsFilled": 18,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Alexandra Lippman"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ANTH",
+    "courseNumber": 116,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Anthropology of Digital Culture",
+   "description": "Technology from the wheel to the printing press has influenced identity, community and society throughout time. Currently, we are in the midst of one of the most significant technological shifts in human history because of digital technologies. Using anthropology as cultural critique, we will examine the new (and not-so-new) cultural, political and material practices connected digital technology. Topics covered include activism, identity, friendship, hacking, piracy, property, privacy, identity, labor, and embodiment. Course is equivalent to ANTH116  PZ.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 57600,
+    "days": [
+     "M"
+    ],
+    "locations": [
+     "Hahn Social Science Bldg 214"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ANTH",
+   "courseNumber": 116,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A6",
+   "1P6",
+   "2FA",
+   "4HSS",
+   "5HUM",
+   "ART"
+  ],
+  "credits": 1,
+  "permCount": 57,
+  "seatsTotal": 14,
+  "seatsFilled": 17,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Mercedes Teixido"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ART",
+    "courseNumber": 5,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Drawing I",
+   "description": "Drawing I. Introduction to observational drawing with attention to the articulation of line, shape, form, gesture, value, and composition. Studio work introduces a range of traditional drawing materials and subjects while exploring a variety of conceptual approaches from image-making to visual expression. Letter grade only.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 56700,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Studio Arts 216"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ART",
+   "courseNumber": 5,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A6",
+   "1PE",
+   "2FA",
+   "2FYA",
+   "4HSS",
+   "5HUM",
+   "DANC"
+  ],
+  "credits": 1,
+  "permCount": 18,
+  "seatsTotal": 20,
+  "seatsFilled": 26,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "John Pennington"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "DANC",
+    "courseNumber": 10,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Beginning Modern Dance",
+   "description": "Beginning Modern Dance. Introductory dance technique class exploring principles of modern, ballet and jazz techniques, body alignment and elementary composition and improvisation. Discussion of how the study of human movement relates to other disciplines. May be taken two times for credit.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 52200,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Pendleton Dance Studio USTD"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "DANC",
+   "courseNumber": 10,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A6",
+   "1PE",
+   "3CC",
+   "4HSS",
+   "5HUM",
+   "DANC"
+  ],
+  "credits": 0.5,
+  "permCount": 1,
+  "seatsTotal": 10,
+  "seatsFilled": 16,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Victoria Koenig"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "DANC",
+    "courseNumber": 12,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Beginning Ballet I",
+   "description": "Beginning Ballet. Introductory class stressing the fundamentals of classical ballet. Students learn basic dance vocabulary at the barre and in the center and to develop coordination, musicality, alignment and harmony of line. Critical reviews in addition to studio work. Half-course. Also available as studio course for cumulative credit (12P). May be taken four times for credit.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 39600,
+    "endTime": 44100,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Pendleton Dance Studio USTD"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "DANC",
+   "courseNumber": 12,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "2WS",
+   "4HSA",
+   "4HSS",
+   "AMST"
+  ],
+  "credits": 3,
+  "permCount": 22,
+  "seatsTotal": 16,
+  "seatsFilled": 13,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "David Seitz"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AMST",
+    "courseNumber": 179,
+    "suffix": "C",
+    "affiliation": "HM"
+   },
+   "title": "Race,Gender,ClassinUrbanSpecFic",
+   "description": "Cities in the United States are both sites and subjects of voluminous speculation. Some modes of speculation compound violent asymmetries of power, from the colonial mythology of the U.S. as a \"shining city on a hill\" to racist cinematic images of otherworldly urban criminality to the dystopian predations of finance capital in gentrifying neighborhoods. But others embrace the city as what Engin Isin calls a \"difference machine,\" making it a departure point for liberatory experiments in alternative, communal, and eccentric modes of living, enduring, and organizing. Thinking with examples from sf literature, film, and television, this course will explore core themes in contemporary sf, sf studies, urban studies, and American studies, with particular attention to questions of race, gender, class, and sexuality.",
+   "primaryAssociation": "HM",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 57600,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Shanahan Center 2421"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AMST",
+   "courseNumber": 179,
+   "suffix": "C",
+   "affiliation": "HM",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "4HSA",
+   "4HSS",
+   "ARCT"
+  ],
+  "credits": 3,
+  "permCount": 3,
+  "seatsTotal": 30,
+  "seatsFilled": 22,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Jia Yi Gu"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ARCT",
+    "courseNumber": 179,
+    "suffix": "D",
+    "affiliation": "HM"
+   },
+   "title": "Postmodern Los Angeles",
+   "description": "Postmodern Los Angeles explores Los Angeles architecture and ecologies in the 1980\u0019s. The decade of the 1980\u0019s\u0014bookmarked by two genre-defining narratives of the city, Reyner Banham\u0019s Los Angeles: Architecture of Four Ecologies (1971), and Mike Davis\u0019 City of Quartz (1990) \u0014was a period of redefinition and rising self-awareness. Throughout this period, much of Los Angeles was being built out, with ambitious public commissions for museums, libraries and infrastructure involving globally recognized architects. The 1984 Summer Olympics transformed the city into a global spectacle of sports, public art, and civic infrastructure. Infrastructural projects such as Donald C. Tillman Water Reclamation Plant (1984) expanded regional systems of water treatment to address challenging eco-urban resource management that continues into today. The 1980\u0019s was also a period of historical self-awareness, as Los Angeles began to establish institutions and policies dedicated to the preservation of its own urban history, including the founding of the Los Angeles Conservancy. Historical markers included streets and buildings\u0014but also entire neighborhood blocks, evidenced for example by LA's first historical preservation overlay zone in Angelino Heights. Los Angeles in the 1980\u0019s was a city full of new identities. Postmodern Los Angeles examines this period of stylistic promiscuity coupled with late-capitalist optimism, bringing together highly recognizable icons of postmodernism with the architecture of fast-food, strip malls, and shopping centers. As a required experiential component, the course features a minimum of five Saturday field trips with transportation to Los Angeles self-organized by students (usually in rideshare or public transport). $50 fee to cover field trip costs.",
+   "primaryAssociation": "HM",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 63000,
+    "days": [
+     "R"
+    ],
+    "locations": [
+     "Shanahan Center 1480"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ARCT",
+   "courseNumber": 179,
+   "suffix": "D",
+   "affiliation": "HM",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "4HSA",
+   "4HSS",
+   "ARCT"
+  ],
+  "credits": 3,
+  "permCount": 8,
+  "seatsTotal": 18,
+  "seatsFilled": 18,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Jia Yi Gu"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ARCT",
+    "courseNumber": 179,
+    "suffix": "E",
+    "affiliation": "HM"
+   },
+   "title": "Bioregional Design Research",
+   "description": "Bioregional materials is a design approach that develops techniques for material reuse, low carbon or circular economies of construction, and systems for deconstruction. Through readings, research, fieldwork, mapping, and workshops with designers from Atelier LUMA, students will map and propose bioregional material inventories in the Los Angeles territory, towards a reparative architecture. As a required experiential component, the course features several field trips (usually Saturday) with transportation to Los Angeles self-organized by students (usually Muddvan, rideshare or public transport). Material fee: $50.",
+   "primaryAssociation": "HM",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 63000,
+    "days": [
+     "T"
+    ],
+    "locations": [
+     "Parsons Engineering Bldg 1279"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ARCT",
+   "courseNumber": 179,
+   "suffix": "E",
+   "affiliation": "HM",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A3",
+   "2RES",
+   "2SS",
+   "4HSS",
+   "5HUM",
+   "AMST"
+  ],
+  "credits": 1,
+  "permCount": 5,
+  "seatsTotal": 15,
+  "seatsFilled": 13,
+  "status": "R",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Julio Orellana"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AMST",
+    "courseNumber": 128,
+    "suffix": "",
+    "affiliation": "SC"
+   },
+   "title": "Race, Space, and Difference",
+   "description": "This course is an introduction to critical scholarship on race and space in the United States. We will consider definitions of race and racism, and how the intertwining of race and differential access to space has shaped patterns of power and inequality. We pay special attention to the making and maintenance of national boundaries; spatial typologies within metropolitan areas; and the differential racialization of Asian Americans, Latinxs, African Americans, and Native Americans. Readings and discussion are organized around spatial typologies including border, ghetto, suburb, and prison. Assignments provide opportunities to think critically about race, space, and inequality in the landscape.",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 57600,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Humanities Building 121"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AMST",
+   "courseNumber": 128,
+   "suffix": "",
+   "affiliation": "SC",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A2",
+   "1ADR",
+   "2FYA",
+   "2SS",
+   "4HSS",
+   "5IUG",
+   "5IUL",
+   "5SJT",
+   "5SOC",
+   "ANTH"
+  ],
+  "credits": 1,
+  "permCount": 16,
+  "seatsTotal": 20,
+  "seatsFilled": 17,
+  "status": "R",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Lara Deeb"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ANTH",
+    "courseNumber": 2,
+    "suffix": "",
+    "affiliation": "SC"
+   },
+   "title": "Intro Sociocultural Anthropology",
+   "description": "An introduction to the basic concepts, theories, and methods of social and cultural anthropology. An investigation of the nature of sociocultural systems using ethnographic materials from a wide range of societies.",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 57600,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Humanities Building 201"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ANTH",
+   "courseNumber": 2,
+   "suffix": "",
+   "affiliation": "SC",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A2",
+   "1ADR",
+   "2FYA",
+   "2SS",
+   "4HSS",
+   "5IUG",
+   "5IUL",
+   "5SJT",
+   "5SOC",
+   "ANTH"
+  ],
+  "credits": 1,
+  "permCount": 25,
+  "seatsTotal": 20,
+  "seatsFilled": 22,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Yimin Lai"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ANTH",
+    "courseNumber": 2,
+    "suffix": "",
+    "affiliation": "SC"
+   },
+   "title": "Intro Sociocultural Anthropology",
+   "description": "An introduction to the basic concepts, theories, and methods of social and cultural anthropology. An investigation of the nature of sociocultural systems using ethnographic materials from a wide range of societies.",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 52200,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Humanities Building 119"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ANTH",
+   "courseNumber": 2,
+   "suffix": "",
+   "affiliation": "SC",
+   "sectionNumber": 2,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "CSCI",
+   "LGCS"
+  ],
+  "credits": 0.5,
+  "permCount": 0,
+  "seatsTotal": 24,
+  "seatsFilled": 11,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 10,
+   "day": 16
+  },
+  "instructors": [
+   {
+    "name": "Joseph Osborn"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "CSCI",
+    "courseNumber": 50,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Fundamentals of Programming",
+   "description": "A half-semester introduction to the basic elements of computer programming in Python. Topics include control flow; basic data structures; reading and writing files; and debugging programs. Special emphasis on working with and making sense of data in order to connect course material with applications in other disciplines.  No previous programming experience is required or expected.  May be taken concurrently with CSCI051 PO.  May not be taken after any of CSCI051 PO, CSCI051P PO, CSCI051A PO, CSCI005 HM, CSCI004 PZ, CSCI040 CM.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 52200,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Lincoln 1125"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "CSCI",
+   "courseNumber": 50,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": {
+    "prefix": "F",
+    "number": 1
+   }
+  }
+ },
+ {
+  "courseAreas": [
+   "CSCI",
+   "LGCS"
+  ],
+  "credits": 0.5,
+  "permCount": 0,
+  "seatsTotal": 24,
+  "seatsFilled": 10,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 10,
+   "day": 16
+  },
+  "instructors": [
+   {
+    "name": "Joseph Osborn"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "CSCI",
+    "courseNumber": 50,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Fundamentals of Programming",
+   "description": "A half-semester introduction to the basic elements of computer programming in Python. Topics include control flow; basic data structures; reading and writing files; and debugging programs. Special emphasis on working with and making sense of data in order to connect course material with applications in other disciplines.  No previous programming experience is required or expected.  May be taken concurrently with CSCI051 PO.  May not be taken after any of CSCI051 PO, CSCI051P PO, CSCI051A PO, CSCI005 HM, CSCI004 PZ, CSCI040 CM.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 57600,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Edmunds 101"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "CSCI",
+   "courseNumber": 50,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 2,
+   "year": 2026,
+   "term": "FA",
+   "half": {
+    "prefix": "F",
+    "number": 1
+   }
+  }
+ },
+ {
+  "courseAreas": [
+   "CSCI",
+   "LGCS"
+  ],
+  "credits": 0.5,
+  "permCount": 0,
+  "seatsTotal": 24,
+  "seatsFilled": 11,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 10,
+   "day": 16
+  },
+  "instructors": [
+   {
+    "name": "David Kauchak"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "CSCI",
+    "courseNumber": 50,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Fundamentals of Programming",
+   "description": "A half-semester introduction to the basic elements of computer programming in Python. Topics include control flow; basic data structures; reading and writing files; and debugging programs. Special emphasis on working with and making sense of data in order to connect course material with applications in other disciplines.  No previous programming experience is required or expected.  May be taken concurrently with CSCI051 PO.  May not be taken after any of CSCI051 PO, CSCI051P PO, CSCI051A PO, CSCI005 HM, CSCI004 PZ, CSCI040 CM.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 34500,
+    "endTime": 39000,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Edmunds 101"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "CSCI",
+   "courseNumber": 50,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 3,
+   "year": 2026,
+   "term": "FA",
+   "half": {
+    "prefix": "F",
+    "number": 1
+   }
+  }
+ },
+ {
+  "courseAreas": [
+   "5NAT",
+   "ASTR"
+  ],
+  "credits": 0,
+  "permCount": 9,
+  "seatsTotal": 26,
+  "seatsFilled": 30,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Elijah Quetin"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ASTR",
+    "courseNumber": 1,
+    "suffix": "L",
+    "affiliation": "PO"
+   },
+   "title": "Lab, Introductory Astronomy",
+   "description": "",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 68400,
+    "endTime": 78600,
+    "days": [
+     "W"
+    ],
+    "locations": [
+     "Brackett OBSR"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ASTR",
+   "courseNumber": 1,
+   "suffix": "L",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "5NAT",
+   "BIOL"
+  ],
+  "credits": 0.25,
+  "permCount": 8,
+  "seatsTotal": 24,
+  "seatsFilled": 15,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Diane Thomson"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "BIOL",
+    "courseNumber": 119,
+    "suffix": "",
+    "affiliation": "KS"
+   },
+   "title": "Intro to R in Science",
+   "description": "This quarter credit class will Introduce use of R and Rstudio for quantitative and computational work in the sciences. The class is intended to prepare students with no previous experience for upper-division science labs taught in R. Topics may vary across offerings, but generally will include basic data management and visualization tools and some programming skills, such as creating loops and functions.",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 51300,
+    "days": [
+     "W"
+    ],
+    "locations": [
+     "Nucleus E082"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "BIOL",
+   "courseNumber": 119,
+   "suffix": "",
+   "affiliation": "KS",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A3",
+   "1DDP",
+   "2WS",
+   "4HSS",
+   "AGFS",
+   "ENGL",
+   "GWFS",
+   "GWS"
+  ],
+  "credits": 1,
+  "permCount": 2,
+  "seatsTotal": 12,
+  "seatsFilled": 12,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Aimee Bahng"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "GWS",
+    "courseNumber": 182,
+    "suffix": "",
+    "affiliation": "PO"
+   },
+   "title": "Feminist and Queer Materialism",
+   "description": "This course will take up recent developments in political and cultural theory that engage the changing planetary and political landscape via an inquiry into the materiality of the world. We will read recent work in affect theory, object-oriented ontology and inquire into the conversation between old materialism (Marxism and class analysis) and new materialism (an interest that the physical life of the world has vital consequences for its human and animal inhabitants). Prerequisites: One other course in queer, feminist or media theory. Letter grade only.",
+   "primaryAssociation": "PO",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 57600,
+    "days": [
+     "R"
+    ],
+    "locations": [
+     "Crookshank Hall 01"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "GWS",
+   "courseNumber": 182,
+   "suffix": "",
+   "affiliation": "PO",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A1",
+   "1P5",
+   "2FYA",
+   "2LT",
+   "4HSS",
+   "5HUM",
+   "ARHI",
+   "ASIA"
+  ],
+  "credits": 1,
+  "permCount": 9,
+  "seatsTotal": 22,
+  "seatsFilled": 22,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Patricia Yu"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ARHI",
+    "courseNumber": 150,
+    "suffix": "",
+    "affiliation": "SC"
+   },
+   "title": "The Arts of China",
+   "description": "A survey of artistic traditions in China from Neolithic to modern times. Architecture, sculpture, painting, calligraphy, ceramics, and metalwork will be discussed in their cultural contexts. ",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 39600,
+    "endTime": 44100,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Steele Hall 101"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ARHI",
+   "courseNumber": 150,
+   "suffix": "",
+   "affiliation": "SC",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A1",
+   "1P5",
+   "2FYA",
+   "2LT",
+   "4HSS",
+   "5HUM",
+   "ARHI",
+   "ASIA"
+  ],
+  "credits": 1,
+  "permCount": 9,
+  "seatsTotal": 12,
+  "seatsFilled": 12,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Patricia Yu"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ARHI",
+    "courseNumber": 154,
+    "suffix": "",
+    "affiliation": "SC"
+   },
+   "title": "Japanese Prints",
+   "description": "The development of Japanese woodblock prints from 1600 to the present will be explored, using the Scripps College Collections. ",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 63000,
+    "days": [
+     "W"
+    ],
+    "locations": [
+     "Baxter Hall 108"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ARHI",
+   "courseNumber": 154,
+   "suffix": "",
+   "affiliation": "SC",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A6",
+   "2FA",
+   "2FYA",
+   "4HSS",
+   "5HUM",
+   "ART",
+   "MS"
+  ],
+  "credits": 1,
+  "permCount": 36,
+  "seatsTotal": 16,
+  "seatsFilled": 16,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Kim-Trang Tran"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ART",
+    "courseNumber": 148,
+    "suffix": "",
+    "affiliation": "SC"
+   },
+   "title": "Introduction to Video Art",
+   "description": "A studio course introducing students to the basic techniques of digital video production: camerawork, audio recording, lighting and non-linear editing. Production is augmented by critiques, screenings, and discussions of conceptual and formal ideas. Course has pre-req.",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 36000,
+    "endTime": 45000,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Lang Art Building 214",
+     "Skandera Hall P104"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ART",
+   "courseNumber": 148,
+   "suffix": "",
+   "affiliation": "SC",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "4HSS",
+   "5HUM",
+   "5IUG",
+   "ALAN",
+   "ARBC",
+   "MENA"
+  ],
+  "credits": 1,
+  "permCount": 0,
+  "seatsTotal": 18,
+  "seatsFilled": 16,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Bassam Frangieh"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ARBC",
+    "courseNumber": 1,
+    "suffix": "",
+    "affiliation": "CM"
+   },
+   "title": "Introductory Arabic",
+   "description": "Introductory Arabic is designed for students who do not have any Arabic language background. Emphasis is placed on the fundamentals of the four basic language skills: listening, speaking, reading and writing, through an integrated and comprehensive method. The course provides an understanding of Arabic phonology, morphology and syntax. The course will be taught in Arabic. Offered every fall semester. Letter grade only.",
+   "primaryAssociation": "CM",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 36000,
+    "endTime": 39000,
+    "days": [
+     "M",
+     "T",
+     "W",
+     "R"
+    ],
+    "locations": [
+     "The Kravis Center LC63"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ARBC",
+   "courseNumber": 1,
+   "suffix": "",
+   "affiliation": "CM",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "4HSS",
+   "5HUM",
+   "5IUG",
+   "ALAN",
+   "ARBC",
+   "MENA"
+  ],
+  "credits": 1,
+  "permCount": 1,
+  "seatsTotal": 18,
+  "seatsFilled": 16,
+  "status": "R",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Bassam Frangieh"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ARBC",
+    "courseNumber": 1,
+    "suffix": "",
+    "affiliation": "CM"
+   },
+   "title": "Introductory Arabic",
+   "description": "Introductory Arabic is designed for students who do not have any Arabic language background. Emphasis is placed on the fundamentals of the four basic language skills: listening, speaking, reading and writing, through an integrated and comprehensive method. The course provides an understanding of Arabic phonology, morphology and syntax. The course will be taught in Arabic. Offered every fall semester. Letter grade only.",
+   "primaryAssociation": "CM",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 39600,
+    "endTime": 42600,
+    "days": [
+     "M",
+     "T",
+     "W",
+     "R"
+    ],
+    "locations": [
+     "The Kravis Center LC63"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ARBC",
+   "courseNumber": 1,
+   "suffix": "",
+   "affiliation": "CM",
+   "sectionNumber": 2,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A3",
+   "1SIR",
+   "2LT",
+   "2WS",
+   "4HSS",
+   "5HUM",
+   "5IUL",
+   "5SJT",
+   "5SRX",
+   "AFRI"
+  ],
+  "credits": 1,
+  "permCount": 23,
+  "seatsTotal": 12,
+  "seatsFilled": 8,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Laura Harris"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AFRI",
+    "courseNumber": 120,
+    "suffix": "",
+    "affiliation": "PZ"
+   },
+   "title": "Black to Nature: Poetry & Thry",
+   "description": "This course introduces students to poetic forms in relation to the subject of nature in 20thC African American poetry. Through the study of authors such as Lucille Clifton, Ntozake Shange, Nikki Giovanni, Sonia Sanchez, June Jordan, and Claudia Rankine students explore formal aesthetic strategies of and practice writing free verse, vignette, haiku, choreopoem, blues, and spoken word. Through readings and research in Black feminist geography studies students learn the critical contexts of and develop an aesthetic understanding in relation to the representational politics of nature and gender in African American poetic expression.",
+   "primaryAssociation": "PZ",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 63000,
+    "days": [
+     "W"
+    ],
+    "locations": [
+     "Lincoln 1109"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AFRI",
+   "courseNumber": 120,
+   "suffix": "",
+   "affiliation": "PZ",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A2",
+   "1ADR",
+   "2SS",
+   "4HSS",
+   "5IUG",
+   "5IUL",
+   "5SJT",
+   "5SOC",
+   "ANTH"
+  ],
+  "credits": 1,
+  "permCount": 32,
+  "seatsTotal": 18,
+  "seatsFilled": 18,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Timothy Hartshorn"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "ANTH",
+    "courseNumber": 2,
+    "suffix": "",
+    "affiliation": "PZ"
+   },
+   "title": "Intro Sociocultural Anthropology",
+   "description": "An introduction to the basic concepts, theories and methods of social and cultural anthropology. An investigation of the nature of sociocultural systems using ethnographic materials from a wide range of societies.",
+   "primaryAssociation": "PZ",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 52200,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Fletcher Hall 104"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "ANTH",
+   "courseNumber": 2,
+   "suffix": "",
+   "affiliation": "PZ",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A3",
+   "2FYA",
+   "2RES",
+   "4HSS",
+   "5HUM",
+   "5IUG",
+   "5IUL",
+   "AFRI"
+  ],
+  "credits": 1,
+  "permCount": 0,
+  "seatsTotal": 25,
+  "seatsFilled": 23,
+  "status": "R",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Maryan Soliman"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AFRI",
+    "courseNumber": 10,
+    "suffix": "A",
+    "affiliation": "AF"
+   },
+   "title": "Intro to Africana Studies",
+   "description": "This class will serve as a general introduction to Africana Studies. Africana studies, while still relatively young, has a vibrant history that traces the lives and scholarship of people from African descent. Its complex and latent development in academia follows from the socio-political marginalization of people within the African diaspora. Nevertheless, resilience and perseverance will be repeated themes as we study how, through different techniques and modes of understanding, people of the African diaspora have continually challenged the western hegemony of academic study.\n",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 52200,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Humanities Building 105"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AFRI",
+   "courseNumber": 10,
+   "suffix": "A",
+   "affiliation": "AF",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A3",
+   "2RES",
+   "4HSS",
+   "5HUM",
+   "AFRI",
+   "AMST",
+   "HIST",
+   "POLI"
+  ],
+  "credits": 1,
+  "permCount": 1,
+  "seatsTotal": 15,
+  "seatsFilled": 19,
+  "status": "C",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Maryan Soliman"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AFRI",
+    "courseNumber": 116,
+    "suffix": "",
+    "affiliation": "AF"
+   },
+   "title": "Marxism & the Black Radical Trad",
+   "description": "Marxism has had a long and vibrant relationship with Black liberation movements worldwide - from early twentieth-century Harlem to postwar anti-colonial struggles to the Black Panther Party. Such thinkers and activists have linked their efforts to Marx, Lenin, and other central figures, while simultaneously molding Marxism to address the circumstances of people of African descent and infusing the philosophy with approaches from the Black radical tradition. The course will examine classic Marxist texts alongside Black radical contributions and interventions to deepen our understanding of racial capitalism and to illuminate possibilities for liberation that come from a Marxist praxis deeply engaged with important approaches in Black thought. ",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 57600,
+    "days": [
+     "T",
+     "R"
+    ],
+    "locations": [
+     "Humanities Building 105"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AFRI",
+   "courseNumber": 116,
+   "suffix": "",
+   "affiliation": "AF",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "2FYA",
+   "4HSS",
+   "5IUG",
+   "5IUL",
+   "5SJT",
+   "5WRI",
+   "AFRI"
+  ],
+  "credits": 1,
+  "permCount": 0,
+  "seatsTotal": 9,
+  "seatsFilled": 5,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Westenley Alcenat"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AFRI",
+    "courseNumber": 164,
+    "suffix": "",
+    "affiliation": "AF"
+   },
+   "title": "Birthright Citizenship in US His",
+   "description": "Birthright Citizenship: Belonging & Exclusion in U.S. History\nWhat does it mean to be an American? This course examines how that fundamental question was answered in the aftermath of the Civil War and how that answer remains fiercely contested today. We will explore the principle of jus soli, birthright citizenship?the guarantee that anyone born on U.S. soil is a citizen?a concept enshrined in the 14th Amendment during the Reconstruction period after the war. Born from the struggle to secure racial and social equality and to define the place of emancipated slaves in American life, this constitutional cornerstone was transformative. It generated a second founding period, fundamentally changing the national and political character of the United States as a country. We will study the Reconstruction Amendments (13th, 14th, and 15th) not as historical artifacts, but as the origin of ongoing political and legal battles over national identity, belonging, and racial justice that continue to resonate in modern debates over immigration and citizenship. Focusing on politics, culture, and race relations rather than military history, this course traces the nation's unfinished quest to define itself. Through analysis of primary sources?from abolitionist writings to court decisions?students will understand how the past actively shapes our present, connecting the historical struggles over emancipation and citizenship to their enduring legacy in contemporary America. Course also listed as HIST164 SC. ",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 53100,
+    "endTime": 63000,
+    "days": [
+     "M"
+    ],
+    "locations": [
+     "Humanities Building 202"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AFRI",
+   "courseNumber": 164,
+   "suffix": "",
+   "affiliation": "AF",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "2FYA",
+   "2RES",
+   "2SS",
+   "4HSS",
+   "AFRI",
+   "HIST"
+  ],
+  "credits": 1,
+  "permCount": 1,
+  "seatsTotal": 14,
+  "seatsFilled": 13,
+  "status": "R",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Westenley Alcenat"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AFRI",
+    "courseNumber": 168,
+    "suffix": "",
+    "affiliation": "AF"
+   },
+   "title": "Medicine & American Slavery",
+   "description": "This course explores how slavery shaped American medicine and the invention of race and vice versa. From the 18th to 19th centuries, physicians and naturalists used pseudoscience to justify enslavement and pathologize Black resistance. We examine how medical knowledge was produced in plantations, slave markets, and wars, and how disease outbreaks revealed racialized inequalities. Through primary sources, students trace the legacies of slavery-era medicine in today?s health disparities and racial inequities. Course meets Social Science, and Race & Ethnic Studies general education requirements. Course is also offered as HIST168 SC. ",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 68400,
+    "endTime": 78300,
+    "days": [
+     "M"
+    ],
+    "locations": [
+     "Humanities Building 119"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AFRI",
+   "courseNumber": 168,
+   "suffix": "",
+   "affiliation": "AF",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "4HSS",
+   "AFRI"
+  ],
+  "credits": 1,
+  "permCount": 0,
+  "seatsTotal": 16,
+  "seatsFilled": 6,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "Laura Harris"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AFRI",
+    "courseNumber": 190,
+    "suffix": "",
+    "affiliation": "AF"
+   },
+   "title": "Senior Seminar",
+   "description": "Seminar for Africana studies majors. Complements guidance of primary thesis advisor, by focusing on interdisciplinary research strategies and data collection methods; development of authorial voice for the interrogation of African/African Diasporan topics, notions of race and manifestations of racism. Emphasis on writing, rewriting and peer review. Minors require instructor's permission.",
+   "primaryAssociation": "PZ",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 57600,
+    "days": [
+     "T"
+    ],
+    "locations": [
+     "Lincoln 1109"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AFRI",
+   "courseNumber": 190,
+   "suffix": "",
+   "affiliation": "AF",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ },
+ {
+  "courseAreas": [
+   "1A3",
+   "2FYA",
+   "4HSS",
+   "5HUM",
+   "5IUL",
+   "AMST"
+  ],
+  "credits": 1,
+  "permCount": 4,
+  "seatsTotal": 20,
+  "seatsFilled": 14,
+  "status": "O",
+  "startDate": {
+   "year": 2026,
+   "month": 8,
+   "day": 31
+  },
+  "endDate": {
+   "year": 2026,
+   "month": 12,
+   "day": 18
+  },
+  "instructors": [
+   {
+    "name": "William Boyer"
+   },
+   {
+    "name": "Julio Orellana"
+   }
+  ],
+  "course": {
+   "code": {
+    "department": "AMST",
+    "courseNumber": 103,
+    "suffix": "",
+    "affiliation": "JT"
+   },
+   "title": "Intro to American Cultures",
+   "description": "This class analyzes the histories and cultures of the U.S., focusing on the experiences of people and communities of color. Topics change each year and include race and racism; migration and immigration; and culture (e.g., art, music, film) across a wide range of academic and popular texts. This is the introductory course in the five-colleges American Studies program, but is open to all students. \n\n",
+   "primaryAssociation": "SC",
+   "potentialError": false
+  },
+  "schedules": [
+   {
+    "startTime": 47700,
+    "endTime": 52200,
+    "days": [
+     "M",
+     "W"
+    ],
+    "locations": [
+     "Humanities Building 121"
+    ]
+   }
+  ],
+  "potentialError": false,
+  "identifier": {
+   "department": "AMST",
+   "courseNumber": 103,
+   "suffix": "",
+   "affiliation": "JT",
+   "sectionNumber": 1,
+   "year": 2026,
+   "term": "FA",
+   "half": null
+  }
+ }
+]

@@ -1,13 +1,13 @@
 import { PipelineError } from "./errors.ts";
 import { runCatalog } from "./commands/catalog.ts";
 import { runValidate } from "./commands/validate.ts";
+import { runSections } from "./commands/sections.ts";
+import { runHistory } from "./commands/history.ts";
+import { runManifest } from "./commands/manifest.ts";
+import { runAll } from "./commands/all.ts";
 
 type Command = "catalog" | "sections" | "history" | "validate" | "manifest" | "all";
 const COMMANDS: Command[] = ["catalog", "sections", "history", "validate", "manifest", "all"];
-
-async function notImplemented(name: string): Promise<never> {
-  throw new PipelineError(`'${name}' is not implemented yet`, "NOT_IMPLEMENTED");
-}
 
 export async function dispatch(argv: readonly string[]): Promise<void> {
   const [command, ...rest] = argv;
@@ -18,9 +18,9 @@ export async function dispatch(argv: readonly string[]): Promise<void> {
     case "catalog":
       return runCatalog(rest);
     case "sections":
-      return notImplemented("sections");
+      return runSections(rest);
     case "history":
-      return notImplemented("history");
+      return runHistory(rest);
     case "validate": {
       const checks = await runValidate(rest);
       const failed = checks.filter((c) => c.status === "fail");
@@ -31,9 +31,10 @@ export async function dispatch(argv: readonly string[]): Promise<void> {
       return;
     }
     case "manifest":
-      return notImplemented("manifest");
+      await runManifest(rest);
+      return;
     case "all":
-      return notImplemented("all");
+      return runAll(rest);
   }
 }
 

@@ -1,15 +1,37 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { CatalogArtefactSchema, type Course, type ValidationCheck } from "@gradguide/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import { log, writeReport } from "../reports.ts";
+import { writeArtefact } from "../write.ts";
 import { parseRegistrarCsv } from "../registrar/parseCsv.ts";
 import { pivotRegistrar } from "../registrar/pivot.ts";
 import { checkGeAgreement } from "../validators/geAgreement.ts";
 import { checkExclusionAnomalies } from "../validators/exclusionAnomalies.ts";
+import { checkHyperscheduleAttributes } from "../validators/hyperscheduleAttributes.ts";
+import { checkArtefactSchemas } from "../validators/schema.ts";
+import { checkProvenance } from "../validators/provenance.ts";
+import { checkSourceQuotes } from "../validators/sourceQuotes.ts";
+import { checkManifest } from "../validators/manifest.ts";
+import { checkNonEmpty } from "../validators/nonEmpty.ts";
+import { readSections } from "../readSections.ts";
+import type { FetchImpl } from "../http.ts";
+import { ValidationReportSchema } from "@gradguide/shared";
+import { PIPELINE_VERSION } from "../meta.ts";
 
-export interface ValidateOptions { env?: PipelineEnv }
+export interface ValidateOptions {
+  env?: PipelineEnv;
+  fetchImpl?: FetchImpl;
+  skipNetwork?: boolean;
+  /**
+   * True inside `pipeline:all`, where validate runs BEFORE the manifest is
+   * written (the manifest must describe validated data). Validator 8 then
+   * reports "pending" instead of failing, and `all` re-runs it as its final
+   * gate once the manifest exists.
+   */
+  manifestPending?: boolean;
+}
 
 export function readCatalog(dataDir: string): Course[] {
   const path = join(dataDir, "catalog.json");
@@ -43,6 +65,54 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
   writeReport("exclusion-anomalies", ex.report, env.dataDir);
   checks.push(ex.check);
   log("validate.exclusion-anomalies", { status: ex.check.status, anomalies: ex.check.count });
+
+  // 4 — Hyperschedule geCodes vs catalog attributes
+  const sections = readSections(env.dataDir);
+  const hs = checkHyperscheduleAttributes(catalog, sections);
+  writeReport("hyperschedule-attribute-diff", hs.report, env.dataDir);
+  checks.push(hs.check);
+  log("validate.hyperschedule-attributes", { status: hs.check.status, divergences: hs.check.count, sections: sections.length });
+
+  // 1 — every emitted artefact re-parses
+  const schema = checkArtefactSchemas(env.dataDir);
+  checks.push(schema.check);
+  log("validate.artefact-schemas", { status: schema.check.status, issues: schema.check.count });
+
+  // 2 — non-empty guard, asserted against what is on disk
+  const nonEmpty = checkNonEmpty(env.dataDir);
+  checks.push(nonEmpty.check);
+  log("validate.non-empty", { status: nonEmpty.check.status, issues: nonEmpty.check.count });
+
+  // 6 — provenance stamping
+  const prov = checkProvenance(env.dataDir);
+  checks.push(prov.check);
+  log("validate.provenance", { status: prov.check.status, issues: prov.check.count });
+
+  // 7 — source quotes (network failure warns, never fails)
+  const quotes = await checkSourceQuotes(env.dataDir, { fetchImpl: opts.fetchImpl, skipNetwork: opts.skipNetwork });
+  writeReport("source-quotes", quotes.report, env.dataDir);
+  checks.push(quotes.check);
+  log("validate.source-quotes", { status: quotes.check.status, issues: quotes.check.count });
+
+  // 8 — manifest consistency
+  const man = checkManifest(env.dataDir);
+  if (opts.manifestPending === true && !existsSync(join(env.dataDir, "manifest.json"))) {
+    man.check = {
+      id: "manifest", status: "warn", count: 0,
+      summary: "manifest not generated yet; re-checked as the final step of pipeline:all",
+      details: [],
+    };
+  }
+  checks.push(man.check);
+  log("validate.manifest", { status: man.check.status, issues: man.check.count });
+
+  const report = {
+    generatedAt: new Date().toISOString(),
+    generator: `@gradguide/pipeline@${PIPELINE_VERSION} validate`,
+    checks,
+    ok: checks.every((c) => c.status !== "fail"),
+  };
+  writeArtefact(join(env.dataDir, "reports", "validation.json"), report, ValidationReportSchema, true);
 
   return checks;
 }

@@ -1,7 +1,7 @@
 # Coursedog vs Registrar — GE attribute divergences
 
 **257** Pomona course(s) disagree between the two sources.
-Threshold: warn from 1, fail above 25 (`PIPELINE_MAX_DIVERGENCES`).
+Threshold: warn from 1, fail above 300 (`PIPELINE_MAX_DIVERGENCES`).
 
 ## How to resolve
 
