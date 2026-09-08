@@ -96,12 +96,20 @@ undefined .
 - nothing
 
 ## For the manager
-- CONTRACT CHANGE REQUEST: gpa  is undefined in API.md.
-- F-06 fixture proves nothing; the constrained-first guarantee has no test.
-- F-12's row in ACCEPTANCE is stale; API.md 2.4 requires what the golden shows.
--  deviates from the brief at #8C5C15 (the brief's value fails AA).
--  defaults to the deleted  directory, so a
-  bare run silently checks nothing.
+- CONTRACT CHANGE REQUEST: the gpa rule's `scope: "program"` is undefined in
+  API.md. Interim behaviour is `unverifiable`. Full request in the handoff.
+- F-06's fixture proves nothing, so the constrained-first guarantee that API.md
+  2.3 makes its centrepiece currently has no test behind it. Needs an
+  `exclusive` or `denyOnly` policy, which is a change to a manager-owned file.
+- F-12's row in ACCEPTANCE is stale: it says every requirement is unmet or
+  unverifiable, but API.md 2.4 requires the two non-applicable transfer
+  requirements to be satisfied with `waived: true`, which is what the golden
+  shows. Amend the fixture table, not the engine.
+- `--partial` deviates from the brief: `#8C5C15` instead of `#B0731A`, which
+  measures 3.48:1 on the cream canvas and fails AA for text.
+- `scripts/slop-check.sh` defaults to `${1:-frontend}`, a directory the
+  restructure deleted. A bare run prints "no such directory: frontend" and
+  checks nothing, so it reports a false pass.
 
 ---
 
@@ -149,11 +157,15 @@ row. Everywhere the brief leaves an axis free, it is spent away from the default
    the single most-violated anti-generic rule, and the brief's ASCII sketch is a
    layout diagram, not a typographic spec. The brief's binding content is the
    palette, the faces, the signature element, the density and the hierarchy.
-4. **Requirements are grouped into four clusters, not eighteen identical ruled
-   rows.** Breadth (the six areas), Overlays (WI, SI, AD), Language and PE, then
-   Credits and GPA. One divider between clusters, one hairline between rows, never
-   both borders on the same row. This also serves the brief's stated hierarchy:
-   unmet and partial sort to the top of their cluster.
+4. **Requirements cluster on a change of RULE KIND, derived from the data.**
+   One hairline between rows, a heavier rule where the kind changes, never two
+   borders on one row. The first instinct was to hard-code the GE groups
+   (Breadth, Overlays, Language and PE, Credits), but that would put a code path
+   in the app that only general education uses, which `ARCHITECTURE.md` rule 1
+   calls a design defect. Clustering on `rule.kind` produces the same four
+   groups for GE and still works for a major nobody has encoded yet.
+   NOT YET DONE: the brief also asks that unmet and partial sort to the top of
+   their group. Rows currently render in program order. TASK-023 owns it.
 5. **`partial` ochre is darkened from #B0731A to #8C5C15.** Measured 3.48:1 on the
    cream canvas, which fails WCAG AA for text; AC-F07 requires a pasted contrast
    check, so the brief's value cannot ship as written. #8C5C15 keeps the hue
