@@ -71,3 +71,84 @@ reporter to find. F-09 requires the row to name the constraint. (3068de8)
 
 ## Blocked on
 - nothing
+
+---
+
+## TASK-021 design direction (produced by the 4-skill pipeline, before any UI code)
+
+**Design read:** a dense single-page academic record for an anxious 19-year-old at
+11pm before registration, in a document register, leaning on a hand-built row grid
+rather than any component library.
+
+Dials: VARIANCE 3 (the row grid is the design), MOTION 2 (one 180ms disclosure),
+DENSITY 9 (the whole audit in one viewport at 1440).
+
+`design-taste-frontend` declares itself out of scope for dense product UI and data
+tables (its section 13), so only its anti-generic rules were applied. That is the
+role the agent definition gives it: critique, not direction.
+
+### The honest problem the pipeline surfaced
+
+`frontend-design` names, as the two commonest tells of AI-generated design,
+(1) a warm cream background near #F4F1EA with a high-contrast serif, and
+(2) hairline rules with dense newspaper columns. The brief specifies both.
+
+The skill's own rule is that the brief wins where it pins a direction, and
+`DESIGN_CONSTRAINTS.md` section 2 already anticipates this exact trap. So the
+palette and the rules stay. The consequence is that **none of the differentiation
+can come from the surface**; all of it has to come from structure that only this
+product could have: the margin of evidence, the term ribbon, and the four-verdict
+row. Everywhere the brief leaves an axis free, it is spent away from the defaults.
+
+### Five decisions, each against a default
+
+1. **Verdict marks are inline SVG primitives, not Unicode glyphs.** U+25D0 and
+   U+25CC are Geometric Shapes; coverage in IBM Plex is not guaranteed, and one
+   missing glyph falls back to another font and breaks the row rhythm on exactly
+   the row that matters most. Four primitives (filled, half, hollow, dotted ring)
+   drawn at the mono cap height, each with the status word beside it and an
+   aria-label. Never colour alone.
+2. **No middle-dot meta chain in the masthead.** The brief's sketch reads
+   "GradGuide · unofficial · Catalog 2026-27 · data as of 8 Sep"; the dot chain is
+   a named tell and is rationed to one per line. The masthead becomes a colophon:
+   name and the word unofficial on one line, then catalog year and data date as a
+   labelled pair on the line beneath.
+3. **Section headings are sentence-case serif, not tracked-out all-caps.**
+   "Your record", "Your requirements". All-caps eyebrows above every section are
+   the single most-violated anti-generic rule, and the brief's ASCII sketch is a
+   layout diagram, not a typographic spec. The brief's binding content is the
+   palette, the faces, the signature element, the density and the hierarchy.
+4. **Requirements are grouped into four clusters, not eighteen identical ruled
+   rows.** Breadth (the six areas), Overlays (WI, SI, AD), Language and PE, then
+   Credits and GPA. One divider between clusters, one hairline between rows, never
+   both borders on the same row. This also serves the brief's stated hierarchy:
+   unmet and partial sort to the top of their cluster.
+5. **`partial` ochre is darkened from #B0731A to #8C5C15.** Measured 3.48:1 on the
+   cream canvas, which fails WCAG AA for text; AC-F07 requires a pasted contrast
+   check, so the brief's value cannot ship as written. #8C5C15 keeps the hue
+   (35.6 degrees) and gives 5.06:1, which also puts all four verdicts in one
+   5.0-5.6 band so they read as a system. **This is a deviation from a
+   manager-owned document and is raised in the handoff rather than changed
+   quietly.**
+
+### Measured contrast of the brief's palette (light canvas #F5F0E6)
+
+| role | hex | ratio | verdict |
+|---|---|---|---|
+| primary ink | #1E1C19 | 14.97 | pass |
+| secondary | #6B665C | 5.02 | pass |
+| satisfied | #2E6B3F | 5.62 | pass |
+| partial | #B0731A | **3.48** | **fails AA, replaced with #8C5C15 at 5.06** |
+| unmet | #A63D2F | 5.55 | pass |
+| unverifiable | #4F5D75 | 5.86 | pass |
+| override | #6E4A7E | 6.28 | pass |
+| focus ring | #2F6FE4 | 4.10 | pass (3:1 non-text) |
+| hairline | #D9D0BE | 1.35 | below 3:1, kept: a decorative divider, and faint rules are the point of the transcript reference. To be checked visually at 390px. |
+
+Dark mode: every role passes on #1B1A17.
+
+### Em dash audit
+`DESIGN_CONSTRAINTS` item 8 covers interface strings only. The engine's
+user-facing `note` strings and the GE program's labels and explanations are clean;
+the only em dashes in the repository are in code comments and documentation, which
+the constraint explicitly exempts.
