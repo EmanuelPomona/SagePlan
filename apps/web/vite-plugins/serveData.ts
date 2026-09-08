@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, copyFileSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { join } from "node:path";
 import type { Plugin } from "vite";
 
 /**
@@ -98,5 +98,3 @@ function resolveArtefact(rel: string, repoData: string, generatedRoot: string): 
   }
   return null;
 }
-
-export { dirname };

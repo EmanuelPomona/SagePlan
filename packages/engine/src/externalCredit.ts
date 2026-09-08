@@ -70,12 +70,6 @@ function examGrantCourse(ec: ExternalCredit, ctx: EvalContext): ResolvedCourse {
   };
 }
 
-/** The exam behind a pseudo course, for the note the UI shows. */
-export function examLabelFor(course: ResolvedCourse, ctx: EvalContext): string | undefined {
-  if (!isExamPseudo(course)) return undefined;
-  return ctx.externalCredits.find((ec) => ec.label === course.completed.title)?.label;
-}
-
 /**
  * Advanced-standing credit actually countable from a set of exams.
  *

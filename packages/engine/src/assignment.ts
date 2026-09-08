@@ -1,5 +1,5 @@
 import type { Program, Requirement } from "@gradguide/shared";
-import { termCode } from "@gradguide/shared";
+import { sameTerm, termCode } from "@gradguide/shared";
 import type { EvalContext } from "./context.ts";
 import { violatesConstraint, type Assignment } from "./constraints.ts";
 import { mayShare } from "./overlap.ts";
@@ -71,15 +71,29 @@ export function assignCourses(
   // A requirement whose entire eligible set still cannot close it is not
   // "unsatisfied because of a bad assignment" — no backtracking can help it.
   const reachable = order.filter((r) => meetsDemand(r, eligible.get(r.id) ?? []));
-  const greedySatisfied = order.filter((r) => meetsDemand(r, greedy.get(r.id) ?? [])).length;
-  if (greedySatisfied >= reachable.length) return { assignment: greedy, bounded: false };
+
+  // Upper bound on partial progress: what each requirement could reach if it
+  // had its whole eligible set to itself. Not always jointly achievable, but a
+  // valid ceiling. Closing on `satisfied` alone was not enough: greedy could
+  // close every closable requirement and still leave a PARTIAL row reporting
+  // more owed than the student actually owes, which is the same defect class as
+  // the PE bug (a wrong number on a row the student is reading).
+  const progressCeiling = round2(
+    order.reduce((sum, r) => sum + progressOf(r, eligible.get(r.id) ?? []), 0),
+  );
+
+  const greedyScore = scoreOf(order, greedy);
+  const optimal = (score: Score): boolean =>
+    score.satisfied >= reachable.length && score.progress >= progressCeiling;
+
+  if (optimal(greedyScore)) return { assignment: greedy, bounded: false };
 
   // Phase 2 — bounded backtracking, seeded with the greedy answer.
   const current = empty();
   let nodes = 0;
   let bounded = false;
   let done = false;
-  let best = { assignment: greedy, ...scoreOf(order, greedy) };
+  let best = { assignment: greedy, ...greedyScore };
 
   const search = (index: number): void => {
     if (done) return;
@@ -92,7 +106,7 @@ export function assignCourses(
     if (index === order.length) {
       const score = scoreOf(order, current);
       if (betterScore(score, best)) best = { assignment: cloneAssignment(current), ...score };
-      if (score.satisfied >= reachable.length) done = true;
+      if (optimal(score)) done = true;
       return;
     }
 
@@ -250,7 +264,11 @@ function canAssign(
 ): boolean {
   for (const [otherId, held] of current) {
     if (otherId === req.id) continue;
-    if (!held.some((c) => c.key === course.key && c.completed.term === course.completed.term)) continue;
+    // Compare terms BY VALUE. TermId is an object, and two rows for the same
+    // course in the same term are distinct objects with equal values, so
+    // reference equality let a duplicated row slip past the overlap check and
+    // close two exclusive requirements at once.
+    if (!held.some((c) => c.key === course.key && sameTerm(c.completed.term, course.completed.term))) continue;
     const other = byId.get(otherId);
     if (!other || !mayShare(req, other)) return false;
   }

@@ -116,7 +116,7 @@ describe("F-04 — chair-granted override", () => {
     expect(si.satisfiedBy.map(courseKey)).toEqual(["HIST 101 PO"]);
   });
 
-  test("the overridden course is not also spent on Area 3, which shares no policy with it", () => {
+  test("Area 3 may still use the overridden course, because both policies allow sharing", () => {
     // speaking-intensive is denyOnly against writing-intensive only, and area-3
     // is allowAll, so sharing IS permitted here: Area 3 may still use it.
     const a3 = byId(evaluate(plan, [GE], CATALOG), "area-3");

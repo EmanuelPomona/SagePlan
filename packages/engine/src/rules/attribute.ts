@@ -53,8 +53,11 @@ export function settleAttribute(
   if (!note && rule.distinctTerms && status !== "satisfied" && sharesTermWithCounted(eligible, counted)) {
     note = "These courses must be taken in different semesters, and another course you have taken falls in a semester that already counts.";
   }
-  const examNote = counted.filter(isExamPseudo).map((c) => c.completed.title).filter(Boolean);
-  if (examNote.length > 0) note = `Satisfied by ${examNote.join(", ")}.`;
+  const exams = counted.filter(isExamPseudo).map((c) => c.completed.title).filter(Boolean);
+  if (exams.length > 0) {
+    const claim = status === "satisfied" ? `Satisfied by ${exams.join(", ")}.` : `Counting ${exams.join(", ")}.`;
+    note = note ? `${note} ${claim}` : claim;
+  }
 
   return {
     status,
@@ -74,9 +77,15 @@ function sharesTermWithCounted(eligible: ResolvedCourse[], counted: ResolvedCour
 /** Catalog courses carrying the attribute that the student has not taken. */
 function candidatesFor(rule: AttributeRule, ctx: EvalContext, used: ReadonlySet<string>): CourseId[] {
   const onRecord = new Set(ctx.courses.map((c) => c.key));
+  const filter = rule.filter;
   const out: CourseId[] = [];
   for (const course of ctx.catalog) {
     if (!course.attributes.includes(rule.attr)) continue;
+    // The catalog-checkable half of the filter. provenance and term fields
+    // describe a course the student has TAKEN, so they cannot narrow a
+    // catalog listing and are deliberately not applied here.
+    if (filter?.attributes && !filter.attributes.every((a) => course.attributes.includes(a))) continue;
+    if (filter?.partialCredit === "exclude" && course.credits.min < 1) continue;
     const key = courseKey(course.id);
     if (onRecord.has(key) || used.has(key)) continue;
     out.push(course.id);
