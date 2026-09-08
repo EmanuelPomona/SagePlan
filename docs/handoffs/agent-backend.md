@@ -420,3 +420,98 @@ Branch `agent/backend`, no remote configured (so "push" is a commit here):
 - `e3a87d8` TASK-012 + TASK-013
 - `fd5cc06` handoff, status, task frontmatter
 - `1acb4e6` nightly PR only on substantive change
+
+---
+
+## HANDOFF-2 — agent/backend — 2026-09-08 (code review applied)
+
+### Summary
+An adversarial code-review subagent was run over `ef81a0f..e3a87d8` plus the whole
+package. It returned 3 Critical, 11 Important and 11 Minor findings. **All three
+Critical were real**, and all three were the silent kind this project is organised
+to prevent. Every Critical and Important finding is fixed; one finding I pushed
+back on with evidence. Details in commit `b14d3cb`.
+
+### What the review caught that my own testing did not
+1. `readExistingCourses` returned `[]` for a catalog that **exists but is
+   unreadable** — indistinguishable from "no catalog". A `schemaVersion` bump was
+   enough to make `pipeline:catalog` write a PO-only file **with exit 0**, deleting
+   all 984 non-Pomona courses. My tests only ever exercised the valid and absent
+   cases.
+2. `GE_GUARD_RE` did not match `"PO Phys Ed Requirement"` ("Phys" is not
+   "Physical") or `"PO Community Partnership"` — two of the twelve tokens it
+   exists to guard. My own test only asserted the guard against `"PO Area 9
+   Requirement"`, which is why the hole was invisible. A rename upstream would
+   have dropped 181 + 27 courses' GE tags on a green build.
+3. Hyperschedule's `unknownPomona` codes reached a log field that no gate reads,
+   so the two ingest paths disagreed about the "never silently drop a GE
+   attribute" rule.
+4. `checkGeAgreement` iterated only the catalog, so **25 Pomona courses the
+   Registrar tags but the catalog lacks** were never reported — including
+   `CSCI 051G PO`. Now bidirectional; the count moved 257 → 282, matching the
+   review's independent figure exactly.
+
+### Finding I pushed back on (17)
+The claim was that `courseNumber` never carries an affiliation, so the
+affiliation strip should not run on that fallback path. **In this catalog it
+does** (`"033 PO"`, `"199DRPO"`), and `code` genuinely disagrees with
+`subjectCode` — `{code: "LATN033 PO", subjectCode: "CLAS"}` and
+`{code: "DS 190 PO", subjectCode: "ID"}` are real records. I applied the change,
+measured it, and it produced `CLAS 033PO PO` for 10 real courses, so I reverted
+it and added those records as tests instead. The catalog is byte-identical
+across the revert: **0 courses added, 0 removed**.
+
+### Fresh verification (run immediately before this handoff, nothing after it)
+```
+npm run typecheck        -> rc=0
+npm run lint             -> rc=0
+npm run build            -> rc=0
+npm test                 -> rc=0   274 pipeline + 13 shared = 287 tests
+npm run seed             -> rc=0
+scripts/contract-test.sh -> rc=0   CONTRACT OK
+
+PIPELINE_MAX_DIVERGENCES=300 npm run pipeline:all -> exit 0
+  catalog ok / sections ok / history ok / validate ok / manifest ok / verify ok
+
+validation.json -> ok: true, 8 checks
+  warn ge-agreement 282 | warn exclusion-anomalies 10 | warn hyperschedule-attributes 78
+  pass artefact-schemas 0 | pass non-empty 0 | pass provenance 0
+  warn source-quotes 3 | pass manifest 0
+
+AC-P08, re-run from a CLEAN tree so the evidence is unambiguous:
+  COURSEDOG_ORIGIN=https://wrong.example npm run pipeline:catalog
+  -> exit 1, FAIL [HTTP_ERROR status=401]
+  -> git status --porcelain data/  ->  (empty)
+
+RED-GREEN on the Critical-1 regression test:
+  fix reverted  -> "THROWS rather than returning empty..." FAILS (1 failed | 7 passed)
+  fix restored  -> 8 passed; git diff on the source is empty
+
+scripts/audit-skills.sh -> 6 invocations at 19,20,26,26,75,99% through the session;
+  every claim corroborated
+```
+
+### New known issue found while verifying
+**Coursedog ignores an unknown `catalogId`.** Requesting
+`catalogId=nonexistent-catalog-id` returns **HTTP 200 with 2,675 records**, not an
+error. So a typo in `COURSEDOG_CATALOG_ID` yields a plausible-but-wrong catalog
+and exits 0; the only thing standing in the way is the ≥2,000 floor, which such a
+response clears. The workflow pins the id explicitly, but nothing detects a wrong
+one. Worth a manager decision: pin an expected course-count range, or assert a
+known-good sentinel course is present.
+
+### What Was NOT Verified (unchanged from HANDOFF-1, plus)
+- The zero-course guard was **not** exercisable against the live API for the
+  reason above; it is covered only by unit tests with an injected fetch
+  (`CATALOG_EMPTY`, `CATALOG_TOO_SMALL`).
+- The workflow still has never executed — no remote, no `actionlint`, no `act`.
+  **AC-B07 remains unverified.**
+- The review's remaining Minor findings 16, 22, 23, 24, 25 are acknowledged and
+  not fixed: a discard-reason wording nit, `fsync` before rename, an unbounded
+  pagination loop, `credits ?? 0` on a section with no credit value, and three
+  bare `catch {}` blocks. None changes a shipped number; all are recorded here
+  rather than silently dropped.
+
+### Commit
+`b14d3cb` (review fixes), on `1acb4e6`, `a44ed99`, `fd5cc06`, `e3a87d8`,
+`ef81a0f`, `d162e78`. Branch `agent/backend`, no remote.
