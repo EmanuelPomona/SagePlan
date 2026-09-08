@@ -9,6 +9,7 @@ const at = (rel: string) => fileURLToPath(new URL(rel, import.meta.url));
 const read = (rel: string) => JSON.parse(readFileSync(at(rel), "utf8"));
 
 const GE: Program = ProgramSchema.parse(read("../../../data/programs/general-education-2026.json"));
+const FAKE_MAJOR: Program = ProgramSchema.parse(read("./fixtures/programs/fake-major.json"));
 const DEFERRED_MAJOR: Program = ProgramSchema.parse(read("./fixtures/programs/deferred-major.json"));
 const CATALOG: Course[] = CatalogArtefactSchema.parse(read("./fixtures/catalog.fixture.json")).courses;
 
@@ -22,6 +23,7 @@ const FIXTURES: { id: string; programs: Program[]; describes: string }[] = [
   { id: "F-05", programs: [GE], describes: "one course short of Area 4" },
   { id: "F-06", programs: [GE], describes: "assignment conflict: rare AD course also carries Area 3" },
   { id: "F-07", programs: [GE, DEFERRED_MAJOR], describes: "deferred rule kinds beside GE" },
+  { id: "F-08", programs: [GE, FAKE_MAJOR], describes: "fake major using only P0 rule kinds" },
   { id: "F-09", programs: [GE], describes: "distinctDepartments: two Dance courses" },
   { id: "F-10", programs: [GE], describes: "one course tagged both WI and SI" },
   { id: "F-11", programs: [GE], describes: "two PE courses in the same term" },
