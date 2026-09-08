@@ -4,7 +4,9 @@ import type {
   CourseId,
   ExternalCredit,
   GeAttribute,
+  Program,
   Provenance,
+  Requirement,
   StudentPlan,
   TermId,
 } from "@gradguide/shared";
@@ -95,5 +97,45 @@ export function grant(
     duplicateKey,
     ruleIds: ["test-rule"],
     notes: [],
+  };
+}
+
+/** A minimal Requirement for assignment tests. */
+export function requirement(
+  id: string,
+  rule: Requirement["rule"],
+  overlapPolicy: Requirement["overlapPolicy"] = { kind: "allowAll" },
+  over: Partial<Requirement> = {},
+): Requirement {
+  return {
+    id,
+    label: id,
+    explanation: "test requirement",
+    sourceQuote: "test quote",
+    sourceRef: { slug: "test", url: "https://catalog.pomona.edu/test" },
+    rule,
+    overlapPolicy,
+    ...over,
+  };
+}
+
+export function attributeRule(attr: GeAttribute, n = 1, over: Record<string, unknown> = {}) {
+  return { kind: "attribute", attr, n, ...over } as Requirement["rule"];
+}
+
+/** A minimal Program wrapping the given requirements. */
+export function program(id: string, requirements: Requirement[], constraints?: Program["constraints"]): Program {
+  return {
+    id,
+    name: id,
+    kind: "general-education",
+    catalogYear: "2026-2027",
+    requirements,
+    ...(constraints ? { constraints } : {}),
+    confidence: "verified",
+    sourceUrl: "https://catalog.pomona.edu/test",
+    encodedBy: "test",
+    encodedOn: "2026-09-08",
+    notes: "",
   };
 }
