@@ -58,3 +58,22 @@ export function violatesConstraint(
   }
   return false;
 }
+
+/**
+ * Was this requirement left short because every course it could still use is
+ * barred by a distinctDepartments group?
+ *
+ * The search AVOIDS such an assignment, so nothing shows up in
+ * `constraintViolations` afterwards. Without this, a student would see
+ * "Area 6 unmet" beside a Dance course they have already passed and no reason
+ * why it did not count. ACCEPTANCE F-09 requires the row to say so.
+ */
+export function blockedByDistinctDepartments(
+  program: Program,
+  reqId: string,
+  eligible: ResolvedCourse[],
+  assignment: Assignment,
+): boolean {
+  if (eligible.length === 0) return false;
+  return eligible.every((course) => violatesConstraint(program, reqId, course, assignment));
+}
