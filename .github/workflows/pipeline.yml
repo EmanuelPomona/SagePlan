@@ -44,14 +44,49 @@ jobs:
 
       # Only reached when pipeline:all succeeded, so a failed run leaves
       # yesterday's committed data in place and opens no PR.
-      - name: Detect changes
+      # Every artefact carries a fresh generatedAt/fetchedAt/lastVerified on every
+      # run, so `git status data/` is ALWAYS dirty. Opening a PR on that would mean
+      # a PR every single night with no course change in it, which is how people
+      # learn to ignore the automation. Compare the artefacts with those volatile
+      # provenance fields stripped, and only raise a PR when the DATA moved.
+      - name: Detect substantive changes
         id: diff
         run: |
-          if [ -n "$(git status --porcelain data/)" ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          fi
+          node --input-type=module -e '
+            import { execSync } from "node:child_process";
+            import { readFileSync, existsSync, appendFileSync } from "node:fs";
+
+            const VOLATILE = new Set(["generatedAt", "fetchedAt", "lastVerified"]);
+            const strip = (v) => {
+              if (Array.isArray(v)) return v.map(strip);
+              if (v && typeof v === "object") {
+                return Object.fromEntries(
+                  Object.entries(v).filter(([k]) => !VOLATILE.has(k)).map(([k, x]) => [k, strip(x)]),
+                );
+              }
+              return v;
+            };
+            const canonical = (text) => JSON.stringify(strip(JSON.parse(text)));
+
+            const files = execSync("git status --porcelain data/", { encoding: "utf8" })
+              .split("\n").map((l) => l.slice(3).trim()).filter(Boolean);
+
+            const substantive = [];
+            for (const f of files) {
+              if (!f.endsWith(".json")) { substantive.push(f); continue; }   // reports/*.md etc.
+              if (!existsSync(f)) { substantive.push(f); continue; }         // deleted
+              let committed;
+              try { committed = execSync(`git show HEAD:${f}`, { encoding: "utf8", maxBuffer: 1 << 30 }); }
+              catch { substantive.push(f); continue; }                       // newly added
+              try {
+                if (canonical(committed) !== canonical(readFileSync(f, "utf8"))) substantive.push(f);
+              } catch { substantive.push(f); }                               // unparseable: treat as changed
+            }
+
+            console.log(`changed files: ${files.length}, substantive: ${substantive.length}`);
+            for (const f of substantive) console.log(`  substantive: ${f}`);
+            appendFileSync(process.env.GITHUB_OUTPUT, `changed=${substantive.length > 0}\n`);
+          '
 
       - name: Summarise the validation report
         if: steps.diff.outputs.changed == 'true'
