@@ -341,3 +341,115 @@ four are fixed; they are recorded because they say where this engine is fragile.
 
 `d3f0c0b` (branch `agent/frontend`; range `5c3d4e8..d3f0c0b`, 8 commits).
 Not pushed: this repository still has no remote (`git remote -v` is empty).
+
+---
+
+## CONTRACT CHANGE REQUEST — `gpa` rule `scope` — agent/frontend — 2026-09-08
+
+**Current shape.** `RuleSchema` defines `{ kind: "gpa"; min: number; scope: "overall" | "program" }`.
+`docs/API.md` section 2.2 describes only one computation: "GPA over letter-graded
+completed courses with provenance pomona, claremont or abroad, weighted by
+credits". It says nothing about what `scope: "program"` means.
+
+**Why this matters.** The engine has no notion of which completed courses belong
+to a program. Until this session it ignored `scope` entirely, so a
+program-scoped rule silently returned the **overall** average. That can approve
+or fail a major on the wrong number, with nothing in the output saying so. The
+fixture `packages/engine/test/fixtures/programs/fake-major.json` already ships
+`"scope": "program"`, so AC-P11's "evaluates correctly" was not in fact
+established by F-08's golden. An independent reviewer found this.
+
+**Interim behaviour now implemented** (fail-safe, not a guess): `scope: "program"`
+returns `unverifiable` with the note "A grade point average within a program is
+not evaluated yet, because the engine cannot yet tell which courses count toward
+a program." `scope: "overall"` is unchanged. F-08's golden was regenerated and
+now shows `cs-gpa: unverifiable`.
+
+**Proposed change**, for the manager to accept or replace:
+
+1. Add to `docs/API.md` 2.2, `gpa` row: `scope: "overall"` averages every
+   qualifying completed course. `scope: "program"` averages only courses counted
+   toward that program's requirements, and is deferred to P1, returning
+   `unverifiable` in P0 exactly like the deferred rule kinds.
+2. Optionally add `courseSet?: CourseSetRef` to the `gpa` rule so a major can say
+   which courses it means, rather than the engine inferring it from assignment.
+
+**What breaks if it is not changed:** nothing in P0, because the only shipped
+program is General Education and its `gpa` requirement is `scope: "overall"`.
+It bites the first time a major is encoded.
+
+**Task status.** I have **not** set `TASK-020` to `blocked_on: contract`, and that
+is a deliberate deviation from protocol section 6 step 3, stated here rather than
+taken quietly. Blocking it would stall TASK-021 to TASK-025, which all depend on
+it, over a rule kind no shipped program uses, and would tell the reviewer the
+engine is unusable when it is not. The interim behaviour is fail-safe. If the
+manager disagrees, set it BLOCKED and I will treat the engine as frozen.
+
+---
+
+## HANDOFF-2 ADDENDUM — review response — agent/frontend — 2026-09-08
+
+An independent review of `5c3d4e8..d3f0c0b` returned **not ready to hand off**.
+Every finding was reproduced as a failing test before any fix. All of them
+reproduced exactly as reported, including the precise `0.75` versus `0.5`.
+
+### Fixed (commit `720becb`)
+
+| Ref | Severity | Defect |
+|---|---|---|
+| C-1 | Critical | `TermId` compared with `===`, which is reference equality on an object. A duplicated course row slipped past the overlap check and closed **two `exclusive` requirements with one course**. Reachable from paste import or a merged plan. Fixed with `sameTerm`. |
+| C-2 | Critical | The greedy short-circuit stopped as soon as every closable requirement was closed, discarding the progress and courses-spent tie-breaks. On a real GE plan it reported **0.75 Area 6 credits owed when 0.5 was owed**. Now also requires the progress ceiling. |
+| I-1 | Important | `gpa` ignored `scope`, silently answering the overall average for a program-scoped rule. Now `unverifiable`; contract change request above. |
+| I-2 | Important | `gpa` divided by zero when every letter-graded course had 0 credits, printing the literal string `NaN` and reporting `unmet` from a passing record. |
+| minor | | candidates ignored their own rule's filter, so "What satisfies this?" could offer a course that can never close the requirement; the exam note claimed "Satisfied by" on partial rows and overwrote the different-semesters explanation; dead `examLabelFor`; a test name that contradicted its own assertion. |
+
+**I was wrong about open item 5.** I scoped the greedy's local optimality as
+cosmetic ("only which of two true statements the UI shows") on the strength of
+F-01, where it is. The reviewer constructed a plan where it puts a **wrong
+number on a partial row**, which is the same defect class as the PE bug I had
+already called the worst of the four. The lesson is that I generalised from the
+one fixture I had looked at instead of from the mechanism.
+
+### Still open, for the manager
+
+- **F-06 proves nothing** (reviewer I-3, and my earlier open item 6). `area-3` and
+  `analyzing-difference` are both `allowAll`, so one course legitimately closes
+  both and the fixture cannot distinguish constrained-first from any other
+  strategy. The `naiveGreedy` helper in the test consumes courses exclusively, a
+  semantics no real policy imposes, so "naive greedy fails" is an artifact of the
+  stub. ACCEPTANCE F-06 promises an assertion that does not exist. Making it real
+  needs `exclusive` or a `denyOnly` on one of the two requirements, which is a
+  change to `data/programs/general-education-2026.json` and therefore a manager
+  decision. **The headline assignment guarantee in API.md 2.3 currently has no
+  test behind it.**
+- **F-12's row in ACCEPTANCE is stale.** It says "every requirement `unmet` or
+  `unverifiable`", but API.md 2.4 requires the two non-applicable transfer
+  requirements to be `satisfied` with `waived: true`, which is what the golden
+  shows. The fixture table should be amended, not the engine.
+
+### For `docs/DEBT.md` (reviewer to move)
+
+- **I-4:** a `distinctDepartments` clash is not reported when an override names a
+  course that is not on the student's record. Narrow (a chair substitution
+  normally names a course they took) but silent. Structurally, manual results are
+  seeded after the search, so such a violation can only ever be reported after
+  the fact, never routed around.
+- Duplicate `requirement.id` values in a hand-written program silently
+  mis-evaluate, because eligibility and assignment are keyed by id. Nothing
+  throws. Worth a defensive check since program JSON is hand-written.
+- The `used` argument to `settleAttribute` is redundant: assigned keys always come
+  from the record, which `candidatesFor` already excludes.
+- No test trips `NODE_LIMIT`, so the bounded-search path is covered by
+  construction and reasoning rather than by execution. The reviewer independently
+  confirmed the path is reachable and correct (a 12-requirement probe ran the full
+  bounded search in 22 ms).
+
+### Verification after the fixes
+
+```
+engine  149 passed   shared 13 passed   web 23 passed
+npm run typecheck   clean
+npm run lint        clean
+grep -rn "document\.\|window\.\|Date\.now\|Math\.random" packages/engine/src   (empty)
+no golden carries an "assignment search bounded" note; suite runs in 66ms
+```
