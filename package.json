@@ -1,0 +1,40 @@
+{
+  "name": "pomona-gradguide",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Unofficial, browser-local degree and general-education planner for Pomona College students.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run --workspace apps/web --if-present dev",
+    "build": "npm run --workspaces --if-present build",
+    "test": "npm run --workspaces --if-present test",
+    "typecheck": "npm run --workspaces --if-present typecheck",
+    "lint": "eslint .",
+    "seed": "npm run contract:artefacts",
+    "contract:openapi": "npm run --workspace packages/shared emit:openapi",
+    "contract:artefacts": "npm run --workspace packages/shared validate:artefacts",
+    "pipeline:catalog": "npm run --workspace packages/pipeline --if-present catalog --",
+    "pipeline:sections": "npm run --workspace packages/pipeline --if-present sections --",
+    "pipeline:history": "npm run --workspace packages/pipeline --if-present history --",
+    "pipeline:validate": "npm run --workspace packages/pipeline --if-present validate --",
+    "pipeline:manifest": "npm run --workspace packages/pipeline --if-present manifest --",
+    "pipeline:all": "npm run --workspace packages/pipeline --if-present all --"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.1",
+    "eslint": "^9.39.5",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^3.2.7"
+  }
+}

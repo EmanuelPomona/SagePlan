@@ -1,0 +1,944 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "subjects": [
+    {
+      "key": "ap-chinese-language",
+      "kind": "AP",
+      "label": "AP Chinese Language and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "chinese-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-french-language",
+      "kind": "AP",
+      "label": "AP French Language and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "french-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-german-language",
+      "kind": "AP",
+      "label": "AP German Language and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "german-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-italian-language",
+      "kind": "AP",
+      "label": "AP Italian Language and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "italian-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-japanese-language",
+      "kind": "AP",
+      "label": "AP Japanese Language and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "japanese-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-latin",
+      "kind": "AP",
+      "label": "AP Latin",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "latin",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-spanish-language",
+      "kind": "AP",
+      "label": "AP Spanish Language and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "spanish-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-spanish-literature",
+      "kind": "AP",
+      "label": "AP Spanish Literature and Culture",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "spanish-literature",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-english-literature",
+      "kind": "AP",
+      "label": "AP English Literature and Composition",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "english-literature",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-english-language",
+      "kind": "AP",
+      "label": "AP English Language and Composition",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "english-language",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-calculus-ab",
+      "kind": "AP",
+      "label": "AP Calculus AB",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "calculus",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-calculus-bc",
+      "kind": "AP",
+      "label": "AP Calculus BC",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "calculus",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-statistics",
+      "kind": "AP",
+      "label": "AP Statistics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "statistics",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-computer-science-a",
+      "kind": "AP",
+      "label": "AP Computer Science A",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "computer-science",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-computer-science-principles",
+      "kind": "AP",
+      "label": "AP Computer Science Principles",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "computer-science-principles",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-biology",
+      "kind": "AP",
+      "label": "AP Biology",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "biology",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-chemistry",
+      "kind": "AP",
+      "label": "AP Chemistry",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "chemistry",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-physics-1",
+      "kind": "AP",
+      "label": "AP Physics 1",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "physics-1",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-physics-2",
+      "kind": "AP",
+      "label": "AP Physics 2",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "physics-2",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-environmental-science",
+      "kind": "AP",
+      "label": "AP Environmental Science",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "environmental-science",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-us-history",
+      "kind": "AP",
+      "label": "AP United States History",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "us-history",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-world-history",
+      "kind": "AP",
+      "label": "AP World History: Modern",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "world-history",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-european-history",
+      "kind": "AP",
+      "label": "AP European History",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "european-history",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-psychology",
+      "kind": "AP",
+      "label": "AP Psychology",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "psychology",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-art-history",
+      "kind": "AP",
+      "label": "AP Art History",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "art-history",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-music-theory",
+      "kind": "AP",
+      "label": "AP Music Theory",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "music-theory",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-human-geography",
+      "kind": "AP",
+      "label": "AP Human Geography",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "human-geography",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-other-year",
+      "kind": "AP",
+      "label": "AP exam not listed (year-long course)",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "ap-other-year",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-microeconomics",
+      "kind": "AP",
+      "label": "AP Microeconomics",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "microeconomics",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-macroeconomics",
+      "kind": "AP",
+      "label": "AP Macroeconomics",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "macroeconomics",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-us-government",
+      "kind": "AP",
+      "label": "AP United States Government and Politics",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "us-government",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-comparative-government",
+      "kind": "AP",
+      "label": "AP Comparative Government and Politics",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "comparative-government",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-physics-c-mechanics",
+      "kind": "AP",
+      "label": "AP Physics C: Mechanics",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "physics-c-mechanics",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-physics-c-em",
+      "kind": "AP",
+      "label": "AP Physics C: Electricity and Magnetism",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "physics-c-em",
+      "ibGroup": null
+    },
+    {
+      "key": "ap-other-semester",
+      "kind": "AP",
+      "label": "AP exam not listed (semester-long course)",
+      "category": "other",
+      "duration": "semester",
+      "duplicateKey": "ap-other-semester",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-english-a",
+      "kind": "IB",
+      "label": "IB English A (Literature, or Language and Literature)",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "english-literature",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-spanish-a",
+      "kind": "IB",
+      "label": "IB Spanish A",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "spanish-language",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-french-a",
+      "kind": "IB",
+      "label": "IB French A",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "french-language",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-german-a",
+      "kind": "IB",
+      "label": "IB German A",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "german-language",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-chinese-a",
+      "kind": "IB",
+      "label": "IB Chinese A",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "chinese-language",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-japanese-a",
+      "kind": "IB",
+      "label": "IB Japanese A",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "japanese-language",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-other-language-a",
+      "kind": "IB",
+      "label": "IB Language A not listed (a language other than English)",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "ib-other-language-a",
+      "ibGroup": "A"
+    },
+    {
+      "key": "ib-spanish-b",
+      "kind": "IB",
+      "label": "IB Spanish B",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "spanish-language",
+      "ibGroup": "B"
+    },
+    {
+      "key": "ib-french-b",
+      "kind": "IB",
+      "label": "IB French B",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "french-language",
+      "ibGroup": "B"
+    },
+    {
+      "key": "ib-german-b",
+      "kind": "IB",
+      "label": "IB German B",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "german-language",
+      "ibGroup": "B"
+    },
+    {
+      "key": "ib-chinese-b",
+      "kind": "IB",
+      "label": "IB Chinese B",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "chinese-language",
+      "ibGroup": "B"
+    },
+    {
+      "key": "ib-japanese-b",
+      "kind": "IB",
+      "label": "IB Japanese B",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "japanese-language",
+      "ibGroup": "B"
+    },
+    {
+      "key": "ib-other-language-b",
+      "kind": "IB",
+      "label": "IB Language B not listed",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "ib-other-language-b",
+      "ibGroup": "B"
+    },
+    {
+      "key": "ib-mathematics",
+      "kind": "IB",
+      "label": "IB Mathematics (Analysis and Approaches, or Applications and Interpretation)",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "calculus",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-biology",
+      "kind": "IB",
+      "label": "IB Biology",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "biology",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-chemistry",
+      "kind": "IB",
+      "label": "IB Chemistry",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "chemistry",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-physics",
+      "kind": "IB",
+      "label": "IB Physics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "physics-1",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-history",
+      "kind": "IB",
+      "label": "IB History",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "world-history",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-economics",
+      "kind": "IB",
+      "label": "IB Economics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "economics",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-psychology",
+      "kind": "IB",
+      "label": "IB Psychology",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "psychology",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-computer-science",
+      "kind": "IB",
+      "label": "IB Computer Science",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "computer-science",
+      "ibGroup": null
+    },
+    {
+      "key": "ib-other",
+      "kind": "IB",
+      "label": "IB exam not listed",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "ib-other",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-french",
+      "kind": "ALEVEL",
+      "label": "A-Level French",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "french-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-spanish",
+      "kind": "ALEVEL",
+      "label": "A-Level Spanish",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "spanish-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-german",
+      "kind": "ALEVEL",
+      "label": "A-Level German",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "german-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-italian",
+      "kind": "ALEVEL",
+      "label": "A-Level Italian",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "italian-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-latin",
+      "kind": "ALEVEL",
+      "label": "A-Level Latin",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "latin",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-chinese",
+      "kind": "ALEVEL",
+      "label": "A-Level Chinese",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "chinese-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-japanese",
+      "kind": "ALEVEL",
+      "label": "A-Level Japanese",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "japanese-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-other-language",
+      "kind": "ALEVEL",
+      "label": "A-Level in another language other than English",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "alevel-other-language",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-mathematics",
+      "kind": "ALEVEL",
+      "label": "A-Level Mathematics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "calculus",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-further-mathematics",
+      "kind": "ALEVEL",
+      "label": "A-Level Further Mathematics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "further-mathematics",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-biology",
+      "kind": "ALEVEL",
+      "label": "A-Level Biology",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "biology",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-chemistry",
+      "kind": "ALEVEL",
+      "label": "A-Level Chemistry",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "chemistry",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-physics",
+      "kind": "ALEVEL",
+      "label": "A-Level Physics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "physics-1",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-economics",
+      "kind": "ALEVEL",
+      "label": "A-Level Economics",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "economics",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-history",
+      "kind": "ALEVEL",
+      "label": "A-Level History",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "world-history",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-english-literature",
+      "kind": "ALEVEL",
+      "label": "A-Level English Literature",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "english-literature",
+      "ibGroup": null
+    },
+    {
+      "key": "alevel-other",
+      "kind": "ALEVEL",
+      "label": "A-Level not listed",
+      "category": "other",
+      "duration": "year",
+      "duplicateKey": "alevel-other",
+      "ibGroup": null
+    },
+    {
+      "key": "satii-french",
+      "kind": "SATII",
+      "label": "SAT Subject Test: French",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-french",
+      "ibGroup": null,
+      "romanizedScript": false
+    },
+    {
+      "key": "satii-spanish",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Spanish",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-spanish",
+      "ibGroup": null,
+      "romanizedScript": false
+    },
+    {
+      "key": "satii-german",
+      "kind": "SATII",
+      "label": "SAT Subject Test: German",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-german",
+      "ibGroup": null,
+      "romanizedScript": false
+    },
+    {
+      "key": "satii-italian",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Italian",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-italian",
+      "ibGroup": null,
+      "romanizedScript": false
+    },
+    {
+      "key": "satii-latin",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Latin",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-latin",
+      "ibGroup": null,
+      "romanizedScript": false
+    },
+    {
+      "key": "satii-modern-hebrew",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Modern Hebrew",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-modern-hebrew",
+      "ibGroup": null,
+      "romanizedScript": false
+    },
+    {
+      "key": "satii-chinese",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Chinese with Listening",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-chinese",
+      "ibGroup": null,
+      "romanizedScript": true
+    },
+    {
+      "key": "satii-japanese",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Japanese with Listening",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-japanese",
+      "ibGroup": null,
+      "romanizedScript": true
+    },
+    {
+      "key": "satii-korean",
+      "kind": "SATII",
+      "label": "SAT Subject Test: Korean with Listening",
+      "category": "language",
+      "duration": "year",
+      "duplicateKey": "satii-korean",
+      "ibGroup": null,
+      "romanizedScript": true
+    }
+  ],
+  "rules": [
+    {
+      "id": "ap-advanced-standing-credit",
+      "effect": "credit",
+      "match": {
+        "kind": "AP",
+        "minScore": 4
+      },
+      "explanation": "AP scores of 4 or 5 earn advanced standing credit: one credit for a year-long course, one-half for a semester-long course.",
+      "sourceQuote": "Credit is awarded for scores of 4 or 5 on Advanced Placement (AP) exams; for scores of 6 or 7 on Higher-Level International Baccalaureate (IB) exams; and for comparable scores on GCE Advanced Level exams.",
+      "sourceRef": {
+        "slug": "academic-standing-credit",
+        "url": "https://catalog.pomona.edu/pages/88p6CaMLyq7qCKR2TsNi"
+      },
+      "confidence": "verified"
+    },
+    {
+      "id": "ib-hl-advanced-standing-credit",
+      "effect": "credit",
+      "match": {
+        "kind": "IB",
+        "levels": [
+          "HL"
+        ],
+        "minScore": 6
+      },
+      "explanation": "IB Higher Level scores of 6 or 7 earn advanced standing credit. Standard Level exams never earn credit.",
+      "sourceQuote": "for scores of 6 or 7 on Higher-Level International Baccalaureate (IB) exams",
+      "sourceRef": {
+        "slug": "academic-standing-credit",
+        "url": "https://catalog.pomona.edu/pages/88p6CaMLyq7qCKR2TsNi"
+      },
+      "confidence": "verified"
+    },
+    {
+      "id": "alevel-advanced-standing-credit",
+      "effect": "credit",
+      "match": {
+        "kind": "ALEVEL",
+        "minGrade": "B",
+        "gradeScale": [
+          "A*",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      "explanation": "A-Level exams earn advanced standing credit for comparable scores. The catalog does not publish the cutoff; this tool assumes a grade of B or better, which is unconfirmed.",
+      "sourceQuote": "and for comparable scores on GCE Advanced Level exams.",
+      "sourceRef": {
+        "slug": "academic-standing-credit",
+        "url": "https://catalog.pomona.edu/pages/88p6CaMLyq7qCKR2TsNi"
+      },
+      "confidence": "unverified"
+    },
+    {
+      "id": "ap-language-requirement",
+      "effect": "attribute",
+      "match": {
+        "kind": "AP",
+        "category": "language",
+        "minScore": 4
+      },
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "explanation": "An AP exam in a language other than English with a score of 4 or 5 satisfies the language requirement.",
+      "sourceQuote": "By earning a score of 4 or 5 on an Advanced Placement examination in a language other than English;",
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "confidence": "verified"
+    },
+    {
+      "id": "ib-language-b-hl-requirement",
+      "effect": "attribute",
+      "match": {
+        "kind": "IB",
+        "category": "language",
+        "ibGroup": "B",
+        "levels": [
+          "HL"
+        ],
+        "minScore": 6
+      },
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "explanation": "An IB Language B exam at Higher Level with a score of 6 or 7 satisfies the language requirement. Language B at Standard Level does not.",
+      "sourceQuote": "For languages other than English, by earning a score of 6 or 7 on an International Baccalaureate (IB) Language B Higher Level or Language A (Standard Level or Higher Level) exam;",
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "confidence": "verified"
+    },
+    {
+      "id": "ib-language-a-requirement",
+      "effect": "attribute",
+      "match": {
+        "kind": "IB",
+        "category": "language",
+        "ibGroup": "A",
+        "levels": [
+          "HL",
+          "SL"
+        ],
+        "minScore": 6
+      },
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "explanation": "An IB Language A exam in a language other than English, at either level, with a score of 6 or 7 satisfies the language requirement (but only Higher Level earns credit).",
+      "sourceQuote": "For languages other than English, by earning a score of 6 or 7 on an International Baccalaureate (IB) Language B Higher Level or Language A (Standard Level or Higher Level) exam;",
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "confidence": "verified"
+    },
+    {
+      "id": "satii-language-requirement",
+      "effect": "attribute",
+      "match": {
+        "kind": "SATII",
+        "category": "language",
+        "minScore": 650,
+        "excludeRomanizedScript": true
+      },
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "explanation": "An SAT Subject Test in a language other than English with a score of 650 or higher satisfies the language requirement, except the Chinese, Japanese and Korean tests, which test in Romanized writing. No credit is awarded.",
+      "sourceQuote": "By earning a score of 650 or higher on a College Board SAT-II Subject test in a language other than English (Listening Tests are not eligible). Exams which significantly test in Romanized writing (instead of or in addition to native orthography) do not satisfy the language requirement (Chinese, Japanese and Korean exams);",
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "confidence": "verified"
+    },
+    {
+      "id": "alevel-language-requirement",
+      "effect": "attribute",
+      "match": {
+        "kind": "ALEVEL",
+        "category": "language",
+        "minGrade": "B",
+        "gradeScale": [
+          "A*",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "excludeSubjectKeys": [
+          "alevel-chinese",
+          "alevel-japanese"
+        ]
+      },
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "explanation": "An A-Level in a language other than English, Chinese or Japanese with a grade of B or better satisfies the language requirement.",
+      "sourceQuote": "By earning a grade of at least B on an A-level or equivalent exam in a language other than English, Chinese or Japanese (O-level exams are not accepted);",
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "confidence": "verified"
+    }
+  ],
+  "caps": {
+    "advancedStandingCredits": 2,
+    "externalCredits": 16
+  },
+  "encodedBy": "manager (Claude, planning session) from the 2026-27 catalog Advanced Standing Credit page and the Degree Requirements language section, snapshotted 2026-09-08",
+  "encodedOn": "2026-09-08",
+  "notes": "Credit rules: AP 4-5, IB HL 6-7, A-Level comparable (assumed B, unconfirmed). Year-long exams earn 1 credit, semester-long 0.5; the semester/year classification of AP subjects follows College Board course length and is a draft. Exams sharing a duplicateKey (AP and IB English Literature, AP Calculus AB and BC) earn credit once. Language requirement paths are separate from credit: IB Language A at Standard Level satisfies the requirement without earning credit; SAT Subject Tests satisfy it without credit. Subject keys ending in -other let a student enter an exam not listed. Quotes validated against data/sources/catalog-pages/. Caps mirror the credits rule in general-education-2026.json."
+}
