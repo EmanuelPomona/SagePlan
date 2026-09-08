@@ -1,0 +1,104 @@
+/*
+ * Design tokens for Pomona GradGuide.
+ *
+ * Source: docs/DESIGN_BRIEF.md "Palette". Hue is reserved for meaning: the four
+ * verdicts and the two manual states are the only colours on the page, and every
+ * status is also carried by a mark and a word, never by colour alone.
+ *
+ * ONE DELIBERATE DEVIATION from the brief, raised in docs/handoffs/agent-frontend.md:
+ * --partial is #8C5C15, not the brief's #B0731A. Measured on the cream canvas the
+ * brief's ochre is 3.48:1, which fails WCAG AA for text, and AC-F07 requires a
+ * contrast check. #8C5C15 keeps the same hue (35.6deg) at 5.06:1, which also puts
+ * all four verdicts in one 5.0-5.6 band so they read as a single system.
+ */
+
+:root {
+  /* Surface. Letter paper, not a white screen: the transcript reference. */
+  --canvas: #f5f0e6;
+  --canvas-hover: #ede6d8;
+  --canvas-pressed: #e4dccc;
+  --rule: #d9d0be;
+
+  /* Ink. Actions are ink too, not a brand hue: this is not a College system. */
+  --ink: #1e1c19;
+  --ink-2: #6b665c;
+
+  /* Verdicts. */
+  --satisfied: #2e6b3f;
+  --partial: #8c5c15;
+  --unmet: #a63d2f;
+  --unverifiable: #4f5d75;
+
+  /* A human said so. Never the same colour as a result the engine derived. */
+  --manual: #6e4a7e;
+
+  --focus: #2f6fe4;
+
+  /* Type. Three voices: the College quoted, the student's own record, the tool. */
+  --face-quote: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
+  --face-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --face-code: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* A dense scale. The competition is a spreadsheet. */
+  --t-quote: 0.8125rem;   /* 13px sidenote serif */
+  --t-small: 0.75rem;     /* 12px metadata */
+  --t-body: 0.875rem;     /* 14px interface */
+  --t-row: 0.875rem;      /* 14px row text, mono sets the rhythm */
+  --t-heading: 1.125rem;  /* 18px section heading, serif */
+  --t-title: 1.5rem;      /* 24px masthead */
+
+  --row-h: 2rem;          /* 32px, set by the mono line */
+  --lh-row: 1.45;
+  --lh-quote: 1.5;        /* serif wants more leading than the sans */
+
+  /* Whitespace separates sections. It does not pad rows. */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-6: 1.5rem;
+  --s-8: 2rem;
+  --s-12: 3rem;
+
+  /* The evidence margin: the signature element, expressed as a grid. */
+  --evidence-col: 22rem;
+  --page-max: 78rem;
+
+  /* Elevation is a semantic, not a decoration: only genuinely floating things. */
+  --shadow-popover: 0 6px 20px rgb(30 28 25 / 0.16);
+}
+
+/* Dark: a warm near-black for the same reason the light canvas is cream. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #1b1a17;
+    --canvas-hover: #24221e;
+    --canvas-pressed: #2c2a25;
+    --rule: #3a372f;
+    --ink: #ede7da;
+    --ink-2: #a39d90;
+    --satisfied: #6fbf85;
+    --partial: #e0a54a;
+    --unmet: #e0776a;
+    --unverifiable: #9fb0cc;
+    --manual: #c39bd3;
+    --focus: #6fa0ff;
+    --shadow-popover: 0 6px 20px rgb(0 0 0 / 0.5);
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #1b1a17;
+  --canvas-hover: #24221e;
+  --canvas-pressed: #2c2a25;
+  --rule: #3a372f;
+  --ink: #ede7da;
+  --ink-2: #a39d90;
+  --satisfied: #6fbf85;
+  --partial: #e0a54a;
+  --unmet: #e0776a;
+  --unverifiable: #9fb0cc;
+  --manual: #c39bd3;
+  --focus: #6fa0ff;
+  --shadow-popover: 0 6px 20px rgb(0 0 0 / 0.5);
+}
