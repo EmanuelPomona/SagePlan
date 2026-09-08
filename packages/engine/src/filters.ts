@@ -1,6 +1,7 @@
 import type { CourseFilter } from "@gradguide/shared";
 import { compareTerms } from "@gradguide/shared";
 import type { EvalContext } from "./context.ts";
+import { isExamPseudo } from "./externalCredit.ts";
 import type { ResolvedCourse } from "./resolvedCourse.ts";
 
 /**
@@ -25,7 +26,11 @@ export function courseMatchesFilter(
 
   if (filter.minTerm && compareTerms(course.completed.term, filter.minTerm) < 0) return false;
 
-  if (filter.sinceMatriculation && compareTerms(course.completed.term, ctx.matriculationTerm) < 0) return false;
+  if (filter.sinceMatriculation) {
+    // "External credit never counts under this filter" (docs/API.md 2.2).
+    if (isExamPseudo(course)) return false;
+    if (compareTerms(course.completed.term, ctx.matriculationTerm) < 0) return false;
+  }
 
   if (filter.partialCredit === "exclude" && course.credits < 1) return false;
 
