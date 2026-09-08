@@ -131,6 +131,36 @@ it with a test. If the manager rules differently, only `dedupe.ts` changes.
 
 ---
 
+### Item 4 — `PIPELINE_MAX_DIVERGENCES` default of 25 makes the nightly red on day one
+
+**Current contract.** `docs/API.md` §4 validator 3: "warn (fail if divergence
+count exceeds `PIPELINE_MAX_DIVERGENCES`, default 25)"; `.env.example` sets 25.
+
+**Measured.** The real Coursedog-vs-Registrar divergence count is **257** across
+2,005 Pomona courses (≈12%). Direction: the Registrar carries strictly more
+attributes on 184 courses, Coursedog on 73. `data/reports/ge-divergences.md`
+lists every one with both sides shown.
+
+**Consequence as written.** Validator 3 fails on every run, so `pipeline:all`
+stops at `validate`, the manifest is never written, and `scripts/contract-test.sh`
+can never reach 0 — which is TASK-013's AC-B06. The threshold as specified does
+not distinguish "the two sources disagree, as they always have" from "something
+broke last night".
+
+**Proposed change.** Raise the default to **300** in `docs/API.md` §4 and
+`.env.example`, so the guard catches a genuine regression (a jump above the
+known baseline) rather than firing on the steady state. Alternatively make
+validator 3 warn-only and track the count as a trend.
+
+**Interim behaviour.** I did NOT edit `docs/API.md` or `.env.example` — the
+manager owns both. The code default stays 25, matching the documented contract.
+`.github/workflows/pipeline.yml` sets `PIPELINE_MAX_DIVERGENCES: "300"`
+explicitly with a comment, and every verification run in this handoff that needed
+it passes it on the command line, so the number is always visible rather than
+hidden in a default.
+
+---
+
 ### Item 3 — two smaller shape facts (no contract change needed; recorded so the reviewer can check them)
 
 1. **`credits` has two upstream shapes, not one.** Brief §7A says
@@ -189,3 +219,188 @@ on TASK-010.
 Per §6 step 5 I am continuing with the unaffected work: `env`, `http`, `write`,
 `meta`, `raw`, `attributeMap`, `normalise`, `csvFallback`, `cli` and their tests.
 None of that changes under either resolution.
+
+---
+
+## HANDOFF-1 — agent/backend — 2026-09-08
+
+### Summary
+`packages/pipeline` is complete and runs end to end against live upstreams.
+`npm run pipeline:all` exits 0, `scripts/contract-test.sh` exits 0, and `/data`
+now holds a 2,989-course catalog spanning 12 campuses, 2,159 FA2026 sections,
+1,416 offering histories, a manifest, and eight validator reports.
+
+"Backend" on this project is this pipeline — no server, no database, no auth
+(`docs/ARCHITECTURE.md` §Pipeline). None was proposed.
+
+Four items still need the manager: the CONTRACT CHANGE REQUEST above. Two of
+them (the AC-B01 count and the duplicate-edition rule) changed what ships and
+are implemented against my proposals on the owner's instruction to proceed.
+
+### Tasks Completed
+- **TASK-010** — AC-B01 (catalog written, count criterion superseded by CCR item 1;
+  `--from-csv` set identical to the API run), AC-P08 (401 → exit 1, `/data` clean),
+  validate-artefacts passes, typecheck/lint/test pass, scope respected.
+- **TASK-011** — AC-B02 (pivot asserts the export's 5,768 courses and all eleven
+  measured attribute counts), AC-B03 (`exclusion-anomalies.md` written),
+  AC-P09 (`ge-divergences.md`, count 257, threshold behaviour per spec),
+  `pipeline:validate` exits non-zero on a hard failure.
+- **TASK-012** — AC-B04 (2,159 FA2026 sections), AC-B05 (1,416 courses, ascending
+  `knownTerms`), catalog grew 2,087 → 2,989 with every PO entry byte-identical,
+  `hyperschedule-attribute-diff.md` written.
+- **TASK-013** — AC-B06/AC-I01 (`contract-test.sh` exits 0 after `pipeline:all`),
+  AC-P08 re-verified, AC-B03 (`validation.json` carries eight checks by id),
+  AC-B07 (workflow reviewed against a checklist — see What Was NOT Verified),
+  `npm run seed` exits 0.
+
+### Files Changed
+- `packages/pipeline/**` — 26 source modules, 19 test files, 6 fixtures
+- `data/catalog.json`, `data/sections-FA2026.json`, `data/offering-history.json`,
+  `data/manifest.json`, `data/reports/*` (generated)
+- `.github/workflows/pipeline.yml` (new)
+- `docs/status/agent-backend.md`, `docs/handoffs/agent-backend.md`,
+  `docs/tasks/TASK-010..013` (frontmatter → REVIEW)
+- Not touched: `packages/shared`, `docs/API.md`, `docs/openapi.yaml`,
+  `docs/DATABASE.md`, `.env.example`, `data/programs/`, `data/sources/`,
+  `docs/tasks/INDEX.md` (shared + generated)
+
+### Contracts
+Consumed unchanged from `@gradguide/shared`. **Produced for the frontend:**
+
+| Artefact | Shape | Live size |
+|---|---|---|
+| `/data/manifest.json` | `Manifest` | 1 sections entry, `upcomingTerms: ["FA2026"]` |
+| `/data/catalog.json` | `CatalogArtefact` | 2,989 courses, 12 affiliations, `courseKey` unique |
+| `/data/sections-FA2026.json` | `SectionsArtefact` | 2,159 sections |
+| `/data/offering-history.json` | `OfferingHistoryArtefact` | 1,416 courses, 32 `knownTerms` |
+
+Three things frontend should know:
+1. **`upcomingTerms` currently contains only `FA2026`.** SP2027 is not published
+   by Hyperschedule yet (HTTP 404); the manifest omits it by design. Do not
+   hard-code two terms.
+2. **`Section.half` is `"F1"`/`"F2"`, not `"F"`/`"S"`.** Upstream models it as
+   `{prefix, number}`; I preserved the number rather than discard it. It fits
+   `z.string().nullable()`. If you test `half === "F"` it will not match.
+3. **Non-PO courses have `description: ""` and `gradeMode: ""`** — Hyperschedule
+   is a schedule, not a catalog. Render an empty description as absent, not blank.
+
+### Skills Used
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `ecc:backend-patterns` | before structuring the package | Fixed the I/O / pure / orchestration split; gave `PipelineError` its status field, `http.ts` its backoff, and the one-line-per-phase logs |
+| `ecc:contract-first` | before writing against `packages/shared` | Sent four contract questions to the manager instead of deciding them in the normaliser; kept raw upstream shapes out of `Course` |
+| `superpowers:test-driven-development` | before every parser, normaliser, validator, command | Every module written test-first and watched fail. Caught the prereq regex matching a Coursedog internal id as a course code, and a CSV fixture generator bug |
+| `ecc:error-handling` | before `http.ts` / `write.ts` | "Retry only retriable errors" → 401/403 fail on the first attempt; validate-then-temp-then-rename → no partial artefact |
+| `superpowers:requesting-code-review` | after implementation, before this handoff | Adversarial reviewer over `ef81a0f..e3a87d8` |
+| `superpowers:verification-before-completion` | immediately before this handoff | Forced the full re-run recorded under Verification |
+
+Deliberately not invoked, per protocol §1: `ecc:api-design` (no REST surface —
+this project ships files) and `ecc:security-review` (no user input, no secrets,
+no auth; the workflow uses only `GITHUB_TOKEN` via `permissions:`). TASK-010's
+own skill list omits both for the same reasons. `scripts/audit-skills.sh`
+corroborates every claim above.
+
+### Verification
+```
+npm run typecheck                     -> rc=0
+npm run lint                          -> rc=0
+npm test                              -> rc=0   233 tests (220 pipeline + 13 shared)
+npm run seed                          -> rc=0
+
+npm run pipeline:catalog
+  [catalog] source=coursedog records=2811 origin=https://catalog.pomona.edu
+  [catalog.normalise] in=2811 out=2233 not-active=576 unparseable-id=1 empty-title=1
+  [catalog.dedupe] in=2233 out=2087 discarded=146
+  [catalog.write] courses=2989 po=2087 preserved=902 unmapped=0
+
+AC-P08  COURSEDOG_ORIGIN=https://wrong.example npm run pipeline:catalog
+  FAIL [HTTP_ERROR status=401] ... -> HTTP 401: {"error":"Unauthenticated"}
+  exit=1 ; git status --porcelain data/ -> (empty)
+
+AC-B01  --from-csv vs API run
+  api courses: 2087   csv courses: 2087
+  only in API run: 0 []      only in CSV run: 0 []
+  IDENTICAL course sets
+
+npm run pipeline:sections -- FA2026 SP2027
+  [sections] term=FA2026 fetched=2159 written=2159 skippedSummer=0 unknownPomonaCodes=0
+  [sections] term=SP2027 status=not-published-yet httpStatus=404 action=skipped
+  [sections.merge] before=2989 after=2989 added=0 AF=29 PZ=187 PO=2005 JT=22 SC=184
+                   HM=153 CM=214 AA=7 KS=79 CH=40 JM=3 JP=66
+
+TASK-012 PO byte-identity across the merge
+  PO entries before merge: 2005 | after: 2005
+  byte-identical: YES
+
+npm run pipeline:history -- FA2026
+  [history] term=FA2026 courses=1416 knownTerms=32 skippedNonFaSp=0
+
+PIPELINE_MAX_DIVERGENCES=300 npm run pipeline:all      -> exit 0
+  catalog ok / sections ok / history ok / validate ok / manifest ok / verify ok
+
+data/reports/validation.json  -> ok: true | checks: 8
+  warn  ge-agreement               count=257
+  warn  exclusion-anomalies        count=10
+  warn  hyperschedule-attributes   count=83
+  pass  artefact-schemas           count=0
+  pass  non-empty                  count=0
+  pass  provenance                 count=0
+  warn  source-quotes              count=3   (34 quotes, 0 not found in snapshot)
+  pass  manifest                   count=0
+
+scripts/contract-test.sh -> exit 0
+  OK data/manifest.json / catalog.json / sections-FA2026.json / offering-history.json
+  6 check(s), 0 failed
+  CONTRACT OK
+
+scripts/audit-skills.sh -> 5 invocations at 24%,25%,33%,34%,96% through the session;
+  all claims corroborated
+```
+Artefacts for the reviewer: `data/reports/validation.json`,
+`ge-divergences.md`, `exclusion-anomalies.md`, `hyperschedule-attribute-diff.md`,
+`catalog-duplicates.md`, `source-quotes.md`.
+
+### What Was NOT Verified
+- **The workflow has never executed.** There is no git remote on this worktree, so
+  no `workflow_dispatch` run, no PR URL, and `act` is not installed. `actionlint`
+  is not installed either. I verified only that the YAML parses and that its
+  structure is right (cron `0 6 * * *`, `workflow_dispatch`, Node 22, concurrency
+  group `data-pipeline`, `permissions: contents/pull-requests: write`, PR `base: main`,
+  `add-paths: data`). **AC-B07 is therefore unverified** — treat the workflow as
+  reviewed-but-untested until someone dispatches it.
+- **The `--from-csv` column names are unverified against a real export.** Coursedog's
+  catalog UI "Export all results as CSV" was not reachable from this environment,
+  so I generated the CSV from the captured API payload. The parser matches headers
+  case-insensitively with aliases, but if the real export names columns differently
+  it will need one line changed in `COLUMNS`.
+- **Validator 7 cannot verify three pages against the live site.** The
+  `degree-requirements-tab-*` pages render their text client-side, so the served
+  HTML has none of their 29 quotes. The check says so explicitly rather than
+  claiming the quotes vanished. The committed-snapshot gate still covers them
+  (34 quotes, 0 failures) and works offline.
+- **The 257 GE divergences are reported, not adjudicated.** I did not decide which
+  source is right for any of them; that is the owner's call via the report.
+- **SP2027 has never been fetched successfully** (404 upstream). The multi-term path
+  is covered by tests with injected fetches, not by a live two-term run.
+- **The pipeline does not read `.env`.** It reads `process.env` with the committed
+  defaults from `.env.example` baked into `src/env.ts`. Nothing here is secret, and
+  the workflow sets its variables explicitly, but a value placed in `.env` alone
+  will NOT take effect.
+- I did not run the frontend, the engine, or any browser check — none exists yet,
+  and none is mine.
+
+### Known Issues
+- `PIPELINE_MAX_DIVERGENCES=25` (the documented default) fails validator 3 on every
+  run because the true baseline is 257. CCR item 4. Until ratified, `pipeline:all`
+  needs the variable set — the workflow sets it to 300 explicitly.
+- One Active Coursedog record is dropped as `unparseable-id` and one as
+  `empty-title` (`ENGL195B PO`, whose `name` is empty upstream). Both are counted
+  in the log, never silent.
+- `MUS031-042PO` in the Registrar export is a course RANGE, not a course; it is
+  reported in `unparseable` and excluded from the pivot.
+- The brief's "PO 1,785" is 1,774 PO + 10 rows whose affiliation is spelled
+  `LPO`/`PPO` + that range. Not a defect, but the figures differ by design.
+
+### Commit
+`e3a87d8` (TASK-012, TASK-013), on top of `ef81a0f` (TASK-010, TASK-011) and
+`d162e78` (the contract change request). Branch `agent/backend`. No remote configured.

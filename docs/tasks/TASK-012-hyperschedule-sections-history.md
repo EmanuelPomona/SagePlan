@@ -1,7 +1,7 @@
 ---
 id: TASK-012
 title: Hyperschedule sections and offering-history ingestion; merge non-Pomona courses into the catalog
-status: READY
+status: REVIEW
 owner: backend
 branch: agent/backend
 priority: HIGH

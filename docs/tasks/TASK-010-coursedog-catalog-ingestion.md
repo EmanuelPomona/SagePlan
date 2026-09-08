@@ -1,13 +1,13 @@
 ---
 id: TASK-010
 title: Pipeline scaffold and Coursedog catalog ingestion into data/catalog.json
-status: BLOCKED
+status: REVIEW
 owner: backend
 branch: agent/backend
 priority: HIGH
 round: 0
 depends_on: []
-blocked_on: "contract"
+blocked_on: ""
 ---
 
 # TASK-010 — Pipeline scaffold and Coursedog catalog ingestion
@@ -96,6 +96,18 @@ Do not touch `packages/shared`, `apps/web`, `data/programs`, `data/sources`.
 - Never call Coursedog from tests; inject the fetch. Capture the fixture once by hand.
 - Log format: one line per phase, counts on every line. The reviewer reads logs.
 - If the shared `Course` shape cannot represent something real (e.g. a credit shape you did not expect), do not widen it: file a `## CONTRACT CHANGE REQUEST` (protocol §6) with a real example record.
+
+## Backend note (2026-09-08)
+
+Was `BLOCKED` on the CONTRACT CHANGE REQUEST in `docs/handoffs/agent-backend.md`.
+The owner instructed me to proceed on my proposed resolutions, so the task is
+implemented against them and is now `REVIEW`. **The two contract items still need
+the manager's ratification** — they changed what ships:
+
+- AC-B01's ">= 2,700 courses" is implemented as "`status: Active` only, floor
+  >= 2,000". The live figure is 2,087 Pomona courses. Ratify or restate the AC.
+- Duplicate editions resolve to the most complete record, not the newest.
+  Ratifying this fixes GE tags on 55 courses; reversing it breaks them.
 
 ## Review History
 

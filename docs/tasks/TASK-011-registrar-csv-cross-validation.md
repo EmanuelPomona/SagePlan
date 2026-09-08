@@ -1,7 +1,7 @@
 ---
 id: TASK-011
 title: Registrar GE CSV parser, cross-source GE validator, exclusion-anomaly report
-status: READY
+status: REVIEW
 owner: backend
 branch: agent/backend
 priority: HIGH

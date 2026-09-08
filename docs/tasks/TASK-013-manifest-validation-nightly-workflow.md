@@ -1,7 +1,7 @@
 ---
 id: TASK-013
 title: Manifest, validation report, source-quote validator, and the nightly pipeline workflow
-status: READY
+status: REVIEW
 owner: backend
 branch: agent/backend
 priority: HIGH
