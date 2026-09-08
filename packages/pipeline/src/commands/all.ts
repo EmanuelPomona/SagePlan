@@ -1,4 +1,5 @@
 import { readEnv, type PipelineEnv } from "../env.ts";
+import type { ValidationCheck } from "@gradguide/shared";
 import { PipelineError } from "../errors.ts";
 import { log } from "../reports.ts";
 import { runCatalog } from "./catalog.ts";
@@ -14,28 +15,42 @@ export interface AllOptions { env?: PipelineEnv; steps?: Step[] }
 /**
  * The nightly sequence, stopping at the FIRST failure.
  *
- * Order matters: the manifest is what the app trusts, so it is written last and
- * only after validation passed. If any earlier step fails we stop with
- * yesterday's manifest still in place, which is the "fails loudly, keeps
- * yesterday's data" promise.
+ * Order matters: the MANIFEST is what the app trusts, so it is written last and
+ * only after validation passed.
+ *
+ * Be precise about what that guarantees. Each artefact is written atomically by
+ * its own step (TASK-013 sanctions this over a staging directory), so a failed
+ * run never leaves a half-written FILE. It can, however, leave a newly written
+ * catalog or sections file alongside YESTERDAY'S manifest — the guarantee is
+ * that the manifest never points at data that failed validation, not that /data
+ * is byte-for-byte unchanged. The workflow reinforces this by committing nothing
+ * unless the whole sequence exits 0.
  */
-export async function runAll(_argv: readonly string[] = [], opts: AllOptions = {}): Promise<void> {
-  const env = opts.env ?? readEnv();
-  const steps: Step[] = opts.steps ?? [
+/**
+ * Fail the run when any validator reported a hard failure. Extracted so the
+ * enforcement itself is testable: injecting fake steps only ever proved that a
+ * for-loop stops on a throw.
+ */
+export function assertNoFailures(checks: readonly ValidationCheck[]): void {
+  const failed = checks.filter((c) => c.status === "fail");
+  if (failed.length > 0) {
+    throw new PipelineError(
+      `${failed.length} validator(s) failed: ${failed.map((c) => `${c.id} (${c.summary})`).join("; ")}`,
+      "VALIDATION_FAILED",
+    );
+  }
+}
+
+/** The real nightly sequence, in order. Exported so its shape can be asserted. */
+export function defaultSteps(env: PipelineEnv): Step[] {
+  return [
     { name: "catalog", run: () => runCatalog([], { env }) },
     { name: "sections", run: () => runSections(env.terms, { env }) },
     { name: "history", run: () => runHistory([env.terms[0] ?? "FA2026"], { env }) },
     {
       name: "validate",
       run: async () => {
-        const checks = await runValidate([], { env, manifestPending: true });
-        const failed = checks.filter((c) => c.status === "fail");
-        if (failed.length > 0) {
-          throw new PipelineError(
-            `${failed.length} validator(s) failed: ${failed.map((c) => `${c.id} (${c.summary})`).join("; ")}`,
-            "VALIDATION_FAILED",
-          );
-        }
+        assertNoFailures(await runValidate([], { env, manifestPending: true }));
       },
     },
     { name: "manifest", run: () => runManifest([], { env }) },
@@ -52,6 +67,11 @@ export async function runAll(_argv: readonly string[] = [], opts: AllOptions = {
       },
     },
   ];
+}
+
+export async function runAll(_argv: readonly string[] = [], opts: AllOptions = {}): Promise<void> {
+  const env = opts.env ?? readEnv();
+  const steps: Step[] = opts.steps ?? defaultSteps(env);
 
   const results: { name: string; status: "ok" | "failed" | "skipped"; detail: string }[] = [];
   let failedAt: string | null = null;
@@ -74,5 +94,10 @@ export async function runAll(_argv: readonly string[] = [], opts: AllOptions = {
   console.log("");
   log("all", { steps: results.length, ok: results.filter((r) => r.status === "ok").length, failed: failedAt ?? "none" });
 
-  if (failedAt !== null) throw new PipelineError(`pipeline:all stopped at '${failedAt}'; yesterday's data is untouched`, "PIPELINE_FAILED");
+  if (failedAt !== null) {
+    throw new PipelineError(
+      `pipeline:all stopped at '${failedAt}'. The manifest was not updated, so the app still reads the last validated dataset; nothing is committed.`,
+      "PIPELINE_FAILED",
+    );
+  }
 }

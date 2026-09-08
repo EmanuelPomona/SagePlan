@@ -26,8 +26,13 @@ export function courseIdFromRaw(subjectCode: string | undefined, code: string | 
   if (!/^[A-Z]{2,5}$/.test(dept)) return null;
 
   const rawCode = String(code ?? "").trim().toUpperCase();
-  let remainder = rawCode.startsWith(dept) ? rawCode.slice(dept.length) : String(courseNumber ?? "").toUpperCase();
-  remainder = remainder.replace(/\s+/g, "");
+  // `code` and `subjectCode` genuinely disagree in this catalog — e.g.
+  // { code: "LATN033 PO", subjectCode: "CLAS" } and { code: "DS 190 PO",
+  // subjectCode: "ID" } — so when the code does not start with the subject we
+  // fall back to `courseNumber`. That field DOES carry the affiliation here
+  // ("033 PO", "199DRPO"), so the strip must run on both paths; gating it on the
+  // code path produced CLAS 033PO PO instead of CLAS 033 PO for 10 real courses.
+  let remainder = (rawCode.startsWith(dept) ? rawCode.slice(dept.length) : String(courseNumber ?? "").toUpperCase()).replace(/\s+/g, "");
   if (remainder.length === 0) return null;
 
   let affiliation: string = DEFAULT_AFFILIATION;
@@ -39,7 +44,10 @@ export function courseIdFromRaw(subjectCode: string | undefined, code: string | 
     }
   }
 
-  const m = /^(\d{1,3})([A-Z0-9]{0,3})$/.exec(remainder);
+  // Anchored to at most three digits followed by a NON-digit suffix: a looser
+  // pattern silently turned "MATH1000" into MATH 100 suffix "0", and course
+  // number feeds the 190-199 senior-exercise rule.
+  const m = /^(\d{1,3})([A-Z][A-Z0-9]{0,2}|)$/.exec(remainder);
   if (!m) return null;
   const courseNum = Number(m[1]);
   if (!Number.isInteger(courseNum) || courseNum < 0 || courseNum > 999) return null;

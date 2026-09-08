@@ -15,6 +15,8 @@ export function checkGeAgreement(
   catalog: readonly Course[],
   registrar: ReadonlyMap<string, RegistrarCourse>,
   maxDivergences: number,
+  /** Course Number strings in the export that could not be decomposed. */
+  unparseable: readonly string[] = [],
 ): { check: ValidationCheck; report: string } {
   type Row = { key: string; title: string; coursedog: GeAttribute[]; registrar: GeAttribute[]; note: string };
   const rows: Row[] = [];
@@ -36,6 +38,18 @@ export function checkGeAgreement(
     }
   }
 
+  // The other direction: a Pomona course the Registrar tags with GE attributes
+  // but which never made it into the catalog. These are the divergences most
+  // likely to hurt a student — the course simply cannot be found in the app —
+  // and iterating only the catalog made them invisible.
+  const inCatalog = new Set(catalog.filter((c) => c.id.affiliation === "PO").map((c) => courseKey(c.id)));
+  for (const [key, entry] of registrar) {
+    if (entry.affiliation !== "PO") continue;
+    if (inCatalog.has(key)) continue;
+    if (entry.attributes.size === 0) continue;
+    rows.push({ key, title: entry.title, coursedog: [], registrar: [...entry.attributes], note: "missing from catalog" });
+  }
+
   rows.sort((a, b) => a.key.localeCompare(b.key));
   const status: ValidationCheck["status"] = rows.length === 0 ? "pass" : rows.length > maxDivergences ? "fail" : "warn";
 
@@ -54,6 +68,12 @@ export function checkGeAgreement(
     "expected (for example a course retagged after the export was taken) can stay",
     "here with its explanation.",
     "",
+    ...(unparseable.length > 0
+      ? [`## Registrar rows that could not be decomposed (${unparseable.length})`, "",
+         "Not compared against the catalog at all. Each is either a course range or a",
+         "malformed Course Number in the export.", "",
+         ...unparseable.map((u) => `- \`${u}\``), ""]
+      : []),
     "| Course | Title | Coursedog | Registrar | Note | Explanation |",
     "|---|---|---|---|---|---|",
     ...rows.map((r) => `| ${r.key} | ${r.title} | ${fmt(r.coursedog)} | ${fmt(r.registrar)} | ${r.note} | |`),
@@ -64,9 +84,13 @@ export function checkGeAgreement(
     check: {
       id: "ge-agreement",
       status,
-      summary: `${rows.length} Coursedog/Registrar GE divergence(s) across Pomona courses`,
+      summary: `${rows.length} Coursedog/Registrar GE divergence(s) across Pomona courses` +
+        (unparseable.length > 0 ? `; ${unparseable.length} Registrar row(s) undecodable` : ""),
       count: rows.length,
-      details: rows.slice(0, 20).map((r) => `${r.key}: coursedog=${fmt(r.coursedog)} registrar=${fmt(r.registrar)} (${r.note})`),
+      details: [
+        ...unparseable.map((u) => `Registrar row could not be decomposed: ${u}`),
+        ...rows.map((r) => `${r.key}: coursedog=${fmt(r.coursedog)} registrar=${fmt(r.registrar)} (${r.note})`),
+      ].slice(0, 20),
     },
     report,
   };

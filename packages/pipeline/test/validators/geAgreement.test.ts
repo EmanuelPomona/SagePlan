@@ -77,3 +77,28 @@ describe("checkGeAgreement", () => {
     expect(checkGeAgreement([], reg([]), 25).check.id).toBe("ge-agreement");
   });
 });
+
+describe("checkGeAgreement is bidirectional", () => {
+  // The bug this guards: the check only iterated the catalog, so a Pomona course
+  // the Registrar tags but that never made it into catalog.json was invisible.
+  // 25 such courses exist in the committed data (CSCI 051G PO among them).
+  test("reports a Pomona course the Registrar tags but the catalog does not contain", () => {
+    const { check, report } = checkGeAgreement([], reg([["CSCI 051G PO", ["AREA_5"]]]), 25);
+    expect(check.count).toBe(1);
+    expect(report).toContain("CSCI 051G PO");
+    expect(report).toContain("missing from catalog");
+  });
+
+  test("does not report an untagged Registrar course that is absent from the catalog", () => {
+    expect(checkGeAgreement([], reg([["HIST 010 PO", []]]), 25).check.count).toBe(0);
+  });
+
+  test("does not report a non-PO Registrar course absent from the catalog", () => {
+    expect(checkGeAgreement([], reg([["CSCI 005 HM", ["AREA_5"], "HM"]]), 25).check.count).toBe(0);
+  });
+
+  test("does not double-report a course present in both sources", () => {
+    const { check } = checkGeAgreement([course("CSCI", 51, "PO", ["AREA_5"])], reg([["CSCI 051 PO", ["AREA_5"]]]), 25);
+    expect(check.count).toBe(0);
+  });
+});

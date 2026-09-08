@@ -78,3 +78,40 @@ describe("mapAttributes", () => {
     expect(values.length).toBe(12);
   });
 });
+
+describe("GE_GUARD_RE covers the whole PO namespace", () => {
+  // The bug this guards: the keyword list did not match "PO Phys Ed Requirement"
+  // ("Phys" is not "Physical") or "PO Community Partnership", so a rename of
+  // either token would drop 181 + 27 courses' GE tags with a green build.
+  test("matches every key in the map", () => {
+    for (const token of Object.keys(COURSEDOG_ATTRIBUTE_MAP)) {
+      expect(GE_GUARD_RE.test(token)).toBe(true);
+    }
+  });
+
+  test("a renamed physical-education token is reported, not dropped", () => {
+    const r = mapAttributes(["PO Phys Ed Req"]);
+    expect(r.unmapped).toEqual(["PO Phys Ed Req"]);
+    expect(r.dropped).toEqual([]);
+  });
+
+  test("a renamed community-partnership token is reported, not dropped", () => {
+    expect(mapAttributes(["PO Community Partnership Requirement"]).unmapped)
+      .toEqual(["PO Community Partnership Requirement"]);
+  });
+
+  test("a renamed speaking/writing token is reported, not dropped", () => {
+    expect(mapAttributes(["PO Speaking Req"]).unmapped).toEqual(["PO Speaking Req"]);
+    expect(mapAttributes(["PO Writing Req"]).unmapped).toEqual(["PO Writing Req"]);
+  });
+
+  test("the explicitly known non-GE PO tokens are still dropped silently", () => {
+    const r = mapAttributes(["PO DDP Courses"]);
+    expect(r.unmapped).toEqual([]);
+    expect(r.dropped).toEqual(["PO DDP Courses"]);
+  });
+
+  test("a non-PO subject token is still not treated as GE", () => {
+    expect(mapAttributes(["Music", "Politics"]).unmapped).toEqual([]);
+  });
+});

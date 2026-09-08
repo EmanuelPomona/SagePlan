@@ -49,11 +49,18 @@ export const KNOWN_NON_GE_TOKENS: Readonly<Record<string, string>> = {
 };
 
 /**
- * A token containing any of these words is GE-shaped. If it is neither mapped nor
- * explicitly known-non-GE, the catalog command fails rather than silently drop a
+ * A token is GE-shaped if it lives in Pomona's "PO " requirement namespace, or
+ * carries one of the GE words. If it is neither mapped nor explicitly
+ * known-non-GE, the catalog command fails rather than silently drop a
  * requirement tag (TASK-010).
+ *
+ * The `^PO ` alternative is load-bearing, not belt-and-braces: the keyword list
+ * alone does NOT match "PO Phys Ed Requirement" ("Phys" is not "Physical") or
+ * "PO Community Partnership", so a rename of either would have dropped 181 and
+ * 27 courses' GE tags with a green build. Every key in the map is asserted
+ * against this pattern in attributeMap.test.ts.
  */
-export const GE_GUARD_RE = /Area|Intensive|Analyzing|Language|Physical/i;
+export const GE_GUARD_RE = /^PO |Area|Intensive|Analyzing|Language|Physical/i;
 
 export interface MappedAttributes {
   /** GE attributes, de-duplicated, in first-seen order. */

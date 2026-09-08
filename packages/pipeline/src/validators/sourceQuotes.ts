@@ -119,7 +119,17 @@ export async function checkSourceQuotes(
     for (const e of entries) {
       if (!snapshots.has(e.slug)) continue;
       try {
-        const res = await fetchImpl(e.url, {});
+        // Bounded like every other network call. Without a signal a page that
+        // accepts the connection and never answers hangs the nightly job until
+        // the workflow's 20-minute timeout, producing no PR and no report.
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 30_000);
+        let res: Response;
+        try {
+          res = await fetchImpl(e.url, { signal: controller.signal });
+        } finally {
+          clearTimeout(timer);
+        }
         if (!res.ok) { warnings.push(`${e.slug}: upstream returned HTTP ${res.status}; quotes not re-verified live`); continue; }
         const fresh = extractSnapshotText(await res.text());
         if (fresh.length === 0) { warnings.push(`${e.slug}: re-extraction produced no text; quotes not re-verified live`); continue; }

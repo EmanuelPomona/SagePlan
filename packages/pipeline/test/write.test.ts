@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach, afterEach } from "vitest";
-import { mkdtempSync, rmSync, readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { mkdtempSync, rmSync, readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { z } from "zod";
@@ -26,10 +26,20 @@ describe("writeArtefact", () => {
     expect(readdirSync(dir)).toEqual([]);
   });
 
-  test("leaves no temp file behind on failure", () => {
+  test("leaves no temp file behind when validation rejects the value", () => {
     const p = join(dir, "c.json");
-    try { writeArtefact(p, { nope: true }, Schema); } catch { /* expected */ }
+    expect(() => writeArtefact(p, { nope: true }, Schema)).toThrow();
     expect(readdirSync(dir).filter((f) => f.includes("tmp"))).toEqual([]);
+  });
+
+  test("removes the temp file when the WRITE itself fails", () => {
+    // Schema validation happens first, so an invalid value returns before any
+    // file is touched; that path never exercised the rmSync cleanup. Point the
+    // destination at a directory so the rename fails after the temp file exists.
+    const asDirectory = join(dir, "adir");
+    mkdirSync(asDirectory, { recursive: true });
+    expect(() => writeArtefact(asDirectory, { n: 1, s: "x" }, Schema)).toThrow(PipelineError);
+    expect(readdirSync(dir).filter((f) => f.endsWith(".tmp"))).toEqual([]);
   });
 
   test("keeps the previous file untouched when the new value is invalid", () => {

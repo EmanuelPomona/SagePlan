@@ -15,11 +15,22 @@ export function checkHyperscheduleAttributes(
   sections: readonly Section[],
 ): { check: ValidationCheck; report: string } {
   const fromSections = new Map<string, Set<GeAttribute>>();
+  // Campus-1 codes we do not recognise. These are the dangerous ones: an
+  // unrecognised Pomona GE code is a GE attribute being dropped from every
+  // course that carries it, so it must reach the report rather than a log line.
+  const unknownPomona = new Map<string, Set<string>>();
+
   for (const s of sections) {
     const key = courseKey(s.course);
+    const mapped = mapGeCodes(s.geCodes);
     const set = fromSections.get(key) ?? new Set<GeAttribute>();
-    for (const a of mapGeCodes(s.geCodes).attrs) set.add(a);
+    for (const a of mapped.attrs) set.add(a);
     fromSections.set(key, set);
+    for (const code of mapped.unknownPomona) {
+      const seen = unknownPomona.get(code) ?? new Set<string>();
+      seen.add(key);
+      unknownPomona.set(code, seen);
+    }
   }
 
   type Row = { key: string; title: string; catalog: GeAttribute[]; sections: GeAttribute[] };
@@ -36,11 +47,23 @@ export function checkHyperscheduleAttributes(
   }
   rows.sort((x, y) => x.key.localeCompare(y.key));
 
+  const unknownLines = [...unknownPomona.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([code, courses]) => `unrecognised Pomona course-area code "${code}" on ${courses.size} course(s), e.g. ${[...courses].slice(0, 3).join(", ")}`);
+
   const report = [
     "# Hyperschedule GE codes vs catalog attributes",
     "",
     `**${rows.length}** course(s) offered this term disagree between the catalog and the schedule.`,
+    `**${unknownPomona.size}** unrecognised Pomona course-area code(s).`,
     "",
+    ...(unknownLines.length > 0
+      ? ["## Unrecognised Pomona codes", "",
+         "Each of these is a GE attribute being dropped from every course that carries it.",
+         "Add it to `HYPERSCHEDULE_GE_CODES` in `packages/shared`, or to the known",
+         "non-attribute list in `src/hyperschedule/geCodes.ts`, before the next run.", "",
+         ...unknownLines.map((l) => `- ${l}`), ""]
+      : []),
     "## How to resolve",
     "",
     "Hyperschedule reflects what the Registrar published for the term; the catalog",
@@ -56,10 +79,10 @@ export function checkHyperscheduleAttributes(
   return {
     check: {
       id: "hyperschedule-attributes",
-      status: rows.length === 0 ? "pass" : "warn",
-      summary: `${rows.length} catalog/Hyperschedule GE disagreement(s)`,
-      count: rows.length,
-      details: rows.slice(0, 20).map((r) => `${r.key}: catalog=${fmt(r.catalog)} sections=${fmt(r.sections)}`),
+      status: rows.length === 0 && unknownPomona.size === 0 ? "pass" : "warn",
+      summary: `${rows.length} catalog/Hyperschedule GE disagreement(s), ${unknownPomona.size} unrecognised Pomona code(s)`,
+      count: rows.length + unknownPomona.size,
+      details: [...unknownLines, ...rows.map((r) => `${r.key}: catalog=${fmt(r.catalog)} sections=${fmt(r.sections)}`)].slice(0, 20),
     },
     report,
   };

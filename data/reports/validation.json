@@ -1,13 +1,14 @@
 {
-  "generatedAt": "2026-09-08T21:20:05.474Z",
+  "generatedAt": "2026-09-08T21:36:04.348Z",
   "generator": "@gradguide/pipeline@0.1.0 validate",
   "checks": [
     {
       "id": "ge-agreement",
       "status": "warn",
-      "summary": "257 Coursedog/Registrar GE divergence(s) across Pomona courses",
-      "count": 257,
+      "summary": "282 Coursedog/Registrar GE divergence(s) across Pomona courses; 1 Registrar row(s) undecodable",
+      "count": 282,
       "details": [
+        "Registrar row could not be decomposed: MUS031-042PO",
         "AMST 103 PO: coursedog=— registrar=AREA_3 (attribute sets differ)",
         "ANTH 080 PO: coursedog=— registrar=AREA_2 (attribute sets differ)",
         "ANTH 105 PO: coursedog=AREA_2, SPEAKING_INTENSIVE registrar=AREA_2 (attribute sets differ)",
@@ -26,8 +27,7 @@
         "ART 024 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
         "ART 026 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
         "ART 027A PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
-        "ART 082 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
-        "ART 110 PO: coursedog=— registrar=AREA_6 (attribute sets differ)"
+        "ART 082 PO: coursedog=— registrar=AREA_6 (attribute sets differ)"
       ]
     },
     {
@@ -51,10 +51,9 @@
     {
       "id": "hyperschedule-attributes",
       "status": "warn",
-      "summary": "83 catalog/Hyperschedule GE disagreement(s)",
-      "count": 83,
+      "summary": "78 catalog/Hyperschedule GE disagreement(s), 0 unrecognised Pomona code(s)",
+      "count": 78,
       "details": [
-        "AFRI 010A AF: catalog=— sections=AREA_3",
         "AFRI 145 PO: catalog=— sections=AREA_3",
         "ANTH 080 PO: catalog=— sections=AREA_2",
         "ANTH 125 PO: catalog=— sections=AREA_2",
@@ -72,8 +71,9 @@
         "CHEM 103 PO: catalog=— sections=AREA_4",
         "CHEM 105 PO: catalog=— sections=AREA_4, WRITING_INTENSIVE",
         "CHIN 111H PO: catalog=— sections=AREA_1, LANGUAGE",
-        "CHST 015 CH: catalog=— sections=AREA_3",
-        "CHST 102 PO: catalog=— sections=AREA_3"
+        "CHST 102 PO: catalog=— sections=AREA_3",
+        "CSCI 051 PO: catalog=— sections=AREA_5",
+        "CSCI 134 PO: catalog=— sections=AREA_5"
       ]
     },
     {
@@ -86,13 +86,14 @@
     {
       "id": "non-empty",
       "status": "pass",
-      "summary": "every generated artefact is non-empty (4 collection(s))",
+      "summary": "every generated artefact is non-empty (5 collection(s))",
       "count": 0,
       "details": [
         "catalog.json: 2989 courses",
         "offering-history.json: 1416 history",
         "manifest.json: 1 sections",
-        "sections-FA2026.json: 2159 sections"
+        "sections-FA2026.json: 2159 sections",
+        "sections-SP2027.json: absent (configured in PIPELINE_TERMS)"
       ]
     },
     {

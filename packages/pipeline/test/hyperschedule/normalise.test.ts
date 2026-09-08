@@ -10,10 +10,14 @@ const ok = (r: ReturnType<typeof normaliseSection>) => { if (isSectionIssue(r)) 
 
 describe("normaliseSection", () => {
   test("every fixture section becomes a valid Section", () => {
+    let validated = 0;
     for (const raw of sections) {
       const r = normaliseSection(raw, { year: 2026, term: "FA" });
-      if (!isSectionIssue(r)) expect(SectionSchema.safeParse(r).success).toBe(true);
+      expect(isSectionIssue(r)).toBe(false);
+      if (!isSectionIssue(r)) { expect(SectionSchema.safeParse(r).success).toBe(true); validated++; }
     }
+    // Without this the loop could assert nothing and still pass.
+    expect(validated).toBe(sections.length);
   });
 
   test("maps identity without re-parsing a string", () => {
@@ -49,7 +53,8 @@ describe("normaliseSection", () => {
 
   test("joins several locations into one string", () => {
     const multi = sections.find((s) => ((s.schedules ?? []) as { locations?: string[] }[]).some((x) => (x.locations ?? []).length > 1));
-    if (multi) expect(ok(normaliseSection(multi, { year: 2026, term: "FA" })).meetings.some((m) => m.location.includes(","))).toBe(true);
+    expect(multi, "fixture must contain a multi-location section").toBeDefined();
+    expect(ok(normaliseSection(multi!, { year: 2026, term: "FA" })).meetings.some((m) => m.location.includes(","))).toBe(true);
   });
 
   test("reduces instructors to names", () => {
@@ -88,11 +93,10 @@ describe("courseFromSection", () => {
 
   test("uses the section's credits honestly, never fabricating 1", () => {
     const zero = sections.find((s) => s.credits === 0);
-    if (zero) {
-      const c = courseFromSection(zero, CTX)!;
-      expect(c.credits.min).toBe(0);
-      expect(c.credits.max).toBe(0);
-    }
+    expect(zero, "fixture must contain a 0-credit section").toBeDefined();
+    const c = courseFromSection(zero!, CTX)!;
+    expect(c.credits.min).toBe(0);
+    expect(c.credits.max).toBe(0);
   });
 
   test("leaves description empty and prereqs null", () => {
@@ -137,6 +141,9 @@ describe("normaliseSection term cross-check", () => {
   test("rejects a section filed under a different term than the one requested", () => {
     const r = normaliseSection(sections[0]!, { year: 2027, term: "SP" });
     expect(isSectionIssue(r)).toBe(true);
-    if (isSectionIssue(r)) expect(r.detail).toContain("expected SP2027");
+    if (isSectionIssue(r)) {
+      expect(r.reason).toBe("term-mismatch");
+      expect(r.detail).toContain("expected SP2027");
+    }
   });
 });

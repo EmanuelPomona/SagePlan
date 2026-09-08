@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { courseKey, parseTermCode, SectionsArtefactSchema, CatalogArtefactSchema, type Course, type Section } from "@gradguide/shared";
+import { courseKey, parseTermCode, SectionsArtefactSchema, CatalogArtefactSchema, type Course, type Section, type TermId } from "@gradguide/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import type { FetchImpl } from "../http.ts";
@@ -15,16 +15,24 @@ export interface SectionsOptions { env?: PipelineEnv; fetchImpl?: FetchImpl; min
 
 export async function runSections(argv: readonly string[], opts: SectionsOptions = {}): Promise<void> {
   const env = opts.env ?? readEnv();
-  const minSections = opts.minSections ?? 1;
+  // A floor of 1 is not a guard. FA2026 carries 2,159 sections live; 500 catches
+  // a truncated or half-published response without tripping on a small term.
+  const minSections = opts.minSections ?? 500;
   const termCodes = argv.filter((a) => !a.startsWith("--"));
   const terms = termCodes.length > 0 ? termCodes : env.terms;
   const fetchedAt = new Date().toISOString();
 
   const newCourses = new Map<string, Course>();
   const notPublished: string[] = [];
-  const written: string[] = [];
-  let skippedTerms = 0;
+  let skippedSummer = 0;
+  let badShape = 0;
+  let termMismatch = 0;
   let unknownPomonaTotal = 0;
+  // Nothing is written until EVERY requested term has been fetched and
+  // normalised. Writing inside the loop meant a later term's failure left a
+  // fresh sections file whose non-PO courses were never merged — a partial
+  // refresh, which is exactly what "keep yesterday's data" forbids.
+  const pending: { code: string; term: TermId; sections: Section[]; unknown: number }[] = [];
 
   for (const code of terms) {
     const term = parseTermCode(code);
@@ -49,7 +57,15 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
     const unknownPomona = new Set<string>();
     for (const r of raw) {
       const s = normaliseSection(r, term);
-      if (isSectionIssue(s)) { if (s.reason === "unsupported-term") skippedTerms++; continue; }
+      if (isSectionIssue(s)) {
+        // Counted separately: a mis-filed term is a data problem worth seeing,
+        // and lumping it in with skipped summer terms hid the very case the
+        // cross-check was added to catch.
+        if (s.reason === "unsupported-term") skippedSummer++;
+        else if (s.reason === "term-mismatch") termMismatch++;
+        else badShape++;
+        continue;
+      }
       sections.push(s);
       for (const u of mapGeCodes(s.geCodes).unknownPomona) unknownPomona.add(u);
 
@@ -67,25 +83,31 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
       );
     }
 
-    writeArtefact(
-      join(env.dataDir, `sections-${code}.json`),
-      { meta: makeMeta({ generator: `sections ${code}`, sourceUrl: sectionsUrl(env, code), fetchedAt, catalogYear: env.catalogYear }), term, sections },
-      SectionsArtefactSchema,
-    );
-    written.push(code);
-    log("sections", { term: code, fetched: raw.length, written: sections.length, skippedSummer: skippedTerms, unknownPomonaCodes: unknownPomona.size });
+    pending.push({ code, term, sections, unknown: unknownPomona.size });
+    log("sections.fetch", { term: code, fetched: raw.length, usable: sections.length, skippedSummer, termMismatch, badShape, unknownPomonaCodes: unknownPomona.size });
   }
 
-  if (written.length === 0) {
+  if (pending.length === 0) {
     throw new PipelineError(
       `none of the requested terms (${terms.join(", ")}) is published upstream; keeping yesterday's data`,
       "SECTIONS_NO_TERMS",
     );
   }
 
-  // Merge non-PO courses into the catalog. Anything already present wins: the
-  // Coursedog record is richer (description, grade mode, requisites), and
-  // TASK-012 requires PO entries to be untouched.
+  for (const p of pending) {
+    writeArtefact(
+      join(env.dataDir, `sections-${p.code}.json`),
+      { meta: makeMeta({ generator: `sections ${p.code}`, sourceUrl: sectionsUrl(env, p.code), fetchedAt, catalogYear: env.catalogYear }), term: p.term, sections: p.sections },
+      SectionsArtefactSchema,
+    );
+    log("sections.write", { term: p.code, sections: p.sections.length, unknownPomonaCodes: p.unknown });
+  }
+
+  // Merge non-PO courses into the catalog. Only PO entries are protected:
+  // TASK-012 requires the Coursedog record (richer — description, grade mode,
+  // requisites) to survive untouched. Non-PO entries are REFRESHED, because
+  // Hyperschedule is their only source and skipping them froze every 5C course
+  // at whatever the first run happened to capture, including its GE tags.
   const catalogPath = join(env.dataDir, "catalog.json");
   const existing = readExistingCourses(catalogPath);
   if (existing.length === 0) {
@@ -93,10 +115,13 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
   }
   const byKey = new Map(existing.map((c) => [courseKey(c.id), c]));
   let added = 0;
+  let refreshed = 0;
   for (const [key, course] of newCourses) {
-    if (byKey.has(key)) continue;
+    const existingEntry = byKey.get(key);
+    if (existingEntry !== undefined && existingEntry.id.affiliation === "PO") continue;
+    if (existingEntry === undefined) added++;
+    else refreshed++;
     byKey.set(key, course);
-    added++;
   }
   const merged = [...byKey.values()].sort((a, b) => courseKey(a.id).localeCompare(courseKey(b.id)));
 
@@ -106,13 +131,18 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
   // of". Stamping it with a Hyperschedule sourceUrl would make 2,005 Pomona
   // courses claim a source they did not come from. ArtefactMeta holds a single
   // sourceUrl, so the honest choice is the catalog's own.
-  const existingMeta = readExistingMeta(catalogPath);
-  const meta = existingMeta ?? makeMeta({ generator: "sections merge", sourceUrl: sectionsUrl(env, terms[0] ?? "FA2026"), fetchedAt, catalogYear: env.catalogYear });
+  // readExistingCourses above has already thrown unless the catalog exists and
+  // is valid, so its meta is always present here — no fallback branch to leave
+  // untested.
+  const meta = readExistingMeta(catalogPath);
+  if (meta === null) {
+    throw new PipelineError(`${catalogPath} has no readable provenance stamp`, "CATALOG_MISSING");
+  }
   writeArtefact(catalogPath, { meta, courses: merged }, CatalogArtefactSchema);
 
   const byAff: Record<string, number> = {};
   for (const c of merged) byAff[c.id.affiliation] = (byAff[c.id.affiliation] ?? 0) + 1;
-  log("sections.merge", { before: existing.length, after: merged.length, added, unknownPomonaCodes: unknownPomonaTotal, ...byAff });
+  log("sections.merge", { before: existing.length, after: merged.length, added, refreshed, unknownPomonaCodes: unknownPomonaTotal, ...byAff });
   if (notPublished.length > 0) {
     log("sections.warn", { notPublishedYet: notPublished.join(","), count: notPublished.length });
   }

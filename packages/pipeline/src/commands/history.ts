@@ -13,7 +13,9 @@ export interface HistoryOptions { env?: PipelineEnv; fetchImpl?: FetchImpl; minC
 
 export async function runHistory(argv: readonly string[], opts: HistoryOptions = {}): Promise<void> {
   const env = opts.env ?? readEnv();
-  const minCourses = opts.minCourses ?? 1;
+  // Live FA2026 returns 1,416 courses; 500 catches a shape drift that silently
+  // drops most records without tripping on a genuinely small term.
+  const minCourses = opts.minCourses ?? 500;
   const code = argv.find((a) => !a.startsWith("--")) ?? env.terms[0] ?? "FA2026";
   const asOfTerm = parseTermCode(code);
   if (!asOfTerm) throw new PipelineError(`'${code}' is not a term code (expected FA2026)`, "CLI_BAD_ARGS");

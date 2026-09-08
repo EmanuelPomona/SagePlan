@@ -60,3 +60,39 @@ describe("checkHyperscheduleAttributes", () => {
     expect(checkHyperscheduleAttributes([], []).check.id).toBe("hyperschedule-attributes");
   });
 });
+
+describe("unknown Pomona GE codes reach the validation report", () => {
+  // The bug this guards: unknownPomona was accumulated into a local counter that
+  // only ever reached a log line. A new or renamed campus-1 code was therefore
+  // dropped from every merged non-PO course with nothing to detect it.
+  test("counts an unrecognised campus-1 code and names it", () => {
+    const { check, report } = checkHyperscheduleAttributes(
+      [course("CSCI", 51, "PO", ["AREA_5"])],
+      [section("CSCI", 51, "PO", ["1A5", "1ZZZ"])],
+    );
+    expect(check.count).toBeGreaterThan(0);
+    expect(check.details.join(" ")).toContain("1ZZZ");
+    expect(report).toContain("1ZZZ");
+  });
+
+  test("does not treat another college's code as unknown", () => {
+    const { check } = checkHyperscheduleAttributes(
+      [course("CSCI", 51, "PO", ["AREA_5"])],
+      [section("CSCI", 51, "PO", ["1A5", "4HSA"])],
+    );
+    expect(check.count).toBe(0);
+  });
+
+  test("reports an unknown code even on a course absent from the catalog", () => {
+    const { check } = checkHyperscheduleAttributes([], [section("ZZZ", 1, "PO", ["1ZZZ"])]);
+    expect(check.details.join(" ")).toContain("1ZZZ");
+  });
+
+  test("known non-attribute Pomona codes are not reported as unknown", () => {
+    const { check } = checkHyperscheduleAttributes(
+      [course("CSCI", 51, "PO", ["AREA_5"])],
+      [section("CSCI", 51, "PO", ["1A5", "1DDP", "1P3"])],
+    );
+    expect(check.count).toBe(0);
+  });
+});

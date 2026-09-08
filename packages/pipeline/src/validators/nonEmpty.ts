@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { ValidationCheck } from "@gradguide/shared";
 import { generatedArtefacts } from "./artefactFiles.ts";
 
@@ -10,7 +11,7 @@ import { generatedArtefacts } from "./artefactFiles.ts";
  * that nothing emptied a file afterwards, and it is what puts validator 2 in
  * data/reports/validation.json alongside the other seven.
  */
-export function checkNonEmpty(dataDir: string, minCourses = 1): { check: ValidationCheck; report: string } {
+export function checkNonEmpty(dataDir: string, minCourses = 2000, expectedTerms: readonly string[] = []): { check: ValidationCheck; report: string } {
   const issues: string[] = [];
   const counts: string[] = [];
 
@@ -30,6 +31,15 @@ export function checkNonEmpty(dataDir: string, minCourses = 1): { check: Validat
       if (name === "courses" && value.length < minCourses) {
         issues.push(`${file.rel}: only ${value.length} courses, below the floor of ${minCourses}`);
       }
+    }
+  }
+
+  // An artefact that is simply ABSENT passes every other check: generatedArtefacts
+  // is existsSync-gated, the manifest omits the term, and validator 8 only checks
+  // that listed files exist. A whole term can vanish without rising above a log line.
+  for (const term of expectedTerms) {
+    if (!existsSync(join(dataDir, `sections-${term}.json`))) {
+      counts.push(`sections-${term}.json: absent (configured in PIPELINE_TERMS)`);
     }
   }
 

@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ManifestSchema, compareTerms, parseTermCode } from "@gradguide/shared";
 import { runManifest } from "../../src/commands/manifest.ts";
-import { runAll, type Step } from "../../src/commands/all.ts";
+import { runAll, defaultSteps, assertNoFailures, type Step } from "../../src/commands/all.ts";
 import { PipelineError } from "../../src/errors.ts";
 import { readEnv } from "../../src/env.ts";
 
@@ -131,5 +131,59 @@ describe("runAll failure enforcement", () => {
     ];
     const err = await runAll([], { env: env(), steps }).catch((e: unknown) => e);
     expect((err as PipelineError).message).toContain("verify");
+  });
+});
+
+describe("the REAL default step list", () => {
+  // Every other runAll test injects fake steps, which only ever proved that a
+  // for-loop stops on a throw. These assert the actual sequence and the actual
+  // failure enforcement.
+  test("runs catalog, sections, history, validate, manifest, then verify", () => {
+    expect(defaultSteps(env()).map((s) => s.name)).toEqual(
+      ["catalog", "sections", "history", "validate", "manifest", "verify"],
+    );
+  });
+
+  test("writes the manifest only after validation", () => {
+    const names = defaultSteps(env()).map((s) => s.name);
+    expect(names.indexOf("validate")).toBeLessThan(names.indexOf("manifest"));
+  });
+
+  test("verifies the manifest after writing it", () => {
+    const names = defaultSteps(env()).map((s) => s.name);
+    expect(names.indexOf("manifest")).toBeLessThan(names.indexOf("verify"));
+  });
+});
+
+describe("assertNoFailures", () => {
+  const check = (id: string, status: "pass" | "warn" | "fail") => ({ id, status, summary: `${id} summary`, count: 0, details: [] });
+
+  test("passes when every check passed", () => {
+    expect(() => assertNoFailures([check("a", "pass"), check("b", "pass")])).not.toThrow();
+  });
+
+  test("passes on warnings: they are advisory by contract", () => {
+    expect(() => assertNoFailures([check("ge-agreement", "warn")])).not.toThrow();
+  });
+
+  test("throws on a single hard failure and names the validator", () => {
+    try {
+      assertNoFailures([check("manifest", "fail")]);
+      throw new Error("should have thrown");
+    } catch (e) {
+      expect((e as PipelineError).code).toBe("VALIDATION_FAILED");
+      expect((e as PipelineError).message).toContain("manifest");
+    }
+  });
+
+  test("names every failing validator", () => {
+    const err = (() => { try { assertNoFailures([check("a", "fail"), check("b", "fail")]); } catch (e) { return e as PipelineError; } })()!;
+    expect(err.message).toContain("a");
+    expect(err.message).toContain("b");
+    expect(err.message).toContain("2 validator(s)");
+  });
+
+  test("passes on an empty check list", () => {
+    expect(() => assertNoFailures([])).not.toThrow();
   });
 });

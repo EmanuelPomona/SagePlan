@@ -56,7 +56,10 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
   const registrar = pivotRegistrar(parseRegistrarCsv(readFileSync(env.registrarCsvPath)));
   log("validate.registrar", { courses: registrar.byCourse.size, unparseable: registrar.unparseable.length });
 
-  const ge = checkGeAgreement(catalog, registrar.byCourse, env.maxDivergences);
+  if (registrar.unparseable.length > 0) {
+    log("validate.registrar.warn", { unparseable: registrar.unparseable.slice(0, 5).join(",") });
+  }
+  const ge = checkGeAgreement(catalog, registrar.byCourse, env.maxDivergences, registrar.unparseable);
   writeReport("ge-divergences", ge.report, env.dataDir);
   checks.push(ge.check);
   log("validate.ge-agreement", { status: ge.check.status, divergences: ge.check.count, max: env.maxDivergences });
@@ -79,7 +82,7 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
   log("validate.artefact-schemas", { status: schema.check.status, issues: schema.check.count });
 
   // 2 — non-empty guard, asserted against what is on disk
-  const nonEmpty = checkNonEmpty(env.dataDir);
+  const nonEmpty = checkNonEmpty(env.dataDir, 2000, env.terms);
   checks.push(nonEmpty.check);
   log("validate.non-empty", { status: nonEmpty.check.status, issues: nonEmpty.check.count });
 

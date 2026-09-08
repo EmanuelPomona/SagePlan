@@ -32,10 +32,14 @@ function isMoreComplete(candidate: Course, incumbent: Course): boolean {
   if (candidate.description.length !== incumbent.description.length) {
     return candidate.description.length > incumbent.description.length;
   }
-  if (candidate.prereqText !== incumbent.prereqText) {
-    return (candidate.prereqText ?? "").length > (incumbent.prereqText ?? "").length;
-  }
-  return candidate.title.length > incumbent.title.length;
+  const candidatePrereq = candidate.prereqText ?? "";
+  const incumbentPrereq = incumbent.prereqText ?? "";
+  if (candidatePrereq.length !== incumbentPrereq.length) return candidatePrereq.length > incumbentPrereq.length;
+  if (candidate.title.length !== incumbent.title.length) return candidate.title.length > incumbent.title.length;
+  // Everything measurable is equal. Compare the serialised record so the winner
+  // is the same whichever order the two editions arrived in — otherwise the
+  // catalog changes between runs for no reason, and the nightly opens a PR for it.
+  return JSON.stringify(candidate) < JSON.stringify(incumbent);
 }
 
 export function dedupeCourses(courses: readonly Course[]): { courses: Course[]; discarded: DiscardedCourse[] } {
@@ -66,7 +70,9 @@ export function dedupeCourses(courses: readonly Course[]): { courses: Course[]; 
       reason:
         kept.attributes.length !== course.attributes.length
           ? "kept the edition carrying more GE attributes"
-          : "kept the edition with more catalog detail",
+          : kept.description.length !== course.description.length || (kept.prereqText ?? "").length !== (course.prereqText ?? "").length
+            ? "kept the edition with more catalog detail"
+            : "editions are equivalent; kept one deterministically",
     });
   }
 

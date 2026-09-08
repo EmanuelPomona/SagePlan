@@ -95,3 +95,26 @@ describe("dedupeCourses", () => {
     expect(new Set(keys).size).toBe(keys.length);
   });
 });
+
+describe("dedupeCourses is deterministic on ties", () => {
+  // The bug this guards: when two editions tied on every measured field the
+  // comparison returned false both ways, so the winner depended on input order
+  // and the catalog changed between identical runs for no reason.
+  test("picks the same winner when prereqText differs but is the same length", () => {
+    const a = base({ prereqText: "MATH 030", title: "Calc" });
+    const b = base({ prereqText: "MATH 031", title: "Calculus I (long title)" });
+    expect(dedupeCourses([a, b]).courses[0]!.title).toBe(dedupeCourses([b, a]).courses[0]!.title);
+  });
+
+  test("picks the same winner when the records are fully tied", () => {
+    const a = base({ gradeMode: "LP" });
+    const b = base({ gradeMode: "UP" });
+    expect(dedupeCourses([a, b]).courses[0]!.gradeMode).toBe(dedupeCourses([b, a]).courses[0]!.gradeMode);
+  });
+
+  test("does not claim more catalog detail when the editions are equivalent", () => {
+    const a = base({ gradeMode: "LP" });
+    const b = base({ gradeMode: "UP" });
+    expect(dedupeCourses([a, b]).discarded[0]!.reason).toContain("equivalent");
+  });
+});

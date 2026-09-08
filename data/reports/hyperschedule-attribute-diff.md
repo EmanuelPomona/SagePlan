@@ -1,6 +1,7 @@
 # Hyperschedule GE codes vs catalog attributes
 
-**83** course(s) offered this term disagree between the catalog and the schedule.
+**78** course(s) offered this term disagree between the catalog and the schedule.
+**0** unrecognised Pomona course-area code(s).
 
 ## How to resolve
 
@@ -10,7 +11,6 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 
 | Course | Title | Catalog | Sections |
 |---|---|---|---|
-| AFRI 010A AF | Intro to Africana Studies | — | AREA_3 |
 | AFRI 145 PO | Sounds & Sonics of Black Life | — | AREA_3 |
 | ANTH 080 PO | The Horror of Everyday Life | — | AREA_2 |
 | ANTH 125 PO | Disability, Race, & the Bodymind | — | AREA_2 |
@@ -28,10 +28,7 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | CHEM 103 PO | Enviro Analyt Chem W/Lab | — | AREA_4 |
 | CHEM 105 PO | Biochemistry w/Laboratory | — | AREA_4, WRITING_INTENSIVE |
 | CHIN 111H PO | Advanced Chinese for Bilinguals | — | AREA_1, LANGUAGE |
-| CHST 015 CH | Intro Chicana/o Latina/o Studies | — | AREA_3 |
 | CHST 102 PO | Latinx Urbanism: Voices from LA | — | AREA_3 |
-| CHST 128 CH | Latinx Citizenship | AREA_3, SPEAKING_INTENSIVE | ANALYZING_DIFFERENCE, AREA_3, SPEAKING_INTENSIVE |
-| CHST 190 CH | Senior Seminar | — | WRITING_INTENSIVE |
 | CSCI 051 PO | Introduction to Computer Science | — | AREA_5 |
 | CSCI 134 PO | Operating Systems | — | AREA_5 |
 | CSCI 181AG PO | Algorithmic Game Theory | — | AREA_5 |
@@ -50,7 +47,6 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | GWS 143 PO | Black Genders, Black Sexualities | — | AREA_3 |
 | GWS 166 PO | Witchcraft | AREA_3 | AREA_3, SPEAKING_INTENSIVE |
 | GWS 181 PO | Queer Feminist Affect Theories | — | AREA_3 |
-| HIST 029 CH | US Immigration History | — | AREA_3 |
 | HIST 061 PO | History of East Asia to 1650 | — | AREA_3 |
 | HIST 165C PO | The Chinese Cultural Revolution | — | AREA_3 |
 | HIST 169 PO | Ghosts and Gods in Japan | — | AREA_3 |

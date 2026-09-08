@@ -5,7 +5,7 @@ import {
 import { mapGeCodes } from "./geCodes.ts";
 import { RawSectionSchema, RawHistorySchema } from "./raw.ts";
 
-export interface SectionIssue { reason: "unsupported-term" | "bad-shape"; detail: string }
+export interface SectionIssue { reason: "unsupported-term" | "term-mismatch" | "bad-shape"; detail: string }
 export function isSectionIssue(v: Section | SectionIssue): v is SectionIssue {
   return (v as SectionIssue).reason !== undefined;
 }
@@ -54,7 +54,7 @@ export function normaliseSection(raw: unknown, term: TermId): Section | SectionI
   // Cross-check against the term we asked for: a section filed under a
   // different term would silently make "is this offered in SP2027" wrong.
   if (id.year !== term.year || season !== term.term) {
-    return { reason: "unsupported-term", detail: `section is ${season}${id.year}, expected ${term.term}${term.year}` };
+    return { reason: "term-mismatch", detail: `section is ${season}${id.year}, expected ${term.term}${term.year}` };
   }
 
   const half = id.half == null ? null : `${id.half.prefix}${id.half.number ?? ""}`;

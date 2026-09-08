@@ -167,7 +167,7 @@ describe("catalog provenance across the sections merge", () => {
     expect(after.sourceUrl).not.toContain("hyperschedule");
   });
 
-  test("falls back to a fresh stamp when there is no prior meta to keep", async () => {
+  test("keeps whatever provenance the catalog already carries", async () => {
     writeFileSync(join(dir, "data", "catalog.json"), JSON.stringify({
       meta: { schemaVersion: 1, generator: "seed", generatedAt: "2026-09-01T00:00:00Z", fetchedAt: "2026-09-01T00:00:00Z", sourceUrl: "https://catalog.pomona.edu/seed", catalogYear: "2026-2027" },
       courses: [poCourse],
@@ -176,5 +176,60 @@ describe("catalog provenance across the sections merge", () => {
     await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
     const meta = JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")).meta;
     expect(meta.sourceUrl).toBe("https://catalog.pomona.edu/seed");
+  });
+});
+
+describe("runSections all-or-nothing across terms", () => {
+  // The bug this guards: artefacts were written inside the per-term loop, so a
+  // later term's failure left a fresh sections file whose non-PO courses were
+  // never merged into the catalog — a partial refresh with a non-zero exit.
+  test("writes no term file at all when a later term fails hard", async () => {
+    seedCatalog([poCourse]);
+    const forTerm = (code: string) => {
+      const term = code.slice(0, 2), year = Number(code.slice(2));
+      return structuredClone(sectionsFixture).map((s: { identifier: Record<string, unknown> }) => {
+        s.identifier.term = term; s.identifier.year = year; return s;
+      });
+    };
+    const fetchImpl = vi.fn().mockImplementation((url: string) =>
+      Promise.resolve(url.includes("SP2027") ? new Response("boom", { status: 500 }) : json(forTerm("FA2026"))));
+    await expect(runSections(["FA2026", "SP2027"], { env: env(), fetchImpl, minSections: 1 })).rejects.toBeInstanceOf(PipelineError);
+    expect(existsSync(join(dir, "data", "sections-FA2026.json"))).toBe(false);
+    expect(existsSync(join(dir, "data", "sections-SP2027.json"))).toBe(false);
+  });
+
+  test("leaves yesterday's catalog untouched when a term fails", async () => {
+    seedCatalog([poCourse]);
+    const before = readFileSync(join(dir, "data", "catalog.json"), "utf8");
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(new Response("boom", { status: 500 })));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 }).catch(() => {});
+    expect(readFileSync(join(dir, "data", "catalog.json"), "utf8")).toBe(before);
+  });
+});
+
+describe("runSections refreshes non-Pomona courses", () => {
+  // The bug this guards: `if (byKey.has(key)) continue` froze every non-PO course
+  // at whatever the first run captured, so a Scripps course gaining an Area tag
+  // never picked it up. Only PO entries must be protected.
+  test("updates a stale non-PO course from the schedule", async () => {
+    const staleNonPo: Course = {
+      ...poCourse,
+      id: { department: "AFRI", courseNumber: 10, suffix: "A", affiliation: "AF" },
+      title: "Stale title", attributes: [], credits: { min: 0, max: 0, repeatable: false, maxRepeats: 0 },
+    };
+    seedCatalog([poCourse, staleNonPo]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    const refreshed = catalog.courses.find((c) => courseKey(c.id) === "AFRI 010A AF")!;
+    expect(refreshed.title).not.toBe("Stale title");
+  });
+
+  test("still never touches a Pomona course", async () => {
+    seedCatalog([poCourse]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    expect(catalog.courses.find((c) => courseKey(c.id) === "AFRI 010A PO")!.title).toBe(poCourse.title);
   });
 });

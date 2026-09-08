@@ -96,6 +96,31 @@ export async function runCatalog(argv: readonly string[], opts: CatalogOptions =
     CatalogArtefactSchema,
   );
 
+  // Records the normaliser refused. Counted in the log before, but never listed
+  // anywhere a human would look; "1 unparseable-id" tells nobody which course.
+  const dropped = issues.filter((i) => i.reason !== "not-active");
+  writeReport(
+    "catalog-dropped",
+    [
+      "# Records dropped during catalog ingestion",
+      "",
+      `${records.length} upstream record(s) -> ${deduped.length} course(s).`,
+      "",
+      `- not Active (administrative placeholders and test rows): **${issueCounts["not-active"] ?? 0}**`,
+      `- refused by the normaliser: **${dropped.length}**`,
+      "",
+      "Non-Active records are expected: Coursedog carries Banked and Inactive rows",
+      "such as `PE WAIVER` and `TEST001 PO`. The rows below are different — they",
+      "look like courses but could not be represented, so each is a real loss.",
+      "",
+      "| Course | Reason | Detail |",
+      "|---|---|---|",
+      ...dropped.map((i) => `| ${i.code} | ${i.reason} | ${i.detail.slice(0, 120)} |`),
+      "",
+    ].join("\n"),
+    env.dataDir,
+  );
+
   if (discarded.length > 0) {
     writeReport(
       "catalog-duplicates",
@@ -118,5 +143,5 @@ export async function runCatalog(argv: readonly string[], opts: CatalogOptions =
     );
   }
 
-  log("catalog.write", { path: catalogPath, courses: merged.length, po: deduped.length, preserved, unmapped: 0 });
+  log("catalog.write", { path: catalogPath, courses: merged.length, po: deduped.length, preserved, unmapped: 0, droppedRecords: dropped.length });
 }

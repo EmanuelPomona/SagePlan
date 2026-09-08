@@ -1,6 +1,6 @@
 # Coursedog vs Registrar — GE attribute divergences
 
-**257** Pomona course(s) disagree between the two sources.
+**282** Pomona course(s) disagree between the two sources.
 Threshold: warn from 1, fail above 300 (`PIPELINE_MAX_DIVERGENCES`).
 
 ## How to resolve
@@ -11,6 +11,13 @@ For each row, decide which record is right, fix it upstream, and write the reaso
 in the Explanation column so the next run's diff is smaller. A row that is
 expected (for example a course retagged after the export was taken) can stay
 here with its explanation.
+
+## Registrar rows that could not be decomposed (1)
+
+Not compared against the catalog at all. Each is either a course range or a
+malformed Course Number in the export.
+
+- `MUS031-042PO`
 
 | Course | Title | Coursedog | Registrar | Note | Explanation |
 |---|---|---|---|---|---|
@@ -59,9 +66,14 @@ here with its explanation.
 | BIOL 165A PO | Molecular Genetics of Cancer | AREA_4, SPEAKING_INTENSIVE | — | missing from Registrar export | |
 | BIOL 173 PO | Genomics & Bioinformatics w/Lab | AREA_4, SPEAKING_INTENSIVE | AREA_4 | attribute sets differ | |
 | BIOL 189J PO | Research Mthd Neurolog Disease | AREA_4 | — | missing from Registrar export | |
+| CHEM 106 PO | Environmental Chemistry | — | AREA_4 | missing from catalog | |
 | CHEM 150 PO | Adv. Synthesis Lab | AREA_4 | — | missing from Registrar export | |
 | CHEM 151 PO | Adv Chem and Biochem Kinetics | — | AREA_4 | attribute sets differ | |
 | CHEM 165 PO | Adv. Biochemistry Lab | AREA_4 | — | missing from Registrar export | |
+| CHEM 172 PO | NMR Spectroscopy | — | AREA_4 | missing from catalog | |
+| CHEM 175 PO | Intro to Medicinal Chemistry | — | AREA_4 | missing from catalog | |
+| CHEM 180 PO | Advanced Biochemistry | — | AREA_4 | missing from catalog | |
+| CHEM 185 PO | Soft Nanomaterials | — | AREA_4 | missing from catalog | |
 | CHEM 187 PO | Polymer Chemistry | — | AREA_4 | attribute sets differ | |
 | CHIN 124 PO | Cultural Landscapes of China | — | AREA_1 | attribute sets differ | |
 | CHIN 129 PO | International Interethnic China | — | LANGUAGE | attribute sets differ | |
@@ -76,7 +88,10 @@ here with its explanation.
 | CLAS 103 PO | Medieval Latin Translation | LANGUAGE | — | missing from Registrar export | |
 | CLAS 104 PO | Readings in Koine Greek | LANGUAGE | — | missing from Registrar export | |
 | CLAS 112 PO | Gender & Sex in Ancient Rome | AREA_1, LANGUAGE, WRITING_INTENSIVE | AREA_1, WRITING_INTENSIVE | attribute sets differ | |
+| CSCI 009 PO | Peer Mentoring in STEM | — | AREA_5 | missing from catalog | |
 | CSCI 051 PO | Introduction to Computer Science | — | AREA_5 | attribute sets differ | |
+| CSCI 051G PO | Intro to CS in Grace w/Lab | — | AREA_5 | missing from catalog | |
+| CSCI 051J PO | Intro to CS in Java w/Lab | — | AREA_5 | missing from catalog | |
 | CSCI 122 PO | Computational Design Tools | — | AREA_5 | attribute sets differ | |
 | CSCI 138 PO | System Security | — | AREA_5 | attribute sets differ | |
 | CSCI 181AA PO | Advanced Algorithms | — | AREA_5 | attribute sets differ | |
@@ -89,8 +104,10 @@ here with its explanation.
 | DANC 137 PO | Performing Art: Sexuality/Gender | AREA_1 | — | missing from Registrar export | |
 | DANC 182 PO | Dance Production Practicum | — | AREA_6 | attribute sets differ | |
 | DANC 189 PO | Movement in the Weimar Republic | — | AREA_1 | attribute sets differ | |
+| DS 002R PO | Foundations of Data Science, R | — | AREA_5 | missing from catalog | |
 | EA 042 PO | Biomimicry Design Innovation | — | AREA_2 | attribute sets differ | |
 | EA 062 PO | Political Animals, Animal Ethics | — | AREA_2 | attribute sets differ | |
+| EA 189C PO | Climate Change Solutions | — | AREA_2 | missing from catalog | |
 | EA 189G PO | Energy History and Justice | — | AREA_2 | attribute sets differ | |
 | EA 190 PO | Environmental Seminar CP | COMMUNITY_PARTNERSHIP, SPEAKING_INTENSIVE | SPEAKING_INTENSIVE | attribute sets differ | |
 | ECON 131 PO | Economics of Entrepreneurship CP | ANALYZING_DIFFERENCE, AREA_2, COMMUNITY_PARTNERSHIP | ANALYZING_DIFFERENCE, AREA_2 | attribute sets differ | |
@@ -139,6 +156,9 @@ here with its explanation.
 | GEOL 143 PO | Geology of Natural Resources | AREA_4 | AREA_4, SPEAKING_INTENSIVE | attribute sets differ | |
 | GEOL 177 PO | Chemical Oceanography | — | AREA_4 | attribute sets differ | |
 | GEOL 179 PO | Isotopes in Earth Sciences | — | AREA_4 | attribute sets differ | |
+| GREK 033 PO | Intermediate Greek | — | LANGUAGE | missing from catalog | |
+| GREK 044 PO | Advanced Greek Readings | — | AREA_1, LANGUAGE | missing from catalog | |
+| GREK 104 PO | Readings in Koine Greek | — | LANGUAGE | missing from catalog | |
 | GRMT 147A PO | German Cinema and Media | — | AREA_1 | attribute sets differ | |
 | GRMT 164 PO | Changing Worlds of Work | AREA_1 | AREA_1, SPEAKING_INTENSIVE | attribute sets differ | |
 | GWS 036 PO | Introduction to Queer Studies | — | AREA_3 | attribute sets differ | |
@@ -169,10 +189,15 @@ here with its explanation.
 | HIST 180 PO | Decolonization European Empires | AREA_3 | — | missing from Registrar export | |
 | HIST 185 PO | Imperial Cartographies | — | AREA_3 | attribute sets differ | |
 | ID 199CP PO | Community Partnerships | COMMUNITY_PARTNERSHIP | — | missing from Registrar export | |
+| LAS 180 PO | Gender and Dev in Latin Amer | — | ANALYZING_DIFFERENCE, AREA_3 | missing from catalog | |
 | LAST 180 PO | Gender and Dev in Latin Amer | ANALYZING_DIFFERENCE, AREA_3 | — | missing from Registrar export | |
 | LAST 184 PO | Citizen Participation in Lat Am | — | AREA_3 | attribute sets differ | |
+| LATN 033 PO | Intermediate Latin | — | LANGUAGE | missing from catalog | |
+| LATN 044 PO | Advanced Latin Readings | — | AREA_1, LANGUAGE | missing from catalog | |
+| LATN 103 PO | Medieval Latin Translation | — | LANGUAGE | missing from catalog | |
 | LGCS 113 PO | Contact Languages | — | AREA_2 | attribute sets differ | |
 | LGCS 118 PO | Morphosyntax | AREA_2, SPEAKING_INTENSIVE, WRITING_INTENSIVE | AREA_2, SPEAKING_INTENSIVE | attribute sets differ | |
+| LGCS 123 PO | Stats and Experimental Design | — | AREA_5 | missing from catalog | |
 | LGCS 124 PO | Corpus Linguistics | AREA_2 | — | missing from Registrar export | |
 | LGCS 129 PO | Computational Linguistics | AREA_2 | — | missing from Registrar export | |
 | LGCS 133 PO | Neurolinguistics | — | AREA_2 | attribute sets differ | |
@@ -190,6 +215,7 @@ here with its explanation.
 | MS 135 PO | Romantic Comedy | — | AREA_1 | attribute sets differ | |
 | MS 148A PO | Surveillance and the Media | — | AREA_1 | attribute sets differ | |
 | MS 148H PO | Media and Nationalism | — | AREA_1 | attribute sets differ | |
+| MUS 016P PO | Acc Indiv Instr Level I | — | AREA_6 | missing from catalog | |
 | MUS 040 PO | Chamber Music | AREA_6 | — | attribute sets differ | |
 | MUS 040P PO | Chamber Music | AREA_6 | — | missing from Registrar export | |
 | MUS 047 PO | Music in Dialog | — | AREA_1, SPEAKING_INTENSIVE | attribute sets differ | |
@@ -227,6 +253,7 @@ here with its explanation.
 | POLI 124 PO | Contemporary Political Theory | — | AREA_2 | attribute sets differ | |
 | POLI 137 PO | Research Design: Pol & Policy | — | AREA_2 | attribute sets differ | |
 | POLI 175 PO | DEMOCRACY, HUMAN RIGHTS AND USFP | AREA_2 | — | missing from Registrar export | |
+| POLI 179A PO | U.S., Israel, and Palestinians | — | AREA_2 | missing from catalog | |
 | POLI 181 PO | Ghibli and Foundations Poli Sci | — | AREA_2, WRITING_INTENSIVE | attribute sets differ | |
 | POLI 189C PO | Race, Film, and Politics | — | AREA_2 | attribute sets differ | |
 | POLI 189D PO | Latino Politics | — | AREA_2 | attribute sets differ | |
@@ -261,11 +288,16 @@ here with its explanation.
 | STS 010 PO | Intro to Sci, Tech, and Society | — | AREA_2 | attribute sets differ | |
 | STS 179 PO | Media, Technology & Energy | — | AREA_2 | attribute sets differ | |
 | THEA 009 PO | Intro to Comedy Improvisation | AREA_6 | — | missing from Registrar export | |
+| THEA 013 PO | Corporeal Mime | — | AREA_6 | missing from catalog | |
+| THEA 014 PO | Corporeal Mime and Pedagogy | — | AREA_6 | missing from catalog | |
 | THEA 022 PO | Lighting Technology | — | AREA_6 | attribute sets differ | |
 | THEA 026 PO | CAD: Drafting and Modeling | — | AREA_6 | attribute sets differ | |
 | THEA 027 PO | CAD: Rendering | — | AREA_6 | attribute sets differ | |
 | THEA 030 PO | World Theatre and Drama 1 | AREA_1 | AREA_1, WRITING_INTENSIVE | attribute sets differ | |
 | THEA 052C PO | Theatre Production: Practicum | — | AREA_6 | attribute sets differ | |
+| THEA 060 PO | Theatre and Youth(CP) | — | AREA_6 | missing from catalog | |
+| THEA 061 PO | Theatre for Young Audiences (CP) | — | AREA_6, SPEAKING_INTENSIVE | missing from catalog | |
+| THEA 062 PO | Lifting Silent Narratives | — | AREA_1 | missing from catalog | |
 | THEA 085 PO | Advanced Lighting Design | — | AREA_1, AREA_6 | attribute sets differ | |
 | THEA 089C PO | Movement for Actors and Others | — | AREA_6 | attribute sets differ | |
 | THEA 141 PO | Dramaturgy | AREA_6 | AREA_6, SPEAKING_INTENSIVE | attribute sets differ | |

@@ -14,12 +14,12 @@ const course = { id: { department: "CSCI", courseNumber: 51, suffix: "", affilia
 describe("checkNonEmpty (validator 2)", () => {
   test("passes when the catalog has courses", () => {
     writeFileSync(join(dir, "catalog.json"), JSON.stringify({ meta, courses: [course] }));
-    expect(checkNonEmpty(dir).check.status).toBe("pass");
+    expect(checkNonEmpty(dir, 1).check.status).toBe("pass");
   });
 
   test("fails when the catalog is empty", () => {
     writeFileSync(join(dir, "catalog.json"), JSON.stringify({ meta, courses: [] }));
-    const { check } = checkNonEmpty(dir);
+    const { check } = checkNonEmpty(dir, 1);
     expect(check.status).toBe("fail");
     expect(check.details.join(" ")).toContain("empty");
   });
@@ -29,18 +29,29 @@ describe("checkNonEmpty (validator 2)", () => {
     expect(checkNonEmpty(dir, 1000).check.status).toBe("fail");
   });
 
+  test("defaults to a floor that a real catalog clears and a truncated one does not", () => {
+    writeFileSync(join(dir, "catalog.json"), JSON.stringify({ meta, courses: [course] }));
+    expect(checkNonEmpty(dir).check.status).toBe("fail");
+  });
+
+  test("surfaces a configured term whose sections file is absent", () => {
+    writeFileSync(join(dir, "catalog.json"), JSON.stringify({ meta, courses: [course] }));
+    const { check } = checkNonEmpty(dir, 1, ["FA2026"]);
+    expect(check.details.join(" ")).toContain("sections-FA2026.json: absent");
+  });
+
   test("fails when a sections file is empty", () => {
     writeFileSync(join(dir, "catalog.json"), JSON.stringify({ meta, courses: [course] }));
     writeFileSync(join(dir, "sections-FA2026.json"), JSON.stringify({ meta, term: { year: 2026, term: "FA" }, sections: [] }));
-    expect(checkNonEmpty(dir).check.status).toBe("fail");
+    expect(checkNonEmpty(dir, 1).check.status).toBe("fail");
   });
 
   test("reports the counts when everything is healthy", () => {
     writeFileSync(join(dir, "catalog.json"), JSON.stringify({ meta, courses: [course] }));
-    expect(checkNonEmpty(dir).check.details.join(" ")).toContain("1 courses");
+    expect(checkNonEmpty(dir, 1).check.details.join(" ")).toContain("1 courses");
   });
 
   test("uses the id 'non-empty'", () => {
-    expect(checkNonEmpty(dir).check.id).toBe("non-empty");
+    expect(checkNonEmpty(dir, 1).check.id).toBe("non-empty");
   });
 });

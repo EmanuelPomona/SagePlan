@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-08T21:20:05.508Z",
+  "generatedAt": "2026-09-08T21:36:04.384Z",
   "catalogYear": "2026-2027",
   "catalog": {
     "path": "/data/catalog.json",
-    "fetchedAt": "2026-09-08T21:19:57.715Z",
+    "fetchedAt": "2026-09-08T21:35:51.257Z",
     "courseCount": 2989
   },
   "sections": [
     {
       "term": "FA2026",
       "path": "/data/sections-FA2026.json",
-      "fetchedAt": "2026-09-08T21:20:01.176Z",
+      "fetchedAt": "2026-09-08T21:35:56.366Z",
       "sectionCount": 2159
     }
   ],
   "offeringHistory": {
     "path": "/data/offering-history.json",
-    "fetchedAt": "2026-09-08T21:20:01.660Z",
+    "fetchedAt": "2026-09-08T21:35:56.837Z",
     "courseCount": 1416
   },
   "programs": [
