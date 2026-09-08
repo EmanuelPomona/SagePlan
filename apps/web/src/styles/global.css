@@ -1,0 +1,224 @@
+/*
+ * The page is a document: ruled rows, a reserved margin for the College's own
+ * words, and no cards anywhere. Elevation appears only on things that genuinely
+ * float, which at this stage is nothing.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: light dark; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--face-ui);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--face-quote); font-weight: 600; margin: 0; }
+
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { background: var(--canvas-hover); }
+
+/* One focus treatment everywhere, and it is never removed. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--s-6) var(--s-12);
+}
+
+/* ---- Masthead ------------------------------------------------------------ */
+
+.masthead {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-6) var(--s-4);
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+
+.masthead-name { font-size: var(--t-title); letter-spacing: -0.01em; }
+
+/* Not a badge and not a pill: the word is part of the name. */
+.masthead-unofficial {
+  font-family: var(--face-ui);
+  font-size: var(--t-small);
+  font-weight: 400;
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.colophon { display: flex; gap: var(--s-6); margin: var(--s-3) 0 0; flex-wrap: wrap; }
+.colophon div { display: flex; gap: var(--s-2); align-items: baseline; }
+.colophon dt { font-size: var(--t-small); color: var(--ink-2); margin: 0; }
+.colophon dd { font-family: var(--face-code); font-size: var(--t-small); margin: 0; }
+
+.disclaimer { margin: var(--s-3) 0 0; font-size: var(--t-small); color: var(--ink-2); max-width: 64ch; }
+
+.banner {
+  margin: var(--s-3) 0 0;
+  padding: var(--s-2) var(--s-3);
+  border-left: 3px solid var(--unverifiable);
+  background: var(--canvas-hover);
+  font-size: var(--t-small);
+  max-width: 72ch;
+}
+.banner-fixture { border-left-color: var(--partial); }
+.banner-stale { border-left-color: var(--partial); }
+.banner-problem { border-left-color: var(--unmet); }
+
+.theme-toggle { display: flex; gap: 0; border: 1px solid var(--rule); }
+.theme-option {
+  font: inherit;
+  font-size: var(--t-small);
+  padding: var(--s-1) var(--s-3);
+  min-height: 32px;
+  background: transparent;
+  color: var(--ink-2);
+  border: 0;
+  cursor: pointer;
+}
+.theme-option + .theme-option { border-left: 1px solid var(--rule); }
+.theme-option:hover { background: var(--canvas-hover); }
+.theme-option:active { background: var(--canvas-pressed); }
+.theme-option[aria-pressed="true"] { color: var(--ink); font-weight: 600; background: var(--canvas-hover); }
+
+/* ---- Sections ------------------------------------------------------------ */
+
+.section { margin-top: var(--s-12); }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+.section-head h2 { font-size: var(--t-heading); }
+
+.profile, .empty { color: var(--ink-2); font-size: var(--t-small); margin: var(--s-1) 0 0; }
+.empty { max-width: 62ch; margin-top: var(--s-4); }
+
+.summary { display: flex; gap: var(--s-6); margin: var(--s-2) 0 var(--s-4); font-size: var(--t-small); color: var(--ink-2); flex-wrap: wrap; }
+.summary strong { font-family: var(--face-code); color: var(--ink); font-weight: 400; }
+
+.rows { list-style: none; margin: 0; padding: 0; }
+
+/* ---- The requirement row, and its margin of evidence ---------------------- */
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr var(--evidence-col);
+  gap: var(--s-6);
+  align-items: start;
+  padding: var(--s-2) 0;
+  border-top: 1px solid var(--rule);
+}
+.row:hover { background: var(--canvas-hover); }
+
+/* The only heavier rule on the page marks a change of requirement kind. */
+.row-cluster { border-top-width: 2px; margin-top: var(--s-4); }
+
+.row-main {
+  display: grid;
+  /* status | label | what closed it | what could | confidence, all on one line:
+     the whole audit has to fit one viewport at 1440. */
+  grid-template-columns: 9rem minmax(0, 1fr) auto auto auto;
+  gap: var(--s-3);
+  align-items: baseline;
+  min-height: var(--row-h);
+  line-height: var(--lh-row);
+}
+
+.row-status { display: inline-flex; align-items: baseline; gap: var(--s-2); }
+.glyph { flex: none; transform: translateY(1px); }
+.row-word { font-size: var(--t-small); color: var(--ink-2); }
+
+.row-satisfied .row-word { color: var(--satisfied); }
+.row-partial .row-word { color: var(--partial); }
+.row-unmet .row-word { color: var(--unmet); }
+.row-unverifiable .row-word { color: var(--unverifiable); }
+.row-waived .row-word, .row-override .row-word, .row-attested .row-word { color: var(--manual); }
+/* A requirement that does not apply is not an achievement: it recedes. */
+.row-waived { opacity: 0.72; }
+/* Doubt looks different at a glance, not in a footnote. */
+.row-unverifiable { border-top-style: dashed; }
+
+.row-label { font-family: var(--face-quote); }
+
+.row-answer, .row-candidates, .row-owed, .row-confidence {
+  font-size: var(--t-small);
+  color: var(--ink-2);
+  justify-self: end;
+  text-align: right;
+}
+.course-code { font-family: var(--face-code); color: var(--ink); }
+.row-confidence { font-style: italic; }
+
+/* The signature element: the catalog speaks in the margin, in its own voice. */
+.row-evidence { border-left: 1px solid var(--rule); padding-left: var(--s-4); }
+.quote {
+  margin: 0;
+  font-family: var(--face-quote);
+  font-size: var(--t-quote);
+  line-height: var(--lh-quote);
+  color: var(--ink-2);
+}
+.row-note { margin: var(--s-2) 0 0; font-size: var(--t-small); color: var(--ink-2); }
+
+/* ---- Record -------------------------------------------------------------- */
+
+.record-row {
+  display: grid;
+  grid-template-columns: 12rem 5rem 1fr;
+  gap: var(--s-3);
+  padding: var(--s-1) 0;
+  border-top: 1px solid var(--rule);
+  min-height: var(--row-h);
+  align-items: baseline;
+}
+.record-term, .record-grade { font-family: var(--face-code); font-size: var(--t-small); color: var(--ink-2); }
+
+/* ---- States and footer --------------------------------------------------- */
+
+.loading, .error-detail, .error-detail-technical { max-width: 62ch; }
+.loading { color: var(--ink-2); margin-top: var(--s-12); }
+.error-detail-technical { font-family: var(--face-code); font-size: var(--t-small); color: var(--ink-2); }
+code { font-family: var(--face-code); font-size: var(--t-small); }
+
+.footer {
+  max-width: var(--page-max);
+  margin: var(--s-12) auto 0;
+  padding: var(--s-4) var(--s-6) var(--s-8);
+  border-top: 1px solid var(--rule);
+}
+.attribution { font-size: var(--t-small); color: var(--ink-2); max-width: 72ch; margin: var(--s-2) 0 0; }
+
+/* ---- Responsive ---------------------------------------------------------- */
+
+/* Tablet: the margin cannot hold a column, so the quote falls beneath its row
+   and stays with it. */
+@media (max-width: 60rem) {
+  .row { grid-template-columns: 1fr; gap: var(--s-2); }
+  .row-evidence { border-left: 0; border-top: 1px dotted var(--rule); padding-left: 0; padding-top: var(--s-2); margin-left: 10rem; }
+  .quote { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+/* Phone: read-mostly, one thumb, outside an advisor's office. The row keeps
+   status, label and answer legible by stacking rather than shrinking. */
+@media (max-width: 30rem) {
+  .page, .masthead, .footer { padding-left: var(--s-4); padding-right: var(--s-4); }
+  .row-main { grid-template-columns: 9rem minmax(0, 1fr); gap: var(--s-1) var(--s-3); }
+  .row-answer, .row-candidates, .row-confidence { grid-column: 2; }
+  .row-answer, .row-candidates, .row-owed, .row-confidence { justify-self: start; text-align: left; }
+  .row-evidence { margin-left: 0; }
+  .record-row { grid-template-columns: 1fr; gap: 0; }
+  .colophon { gap: var(--s-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

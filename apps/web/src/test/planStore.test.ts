@@ -15,7 +15,7 @@ const course = (dept: string, n: number): CompletedCourse => ({
 beforeEach(() => localStorage.clear());
 afterEach(() => vi.restoreAllMocks());
 
-describe("usePlan — persistence", () => {
+describe("usePlan: persistence", () => {
   test("starts from an empty plan when nothing is stored", () => {
     const { result } = renderHook(() => usePlan());
 
@@ -69,7 +69,7 @@ describe("usePlan — persistence", () => {
   });
 });
 
-describe("usePlan — editing", () => {
+describe("usePlan: editing", () => {
   test("setProfile replaces matriculation term and student type", () => {
     const { result } = renderHook(() => usePlan());
     act(() => result.current.setProfile({ matriculationTerm: { year: 2026, term: "FA" }, studentType: "transfer" }));
