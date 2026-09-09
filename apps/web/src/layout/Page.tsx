@@ -4,6 +4,8 @@ import { useData } from "../data/DataProvider.tsx";
 import { usePlan } from "../plan/planStore.ts";
 import { RecordSection } from "../record/RecordSection.tsx";
 import { ExportImport } from "../share/ExportImport.tsx";
+import { ImportPreview } from "../share/ImportPreview.tsx";
+import { useFragmentImport } from "../share/useFragmentImport.ts";
 import { Footer } from "./Footer.tsx";
 import { Masthead } from "./Masthead.tsx";
 
@@ -63,11 +65,27 @@ function Ready({
   plan: ReturnType<typeof usePlan>;
 }) {
   const results = useAudit(plan.plan, data.programs, data.catalog.courses);
+  const fragment = useFragmentImport();
 
   return (
     <>
       <Masthead manifest={data.manifest} fixture={data.fixture} />
       <main className="page">
+        {/* A shared link is the reason this page was opened, so the offer goes
+            where the student is already looking, not in the footer. */}
+        {fragment.state.status === "offered" && (
+          <ImportPreview
+            plan={fragment.state.plan}
+            source="From a shared link"
+            onReplace={() => fragment.accept(plan.replacePlan)}
+            onCancel={fragment.dismiss}
+          />
+        )}
+        {fragment.state.status === "failed" && (
+          <p className="banner banner-problem" role="alert">
+            <strong>That shared link could not be read.</strong> {fragment.state.detail}
+          </p>
+        )}
         {plan.status === "corrupt" && (
           <p className="banner banner-problem" role="alert">
             <strong>Your saved record could not be read.</strong> It has been left

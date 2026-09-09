@@ -1,23 +1,18 @@
-Browser console, primary flow (empty state -> full audit render)
+Browser console, full primary flow. Evidence for AC-F08.
 Chrome, http://localhost:3001/, dev server, 2026-09-08
 
+Flow: open a share link -> preview -> Replace -> 20-course audit renders ->
+expand two requirement rows (lazy section + offering-history loads) -> export.
+
 Captured with mcp__claude-in-chrome__read_console_messages, pattern ".*"
-(unfiltered), limit 40. Ten messages, ZERO errors and ZERO CSP violations.
+(unfiltered). THREE messages. Zero errors. Zero CSP violations.
 
-[1]  DEBUG  @vite/client   [vite] connecting...
-[2]  DEBUG  @vite/client   [vite] connected.
-[3]  INFO   react-dom      Download the React DevTools for a better development experience
-[4]  DEBUG  @vite/client   [vite] hot updated: /src/audit/AuditSection.tsx
-[5]  DEBUG  @vite/client   [vite] hot updated: /src/styles/global.css
-[6]  DEBUG  @vite/client   [vite] invalidate /src/audit/StatusGlyph.tsx: Could not Fast Refresh (new export)
-[7]  DEBUG  @vite/client   [vite] hot updated: /src/audit/StatusGlyph.tsx
-[8]  DEBUG  @vite/client   [vite] hot updated: /src/audit/AuditSection.tsx
-[9]  DEBUG  @vite/client   [vite] hot updated: /src/styles/global.css
-[10] DEBUG  @vite/client   [vite] hot updated: /src/audit/AuditSection.tsx
+[1] DEBUG  @vite/client   [vite] connecting...
+[2] DEBUG  @vite/client   [vite] connected.
+[3] INFO   react-dom      Download the React DevTools for a better development experience
 
-Every message is Vite's dev-server hot-reload channel or React's DevTools
-notice. Entries 4 to 10 are hot reloads from edits made during this QA pass.
-None of them exist in a production build.
+Entries 1 and 2 are the dev server's hot-reload channel and entry 3 is React's
+development notice. None exists in a production build.
 
-NOT YET VERIFIED: the console of a production build. `npm run build` cannot run
+NOT VERIFIED: the console of a production build. `npm run build` cannot run
 until data/manifest.json exists, by design (see F-network.txt).

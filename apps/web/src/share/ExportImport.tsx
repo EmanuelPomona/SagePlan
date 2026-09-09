@@ -5,7 +5,6 @@ import type { PlanStore } from "../plan/planStore.ts";
 import { ImportPreview } from "./ImportPreview.tsx";
 import { download } from "./exportPlan.ts";
 import { FRAGMENT_PREFIX, SHARE_LINK_WARN_LENGTH, encodePlan } from "./shareLink.ts";
-import { useFragmentImport } from "./useFragmentImport.ts";
 
 type Pending = { plan: StudentPlan; source: string } | null;
 
@@ -16,7 +15,6 @@ export function ExportImport({ plan }: { plan: PlanStore }) {
   const [tooLong, setTooLong] = useState(false);
   const fileId = useId();
   const fileRef = useRef<HTMLInputElement>(null);
-  const fragment = useFragmentImport();
 
   const readFile = async (file: File) => {
     setProblem(null);
@@ -46,8 +44,6 @@ export function ExportImport({ plan }: { plan: PlanStore }) {
       setCopied(url);
     }
   };
-
-  const offered = fragment.state.status === "offered" ? fragment.state : null;
 
   return (
     <div className="export-import">
@@ -109,21 +105,6 @@ export function ExportImport({ plan }: { plan: PlanStore }) {
       )}
 
       {problem && <p className="share-note share-warning" role="alert">{problem}</p>}
-
-      {fragment.state.status === "failed" && (
-        <p className="share-note share-warning" role="alert">
-          The shared link could not be read. {fragment.state.detail}
-        </p>
-      )}
-
-      {offered && (
-        <ImportPreview
-          plan={offered.plan}
-          source="From a shared link"
-          onReplace={() => fragment.accept(plan.replacePlan)}
-          onCancel={fragment.dismiss}
-        />
-      )}
 
       {pending && (
         <ImportPreview
