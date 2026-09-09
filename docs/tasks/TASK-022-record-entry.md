@@ -1,7 +1,7 @@
 ---
 id: TASK-022
 title: Record section — profile, course autocomplete, spreadsheet paste, non-catalog courses, external credit entry
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

@@ -16,7 +16,23 @@ body {
   font-size: var(--t-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/*
+ * Every number on this page changes as the student types: credits owed, seats
+ * filled, "5 of 6". Proportional digits make the whole row twitch on each
+ * keystroke, which on a page whose job is to be trusted reads as instability.
+ */
+.course-code, .row-owed, .row-candidates, .progress-figures,
+.summary-count, .ws-count, .candidate-sections, .import-facts dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ragged endings on a two-line quote or heading look like a mistake. */
+h1, h2, h3, .row-label, .search-title, .candidate-title { text-wrap: balance; }
+.quote, .row-note, .detail-explanation, .detail-prose, .empty,
+.advisory-text, .ws-note, .ws-empty, .import-warning, .share-note { text-wrap: pretty; }
 
 h1, h2, h3 { font-family: var(--face-quote); font-weight: 600; margin: 0; }
 
@@ -219,6 +235,9 @@ code { font-family: var(--face-code); font-size: var(--t-small); }
   .colophon { gap: var(--s-3); }
 }
 
+/* The ribbon is the densest thing on the page; its marks must not blur. */
+.ribbon-mark { shape-rendering: crispEdges; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
@@ -247,13 +266,21 @@ button {
   border-color: var(--ink);
   font-size: var(--t-small);
   padding: var(--s-1) var(--s-3);
+  /* Named properties, never `all`: nothing else here should animate. */
+  transition-property: background-color, transform;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
 }
 button:hover:not(:disabled) { background: var(--canvas-hover); }
 button:active:not(:disabled) { background: var(--canvas-pressed); transform: translateY(1px); }
 button:disabled { color: var(--ink-2); border-color: var(--rule); cursor: not-allowed; }
 
 .link-button {
-  border: 0; background: none; padding: var(--s-1);
+  border: 0; background: none;
+  /* The visible text is small, but the target should not be: the row is 32px
+     and this fills it. The audit's density is the brief's, so 44px would cost
+     more than it buys here. */
+  padding: var(--s-1) var(--s-2); min-height: 32px;
   color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px;
 }
 .link-button:hover { color: var(--ink); background: none; }
