@@ -82,7 +82,7 @@ function Ready({
           </p>
         )}
         <RecordSection plan={plan} catalog={data.catalog.courses} rules={data.rules} />
-        <AuditSection programs={data.programs} results={results} />
+        <AuditSection programs={data.programs} results={results} plan={plan} catalog={data.catalog.courses} />
       </main>
       <Footer />
     </>
