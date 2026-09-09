@@ -1,7 +1,7 @@
 ---
 id: TASK-023
 title: Audit section — requirement rows with four states, margin of evidence, in-place detail, overrides and attestations
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

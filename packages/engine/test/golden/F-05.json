@@ -1,0 +1,337 @@
+[
+  {
+    "programId": "general-education-2026",
+    "requirementId": "critical-inquiry",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "ID",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": null,
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "area-1",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "area-2",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "PSYC",
+        "courseNumber": 52,
+        "suffix": "",
+        "affiliation": "SC"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "area-3",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "area-4",
+    "status": "unmet",
+    "satisfiedBy": [],
+    "remaining": {
+      "n": 1,
+      "unit": "courses"
+    },
+    "candidates": [
+      {
+        "department": "BIOL",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
+        "department": "CHEM",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
+        "department": "GEOL",
+        "courseNumber": 20,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
+        "department": "PHYS",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "area-5",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "area-6",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "THEA",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "credits"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "draft"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "writing-intensive",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "speaking-intensive",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "RHET",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "analyzing-difference",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "ANTH",
+        "courseNumber": 25,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "language",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "SPAN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "physical-education",
+    "status": "satisfied",
+    "satisfiedBy": [
+      {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
+        "department": "PE",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      }
+    ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "physical-education-transfer",
+    "status": "satisfied",
+    "satisfiedBy": [],
+    "remaining": null,
+    "candidates": [],
+    "children": [],
+    "waived": true,
+    "confidence": "verified",
+    "note": "This requirement applies only to students of type transfer, so it does not apply to you."
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "total-credits",
+    "status": "partial",
+    "satisfiedBy": [],
+    "remaining": {
+      "n": 1.5,
+      "unit": "credits"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "post-matriculation-credits",
+    "status": "satisfied",
+    "satisfiedBy": [],
+    "remaining": {
+      "n": 0,
+      "unit": "credits"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "verified"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "post-matriculation-credits-transfer",
+    "status": "satisfied",
+    "satisfiedBy": [],
+    "remaining": null,
+    "candidates": [],
+    "children": [],
+    "waived": true,
+    "confidence": "draft",
+    "note": "This requirement applies only to students of type transfer, so it does not apply to you."
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "pomona-residency-credits",
+    "status": "satisfied",
+    "satisfiedBy": [],
+    "remaining": {
+      "n": 0,
+      "unit": "credits"
+    },
+    "candidates": [],
+    "children": [],
+    "confidence": "draft"
+  },
+  {
+    "programId": "general-education-2026",
+    "requirementId": "gpa",
+    "status": "satisfied",
+    "satisfiedBy": [],
+    "remaining": null,
+    "candidates": [],
+    "children": [],
+    "confidence": "verified",
+    "note": "Grade point average 3.21 over 30 graded credits."
+  }
+]

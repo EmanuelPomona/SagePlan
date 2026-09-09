@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 62,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "SP"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 30,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "B+",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 60,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "SP"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 195,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

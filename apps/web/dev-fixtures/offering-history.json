@@ -1,0 +1,1302 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "generator": "apps/web dev fixture history",
+    "generatedAt": "2026-09-08T06:12:03Z",
+    "fetchedAt": "2026-09-08T06:11:41Z",
+    "sourceUrl": "https://catalog.pomona.edu/",
+    "catalogYear": "2026-2027"
+  },
+  "asOfTerm": {
+    "year": 2026,
+    "term": "FA"
+  },
+  "knownTerms": [
+    {
+      "year": 2023,
+      "term": "SP"
+    },
+    {
+      "year": 2023,
+      "term": "FA"
+    },
+    {
+      "year": 2024,
+      "term": "SP"
+    },
+    {
+      "year": 2024,
+      "term": "FA"
+    },
+    {
+      "year": 2025,
+      "term": "SP"
+    },
+    {
+      "year": 2025,
+      "term": "FA"
+    },
+    {
+      "year": 2026,
+      "term": "SP"
+    },
+    {
+      "year": 2026,
+      "term": "FA"
+    }
+  ],
+  "history": [
+    {
+      "course": {
+        "department": "ID",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "DANC",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "ARTH",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "MUS",
+        "courseNumber": 81,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "PSYC",
+        "courseNumber": 52,
+        "suffix": "",
+        "affiliation": "SC"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "ECON",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "SOC",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "POLI",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "PHIL",
+        "courseNumber": 32,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "AMST",
+        "courseNumber": 110,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "RLST",
+        "courseNumber": 40,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "BIOL",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "CHEM",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "PHYS",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "GEOL",
+        "courseNumber": 20,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 30,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 60,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 62,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "THEA",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "DANC",
+        "courseNumber": 120,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "MUS",
+        "courseNumber": 60,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "ARTS",
+        "courseNumber": 21,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "RHET",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "ANTH",
+        "courseNumber": 25,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "GWS",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "SPAN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "FREN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "CHIN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "SPAN",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 3,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 195,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "GEOL",
+        "courseNumber": 112,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 199,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2024,
+          "term": "FA"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "SP"
+        }
+      ]
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 190,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "terms": [
+        {
+          "year": 2023,
+          "term": "FA"
+        },
+        {
+          "year": 2024,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "SP"
+        },
+        {
+          "year": 2025,
+          "term": "FA"
+        },
+        {
+          "year": 2026,
+          "term": "FA"
+        }
+      ]
+    }
+  ]
+}

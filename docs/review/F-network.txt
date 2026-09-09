@@ -1,0 +1,48 @@
+Network log, full primary flow. Evidence for AC-P07 (no student data leaves the
+browser), AC-U07 (fonts self-hosted) and AC-B08 (no call to Hyperschedule or
+Coursedog from the app).
+Chrome, http://localhost:3001/, dev server, 2026-09-08
+
+Flow captured: load -> share link decoded from the URL fragment -> Replace
+(20-course plan imported) -> expand the Language requirement (lazy loads) ->
+Export my record.
+
+98 requests. EVERY ONE is http://localhost:3001. Zero external hosts.
+Every request is a GET. There are no POST, PUT or PATCH requests at all.
+
+  1        document              /
+  2-87     dev-server modules    /@vite/client, /src/*, /@fs/... (workspace
+                                 sources), /node_modules/.vite/deps/*
+  88, 89   artefact              /data/manifest.json   (twice: React StrictMode
+                                 double-invokes effects in DEVELOPMENT only)
+  93       artefact              /data/catalog.json
+  94       artefact              /data/programs/general-education-2026.json
+  95       artefact              /data/external-credit-rules.json
+  97       artefact (LAZY)       /data/sections-SP2027.json
+  98       artefact (LAZY)       /data/offering-history.json
+  90,91,92,96  fonts             /@fs/.../@fontsource*/files/*.woff2
+                                 ibm-plex-sans 400 and 600, source-serif-4
+                                 variable, ibm-plex-mono 400
+
+Specifically checked:
+
+- ZERO requests to hyperschedule.io or coursedog.com. The Hyperschedule link on
+  a candidate row is an anchor the STUDENT may click; the page never fetches it.
+- ZERO requests to fonts.googleapis.com, fonts.gstatic.com or any CDN.
+- The share link is a FRAGMENT (#plan=...). Browsers never transmit a fragment,
+  so request 1 is a plain GET of "/" with no plan data in it. Confirmed by the
+  address bar: after Replace, the URL is http://localhost:3001/ with no
+  fragment at all (AC-F09).
+- Export made NO request. The file is built in memory as a Blob and handed to
+  the browser through an object URL that is revoked immediately.
+- Requests 97 and 98 appear only AFTER a requirement row was expanded, and once
+  each despite two rows being opened, because the section and history caches are
+  shared across rows.
+
+The Content-Security-Policy in index.html is:
+  default-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self';
+  script-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'none';
+  form-action 'none'
+
+NOT VERIFIED: the production build's network profile, and a share link opened in
+a genuine private window (the flow above ran in the same profile).

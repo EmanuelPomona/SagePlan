@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}
