@@ -88,7 +88,12 @@ export function courseFromSection(raw: unknown, ctx: { catalogYear: CatalogYear;
   const title = String(r.course?.title ?? "").trim();
   if (title.length === 0) return null;
 
-  const credits = typeof r.credits === "number" && Number.isFinite(r.credits) && r.credits >= 0 ? r.credits : 0;
+  // A section that genuinely carries 0 credits is real data and kept as 0. A
+  // section with NO credit value is not the same thing: defaulting it to 0 both
+  // invents a fact and trips the partial-credit exclusion validator for a course
+  // that may well be worth one. Refuse it instead; the caller counts the refusal.
+  if (typeof r.credits !== "number" || !Number.isFinite(r.credits) || r.credits < 0) return null;
+  const credits = r.credits;
   const { attrs } = mapGeCodes(r.courseAreas ?? []);
 
   return {

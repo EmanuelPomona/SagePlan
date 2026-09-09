@@ -1,7 +1,7 @@
 # STATUS: agent/backend
-Task: TASK-010, TASK-011, TASK-012, TASK-013 — all implemented, status REVIEW
+Task: TASK-010, TASK-011, TASK-012, TASK-013 — implemented, reviewed, status REVIEW. No backend work outstanding.
 Round: 0
-Last updated: 2026-09-08T21:14:35Z
+Last updated: 2026-09-09T00:03:47Z
 
 ## Skills invoked so far
 - `ecc:backend-patterns` @ before structuring packages/pipeline -> confirmed the
@@ -59,6 +59,22 @@ diagnosed from one command's output.
 - `data/reports/validation.json` -> 8 checks by id, ok=true
 - `scripts/contract-test.sh` -> exit 0, "6 check(s), 0 failed", CONTRACT OK
 - `npm run seed` -> exit 0
+
+## Round 2 — remaining review findings closed
+The five Minor findings HANDOFF-2 listed as acknowledged-but-unfixed are now fixed:
+- 22 `write.ts` fsyncs before rename, and sweeps temp files an interrupted run
+  orphaned (matched by an anchored pattern, so it can only ever remove one of ours).
+- 23 Coursedog pagination is capped at 10 pages; a runaway upstream now throws
+  instead of accumulating until the process dies.
+- 24 A Hyperschedule section with NO credit value is refused rather than recorded
+  as 0 credits, which both invented a fact and tripped the partial-credit
+  exclusion validator. A genuine 0 is still kept as 0. Verified against live data:
+  0 courses added, 0 removed — a guard against drift, not a behaviour change.
+- 25 The three bare `catch {}` blocks now report: an unreadable term file is
+  surfaced by validator 4 (it silently narrowed that check's coverage before), and
+  an unparseable programs file or catalog-pages index is reported by validator 7.
+- 16 The dedupe discard reason is derived, not asserted.
+Findings 1-15 and 17-21 were closed in b14d3cb, with 17 pushed back on with evidence.
 
 ## Blocked on
 - nothing blocking. **Two contract items still need the manager's ratification**

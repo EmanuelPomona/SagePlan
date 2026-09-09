@@ -70,11 +70,11 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
   log("validate.exclusion-anomalies", { status: ex.check.status, anomalies: ex.check.count });
 
   // 4 — Hyperschedule geCodes vs catalog attributes
-  const sections = readSections(env.dataDir);
-  const hs = checkHyperscheduleAttributes(catalog, sections);
+  const { sections, unreadable } = readSections(env.dataDir);
+  const hs = checkHyperscheduleAttributes(catalog, sections, unreadable);
   writeReport("hyperschedule-attribute-diff", hs.report, env.dataDir);
   checks.push(hs.check);
-  log("validate.hyperschedule-attributes", { status: hs.check.status, divergences: hs.check.count, sections: sections.length });
+  log("validate.hyperschedule-attributes", { status: hs.check.status, divergences: hs.check.count, sections: sections.length, unreadableFiles: unreadable.length });
 
   // 1 — every emitted artefact re-parses
   const schema = checkArtefactSchemas(env.dataDir);

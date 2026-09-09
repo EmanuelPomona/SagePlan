@@ -4,6 +4,14 @@ import { CoursedogSearchResponseSchema, type RawCoursedogCourse } from "./raw.ts
 import { PipelineError } from "../errors.ts";
 
 const PAGE_SIZE = 3000;
+/**
+ * Hard ceiling on pagination. Every exit condition depends on the upstream
+ * behaving (a short page, a listLength, or an empty page); if it ever ignored
+ * `skip` and kept returning full pages, the loop would accumulate until the
+ * process died of memory exhaustion. Ten pages is 30,000 courses against a
+ * catalog of 2,811.
+ */
+const MAX_PAGES = 10;
 
 export function coursedogSearchUrl(env: PipelineEnv, skip: number, limit = PAGE_SIZE): string {
   const params = new URLSearchParams({
@@ -31,7 +39,13 @@ export async function fetchCoursedogCourses(
   const firstUrl = coursedogSearchUrl(env, 0);
 
   let skip = 0;
-  for (;;) {
+  for (let page_i = 0; ; page_i++) {
+    if (page_i >= MAX_PAGES) {
+      throw new PipelineError(
+        `Coursedog pagination did not terminate after ${MAX_PAGES} pages (${records.length} records); refusing to continue`,
+        "COURSEDOG_PAGINATION_RUNAWAY",
+      );
+    }
     const url = coursedogSearchUrl(env, skip);
     const body = await fetchJson(url, { headers, fetchImpl: opts.fetchImpl });
     const parsed = CoursedogSearchResponseSchema.safeParse(body);

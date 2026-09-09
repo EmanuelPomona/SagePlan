@@ -32,7 +32,6 @@ is frequently the one with an empty `attributes` array.
 | CSCI 105 PO | Computer Systems | AREA_5 | AREA_5 | kept the edition with more catalog detail |
 | PPE 195 PO | Philo/Politics/Econ Sr Exercise | — | — | kept the edition with more catalog detail |
 | THEA 100S PO | Acting Studio:Acting Shakespeare | AREA_6, SPEAKING_INTENSIVE | AREA_6, SPEAKING_INTENSIVE | kept the edition with more catalog detail |
-| SPAN 140 PO | From Borges to "Literatura Lite" | AREA_1, LANGUAGE | — | kept the edition carrying more GE attributes |
 | THEA 115O PO | Applied Theatre | AREA_6 | AREA_6 | kept the edition with more catalog detail |
 | ANTH 053 PO | Language and Globalization | AREA_2, SPEAKING_INTENSIVE | AREA_2, SPEAKING_INTENSIVE | kept the edition with more catalog detail |
 | MUS 121 PO | Sem in Music Hist (Pre-1750) | AREA_1, WRITING_INTENSIVE | AREA_1, WRITING_INTENSIVE | kept the edition with more catalog detail |
@@ -40,10 +39,10 @@ is frequently the one with an empty `attributes` array.
 | POLI 172 PO | City Research Task Force | AREA_2 | AREA_2 | kept the edition with more catalog detail |
 | FREN 129 PO | Proust's Time Machine | AREA_1, LANGUAGE | AREA_1, LANGUAGE | kept the edition with more catalog detail |
 | GWS 166 PO | Witchcraft | AREA_3 | — | kept the edition carrying more GE attributes |
+| CSCI 188 PO | Computer Science Colloquium | — | — | kept the edition with more catalog detail |
 | LGCS 118 PO | Morphosyntax | AREA_2, SPEAKING_INTENSIVE, WRITING_INTENSIVE | AREA_2, SPEAKING_INTENSIVE, WRITING_INTENSIVE | kept the edition with more catalog detail |
 | MUS 122 PO | Sem in Music Hist (1750-c.1920) | AREA_1, WRITING_INTENSIVE | AREA_1, WRITING_INTENSIVE | kept the edition with more catalog detail |
 | CSCI 190 PO | Computer Science Senior Seminar | SPEAKING_INTENSIVE | SPEAKING_INTENSIVE | kept the edition with more catalog detail |
-| CSCI 188 PO | Computer Science Colloquium | — | — | kept the edition with more catalog detail |
 | CHEM 150 PO | Intro to Medicinal Chemistry | AREA_4 | — | kept the edition carrying more GE attributes |
 | CHEM 151 PO | Advanced Biochemistry | — | — | kept the edition with more catalog detail |
 | CHEM 115 PO | Computational Organic Chem w/Lab | AREA_4, WRITING_INTENSIVE | — | kept the edition carrying more GE attributes |
@@ -53,12 +52,12 @@ is frequently the one with an empty `attributes` array.
 | CSCI 050 PO | Fundamentals of Programming | — | — | kept the edition with more catalog detail |
 | ENGL 157 PO | Diaries and Daybooks | — | — | editions are equivalent; kept one deterministically |
 | ECON 147 PO | Economics for Public Policy | — | — | editions are equivalent; kept one deterministically |
-| SPAN 001 PO | Elementary Spanish | — | — | kept the edition with more catalog detail |
+| SPAN 140 PO | From Borges to "Literatura Lite" | AREA_1, LANGUAGE | — | kept the edition carrying more GE attributes |
 | SPAN 192 PO | Senior Paper | — | — | kept the edition with more catalog detail |
 | THEA 054C PO | The Speaking Voice | AREA_6 | AREA_6 | kept the edition with more catalog detail |
 | RUST 175 PO | Russia: Empire and Identity | AREA_1, WRITING_INTENSIVE | AREA_1, WRITING_INTENSIVE | kept the edition with more catalog detail |
 | RUST 079 PO | Russian Short Fiction | AREA_1, WRITING_INTENSIVE | AREA_1, WRITING_INTENSIVE | kept the edition with more catalog detail |
-| ENGL 044 PO | Cont. Indigenous Writers | AREA_1 | — | kept the edition carrying more GE attributes |
+| GEOL 131 PO | Volcanology w/Lab | AREA_4 | — | kept the edition carrying more GE attributes |
 | ENGL 072 PO | City Comedy | AREA_1 | — | kept the edition carrying more GE attributes |
 | ENGL 084 PO | Dream Lore | AREA_1 | — | kept the edition carrying more GE attributes |
 | ENGL 169 PO | Q/TOC Critique & Latinx Lit | AREA_1, ANALYZING_DIFFERENCE | — | kept the edition carrying more GE attributes |
@@ -66,27 +65,27 @@ is frequently the one with an empty `attributes` array.
 | ENGL 170X PO | Asian Am Lit & Cultural Critique | AREA_1 | — | kept the edition carrying more GE attributes |
 | ENGL 188 PO | American Literature After 1945 | AREA_1 | — | kept the edition carrying more GE attributes |
 | FREN 107 PO | Francophone Futurity | AREA_1, ANALYZING_DIFFERENCE, SPEAKING_INTENSIVE, WRITING_INTENSIVE | — | kept the edition carrying more GE attributes |
-| GEOL 131 PO | Volcanology w/Lab | AREA_4 | — | kept the edition carrying more GE attributes |
+| ENGL 044 PO | Cont. Indigenous Writers | AREA_1 | — | kept the edition carrying more GE attributes |
 | GEOL 133 PO | Paleoclimatology | AREA_4 | — | kept the edition carrying more GE attributes |
 | GWS 081 PO | Transformative Justice | — | — | kept the edition with more catalog detail |
 | GWS 166 PO | Witchcraft | AREA_3 | — | kept the edition carrying more GE attributes |
 | GWS 173 PO | Premodern Intersectionality | AREA_3 | — | kept the edition carrying more GE attributes |
 | HIST 101Q PO | Writing Stories About The Body | AREA_3, SPEAKING_INTENSIVE, WRITING_INTENSIVE | — | kept the edition carrying more GE attributes |
 | HIST 167 PO | Archived East Asia | AREA_3 | — | kept the edition carrying more GE attributes |
-| DANC 173 PO | Alexander Technique - Individual | AREA_6 | — | kept the edition carrying more GE attributes |
+| DANC 174 PO | Alexander Technique - Group | AREA_6, PHYSICAL_EDUCATION | — | kept the edition carrying more GE attributes |
 | BIOL 152 PO | Population and Quant. Genetics | AREA_4 | — | kept the edition carrying more GE attributes |
 | CHIN 055 PO | Social Issues in China Today | SPEAKING_INTENSIVE | — | kept the edition carrying more GE attributes |
 | CHIN 123 PO | Chinese Culture and Arts | LANGUAGE | — | kept the edition carrying more GE attributes |
 | CSCI 181R PO | Mobile Robotics | — | — | kept the edition with more catalog detail |
-| DANC 174 PO | Alexander Technique - Group | AREA_6, PHYSICAL_EDUCATION | — | kept the edition carrying more GE attributes |
+| DANC 173 PO | Alexander Technique - Individual | AREA_6 | — | kept the edition carrying more GE attributes |
 | ECON 123 PO | International Economics | AREA_2 | — | kept the edition carrying more GE attributes |
 | ENGL 019 PO | Intro to Asian Am Lit | AREA_1, ANALYZING_DIFFERENCE | — | kept the edition carrying more GE attributes |
-| PSYC 158 PO | Intro Stats for Psych w/ lab | AREA_5 | — | kept the edition carrying more GE attributes |
+| PSYC 163 PO | Emotion & Motivation with Lab | AREA_2 | — | kept the edition carrying more GE attributes |
 | POLI 030 PO | U.S. Congress | AREA_2 | — | kept the edition carrying more GE attributes |
 | POLI 161 PO | Comparative Social Policy | AREA_2, WRITING_INTENSIVE | — | kept the edition carrying more GE attributes |
 | POLI 189H PO | Politics of Poverty | AREA_2 | — | kept the edition carrying more GE attributes |
 | PSYC 143 PO | Soc Cog Affective Neurosc w/lab | AREA_2 | — | kept the edition carrying more GE attributes |
-| PSYC 163 PO | Emotion & Motivation with Lab | AREA_2 | — | kept the edition carrying more GE attributes |
+| PSYC 158 PO | Intro Stats for Psych w/ lab | AREA_5 | — | kept the edition carrying more GE attributes |
 | PSYC 180F PO | Seminar in Forensic Psychology | AREA_2 | — | kept the edition carrying more GE attributes |
 | PSYC 180S PO | Seminar in Group Dynamics | AREA_2, SPEAKING_INTENSIVE, WRITING_INTENSIVE | — | kept the edition carrying more GE attributes |
 | PSYC 189Q PO | Qualitative Methods | AREA_2, SPEAKING_INTENSIVE | — | kept the edition carrying more GE attributes |
@@ -94,30 +93,31 @@ is frequently the one with an empty `attributes` array.
 | RLST 189N PO | Leadership, Authority, Protest | AREA_3 | — | kept the edition carrying more GE attributes |
 | SOC 189Z PO | Sociology of (Non)Citizenship | AREA_2 | — | kept the edition carrying more GE attributes |
 | SOC 191 PO | Senior Thesis | — | — | editions are equivalent; kept one deterministically |
+| SPAN 001 PO | Elementary Spanish | — | — | kept the edition with more catalog detail |
+| MATH 142 PO | Differential Geometry | AREA_5 | — | kept the edition carrying more GE attributes |
 | ID 174 PO | Diplomacy and Human Rights | AREA_2 | — | kept the edition carrying more GE attributes |
 | CLAS 103 PO | Medieval Latin Translation | LANGUAGE | — | kept the edition carrying more GE attributes |
 | LGCS 117 PO | Writing Systems | AREA_2 | — | kept the edition carrying more GE attributes |
 | LGCS 188 PO | Topics in Phonetics | AREA_2 | — | kept the edition carrying more GE attributes |
-| ASIA 083 PO | The Great Books of China | AREA_3 | — | kept the edition carrying more GE attributes |
-| MATH 142 PO | Differential Geometry | AREA_5 | — | kept the edition carrying more GE attributes |
 | MS 072 PO | Representing Britain | AREA_1 | — | kept the edition carrying more GE attributes |
 | MS 085 PO | Dialectical Image | AREA_1 | — | kept the edition carrying more GE attributes |
 | MUS 062 PO | Surv Am Mus: Harlem Renaissance | AREA_1 | — | kept the edition carrying more GE attributes |
 | MUS 068 PO | American Roots Music | AREA_1, ANALYZING_DIFFERENCE | — | kept the edition carrying more GE attributes |
-| THEA 030 PO | World Theatre and Drama 1 | AREA_1 | AREA_1 | editions are equivalent; kept one deterministically |
 | THEA 141 PO | Dramaturgy | AREA_6 | AREA_6 | editions are equivalent; kept one deterministically |
-| ARHI 137 PO | History & Ethics of Collecting | AREA_1 | — | kept the edition carrying more GE attributes |
-| ANTH 077 PO | The Unseen & The Unknown | AREA_2 | — | kept the edition carrying more GE attributes |
+| THEA 030 PO | World Theatre and Drama 1 | AREA_1 | AREA_1 | editions are equivalent; kept one deterministically |
 | ANTH 104 PO | Linguistic Anthropology | AREA_2, WRITING_INTENSIVE | — | kept the edition carrying more GE attributes |
 | ARHI 127 PO | Ottoman Art and Architecture | — | — | editions are equivalent; kept one deterministically |
 | ARHI 130 PO | Modern Latinx American Art | AREA_1 | — | kept the edition carrying more GE attributes |
 | ARHI 131 PO | US-Mexico Border Art | AREA_1, ANALYZING_DIFFERENCE | — | kept the edition carrying more GE attributes |
-| ANTH 015 PO | Data and Society | AREA_2 | — | kept the edition carrying more GE attributes |
+| ARHI 137 PO | History & Ethics of Collecting | AREA_1 | — | kept the edition carrying more GE attributes |
+| ANTH 077 PO | The Unseen & The Unknown | AREA_2 | — | kept the edition carrying more GE attributes |
 | ART 082 PO | Art of Persuasion | — | — | kept the edition with more catalog detail |
 | ART 123 PO | Mending: Practical & Symbolic | — | — | kept the edition with more catalog detail |
 | ASAM 142 PO | South Asian American Studies | AREA_3, ANALYZING_DIFFERENCE | — | kept the edition carrying more GE attributes |
 | ASIA 081 PO | A Culinary History of China | AREA_3, SPEAKING_INTENSIVE | — | kept the edition carrying more GE attributes |
+| ASIA 083 PO | The Great Books of China | AREA_3 | — | kept the edition carrying more GE attributes |
 | THEA 084 PO | Projection/Media Design for Thea | AREA_6 | AREA_6 | kept the edition with more catalog detail |
+| ANTH 015 PO | Data and Society | AREA_2 | — | kept the edition carrying more GE attributes |
 | CHST 132 CH | Immigration and Activism | AREA_3, COMMUNITY_PARTNERSHIP, SPEAKING_INTENSIVE | AREA_3, COMMUNITY_PARTNERSHIP, SPEAKING_INTENSIVE | editions are equivalent; kept one deterministically |
 | CHST 128 CH | Latinx Citizenship | AREA_3, SPEAKING_INTENSIVE | AREA_3, SPEAKING_INTENSIVE | editions are equivalent; kept one deterministically |
 | CHST 028 CH | Intro Contemp Central America II | AREA_3, SPEAKING_INTENSIVE | AREA_3, SPEAKING_INTENSIVE | editions are equivalent; kept one deterministically |

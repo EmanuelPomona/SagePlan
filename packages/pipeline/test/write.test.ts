@@ -69,3 +69,52 @@ describe("writeArtefact", () => {
     expect(readFileSync(p, "utf8")).not.toContain("\n  ");
   });
 });
+
+describe("writeArtefact durability", () => {
+  test("flushes to disk before renaming, so a crash cannot publish a truncated file", () => {
+    // Guards finding 22: renameSync without an fsync can survive a machine crash
+    // with the file's data blocks unflushed, leaving a zero-length or partial
+    // artefact where the app expects a whole one.
+    const p = join(dir, "durable.json");
+    writeArtefact(p, { n: 7, s: "flushed" }, Schema);
+    expect(JSON.parse(readFileSync(p, "utf8"))).toEqual({ n: 7, s: "flushed" });
+  });
+
+  test("sweeps a stale temp file left by an earlier interrupted run", () => {
+    // A SIGKILL between write and rename orphans a .tmp in /data. Nothing scanned
+    // for those, so they accumulated silently.
+    const orphan = join(dir, ".1700000000000-abandoned.tmp");
+    writeFileSync(orphan, "{}");
+    writeArtefact(join(dir, "fresh.json"), { n: 1, s: "x" }, Schema);
+    expect(readdirSync(dir).filter((f) => f.endsWith(".tmp"))).toEqual([]);
+  });
+
+  test("does not remove an unrelated dotfile while sweeping", () => {
+    const keep = join(dir, ".gitkeep");
+    writeFileSync(keep, "");
+    writeArtefact(join(dir, "fresh.json"), { n: 1, s: "x" }, Schema);
+    expect(existsSync(keep)).toBe(true);
+  });
+});
+
+describe("the stale-temp sweep is narrowly targeted", () => {
+  test("sweeps the current temp shape too", () => {
+    writeFileSync(join(dir, ".gg-tmp-1700000000000-abc123.tmp"), "{}");
+    writeArtefact(join(dir, "a.json"), { n: 1, s: "x" }, Schema);
+    expect(readdirSync(dir).filter((f) => f.endsWith(".tmp"))).toEqual([]);
+  });
+
+  test("does not remove a file that merely ends in .tmp", () => {
+    const notOurs = join(dir, "someone-elses.tmp");
+    writeFileSync(notOurs, "keep me");
+    writeArtefact(join(dir, "b.json"), { n: 1, s: "x" }, Schema);
+    expect(existsSync(notOurs)).toBe(true);
+  });
+
+  test("does not remove a hidden file that is not a temp of ours", () => {
+    const dotfile = join(dir, ".DS_Store");
+    writeFileSync(dotfile, "");
+    writeArtefact(join(dir, "c.json"), { n: 1, s: "x" }, Schema);
+    expect(existsSync(dotfile)).toBe(true);
+  });
+});

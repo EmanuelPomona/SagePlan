@@ -96,3 +96,16 @@ describe("unknown Pomona GE codes reach the validation report", () => {
     expect(check.count).toBe(0);
   });
 });
+
+describe("unreadable term files narrow the check visibly", () => {
+  test("reports a term file that could not be read", () => {
+    const { check, report } = checkHyperscheduleAttributes([], [], ["sections-FA2026.json"]);
+    expect(check.status).toBe("warn");
+    expect(check.count).toBe(1);
+    expect(report).toContain("sections-FA2026.json");
+  });
+
+  test("passes when everything agrees and every file was readable", () => {
+    expect(checkHyperscheduleAttributes([], [], []).check.status).toBe("pass");
+  });
+});

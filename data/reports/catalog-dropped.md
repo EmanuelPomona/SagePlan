@@ -1,8 +1,8 @@
 # Records dropped during catalog ingestion
 
-2811 upstream record(s) -> 2087 course(s).
+2812 upstream record(s) -> 2087 course(s).
 
-- not Active (administrative placeholders and test rows): **576**
+- not Active (administrative placeholders and test rows): **577**
 - refused by the normaliser: **2**
 
 Non-Active records are expected: Coursedog carries Banked and Inactive rows

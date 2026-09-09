@@ -147,3 +147,27 @@ describe("normaliseSection term cross-check", () => {
     }
   });
 });
+
+describe("courseFromSection credits honesty", () => {
+  test("keeps a genuine 0-credit section at 0", () => {
+    const raw = structuredClone(sections[0]!) as Record<string, unknown>;
+    raw.credits = 0;
+    const c = courseFromSection(raw, CTX)!;
+    expect(c.credits.min).toBe(0);
+  });
+
+  // Guards finding 24: `credits ?? 0` turned "Hyperschedule did not tell us" into
+  // "this course is worth zero credits", which then trips the partial-credit
+  // exclusion validator for a course that may be worth one.
+  test("refuses a section with no credit value rather than calling it 0", () => {
+    const raw = structuredClone(sections[0]!) as Record<string, unknown>;
+    delete raw.credits;
+    expect(courseFromSection(raw, CTX)).toBeNull();
+  });
+
+  test("refuses a negative or non-finite credit value", () => {
+    const neg = structuredClone(sections[0]!) as Record<string, unknown>;
+    neg.credits = -1;
+    expect(courseFromSection(neg, CTX)).toBeNull();
+  });
+});

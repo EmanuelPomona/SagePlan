@@ -13,6 +13,8 @@ const fmt = (a: readonly GeAttribute[]) => (a.length > 0 ? [...a].sort().join(",
 export function checkHyperscheduleAttributes(
   catalog: readonly Course[],
   sections: readonly Section[],
+  /** Term files that could not be read; each one silently narrows this check. */
+  unreadable: readonly string[] = [],
 ): { check: ValidationCheck; report: string } {
   const fromSections = new Map<string, Set<GeAttribute>>();
   // Campus-1 codes we do not recognise. These are the dangerous ones: an
@@ -47,6 +49,9 @@ export function checkHyperscheduleAttributes(
   }
   rows.sort((x, y) => x.key.localeCompare(y.key));
 
+  const unreadableLines = unreadable.map(
+    (f) => `term file ${f} could not be read, so the courses it covers were NOT cross-checked`,
+  );
   const unknownLines = [...unknownPomona.entries()]
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(([code, courses]) => `unrecognised Pomona course-area code "${code}" on ${courses.size} course(s), e.g. ${[...courses].slice(0, 3).join(", ")}`);
@@ -57,6 +62,7 @@ export function checkHyperscheduleAttributes(
     `**${rows.length}** course(s) offered this term disagree between the catalog and the schedule.`,
     `**${unknownPomona.size}** unrecognised Pomona course-area code(s).`,
     "",
+    ...(unreadableLines.length > 0 ? ["## Term files that could not be read", "", ...unreadableLines.map((l) => `- ${l}`), ""] : []),
     ...(unknownLines.length > 0
       ? ["## Unrecognised Pomona codes", "",
          "Each of these is a GE attribute being dropped from every course that carries it.",
@@ -79,10 +85,10 @@ export function checkHyperscheduleAttributes(
   return {
     check: {
       id: "hyperschedule-attributes",
-      status: rows.length === 0 && unknownPomona.size === 0 ? "pass" : "warn",
+      status: rows.length === 0 && unknownPomona.size === 0 && unreadable.length === 0 ? "pass" : "warn",
       summary: `${rows.length} catalog/Hyperschedule GE disagreement(s), ${unknownPomona.size} unrecognised Pomona code(s)`,
-      count: rows.length + unknownPomona.size,
-      details: [...unknownLines, ...rows.map((r) => `${r.key}: catalog=${fmt(r.catalog)} sections=${fmt(r.sections)}`)].slice(0, 20),
+      count: rows.length + unknownPomona.size + unreadable.length,
+      details: [...unreadableLines, ...unknownLines, ...rows.map((r) => `${r.key}: catalog=${fmt(r.catalog)} sections=${fmt(r.sections)}`)].slice(0, 20),
     },
     report,
   };

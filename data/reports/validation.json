@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T21:37:36.126Z",
+  "generatedAt": "2026-09-09T00:02:49.018Z",
   "generator": "@gradguide/pipeline@0.1.0 validate",
   "checks": [
     {
@@ -92,7 +92,7 @@
         "catalog.json: 2989 courses",
         "offering-history.json: 1416 history",
         "manifest.json: 1 sections",
-        "sections-FA2026.json: 2159 sections",
+        "sections-FA2026.json: 2160 sections",
         "sections-SP2027.json: absent (configured in PIPELINE_TERMS)"
       ]
     },

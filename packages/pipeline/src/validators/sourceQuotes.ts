@@ -39,8 +39,9 @@ export function extractSnapshotText(html: string): string {
 
 interface QuoteRef { owner: string; quote: string; slug: string }
 
-function collectQuotes(dataDir: string): QuoteRef[] {
+function collectQuotes(dataDir: string): { refs: QuoteRef[]; errors: string[] } {
   const refs: QuoteRef[] = [];
+  const errors: string[] = [];
   const push = (owner: string, node: unknown) => {
     const n = node as { sourceQuote?: unknown; sourceRef?: { slug?: unknown } };
     if (typeof n?.sourceQuote === "string" && typeof n?.sourceRef?.slug === "string") {
@@ -51,7 +52,12 @@ function collectQuotes(dataDir: string): QuoteRef[] {
   if (existsSync(programsDir)) {
     for (const f of readdirSync(programsDir).filter((x) => x.endsWith(".json"))) {
       let p: Record<string, unknown>;
-      try { p = JSON.parse(readFileSync(join(programsDir, f), "utf8")) as Record<string, unknown>; } catch { continue; }
+      try {
+        p = JSON.parse(readFileSync(join(programsDir, f), "utf8")) as Record<string, unknown>;
+      } catch (e) {
+        errors.push(`programs/${f} could not be parsed (${(e as Error).message}); its quotes were not checked`);
+        continue;
+      }
       for (const r of (p.requirements as unknown[]) ?? []) push(`programs/${f}#${(r as { id?: string }).id ?? "?"}`, r);
       for (const c of (p.constraints as unknown[]) ?? []) push(`programs/${f}#constraint`, c);
       for (const a of (p.advisories as unknown[]) ?? []) push(`programs/${f}#${(a as { id?: string }).id ?? "advisory"}`, a);
@@ -62,9 +68,13 @@ function collectQuotes(dataDir: string): QuoteRef[] {
     try {
       const rules = JSON.parse(readFileSync(rulesPath, "utf8")) as { rules?: unknown[] };
       for (const r of rules.rules ?? []) push(`external-credit-rules.json#${(r as { id?: string }).id ?? "?"}`, r);
-    } catch { /* schema validator reports this */ }
+    } catch (e) {
+      // Not silent: the artefact schema validator will fail this file too, but a
+      // reader of THIS report needs to know its quote coverage was incomplete.
+      errors.push(`external-credit-rules.json could not be parsed (${(e as Error).message}); its quotes were not checked`);
+    }
   }
-  return refs;
+  return { refs, errors };
 }
 
 /**
@@ -89,9 +99,9 @@ export async function checkSourceQuotes(
     }
   }
 
-  const failures: string[] = [];
+  const { refs, errors } = collectQuotes(dataDir);
+  const failures: string[] = [...errors];
   const warnings: string[] = [];
-  const refs = collectQuotes(dataDir);
 
   for (const ref of refs) {
     const snap = snapshots.get(ref.slug);
@@ -112,7 +122,11 @@ export async function checkSourceQuotes(
   const stale: string[] = [];
   if (!opts.skipNetwork && existsSync(indexPath)) {
     let entries: { slug: string; url: string }[] = [];
-    try { entries = Object.values(JSON.parse(readFileSync(indexPath, "utf8")) as Record<string, { slug: string; url: string }>); } catch { /* ignore */ }
+    try {
+      entries = Object.values(JSON.parse(readFileSync(indexPath, "utf8")) as Record<string, { slug: string; url: string }>);
+    } catch (e) {
+      warnings.push(`catalog-pages/index.json could not be read (${(e as Error).message}); no page was re-verified live`);
+    }
     const fetchImpl = opts.fetchImpl ?? (fetch as FetchImpl);
     const liveBySlug = new Map<string, string>();
 
