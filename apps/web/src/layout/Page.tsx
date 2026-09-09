@@ -81,7 +81,7 @@ function Ready({
             reload. Export your record to keep it.
           </p>
         )}
-        <RecordSection plan={plan.plan} />
+        <RecordSection plan={plan} catalog={data.catalog.courses} rules={data.rules} />
         <AuditSection programs={data.programs} results={results} />
       </main>
       <Footer />

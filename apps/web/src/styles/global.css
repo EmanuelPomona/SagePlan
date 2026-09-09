@@ -222,3 +222,122 @@ code { font-family: var(--face-code); font-size: var(--t-small); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ---- Controls ------------------------------------------------------------ */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+input, select, textarea, button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--canvas);
+  border: 1px solid var(--rule);
+  padding: var(--s-1) var(--s-2);
+  min-height: 32px;
+  border-radius: 0;
+}
+textarea { font-family: var(--face-code); font-size: var(--t-small); width: 100%; min-height: 6rem; }
+select { cursor: pointer; }
+
+button {
+  cursor: pointer;
+  border-color: var(--ink);
+  font-size: var(--t-small);
+  padding: var(--s-1) var(--s-3);
+}
+button:hover:not(:disabled) { background: var(--canvas-hover); }
+button:active:not(:disabled) { background: var(--canvas-pressed); transform: translateY(1px); }
+button:disabled { color: var(--ink-2); border-color: var(--rule); cursor: not-allowed; }
+
+.link-button {
+  border: 0; background: none; padding: var(--s-1);
+  color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px;
+}
+.link-button:hover { color: var(--ink); background: none; }
+
+.field { display: flex; align-items: baseline; gap: var(--s-2); }
+.field label { font-size: var(--t-small); color: var(--ink-2); white-space: nowrap; }
+.field-wide { grid-column: span 2; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--s-3); margin: var(--s-3) 0; }
+.profile-fields { display: flex; gap: var(--s-3); flex-wrap: wrap; align-items: baseline; }
+
+details { margin-top: var(--s-4); border-top: 1px solid var(--rule); padding-top: var(--s-3); }
+summary { cursor: pointer; font-size: var(--t-small); color: var(--ink-2); }
+summary:hover { color: var(--ink); }
+
+fieldset { border: 1px solid var(--rule); padding: var(--s-3); margin: var(--s-3) 0; }
+fieldset:disabled { opacity: 0.55; }
+legend { font-size: var(--t-small); color: var(--ink-2); padding: 0 var(--s-2); }
+.hint { font-style: italic; }
+
+/* ---- Course search ------------------------------------------------------- */
+
+.course-search { position: relative; margin: var(--s-4) 0; max-width: 44rem; }
+.course-search label { display: block; font-size: var(--t-small); color: var(--ink-2); margin-bottom: var(--s-1); }
+.course-search input { width: 100%; }
+
+.search-results {
+  position: absolute; z-index: 20; left: 0; right: 0;
+  list-style: none; margin: 0; padding: 0;
+  background: var(--canvas);
+  border: 1px solid var(--ink);
+  /* The one place elevation is real: this popover floats over the record. */
+  box-shadow: var(--shadow-popover);
+  max-height: 20rem; overflow-y: auto;
+}
+.search-option {
+  display: grid; grid-template-columns: 9rem 1fr auto; gap: var(--s-3);
+  align-items: baseline; padding: var(--s-2) var(--s-3); cursor: pointer;
+}
+.search-option + .search-option { border-top: 1px solid var(--rule); }
+.search-option.is-active { background: var(--canvas-hover); }
+.search-title { font-family: var(--face-quote); }
+
+.chips { display: flex; gap: var(--s-1); flex-wrap: wrap; }
+.chip {
+  font-size: var(--t-small); color: var(--ink-2);
+  border: 1px solid var(--rule); padding: 0 var(--s-2); white-space: nowrap;
+}
+.chip-check { display: inline-flex; align-items: center; gap: var(--s-1); cursor: pointer; min-height: 28px; }
+
+/* ---- Course table -------------------------------------------------------- */
+
+.course-table { width: 100%; border-collapse: collapse; margin-top: var(--s-4); }
+.course-table th {
+  text-align: left; font-size: var(--t-small); font-weight: 400; color: var(--ink-2);
+  border-bottom: 1px solid var(--rule); padding: var(--s-1) var(--s-2) var(--s-1) 0;
+}
+.course-table td { border-bottom: 1px solid var(--rule); padding: var(--s-1) var(--s-2) var(--s-1) 0; vertical-align: baseline; }
+.course-table tr:hover td { background: var(--canvas-hover); }
+.cell-title { font-family: var(--face-quote); }
+.mark-not-in-catalog { font-family: var(--face-ui); font-size: var(--t-small); color: var(--unverifiable); margin-left: var(--s-2); }
+
+.record-tools > details:first-child { margin-top: var(--s-8); }
+
+/* ---- Paste and exams ----------------------------------------------------- */
+
+.paste-actions { display: flex; gap: var(--s-3); align-items: center; margin-top: var(--s-3); }
+.paste-preview { margin-top: var(--s-4); }
+.paste-preview h4 { font-family: var(--face-ui); font-size: var(--t-small); font-weight: 600; margin: var(--s-3) 0 var(--s-1); }
+.paste-row { display: grid; grid-template-columns: 9rem 7rem 1fr; gap: var(--s-3); padding: var(--s-1) 0; border-top: 1px solid var(--rule); font-size: var(--t-small); }
+.paste-rejected { border-left: 3px solid var(--unmet); padding-left: var(--s-3); }
+.rejected-text { font-family: var(--face-code); color: var(--ink-2); }
+.rejected-reason { color: var(--unmet); }
+
+.exam-verdict { font-size: var(--t-small); color: var(--ink-2); border-left: 3px solid var(--rule); padding-left: var(--s-3); margin: var(--s-3) 0; }
+.exam-qualifies { border-left-color: var(--satisfied); color: var(--ink); }
+.exam-row { display: grid; grid-template-columns: 16rem 5rem 1fr auto; gap: var(--s-3); padding: var(--s-1) 0; border-top: 1px solid var(--rule); font-size: var(--t-small); align-items: baseline; }
+.exam-label { font-family: var(--face-quote); }
+.exam-result { color: var(--ink-2); }
+
+@media (max-width: 30rem) {
+  .course-table thead { display: none; }
+  .course-table tr { display: grid; grid-template-columns: 1fr auto; gap: var(--s-1) var(--s-2); border-bottom: 1px solid var(--rule); padding: var(--s-2) 0; }
+  .course-table td { border: 0; padding: 0; }
+  .cell-title { grid-column: 1 / -1; }
+  .search-option { grid-template-columns: 1fr; gap: 0; }
+  .paste-row, .exam-row { grid-template-columns: 1fr; gap: 0; }
+}
