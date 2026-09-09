@@ -1,0 +1,26 @@
+R-console.txt — browser console, primary flow
+Reviewer: agent/reviewer   Round 1   2026-09-08
+App: http://localhost:3003 (vite dev, integrated agent/backend + agent/frontend)
+
+Flow exercised: load -> fragment share-link import offer -> "Replace my record"
+(20 courses) -> expand Breadth Area 6 row -> "What satisfies this?" candidate
+list with term ribbon (lazy sections + offering-history fetch).
+
+FULL console output for that flow (read via CDP + claude-in-chrome, unfiltered):
+
+  [DEBUG] http://localhost:3003/@vite/client:732  [vite] connecting...
+  [DEBUG] http://localhost:3003/@vite/client:826  [vite] connected.
+  [INFO ] react-dom_client.js:20102  Download the React DevTools for a better
+          development experience: https://react.dev/link/react-devtools
+
+Application errors:   0
+Application warnings: 0
+Uncaught exceptions:  0
+React key/hydration warnings: 0
+
+All three messages are dev-server / React-DevTools notices, not application
+output. Definition of Done item 11 (console clean of errors): PASS.
+
+Error path, separately (Network.setBlockedURLs on */data/manifest.json):
+the failure is rendered as UI, not thrown — console stayed at the same three
+messages, zero exceptions. See R-05-state-error.png.

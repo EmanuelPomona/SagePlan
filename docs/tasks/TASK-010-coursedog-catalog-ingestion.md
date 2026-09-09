@@ -1,11 +1,11 @@
 ---
 id: TASK-010
 title: Pipeline scaffold and Coursedog catalog ingestion into data/catalog.json
-status: REVIEW
+status: READY
 owner: backend
 branch: agent/backend
 priority: HIGH
-round: 0
+round: 1
 depends_on: []
 blocked_on: ""
 ---
@@ -113,3 +113,4 @@ the manager's ratification** — they changed what ships:
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | CHANGES_REQUIRED | H-1 unresolved CCR + worker self-unblock; H-2 AC-B01 met only after the TASK-012 merge (2,087 from pipeline:catalog); M-5 placeholder records. |

@@ -1,11 +1,11 @@
 ---
 id: TASK-025
 title: Export, import, share link (URL fragment), demo plans, and the no-student-data-leaves-the-browser proof
-status: REVIEW
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
-round: 0
+round: 1
 depends_on: [TASK-022]
 blocked_on: ""
 ---
@@ -69,3 +69,4 @@ the reviewer (AC-D02).
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | CHANGES_REQUIRED | Share link, fragment import, confirm and replaceState verified; privacy verified independently. AC-D02's six-plan UI import not exercised - evidence gap. |

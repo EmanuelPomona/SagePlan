@@ -1,11 +1,11 @@
 ---
 id: TASK-024
 title: "What satisfies this?" — candidates filtered to an upcoming term, dual-purpose marking, term ribbon
-status: REVIEW
+status: DONE
 owner: frontend
 branch: agent/frontend
 priority: HIGH
-round: 0
+round: 1
 depends_on: [TASK-023]
 blocked_on: ""
 ---
@@ -69,3 +69,4 @@ apps/web/src/test/selectors.test.ts
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | APPROVED | Approved. Candidate list, upcoming-term filter and the term ribbon verified live (108 of 190 offered in FA 2026). |

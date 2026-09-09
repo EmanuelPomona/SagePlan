@@ -1,11 +1,11 @@
 ---
 id: TASK-013
 title: Manifest, validation report, source-quote validator, and the nightly pipeline workflow
-status: REVIEW
+status: READY
 owner: backend
 branch: agent/backend
 priority: HIGH
-round: 0
+round: 1
 depends_on: [TASK-010, TASK-011, TASK-012]
 blocked_on: ""
 ---
@@ -74,3 +74,4 @@ Modify: `packages/pipeline/src/cli.ts` (wire `validate`, `manifest`, `all`).
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | CHANGES_REQUIRED | M-4 pipeline:all fails at the documented default of 25 divergences (CI hard-codes 300); AC-B07 unverifiable, no git remote. |

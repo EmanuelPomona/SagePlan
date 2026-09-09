@@ -1,11 +1,11 @@
 ---
 id: TASK-020
 title: Requirement engine — P0 rule kinds, constrained-first assignment, external credit, golden fixtures
-status: REVIEW
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
-round: 0
+round: 1
 depends_on: []
 blocked_on: ""
 ---
@@ -127,3 +127,4 @@ Claremont courses count; `GEOL 112 PO` (no attributes); `CSCI 195 PO`
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | CHANGES_REQUIRED | M-1 F-05 golden {1.5} vs ACCEPTANCE {1}; M-2 F-06 shares AMST 110 PO, API.md 2.3 step 4 self-contradictory; M-3 cs-gpa unverifiable so AC-P11 unproven; gpa CCR not routed via frontmatter. |
