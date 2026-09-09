@@ -433,3 +433,27 @@ legend { font-size: var(--t-small); color: var(--ink-2); padding: 0 var(--s-2); 
   .ribbon-label { font-size: 10px; }
   .row-extra { justify-self: start; grid-column: 2; }
 }
+
+/* ---- Export, import, share ----------------------------------------------- */
+
+.export-import { margin-bottom: var(--s-4); }
+.share-actions { display: flex; gap: var(--s-3); flex-wrap: wrap; align-items: center; }
+.file-label {
+  display: inline-flex; align-items: center; min-height: 32px;
+  padding: var(--s-1) var(--s-3); border: 1px solid var(--ink);
+  font-size: var(--t-small); cursor: pointer;
+}
+.file-label:hover { background: var(--canvas-hover); }
+.file-label:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.share-note { font-size: var(--t-small); color: var(--ink-2); max-width: 62ch; margin: var(--s-3) 0 0; }
+.share-warning { border-left: 3px solid var(--unmet); padding-left: var(--s-3); color: var(--ink); }
+
+.import-preview { border: 1px solid var(--ink); padding: var(--s-4); margin-top: var(--s-4); max-width: 44rem; }
+.import-preview h4 { font-family: var(--face-quote); font-size: var(--t-heading); margin: 0 0 var(--s-2); }
+.import-source { font-size: var(--t-small); color: var(--ink-2); margin: 0 0 var(--s-3); }
+.import-facts { display: flex; gap: var(--s-6); flex-wrap: wrap; margin: 0 0 var(--s-3); }
+.import-facts div { display: flex; gap: var(--s-2); align-items: baseline; }
+.import-facts dt { font-size: var(--t-small); color: var(--ink-2); margin: 0; }
+.import-facts dd { font-family: var(--face-code); margin: 0; }
+.import-warning { font-size: var(--t-small); border-left: 3px solid var(--partial); padding-left: var(--s-3); }

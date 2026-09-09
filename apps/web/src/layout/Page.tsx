@@ -3,6 +3,7 @@ import { AuditSection } from "../audit/AuditSection.tsx";
 import { useData } from "../data/DataProvider.tsx";
 import { usePlan } from "../plan/planStore.ts";
 import { RecordSection } from "../record/RecordSection.tsx";
+import { ExportImport } from "../share/ExportImport.tsx";
 import { Footer } from "./Footer.tsx";
 import { Masthead } from "./Masthead.tsx";
 
@@ -84,7 +85,9 @@ function Ready({
         <RecordSection plan={plan} catalog={data.catalog.courses} rules={data.rules} />
         <AuditSection programs={data.programs} results={results} plan={plan} catalog={data.catalog.courses} />
       </main>
-      <Footer />
+      <Footer>
+        <ExportImport plan={plan} />
+      </Footer>
     </>
   );
 }

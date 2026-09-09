@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "ID",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PSYC",
+        "courseNumber": 52,
+        "suffix": "",
+        "affiliation": "SC"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "B+",
+      "gradeMode": "letter",
+      "provenance": "claremont"
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "THEA",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "RHET",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "SP"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ANTH",
+        "courseNumber": 25,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "SP"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "SPAN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "SP"
+      },
+      "grade": "B+",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "CR",
+      "gradeMode": "creditNoCredit",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "SP"
+      },
+      "grade": "CR",
+      "gradeMode": "creditNoCredit",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 1",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 2",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 3,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 3",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 4,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 4",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 5,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 5",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 6,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 6",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 7,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 7",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 8,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 8",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 9,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 9",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 10",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 11,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 11",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 12,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 12",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 13,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 13",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 14,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 14",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 15,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 15",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 16,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 16",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 17,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 17",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 18,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 18",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 19,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 19",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 20,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 20",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 21,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 21",
+      "credits": 1
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

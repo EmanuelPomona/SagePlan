@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2026,
+    "term": "FA"
+  },
+  "studentType": "transfer",
+  "completed": [
+    {
+      "course": {
+        "department": "ECON",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "EXT"
+      },
+      "term": {
+        "year": 2024,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "transfer",
+      "title": "Principles of Microeconomics",
+      "credits": 1,
+      "attributes": [
+        "AREA_2"
+      ]
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 210,
+        "suffix": "",
+        "affiliation": "EXT"
+      },
+      "term": {
+        "year": 2025,
+        "term": "SP"
+      },
+      "grade": "B+",
+      "gradeMode": "letter",
+      "provenance": "transfer",
+      "title": "United States since 1877",
+      "credits": 1,
+      "attributes": [
+        "AREA_3"
+      ]
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "CR",
+      "gradeMode": "creditNoCredit",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "BIOL",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B+",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}
