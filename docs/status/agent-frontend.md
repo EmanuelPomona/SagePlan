@@ -1,7 +1,7 @@
 # STATUS: agent/frontend
-Task: TASK-020 + TASK-021 COMPLETE (both REVIEW) — next TASK-022
+Task: ALL SIX FRONTEND TASKS COMPLETE (TASK-020..025, all REVIEW)
 Round: 0
-Last updated: 2026-09-08T21:33:12Z
+Last updated: 2026-09-09T00:26:03Z
 
 ## Skills invoked so far
 - superpowers:verification-before-completion @ round-0 blocked record -> forced
@@ -88,9 +88,32 @@ the one fixture I had looked at, and the reviewer built a plan where it puts a
 wrong number on a partial row. Contract change request filed for the gpa rule's
 undefined .
 
+## TASK-022 to TASK-025 — COMPLETE
+283 tests (engine 149, shared 13, web 121). typecheck, lint clean. Build guard
+still refuses to ship fixture data.
+
+Record entry (ARIA combobox over a ranked index, spreadsheet paste with a
+preview, non-catalog courses, exam entry that shows the verdict before it is
+committed), the grouped audit with requirement detail, "What satisfies this?"
+with the term ribbon, and export / import / share-link.
+
+### Three defects browser QA found that the tests did not
+1. The share-link import offer rendered in the FOOTER, 3400px below the fold.
+   The link decoded perfectly and the student saw nothing. Moved to the top.
+2. Every term ribbon was empty: the history hook guarded its fetch with a ref,
+   which under StrictMode means pass one starts the fetch, cleanup cancels it,
+   and pass two returns early having already been "started". Now a shared
+   promise.
+3. The section cache was per component, so ten open rows meant ten fetches of
+   the same file. Now shared.
+
+### Evidence
+docs/review/F-01..F-09 plus F-console.txt (3 messages, zero errors) and
+F-network.txt (98 requests, all same-origin, zero to hyperschedule.io, zero
+POST). Share link measured at 638 characters; fragment cleared after import.
+
 ## In progress
-- [ ] TASK-022 record entry (course autocomplete, spreadsheet paste, external
-      credit). Depends on 020 + 021, both complete.
+- [ ] Nothing. All six frontend tasks are REVIEW, awaiting the reviewer.
 
 ## Blocked on
 - nothing
