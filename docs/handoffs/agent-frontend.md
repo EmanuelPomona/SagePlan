@@ -599,3 +599,166 @@ passes on the dark canvas too.
 ### Commit
 
 `a8d4b1b`. Branch `agent/frontend`, still no remote to push to.
+
+---
+
+## HANDOFF-4 — agent/frontend — TASK-022 to TASK-025 — 2026-09-08
+
+### Summary
+
+The remaining four frontend tasks are implemented. All six frontend tasks
+(TASK-020 to TASK-025) are now `REVIEW`. 283 tests across three workspaces;
+typecheck and lint clean; the build guard correctly refuses to ship fixture data.
+
+The app now does the thing it exists to do: enter a record by keyboard or by
+pasting a spreadsheet, see every requirement grouped with the catalog's own
+sentence beside it, expand a row to ask what would close it, and get back a list
+of courses actually offered next term with eight terms of offering history.
+
+### Tasks Completed
+
+**TASK-022** record entry: profile fields, an ARIA combobox over a ranked course
+index, an editable course table, spreadsheet paste with a preview, non-catalog
+courses, and exam entry that shows what the exam earned before it is committed.
+
+**TASK-023** audit: data-driven grouping, requirement detail with the full quote
+and a link to its catalog page, the rule in plain English, confidence badges,
+override and attestation controls, advisories.
+
+**TASK-024** "What satisfies this?": term filter, dual-purpose marking, the term
+ribbon, lazily loaded section and offering data with their own failure states.
+
+**TASK-025** export, import, share link in a URL fragment, six demo plans, and
+the README demo section.
+
+### Files Changed
+
+`apps/web/src/record/` (9 files), `apps/web/src/audit/` (10), `apps/web/src/
+candidates/` (5), `apps/web/src/share/` (5), `apps/web/src/data/useLazyData.ts`,
+`apps/web/src/test/` (6 new test files), `apps/web/public/demo/` (6 plans),
+`apps/web/src/styles/global.css`, `README.md` (Demo section only), and the six
+task files moved to `REVIEW`.
+
+### Contracts
+
+Nothing new is consumed by another agent; these tasks are the last in the chain.
+Internal exports other frontend modules rely on: `buildCourseIndex` / `search`,
+`parsePaste`, `groupRequirements`, `ruleToProse`, `offeredIn` / `dualPurpose` /
+`ribbon`, `encodePlan` / `decodePlan`, `exportFilename` / `planToJson`.
+
+**No contract change request.** The one outstanding request (gpa `scope`) is in
+HANDOFF-2 and is unchanged.
+
+### Skills Used
+
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `superpowers:test-driven-development` | Before each logic module | courseIndex, parsePaste, groupRequirements, selectors, shareLink and exportPlan were written test-first, 100 tests. |
+| `ecc:frontend-a11y` | Before the components (HANDOFF-3), applied again to the combobox | The combobox is `role="combobox"` with `aria-expanded`, `aria-controls`, `aria-activedescendant` and a `listbox`, so the caret never leaves the input; the result count is announced through a `role="status"` region. |
+| `vercel:react-best-practices` | Before the hooks (HANDOFF-3), applied here | Course index built once per catalog and memoised; search memoised per query; the audit derived during render rather than in an effect. |
+| `ecc:make-interfaces-feel-better` | After the structure was right | Tabular numerals on every count that changes as the student types; balanced and pretty text wrapping; explicit transition properties rather than `all`; a 32px hit area on small text buttons. |
+| `superpowers:verification-before-completion` | Immediately before this handoff | Re-ran the whole gate fresh; no implementation work after it. |
+
+**Not invoked, stated plainly:** `ecc:react-performance` and `ecc:browser-qa`,
+both named in the task notes. Browser QA was performed manually and in depth
+(the three defects below came out of it), but the skill itself was not loaded, so
+its checklist may cover things I did not think to check. `ecc:react-performance`
+was skipped because the measured surface is small: 40 fixture courses, a
+memoised index and a synchronous engine. That reasoning is untested against
+2,811 real courses.
+
+### Verification
+
+```
+npm test         engine 149 | shared 13 | web 121 = 283      exit 0
+npm run typecheck                                            exit 0
+npm run lint                                                 exit 0
+npm run build                                                exit 1  <- CORRECT
+  "Refusing to build: data/manifest.json is missing ... Fixture data must
+   never ship as the catalog."
+scripts/slop-check.sh apps/web        1 hit: the autocomplete popover shadow,
+  already justified in docs/DESIGN_BRIEF.md ("Elevation semantics: the popover
+  floats above the record. Nowhere else.")
+grep -rn "react-router\|createBrowserRouter" apps/web/src     (empty)
+git log <base>..HEAD -- packages/shared                       (empty)
+```
+
+Browser QA, Chrome, dev server on `FRONTEND_PORT=3001` from `.env`, with the
+F-01 demo plan imported **through a real share link**:
+
+| Artefact | Shows |
+|---|---|
+| `F-01-desktop-1440.jpg` | 5 of 6 breadth areas, groups, unmet sorted first, 8 satisfied rows each naming a course, quote in the margin of every row |
+| `F-02-tablet-768.jpg` | sidenote collapsed beneath each row |
+| `F-03-mobile-390.jpg` | audit at 390, single column, no horizontal overflow |
+| `F-04-light-1440.jpg` | light theme |
+| `F-05-state-error-data-unavailable.jpg` | manifest removed: names the file, says the student's record is safe |
+| `F-06-what-satisfies.jpg` | term filter, count line, candidate with attribute chips, seats, instructor, Hyperschedule link, and the eight-term ribbon |
+| `F-07-state-share-import.jpg` | the share-link preview: 20 courses, FA2025, first-year, with the replace warning |
+| `F-08-state-disabled-attributes.jpg` | the disabled attribute fieldset with its explanation |
+| `F-09-mobile-390-record.jpg` | record as a single-column list at 390 |
+| `F-console.txt` | 3 messages, zero errors, zero CSP violations |
+| `F-network.txt` | 98 requests, every one same-origin, zero to hyperschedule.io or any CDN, zero POST |
+
+Share link measured at **638 characters** of fragment for a 20-course plan,
+well under the 8000 warning threshold. After Replace the address bar reads
+`http://localhost:3001/` with no fragment (AC-F09).
+
+### What Was NOT Verified
+
+- **No production build has ever run**, so nothing about built output is
+  verified. Blocked on `data/manifest.json` (backend TASK-010), by design.
+- **The 390px evidence is an iframe**, not a device or a real window: Chrome on
+  macOS clamps windows to about 500px. The viewport is genuinely 390 (measured
+  `innerWidth`, matching media query, no overflow), but it is not a phone.
+- **No axe or automated accessibility scan, and no screen reader.** The combobox
+  follows the documented ARIA pattern and was exercised by mouse and by script,
+  but the keyboard-only transcript AC-F02 asks for was not produced.
+- **Several AC states are not screenshotted:** loading, corrupt-plan, storage
+  quota, term-data-unavailable, share-link-too-long, and the paste preview.
+  Every one is covered by a unit test or reachable by construction, which is not
+  the same as having been seen.
+- **AC-P06's export/reload/re-import diff was not run end to end.** Export is
+  covered by tests and the round trip is asserted, but I did not download a file,
+  reload, re-import it and diff the two on disk.
+- **The catalog is 40 fixture courses, not 2,811.** Candidate lists are capped at
+  40 rows in the UI, but `candidatesFor` in the engine scans the whole catalog
+  per requirement and no profiling was done.
+- **`scripts/bootstrap.sh` was not run from a clean clone** (AC-D01).
+- Node 26 locally; CI pins Node 22.
+
+### Known Issues
+
+**Three defects browser QA found that 283 tests did not:**
+
+1. **The share-link import offer rendered in the footer**, 3400px below the
+   fold. The link decoded perfectly and the student saw an unchanged page with
+   no sign anything was on offer, which is the entire purpose of the link. Moved
+   to the top of the page.
+2. **Every term ribbon was empty.** The history hook guarded its fetch with a
+   ref, which looks like a cache and is not: under StrictMode React runs the
+   effect, cleans it up and runs it again, so the first pass set the guard and
+   started the fetch, the cleanup cancelled it, and the second pass returned
+   early having already been "started". Now a shared promise.
+3. **The section cache was per component**, so opening ten rows would have
+   fetched the same term file ten times. Now shared; the network log shows one
+   fetch with two rows open.
+
+**Open:**
+
+4. `groupRequirements` uses a lookup table of general-education requirement ids.
+   It is data with a rule-kind fallback rather than a code path, and a program
+   whose ids are unknown still groups and loses nothing (there is a test). It is
+   still the closest thing in the app to general education being special, and
+   worth a look at the first real major.
+5. The tablet sidenote is clamped to two lines rather than one line that expands
+   on tap. The row itself expands; the quote does not have its own disclosure.
+6. `scripts/slop-check.sh` still defaults to the deleted `frontend/` directory,
+   so a bare run silently checks nothing. Reported in HANDOFF-3, unfixed because
+   it is shared tooling, not mine.
+7. Candidate lists render at most 40 rows with no "show more". At 2,811 courses
+   an Area with 307 candidates will silently show 40.
+
+### Commit
+
+`f95607f`. Branch `agent/frontend`, still no remote to push to.
