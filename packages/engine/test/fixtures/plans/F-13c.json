@@ -246,7 +246,21 @@
     },
     {
       "course": {
-        "department": "PE",
+        "department": "FILL",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 1",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
         "courseNumber": 2,
         "suffix": "",
         "affiliation": "PO"
@@ -254,7 +268,135 @@
       "term": null,
       "grade": null,
       "gradeMode": null,
-      "provenance": "pomona"
+      "provenance": "pomona",
+      "title": "Elective 2",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 3,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 3",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 4,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 4",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 5,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 5",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 6,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 6",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 7,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 7",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 8,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 8",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 9,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 9",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona",
+      "title": "Elective 10",
+      "credits": 1
+    },
+    {
+      "course": {
+        "department": "ECON",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "EXT"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "transfer",
+      "title": "Principles of Microeconomics",
+      "credits": 1
     }
   ],
   "planned": [],

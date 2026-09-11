@@ -303,7 +303,7 @@
     "status": "partial",
     "satisfiedBy": [],
     "remaining": {
-      "n": 12.75,
+      "n": 1.75,
       "unit": "credits"
     },
     "candidates": [],
@@ -313,15 +313,16 @@
   {
     "programId": "general-education-2026",
     "requirementId": "post-matriculation-credits",
-    "status": "partial",
+    "status": "unverifiable",
     "satisfiedBy": [],
     "remaining": {
-      "n": 10.75,
+      "n": 0,
       "unit": "credits"
     },
     "candidates": [],
     "children": [],
-    "confidence": "verified"
+    "confidence": "verified",
+    "note": "Add the term to ECON 101 EXT so this can be checked. Without it the answer depends on when they were taken."
   },
   {
     "programId": "general-education-2026",

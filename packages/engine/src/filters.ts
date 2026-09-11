@@ -29,6 +29,7 @@ export function courseMatchesFilter(
   if (filter.minTerm) {
     const term = course.completed.term;
     if (term === null) {
+      ctx.modeSensitive.add(course.key);
       if (!favourable(ctx)) return false;
     } else if (compareTerms(term, filter.minTerm) < 0) {
       return false;
@@ -40,13 +41,17 @@ export function courseMatchesFilter(
     if (isExamPseudo(course)) return false;
     const term = course.completed.term;
     if (term === null || ctx.matriculationTerm === null) {
-      // docs/API.md 2.7 as written: an unrecorded term is mode-dependent for
-      // every course, not only for work from outside. See the CONTRACT CHANGE
-      // REQUEST in docs/handoffs/agent-frontend.md: the literal reading means a
-      // student who records no terms gets `unverifiable` on this rule, which is
-      // the default record ADR-015 created. Implemented as written rather than
-      // quietly refined.
-      if (!favourable(ctx)) return false;
+      // ADR-018: the pessimistic pass may only consider values the unknown
+      // field could ACTUALLY take. Pre-matriculation college work is posted as
+      // advanced standing or transfer credit, so it reaches a plan as an
+      // ExternalCredit or as provenance: transfer, never as unmarked Pomona
+      // coursework. A pomona, claremont or abroad course therefore cannot
+      // predate matriculation, both passes agree about it, and the student is
+      // never asked for a term that could not change the answer.
+      if (canPredateMatriculation(course)) {
+        ctx.modeSensitive.add(course.key);
+        if (!favourable(ctx)) return false;
+      }
     } else if (compareTerms(term, ctx.matriculationTerm) < 0) {
       return false;
     }
@@ -62,6 +67,15 @@ function favourable(ctx: EvalContext): boolean {
   return ctx.mode === "optimistic";
 }
 
+/**
+ * Only transfer work can genuinely sit either side of matriculation (ADR-018).
+ * This is the constraint that keeps the default record free of unverifiable
+ * rows while still discriminating when the answer really is unknown.
+ */
+function canPredateMatriculation(course: ResolvedCourse): boolean {
+  return course.completed.provenance === "transfer";
+}
+
 
 function admittedByTransferPolicy(course: ResolvedCourse, filter: CourseFilter, ctx: EvalContext): boolean {
   if (filter.transferPolicy !== "transferStudentsPreMatriculation") return false;
@@ -69,6 +83,9 @@ function admittedByTransferPolicy(course: ResolvedCourse, filter: CourseFilter, 
   if (ctx.studentType !== "transfer") return false;
 
   const term = course.completed.term;
-  if (term === null || ctx.matriculationTerm === null) return favourable(ctx);
+  if (term === null || ctx.matriculationTerm === null) {
+    ctx.modeSensitive.add(course.key);
+    return favourable(ctx);
+  }
   return compareTerms(term, ctx.matriculationTerm) < 0;
 }

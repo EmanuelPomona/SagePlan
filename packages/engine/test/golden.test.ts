@@ -31,6 +31,7 @@ const FIXTURES: { id: string; programs: Program[]; describes: string }[] = [
   { id: "F-12", programs: [GE], describes: "empty plan" },
   { id: "F-13", programs: [GE], describes: "the default v1 record: course codes only, no terms, no grades" },
   { id: "F-13b", programs: [GE], describes: "two PE courses whose terms are unknown" },
+  { id: "F-13c", programs: [GE], describes: "a transfer course with no term: the one case that is genuinely unknown" },
   { id: "F-14", programs: [GPA_SCOPES], describes: "gpa scope: overall evaluates, program is deferred" },
 ];
 
@@ -61,9 +62,10 @@ describe("golden fixtures", () => {
     const f01 = evaluate(StudentPlanSchema.parse(read("./fixtures/plans/F-01.json")), [GE], CATALOG);
     const f13 = evaluate(StudentPlanSchema.parse(read("./fixtures/plans/F-13.json")), [GE], CATALOG);
 
-    // Everything an attribute rule decides: areas, overlays, language.
-    const termFree = f01.filter((r) => !["physical-education", "post-matriculation-credits"].includes(r.requirementId));
-    for (const before of termFree) {
+    // ADR-018: ALL of them, not most. F-13 is the default v1 record, and a
+    // single unverifiable row in it is the failure the design exists to prevent.
+    expect(f13).toHaveLength(f01.length);
+    for (const before of f01) {
       const after = f13.find((r) => r.requirementId === before.requirementId)!;
       expect(after.status, `${before.requirementId} should not need a term or a grade`).toBe(before.status);
     }

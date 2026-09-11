@@ -24,6 +24,12 @@ export type EvalContext = {
   mode: EvalMode;
   /** Courses whose term the student has not recorded. Empty means one pass suffices. */
   unknownTermCourses: ResolvedCourse[];
+  /**
+   * Filled in as a pass runs: the courses whose unknown field the PASS actually
+   * decided, rather than every course that happens to be missing one. A note
+   * that names all twenty is useless; the student needs the one that matters.
+   */
+  modeSensitive: Set<string>;
 };
 
 export function buildContext(plan: StudentPlan, catalog: Course[], mode: EvalMode = "optimistic"): EvalContext {
@@ -43,6 +49,7 @@ export function buildContext(plan: StudentPlan, catalog: Course[], mode: EvalMod
     catalogByKey,
     mode,
     unknownTermCourses: courses.filter((c) => c.termUnknown),
+    modeSensitive: new Set<string>(),
   };
 }
 
@@ -63,7 +70,11 @@ export function inferMatriculationTerm(plan: StudentPlan, courses: ResolvedCours
   return earliest;
 }
 
-/** A second context over the same plan, reading unknowns the other way. */
-export function withMode(ctx: EvalContext, mode: EvalMode): EvalContext {
-  return { ...ctx, mode };
+/**
+ * A second context over the same plan, reading unknowns the other way. The two
+ * passes SHARE the collector, so the note can name exactly the courses whose
+ * unknown decided the disagreement.
+ */
+export function withMode(ctx: EvalContext, mode: EvalMode, modeSensitive = ctx.modeSensitive): EvalContext {
+  return { ...ctx, mode, modeSensitive };
 }

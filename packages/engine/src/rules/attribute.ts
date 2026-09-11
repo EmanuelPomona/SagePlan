@@ -40,6 +40,7 @@ export function settleAttribute(
     counted = assigned.filter((c) => {
       const term = c.completed.term;
       if (term === null) {
+        ctx.modeSensitive.add(c.key);
         if (ctx.mode === "optimistic") return true;
         if (unknownCounted) return false;
         unknownCounted = true;

@@ -25,11 +25,14 @@ export function settleBounded(
   // the reason this costs nothing for a student who typed their terms.
   if (ctx.unknownTermCourses.length === 0) return settle(ctx);
 
-  const optimistic = settle(withMode(ctx, "optimistic"));
-  const pessimistic = settle(withMode(ctx, "pessimistic"));
+  // Both passes share one collector, so afterwards it holds exactly the courses
+  // whose unknown field a pass had to decide.
+  const decided = new Set<string>();
+  const optimistic = settle(withMode(ctx, "optimistic", decided));
+  const pessimistic = settle(withMode(ctx, "pessimistic", decided));
   if (optimistic.status === pessimistic.status) return optimistic;
 
-  const affected = relevant.filter((c) => c.termUnknown);
+  const affected = relevant.filter((c) => c.termUnknown && decided.has(c.key));
   return {
     status: "unverifiable",
     satisfiedBy: [],

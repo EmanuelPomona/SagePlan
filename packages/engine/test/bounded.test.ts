@@ -50,52 +50,61 @@ describe("distinctTerms under unknown terms (docs/API.md 2.7)", () => {
   });
 });
 
-describe("what an unknown term actually costs, measured", () => {
+describe("ADR-018 — the pessimistic pass may only consider values the field could take", () => {
   const twenty = Array.from({ length: 20 }, (_, i) =>
     completed(`FILL ${String(i + 1).padStart(3, "0")} PO`, { term: null, grade: null, gradeMode: null, credits: 1 }),
   );
 
-  test("rules with no term dependency are unaffected: total-credits answers the same", () => {
-    const unknown = planWith({ matriculationTerm: null, completed: twenty });
-    const known = planWith({
-      matriculationTerm: term("FA2025"),
-      completed: twenty.map((c) => ({ ...c, term: term("FA2025") })),
-    });
+  test("a plain record with no terms produces NO unverifiable row at all", () => {
+    // The whole point of ADR-015 and ADR-018. Pre-matriculation college work is
+    // posted as advanced standing or transfer credit, so unmarked Pomona
+    // coursework cannot predate matriculation and both passes agree about it.
+    const plan = planWith({ matriculationTerm: null, completed: twenty });
+    const unverifiable = evaluate(plan, [GE], CATALOG).filter((r) => r.status === "unverifiable");
 
-    expect(by(evaluate(unknown, [GE], CATALOG), "total-credits").status)
-      .toBe(by(evaluate(known, [GE], CATALOG), "total-credits").status);
+    expect(unverifiable.map((r) => r.requirementId)).toEqual([]);
   });
 
-  test("WITH exam credit and no terms, the post-matriculation rule goes unverifiable", () => {
+  test("exam credit does NOT change that: includeExternal is false, so it never enters the sum", () => {
+    // The discriminator this test used to assert was unsatisfiable, which is
+    // what the contract change request established (ADR-018).
     const plan = planWith({
       matriculationTerm: null,
       completed: twenty,
       externalCredits: [grant("ap-biology", "AP Biology", [], 1, "biology")],
     });
+    expect(by(evaluate(plan, [GE], CATALOG), "post-matriculation-credits").status).not.toBe("unverifiable");
+  });
+
+  test("a TRANSFER course with no term does, and the note names only that course", () => {
+    // 29 credits of Pomona work plus one transfer credit, so the two passes
+    // straddle the 30-credit threshold and genuinely disagree.
+    const pomona = Array.from({ length: 29 }, (_, i) =>
+      completed(`FILL ${String(i + 1).padStart(3, "0")} PO`, { term: null, grade: null, gradeMode: null, credits: 1 }),
+    );
+    const plan = planWith({
+      matriculationTerm: null,
+      completed: [
+        ...pomona,
+        completed("ECON 101 EXT", { term: null, grade: null, gradeMode: null, credits: 1, provenance: "transfer", title: "Microeconomics" }),
+      ],
+    });
     const result = by(evaluate(plan, [GE], CATALOG), "post-matriculation-credits");
 
     expect(result.status).toBe("unverifiable");
-    expect(result.note).toMatch(/term/i);
+    expect(result.note).toContain("ECON 101 EXT");
+    // Discriminates rather than suppresses: the 29 Pomona courses are not named.
+    expect(result.note).not.toContain("FILL");
   });
 
-  /**
-   * MEASURED, and the subject of a CONTRACT CHANGE REQUEST in
-   * docs/handoffs/agent-frontend.md.
-   *
-   * docs/API.md 2.7 says "with no external or transfer credit, including or
-   * excluding unknown-term courses gives the same answer for every credit rule,
-   * so nothing goes unverifiable". Implemented literally, that is not what
-   * happens: `sinceMatriculation` reads EVERY unknown term as mode-dependent, so
-   * a plain 20-course Pomona record with no terms and no outside credit still
-   * goes unverifiable. That record is the DEFAULT under ADR-015.
-   *
-   * This test pins the behaviour the contract currently specifies so the
-   * divergence is visible rather than silent. It should be rewritten when the
-   * manager rules.
-   */
-  test("but a plain record with no outside credit ALSO goes unverifiable, which 2.7 says it should not", () => {
-    const plan = planWith({ matriculationTerm: null, completed: twenty });
-    expect(by(evaluate(plan, [GE], CATALOG), "post-matriculation-credits").status).toBe("unverifiable");
+  test("rules with no term dependency are unaffected either way", () => {
+    const unknown = planWith({ matriculationTerm: null, completed: twenty });
+    const known = planWith({
+      matriculationTerm: term("FA2025"),
+      completed: twenty.map((c) => ({ ...c, term: term("FA2025") })),
+    });
+    expect(by(evaluate(unknown, [GE], CATALOG), "total-credits").status)
+      .toBe(by(evaluate(known, [GE], CATALOG), "total-credits").status);
   });
 });
 
