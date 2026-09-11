@@ -114,9 +114,28 @@ These supersede any v0 criterion they contradict. Measurements are taken at
   CHST 055  CH  Digitizing our Testimonios
   ```
 
-  Silently deleting a real course is a worse defect than shipping a placeholder, because a missing course makes the engine answer `unmet` for a requirement the student satisfied. `THEA 007 PO` ("repeat test course", department `PREG`) deliberately escapes the exact rule: **report it, do not widen the rule to catch it.** The owner decides on reported records.
+  Silently deleting a real course is a worse defect than shipping a placeholder, because a missing course makes the engine answer `unmet` for a requirement the student satisfied. **Five of those six carry GE attributes**, and `ENGL 170R PO` carries two:
 
-  Evidence: the reports, the exclusion count, and a test asserting each of the six courses above survives.
+  ```
+  ENGL 170R PO  AREA_1 + WRITING_INTENSIVE     RLST 061  SC  AREA_3
+  CHST 055  CH  AREA_3                         RLST 189N PO  AREA_3
+  HIST 132  PO  AREA_3                         ENGL 076  PZ  (none)
+  ```
+
+  So the test asserts **attributes, not existence**: `ENGL 170R PO` must retain exactly `["AREA_1","WRITING_INTENSIVE"]`. A student who took it and nothing else for those slots would otherwise be told they still owe both an Area 1 and their Writing Intensive.
+
+  **The one record that escapes the exact rule is handled by an exact-key denylist, never a pattern.** `THEA 007 PO` ("repeat test course") is Active upstream and carries no attributes, and every mechanical rule that would catch it destroys real data:
+
+  | Candidate rule | What it deletes |
+  |---|---|
+  | `title contains "test"` | the six real courses above, five of them attribute carriers |
+  | `department === "PREG"` | 13 real Associated Kyoto Program study-abroad courses (`AKP 001-019 PO`) — 93% of that department. **None carries a GE attribute**, so no verdict changes; the harm is 13 courses forced down the manual entry path on a release whose whole point is removing entry friction |
+
+  The two rules fail differently and both failures matter: the substring rule **silently changes an answer**, the department rule **over-matches into real data**. Neither is acceptable, and no third pattern is going to be safer.
+
+  So: create `data/catalog-denylist.json` (it does not exist yet — it is part of this task), a list of **exact `courseKey` strings** each with a one-line reason, its first entry `THEA 007 PO`. It is human-curated and reviewed, it cannot over-match by construction, and adding to it is a visible diff. Anything else that looks like a placeholder is reported to `catalog-excluded.md` for the owner, never guessed at.
+
+  Evidence: the reports, the exclusion count, the denylist, and tests asserting `ENGL 170R PO` keeps both attributes, the 13 `AKP` courses survive, and `THEA 007 PO` is gone.
 - [ ] **AC-B03** Validators 1–8 in `docs/API.md` §4 exist, each with a unit test on a fixture, and the exclusion-anomaly report lists the 3 senior exercises with Area tags, the 10 non-Area-6 partial-credit tagged courses, and THEA085 PO. Evidence: `data/reports/exclusion-anomalies.md`.
 - [ ] **AC-B04** `npm run pipeline:sections -- FA2026` emits ≥ 2,000 sections; every `geCodes` entry maps through `HYPERSCHEDULE_GE_CODES` or is reported. Evidence: run output.
 - [ ] **AC-B05** `npm run pipeline:history -- FA2026` emits offering history for ≥ 1,400 courses with `knownTerms` ascending. Evidence: run output.
