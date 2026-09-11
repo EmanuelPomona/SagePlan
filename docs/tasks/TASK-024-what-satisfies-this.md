@@ -1,11 +1,11 @@
 ---
 id: TASK-024
 title: "What satisfies this?" — candidates filtered to an upcoming term, dual-purpose marking, term ribbon
-status: DONE
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
-round: 1
+round: 0
 depends_on: [TASK-023]
 blocked_on: ""
 ---

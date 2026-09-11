@@ -1,11 +1,11 @@
 ---
 id: TASK-022
 title: Record section — profile, course autocomplete, spreadsheet paste, non-catalog courses, external credit entry
-status: DONE
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
-round: 1
+round: 0
 depends_on: [TASK-020, TASK-021]
 blocked_on: ""
 ---
