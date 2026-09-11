@@ -129,9 +129,11 @@ These supersede any v0 criterion they contradict. Measurements are taken at
   | Candidate rule | What it deletes |
   |---|---|
   | `title contains "test"` | the six real courses above, five of them attribute carriers |
-  | `department === "PREG"` | **13 real Associated Kyoto Program study-abroad courses** (`AKP 001-019 PO`), which are precisely the `provenance: abroad` courses the 16-credit residency requirement counts |
+  | `department === "PREG"` | 13 real Associated Kyoto Program study-abroad courses (`AKP 001-019 PO`) — 93% of that department. **None carries a GE attribute**, so no verdict changes; the harm is 13 courses forced down the manual entry path on a release whose whole point is removing entry friction |
 
-  So: maintain `data/catalog-denylist.json`, a list of **exact `courseKey` strings** each with a one-line reason, seeded with `THEA 007 PO`. It is human-curated and reviewed, it cannot over-match by construction, and adding to it is a visible diff. Anything else that looks like a placeholder is reported to `catalog-excluded.md` for the owner, never guessed at.
+  The two rules fail differently and both failures matter: the substring rule **silently changes an answer**, the department rule **over-matches into real data**. Neither is acceptable, and no third pattern is going to be safer.
+
+  So: create `data/catalog-denylist.json` (it does not exist yet — it is part of this task), a list of **exact `courseKey` strings** each with a one-line reason, its first entry `THEA 007 PO`. It is human-curated and reviewed, it cannot over-match by construction, and adding to it is a visible diff. Anything else that looks like a placeholder is reported to `catalog-excluded.md` for the owner, never guessed at.
 
   Evidence: the reports, the exclusion count, the denylist, and tests asserting `ENGL 170R PO` keeps both attributes, the 13 `AKP` courses survive, and `THEA 007 PO` is gone.
 - [ ] **AC-B03** Validators 1–8 in `docs/API.md` §4 exist, each with a unit test on a fixture, and the exclusion-anomaly report lists the 3 senior exercises with Area tags, the 10 non-Area-6 partial-credit tagged courses, and THEA085 PO. Evidence: `data/reports/exclusion-anomalies.md`.

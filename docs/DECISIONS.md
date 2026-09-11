@@ -352,16 +352,33 @@ catalog and both destroy real data:
 | Candidate rule | What it deletes |
 |---|---|
 | `title contains "test"` | six real courses, five carrying GE attributes, including `ENGL 170R PO` (`AREA_1` + `WRITING_INTENSIVE`) |
-| `department === "PREG"` | 13 real Associated Kyoto Program courses (`AKP 001-019 PO`) — the `provenance: abroad` study-abroad courses the residency requirement counts |
+| `department === "PREG"` | 13 real Associated Kyoto Program courses (`AKP 001-019 PO`), 93% of that department |
 
-The second is the more instructive near-miss: it looks like a clean
-administrative signal, and it would have quietly removed the study-abroad
-catalog that one of the seventeen GE requirements depends on.
+The two fail in different ways, and the distinction is the reason the standing
+rule below is worded as it is.
+
+- The **substring rule silently changes an answer.** Five of its six casualties
+  carry GE attributes and `ENGL 170R PO` carries two, so a student who took it
+  would be told they still owe both an Area 1 and their Writing Intensive. This
+  is the load-bearing example.
+- The **department rule over-matches into real data** without changing a
+  verdict. Corrected on the reviewer's challenge, and measured: none of the 13
+  `AKP` courses carries a GE attribute, and `provenance` is a property of the
+  student's plan entry rather than of the catalog course, so a student who did
+  Kyoto could still enter them by hand as `abroad` and the residency requirement
+  would still count them. The harm is 13 courses forced down the manual entry
+  path, on a release whose entire purpose is removing entry friction. Real, and
+  a different kind of defect from a wrong answer.
+
+An earlier draft of this amendment claimed the department rule would have broken
+the residency requirement outright. It would not have, and the claim is removed:
+a standing rule is strongest when every harm cited for it is exactly what was
+measured, and the evidence was in the verification output at the time.
 
 **Decision:** placeholder exclusion is `department === "TEST"`, `title` beginning
 `DNR:`, non-Active status, **and an exact-`courseKey` denylist**
-(`data/catalog-denylist.json`) with a reason per entry, seeded with
-`THEA 007 PO`. A denylist cannot over-match by construction and every addition
+(`data/catalog-denylist.json`, created by backend under AC-B00) with a reason per
+entry, its first entry `THEA 007 PO`. A denylist cannot over-match by construction and every addition
 is a visible diff. Everything else suspicious is reported for the owner, never
 guessed at. **No pattern rule may be added to catch a single record.**
 
