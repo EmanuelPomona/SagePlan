@@ -163,3 +163,39 @@ above the fold. My v0 baseline was 57px rows / 1774px audit.
 - AC-V05: the 2.00 GPA sentence must still be on the page (collapsed "Other
   degree rules"); the honesty rule is that we never hide a rule we do not check.
 - Evidence bar unchanged: no runtime evidence -> BLOCKED, never APPROVED.
+
+## Update 2026-09-11 (later) — L-9 resolved, TASK-030 gate blocked
+
+**L-9 was correct as written, but my process was not.** Challenged on it; verified
+at `1b5cdf8`. The F-03b plan carries 9 external credits, **5 granting LANGUAGE**
+(ap-german-language, ib-french-b, ib-spanish-a, satii-french, alevel-german), so
+deleting the ADR-007 rule leaves `language` satisfied by four others and
+`total-credits` untouched (ib-spanish-a is credits=0). The golden cannot
+discriminate on that clause — exactly L-9's claim, which also explicitly credited
+`externalCredit.test.ts:45` as already asserting the rule.
+
+**The real defect is mine and stands:** L-9 came from a subagent measurement I did
+NOT re-run before publishing. I re-ran every High/Medium subagent finding and said
+so; I did not do that for the Lows, and the verdict does not mark provenance per
+finding. **Two standing changes: (1) re-run every measurement I publish regardless
+of severity; (2) mark each finding as self-measured or relayed.**
+
+**TASK-030 gate authorised by the manager but BLOCKED — ADR-018 has not landed:**
+```
+F-13   1 unverifiable (post-matriculation-credits)  <- ADR-018 requires 0
+F-13b  2 unverifiable                               <- manager's split specifies 1
+F-13c  ABSENT   <- the fixture that proves the constraint discriminates
+engine src: no provenance-constrained pessimistic pass
+```
+Frontend has moved on to TASK-031/032 (`e4a8abf`, wip) while TASK-030 sits at
+REVIEW with stale goldens. Raised as a sequencing risk. **Do not gate until F-13c
+exists and F-13 reads 0 unverifiable**, or I gate behaviour already superseded.
+
+**Verified as correct, no action:** `docs/review/rounds.md` transcription matches my
+verdict exactly (10 tasks); DEBT.md union merge preserved D-01..D-12; ADR-019 is in
+protocol section 21; `integrate.sh` now merges `agent/reviewer` last, so evidence
+and the ledger reach main.
+
+**When gating TASK-030, be sceptical of F-13c specifically** (manager's own flag): a
+rule that quietly returns "agree" for everything passes F-13 and F-13b. F-13c must
+show the constraint discriminating, not suppressing.
