@@ -36,15 +36,21 @@ export function AdministrativeStrip({
           aria-label={`${requirement.label}, ${result.status}${result.remaining ? `, ${result.remaining.n} ${result.remaining.unit} to go` : ""}`}
         >
           <span className="admin-figure">{figure(result)}</span>
-          <span className="admin-label">{requirement.label.replace(/^\d+\s+/, "")}</span>
+          <span className="admin-label">{shortLabel(requirement.label)}</span>
         </button>
       ))}
     </p>
   );
 }
 
+/** Reads as a sentence: "12.75 more  course credits", "done  credits at Pomona". */
 function figure(result: Result): string {
   if (result.status === "satisfied") return "done";
-  if (result.status === "unverifiable") return "?";
-  return result.remaining ? `${result.remaining.n} to go` : result.status;
+  if (result.status === "unverifiable") return "unknown";
+  return result.remaining ? `${result.remaining.n} more` : result.status;
+}
+
+/** "32 course credits" is the rule's name; the strip already shows the number. */
+function shortLabel(label: string): string {
+  return label.replace(/^\d+(\.\d+)?\s+/, "");
 }

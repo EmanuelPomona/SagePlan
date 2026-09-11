@@ -135,12 +135,14 @@ a:hover { background: var(--canvas-hover); }
 
 /* ---- The requirement row, and its margin of evidence ---------------------- */
 
+/*
+ * One line, 40px. The quote left the collapsed row (v1 brief revision) and the
+ * evidence column with it, so the row is a single grid line again. Padding is
+ * what came down; the type scale is the brief's and does not move.
+ */
 .row {
-  display: grid;
-  grid-template-columns: 1fr var(--evidence-col);
-  gap: var(--s-6);
-  align-items: start;
-  padding: var(--s-2) 0;
+  display: block;
+  padding: var(--s-1) 0;
   border-top: 1px solid var(--rule);
 }
 .row:hover { background: var(--canvas-hover); }
@@ -150,12 +152,11 @@ a:hover { background: var(--canvas-hover); }
 
 .row-main {
   display: grid;
-  /* status | label | what closed it | what could | confidence, all on one line:
-     the whole audit has to fit one viewport at 1440. */
+  /* status | label | what closed it | what could | confidence, all on one line. */
   grid-template-columns: 9rem minmax(0, 1fr) auto auto auto;
   gap: var(--s-3);
   align-items: baseline;
-  min-height: var(--row-h);
+  min-height: 1.75rem;
   line-height: var(--lh-row);
 }
 
@@ -421,10 +422,8 @@ legend { font-size: var(--t-small); color: var(--ink-2); padding: 0 var(--s-2); 
 }
 
 .summary { align-items: baseline; }
-.progress-count { display: inline-flex; align-items: center; gap: var(--s-2); }
-.progress-figures strong { font-family: var(--face-code); color: var(--ink); font-weight: 400; }
-.progress-track { display: inline-block; inline-size: 4rem; block-size: 3px; background: var(--rule); }
-.progress-fill { display: block; block-size: 100%; background: var(--satisfied); }
+.progress-count { display: inline-flex; align-items: baseline; gap: var(--s-1); }
+.progress-count strong { font-family: var(--face-code); color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
 
 .row-extra { display: inline-flex; gap: var(--s-3); align-items: baseline; justify-self: end; }
 .row-manual { font-size: var(--t-small); color: var(--manual); }

@@ -1,7 +1,7 @@
 ---
 id: TASK-031
 title: Light default, v1 palette, family hues, and the four visual defects from round 1
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

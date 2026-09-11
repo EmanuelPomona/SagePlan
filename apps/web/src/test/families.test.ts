@@ -47,7 +47,7 @@ describe("how many nodes each student actually gets", () => {
    * MEASURED, and it disagrees with TASK-033's parenthetical.
    *
    * The task says twelve for a transfer student too, "the PE variant swaps in,
-   * the waived one drops out" — but TWO family requirements are waived for a
+   * the waived one drops out": but TWO family requirements are waived for a
    * transfer student, not one: critical-inquiry AND physical-education. The
    * brief is explicit that a waived requirement is not drawn as a node, so the
    * honest count is eleven. Flagged in the handoff rather than padded back to
