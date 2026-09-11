@@ -32,6 +32,13 @@ Checkable by someone who did not build it.
 
 Relevant implementation information, links to the contract sections involved.
 
+**Notes are guidance, not requirements.** Anything that must be true for the task
+to be done belongs in Acceptance Criteria, where it gets ticked. A requirement
+recorded only here is a requirement recorded where the person ticking boxes does
+not read it — which is how F-03c was specified, agreed and then missed
+(reviewer R2-M1, 2026-09-11). If you find yourself writing "must" or "required"
+in this section, it belongs above.
+
 ## Review History
 
 | Round | Verdict | Summary |
