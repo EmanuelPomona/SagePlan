@@ -762,3 +762,62 @@ well under the 8000 warning threshold. After Replace the address bar reads
 ### Commit
 
 `f95607f`. Branch `agent/frontend`, still no remote to push to.
+
+---
+
+## CONTRACT CHANGE REQUEST — API.md 2.7 vs the default v1 record — agent/frontend — 2026-09-11
+
+**Current shape.** `docs/API.md` 2.7 says the pessimistic pass treats an unknown
+term "in the way least favourable", and then claims: *"Most students are
+unaffected: with no external or transfer credit, including or excluding
+unknown-term courses gives the same answer for every credit rule, so nothing
+goes `unverifiable`."*
+
+**Those two sentences disagree, and I implemented the first one.** Under the
+literal rule, `sinceMatriculation` reads every unknown term as mode-dependent.
+For `post-matriculation-credits` (n=30, `sinceMatriculation`) the optimistic
+pass counts all the student's courses and the pessimistic pass counts none, so
+the two passes differ for any student below 30 credits.
+
+**Measured, not argued.** Golden `F-13` is the ADR-015 default record: the F-01
+student with nothing but course codes, no outside credit of any kind.
+
+```
+F-13 vs F-01: 16 of 17 requirements identical
+  CHANGED post-matriculation-credits  partial -> unverifiable
+    "Add the term to ANTH 025 PO, ARTH 051 PO, BIOL 041 PO and CHEM 051 PO,
+     and 16 more so this can be checked."
+```
+
+So the record ADR-015 exists to create — *just the list of courses you took* —
+produces a row telling the student to go back and add twenty terms. That is the
+outcome ADR-015 set out to remove, and 2.7's own sentence says it should not
+happen.
+
+**Proposed change**, for the manager to accept or replace:
+
+> In the pessimistic pass, an unrecorded term excludes a course from
+> `sinceMatriculation` **only when that course could actually predate
+> matriculation**, i.e. when its `provenance` is `transfer`. Coursework taken at
+> the Claremont Colleges cannot precede matriculating there, so for it both
+> passes agree and the student is never asked for a term they do not need to
+> give. `minTerm` is unaffected.
+
+I implemented this refinement first, measured it, and **backed it out** when I
+saw it contradicted the F-13 expectation in ACCEPTANCE and the task's own
+bounded test ("a student with AP credit and every term null: unverifiable").
+The refinement makes 2.7's claim true; the literal rule makes the task's test
+true. They cannot both hold, because `post-matriculation-credits` has
+`includeExternal: false`, so exam credit never enters that sum and therefore
+cannot be what distinguishes the two cases.
+
+**What breaks if it is not changed:** nothing crashes, and no verdict is wrong.
+But every student who uses the v1 record as designed sees one `unverifiable`
+row, and the fix it offers them is to do the data entry ADR-015 removed. The
+test `bounded.test.ts > "but a plain record with no outside credit ALSO goes
+unverifiable, which 2.7 says it should not"` pins the current behaviour so the
+divergence is visible rather than silent; rewrite it when you rule.
+
+**Task status.** TASK-030 is **not** blocked: the contract as written is
+implemented, tested and shipped. This is a correctness-of-experience question
+for TASK-032 and TASK-033, which is why I am raising it before building them.

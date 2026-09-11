@@ -1,7 +1,7 @@
 ---
 id: TASK-030
 title: Engine round 2 — assignment attribution, gpa scope, optional terms and grades, bounded evaluation
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH
