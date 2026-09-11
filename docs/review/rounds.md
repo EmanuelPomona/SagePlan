@@ -33,3 +33,6 @@ Append a row per verdict. Never edit a past row; a task at round 3 has three row
 | TASK-012 | 2 | APPROVED | 2026-09-11 | H-5 closed by AC-B04 amendment (SP2027 unpublished upstream); L-7 codes now reported |
 | TASK-013 | 2 | APPROVED | 2026-09-11 | M-4 closed; AC-B07 UNVERIFIABLE — no git remote (D-12), not ticked |
 | — | — | FINDING | 2026-09-11 | R2-M2 docs/tasks/*.md merge=union silently dropped backend's REVIEW status; third instance of cross-branch declaration loss |
+| TASK-031 | 1 | APPROVED | 2026-09-11 | AC-V08 met in full; reviewer D-01/D-02/D-03 all closed and re-measured |
+| TASK-033 | 1 | APPROVED | 2026-09-11 | AC-V01/V02/V03/V04/V09/V10/V11 measured and met; map 274px, rows 38px, above the fold at 1440x800 |
+| TASK-032 | 1 | CHANGES_REQUIRED | 2026-09-11 | V1-H1: AC-V07 unmet — a malformed course line is silently dropped, no rejection reported |

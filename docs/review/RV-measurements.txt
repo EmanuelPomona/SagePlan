@@ -1,0 +1,36 @@
+RV-measurements.txt — AC-V02 / AC-V03 under the instrument ADR-017 specifies
+Reviewer: agent/reviewer   2026-09-11
+
+INSTRUMENT READ-BACK (part of the criterion, not a claim about it):
+  innerWidth        1440
+  innerHeight        800
+  devicePixelRatio     1
+  data-theme       light
+  color-scheme     light      <- follows data-theme (AC-V08)
+
+AC-V02 — masthead + collapsed record + entire map above the fold:
+  masthead bottom   158 px
+  map top           213 px
+  map bottom        487 px
+  viewport height   800 px
+  MAP ABOVE FOLD    true       (487 <= 800, 313 px of headroom)
+  scrollY             0        (nothing scrolled to achieve this)
+
+AC-V03 — getBoundingClientRect, measured not asserted:
+  map height        274 px     bar: <= 320   PASS
+  collapsed row      38 px     bar: <=  40   PASS
+
+Round-1 baseline for comparison (reviewer M-06): audit block 1774 px,
+row heights 57 px. The map is now 274 px and rows are 38 px.
+
+AC-V08 — 390x844 mobile viewport, dpr 2:
+  before opening "Add an exam"  layoutVW 390  scrollWidth 390
+  after  opening "Add an exam"  layoutVW 390  scrollWidth 390
+  widest <select>               320 px  (was 541 px in round 1)
+  WIDENED                       false      <- reviewer D-02 closed
+
+AC-V08 — theme, from empty localStorage:
+  stored keys []   data-theme light   color-scheme light   bg rgb(245,240,230)
+  after clicking Dark:
+  data-theme dark  color-scheme dark  bg rgb(27,26,23)     <- follows both ways
+  checkboxes: 12, each 13x13 px, min-height 0px            <- reviewer D-03 closed
