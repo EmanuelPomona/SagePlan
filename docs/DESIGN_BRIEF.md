@@ -7,6 +7,29 @@ design problem, not a style instruction. Frontend reads this together with
 
 ---
 
+## v1 revision — 2026-09-11
+
+The v0 build shipped and was reviewed against real use. Four things changed, on
+the owner's instruction. **Where this section and the original text below
+disagree, this section wins.**
+
+| Changed | Why |
+|---|---|
+| **A requirement map sits above the detail rows** | The audit measured **1774px at 1440x900** (reviewer finding M-06). "Where do I stand" required two viewports of scrolling. The map answers it above the fold. |
+| **The verbatim catalog quote moves into the expanded row** | It was roughly half the audit's height. It is still one click from every claim, which keeps the trust argument, and the collapsed rows now fit. |
+| **Light is the default canvas** | The dark canvas was the accident of a `System` default; the design was always drawn for cream. |
+| **The GPA row is gone, and the app never asks for grades** | A share link carries the whole plan, so grades would travel to whoever receives it. The 2.00 rule stays on the page as a quoted advisory. |
+
+The owner's reference for the map is committed at
+`docs/design-refs/v1-requirement-map-reference.png`. Take from it: the node
+grammar (a ring per requirement, state shown by how the ring is filled), the
+grouping of requirements into families, and the warm light ground. **Do not**
+take from it: the four-year planner, prerequisite arrows, "Unlocks", or the
+major tree - those are P1/P2 and building them now would change what this
+product is. Its "Area 1-5" is also wrong; Pomona has six.
+
+---
+
 ## Target audience
 
 A Pomona first- or second-year, the week before registration, at a desk or on a
@@ -26,45 +49,81 @@ evidence rather than asking to be believed.
 Turn "what do I still owe?" into a named list of courses I can take next term,
 with the catalog's own words beside every answer.
 
-## Structural rule (owner decision, 2026-09-08)
+## Structural rule (owner decision, 2026-09-08; layout revised 2026-09-11)
 
-**One page.** No tabs, no routes, no landing page, no navigation to other views.
-The five "screens" in the product brief are sections and inline disclosures on a
-single scrolling document:
+**One page.** No tabs, no routes, no landing page, no modal that hides the
+audit. The layout is four bands: who this is and how fresh the data is, what
+you told us, **where you stand**, and the evidence behind it.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│ MASTHEAD  Pomona GradGuide · unofficial · Catalog 2026–27 · data as of 8 Sep  │
-│           "The Registrar's official audit is the source of truth. Confirm     │
-│            with your advisor before registering."  → portal link              │
+│ MASTHEAD   Pomona GradGuide · unofficial · Catalog 2026-27 · data as of …     │
+│            "The Registrar's official audit is the source of truth. Confirm    │
+│             with your advisor before registering."  → portal link             │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│ YOUR RECORD                                                                   │
-│   matriculated FA 2025 · first-year        [ type a course… CSCI 5|        ] │
-│   CSCI 051 PO  Intro to CS          FA25  A-   PO                             │
-│   ID   001 PO  Critical Inquiry     FA25  CR   PO                             │
-│   …                                                                            │
-│   AP Spanish Language · 5 · qualifies · grants Language                        │
-│   [ paste from spreadsheet ]                                                   │
+│ YOUR RECORD   32 courses · 30.5 credits · entered Fall 2025      [ edit ▾ ]   │
+│               (collapsed to this one line as soon as a course exists;         │
+│                expands to the entry surface: search, paste, transcript)       │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│ YOUR REQUIREMENTS                         4 of 6 breadth · 3 overlays owed    │
-│ ● Area 1  satisfied   ENGL 067 PO         │ "Criticism, analysis and         │
-│                                           │  contextual study of works of    │
-│ ○ Area 3  unmet       what satisfies this?│  the human imagination."         │
-│   ▼ open in place ─────────────────────────────────────────────────────────── │
-│     offered SP 2027                       ribbon  FA SP FA SP FA SP FA SP     │
-│     HIST 101 PO  Modern Europe           ▮▯▮▯▮▮▯▮   also closes: Analyzing… │
-│     PHIL 032 PO  Ethics                  ▮▮▮▮▮▮▮▮                            │
-│ ◐ PE      partial  1 of 2   PE 001 PO     │ …                                 │
-│ ◌ Language unverifiable → confirm         │ …                                 │
+│ WHERE YOU STAND                                                               │
+│                                                                               │
+│  BREADTH ──────────────────────   OVERLAYS ─────────   FOUNDATIONS ────────   │
+│   ● Area 1    ● Area 2    ● Area 3   ● Writing           ● Critical Inquiry   │
+│     ENGL 067    PSYC 052    AMST 110   ENGL 067            ID 001             │
+│   ○ Area 4    ● Area 5    ◐ Area 6   ○ Speaking          ● Language          │
+│     2 in SP27   MATH 030    0.5 of 1   7 in SP27           AP Spanish         │
+│                                      ● Analyzing         ◐ Physical Ed        │
+│                                        AMST 110            1 of 2             │
+│                                                                               │
+│  32 of 32 credits · 16 at Pomona · 30 after matriculation       [ details ]   │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│ EXPORT · IMPORT · SHARE LINK      Data: Hyperschedule (BSD), Coursedog · About │
+│ THE DETAIL   one line per requirement; open one for the College's own words   │
+│  ○ Area 4   unmet   1 more course   2 offered in SP 2027            [ open ]  │
+│    ▼ opened ───────────────────────────────────────────────────────────────   │
+│      "Area 4: Physical and Biological Sciences"        ← verbatim, serif      │
+│      One course in Area 4, taken at the Claremont Colleges.                   │
+│      What satisfies this?  →  offered SP 2027, ribbon, "also closes …"        │
+│      Record an override · I satisfied this another way                        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ EXPORT · IMPORT · SHARE LINK     Other degree rules (8) ▾      Attribution    │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
-A requirement row expands in place to reveal its detail (full verbatim quote,
-plain-English rule, override and attestation controls) and its candidates. Only
-one row needs to be open at a time, but nothing forbids several. Nothing ever
-replaces the page.
+**The map is the answer; the rows are the evidence.** Clicking a node opens that
+requirement's row below and scrolls it into view. Nothing navigates away, and
+no overlay ever covers the audit.
+
+### The three families
+
+Twelve nodes, because twelve is what a student actually chooses courses for.
+
+| Family | Requirement ids | Why it is a family |
+|---|---|---|
+| **Breadth** | `area-1` … `area-6` | six peer slots, one course each, mutually exclusive by department |
+| **Overlays** | `writing-intensive`, `speaking-intensive`, `analyzing-difference` | the catalog's own word for them; they ride on top of a Breadth course |
+| **Foundations** | `critical-inquiry`, `language`, `physical-education` (or `-transfer`) | specific things you must actually go and take |
+
+Everything else - `total-credits`, `post-matriculation-credits`,
+`pomona-residency-credits` - is **administrative**: it is about totals, it
+resolves itself, and no student plans a semester around it. It gets the one-line
+strip under the map, not a node. A requirement waived for this student
+(`waived: true`) is not drawn as a node; it appears in the detail rows, last.
+
+### Node grammar
+
+State is carried by the ring, never by hue alone, and every node also carries
+its status word in its detail row.
+
+| State | Ring | Under the label |
+|---|---|---|
+| satisfied | filled, check inside | the course that did it, in mono (`ENGL 067`) |
+| partial | half-filled | `0.5 of 1`, `1 of 2` |
+| unmet | hollow, solid ring | `2 in SP27` - how many candidates are offered next term |
+| unverifiable | hollow, **dashed** ring | the one thing that would resolve it |
+| manual (override / attested) | filled, plum, different glyph | `override` or `attested` |
+
+A node is a button: `aria-label` reads "Area 4, unmet, 1 more course, 2 offered
+in Spring 2027", and it is reachable and operable by keyboard.
 
 ## Reference points
 
@@ -140,9 +199,14 @@ monospace`.
 
 ## Palette
 
+**Light is the default** (v1). A viewer with no stored preference gets cream;
+`System` and `Dark` remain in the toggle. `color-scheme` must follow
+`data-theme` in both directions, or the browser paints native controls from the
+OS scheme onto the wrong canvas (reviewer finding M-08).
+
 Hue is reserved for meaning. The four verdicts and the two manual states are the
-only colors on the page; everything else is ink on paper. Every status is also
-carried by a glyph and a word, never by color alone.
+only strong colors on the page; everything else is ink on paper. Every status is
+also carried by a glyph and a word, never by color alone.
 
 | Role | Light | Dark | Why |
 |---|---|---|---|
@@ -160,13 +224,44 @@ carried by a glyph and a word, never by color alone.
 Selection, hover and pressed states are tonal shifts of the canvas (`#EDE6D8`
 hover, `#E4DCCC` pressed in light), not new hues.
 
+### Family hues (v1, map only)
+
+Three quiet hues distinguish the three families. They are used **only** on the
+family label (11px, letter-spaced small caps) and on the 1px bracket that
+gathers its nodes. Never a fill, never a node, never a row background, because
+**status owns fill**.
+
+| Family | Light | Dark |
+|---|---|---|
+| Breadth | `#5B6E8C` dusty blue | `#93A7C4` |
+| Overlays | `#3E6F76` deep teal | `#7FB0B8` |
+| Foundations | `#7A5C46` warm brown | `#C2A088` |
+
+These sit in a crowded space: teal neighbours the satisfied green, warm brown
+neighbours the partial ochre. Restricting them to hairlines and small-caps text
+is what keeps them reading as *grouping* rather than as *state*. **Verify that
+at 1440, 768 and 390. If a family hue is mistaken for a status at a glance, drop
+family hue entirely and group by position and label alone** - and say so in the
+handoff rather than shipping an ambiguous page.
+
 ## Information density
 
-**Dense.** The competition is a spreadsheet. At 1440px the entire audit (15
-requirement rows with their satisfying courses and sidenotes) fits in one
-viewport under the record section. Row height is set by the mono line, about
-32px. Sidenotes are set at 13px serif. Whitespace separates the three page
-sections; it does not pad rows.
+**Dense.** The competition is a spreadsheet.
+
+The v0 build promised "the entire audit fits in one viewport" and shipped an
+audit **1774px tall at 1440x900** with 57px rows. The v1 target is stated so it
+can be measured and held:
+
+| At 1440x900, with a 32-course plan loaded | Target |
+|---|---|
+| Masthead + collapsed record + the whole map | **fits above 900px**, no scrolling |
+| A collapsed requirement row | **<= 40px** |
+| The map itself | **<= 320px** tall |
+
+The record collapsing to one line is what makes the map reachable without
+scrolling. Detail rows below the map may run past the fold; that is correct,
+because they are the evidence you go looking for, not the answer you arrive for.
+Whitespace separates the four bands; it does not pad rows.
 
 At 768px the sidenote column collapses beneath each row as a one-line quote
 that expands on tap. At 390px the record becomes a single-column list with the
@@ -191,12 +286,23 @@ outside-the-advisor's-office moment: read-mostly, one thumb.
 
 ## Signature element
 
-**The margin of evidence.** Every requirement row is a two-column line: on the
+v1 has two, and they are one idea at two scales: **the map answers, the margin
+proves.**
+
+**1. The requirement map.** Twelve rings in three families, each showing its
+state and the course that satisfied it, all above the fold. A student opens the
+page and knows where they stand before touching anything. No official tool on
+this campus shows the whole shape of the requirement at once - and nothing in it
+is a percentage.
+
+**2. The margin of evidence.** Every requirement row is a two-column line: on the
 left the verdict glyph, the requirement label, the status word and the course
 that satisfied it, set in mono; on the right, in the margin, the catalog's
 verbatim sentence in small serif, joined to its row by the same hairline rule.
-The layout reserves space for the College's words on every line, so the page
-cannot physically show a checkmark without its reason. When a row is
+**In v1 the quote lives in the expanded row rather than permanently in the
+margin** - permanently visible, it was half the audit's height - but the rule is
+unchanged: no verdict is ever shown without the College's own sentence one click
+away, and the expanded row reserves its margin for it. When a row is
 `unverifiable`, the margin holds the question the student must answer instead of
 a quote. When a result is an override, the margin holds who approved it.
 
@@ -209,12 +315,20 @@ most differentiated asset made visible.
 
 ## Interaction notes
 
-- Course entry is the highest-friction moment. The autocomplete opens on the
-  first keystroke, matches on department, number and title, shows the course's
-  GE attributes inline in the results, and commits on Enter. Paste accepts
-  tab- or comma-separated rows in any of the common spreadsheet shapes (code
-  only; code + term; code + term + grade) and previews what it parsed before
-  adding.
+- **Course entry is the highest-friction moment, and v1 removes most of it.**
+  The only thing a student must supply is *which courses* they took. Term,
+  grade and where-it-was-taken are optional: term and grade default to unknown
+  (the engine handles that honestly, `docs/API.md` 2.7), and provenance is
+  inferred from the campus code in `CSCI 051 PO`. The per-row Term, Grade and
+  "Taken at" controls move behind a per-row `edit` disclosure; the default row
+  is code, title and a remove control. A student who never opens that
+  disclosure still gets a correct audit.
+- Three ways in, one parser behind them: type-ahead (opens on the first
+  keystroke, matches department, number and title, commits on Enter), **paste**
+  (a whole blob copied out of the portal's academic history, not just tidy
+  spreadsheet rows), and later a **transcript PDF** read in the browser. All
+  three preview what was parsed, and what was not, before anything is added.
+  Nothing is ever added silently.
 - Rows expand in place with a short height transition (about 180ms, ease-out).
   No other motion is required. Nothing animates because it can.
 - Overrides and attestations are entered inline in the expanded row and appear

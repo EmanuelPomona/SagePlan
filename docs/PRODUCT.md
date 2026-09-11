@@ -158,6 +158,23 @@ P0 must let a student:
 
 ---
 
+## v1 scope change (owner feedback, 2026-09-11)
+
+The P0 build shipped and was reviewed against real use. v1 does not add
+capability; it removes friction and makes the answer visible.
+
+| Change | Reason | Where |
+|---|---|---|
+| A requirement map above the detail rows | "Scroll down to see area requirements" - the audit measured 1774px at 1440x900 | ADR-011 |
+| The app never asks for grades, terms, or where a course was taken | These served one requirement the owner removed; the rest are inferable | ADR-015 |
+| GPA leaves the audit and becomes a quoted advisory | Most students are in good standing, and share links would carry grades to whoever received them | ADR-015 |
+| Paste a transcript blob; PDF once a sample exists | "People don't wanna search up every class" | ADR-012 |
+| Light default, family hues, quotes on expand | Owner direction; density | ADR-011 |
+
+Still out of scope, and explicitly not taken from the owner's reference image:
+the four-year planner, prerequisite graphs, "Unlocks", and the major tree. Those
+remain P1 (majors) and P2 (planner).
+
 ## Interface Shape (owner decision, 2026-09-08)
 
 **One page. No tabs, no routes, no separate landing page.** Course entry, the
