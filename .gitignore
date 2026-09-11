@@ -47,3 +47,7 @@ temp/*~
 .vite/
 *.tsbuildinfo
 apps/web/public/data/
+
+# Transcript samples stay on the owner's machine (ADR-012); the README is tracked.
+data/sources/samples/*
+!data/sources/samples/README.md

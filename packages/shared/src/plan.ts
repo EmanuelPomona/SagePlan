@@ -12,9 +12,9 @@ export type GradeMode = z.infer<typeof GradeModeSchema>;
 export const CompletedCourseSchema = z
   .object({
     course: CourseIdSchema,
-    term: TermIdSchema,
-    grade: z.string().describe('"A-", "CR", "P", "IP" (in progress). Letter grades feed GPA; CR/P/NC/NP do not.'),
-    gradeMode: GradeModeSchema,
+    term: TermIdSchema.nullable().describe("When the course was taken, or null when the student has not recorded it. Entering terms is optional by design: a rule that needs a term is evaluated both with and without the unknown-term courses, and reports unverifiable only when the two disagree. See docs/API.md 2.7."),
+    grade: z.string().nullable().describe('"A-", "CR", "P", "IP" (in progress), or null when not recorded. null is treated as PASSED, so a course the student did not pass must carry its grade. Letter grades feed a gpa rule; CR/P/NC/NP do not.'),
+    gradeMode: GradeModeSchema.nullable().describe("null when not recorded."),
     provenance: ProvenanceSchema,
     title: z.string().optional().describe("Required when the course is not in the catalog (transfer or non-Pomona abroad)."),
     credits: z.number().min(0).optional().describe("Overrides the catalog credit value; required when the course is not in the catalog."),
@@ -68,7 +68,7 @@ export const StudentPlanSchema = z
   .object({
     schemaVersion: z.literal(PLAN_SCHEMA_VERSION).describe("Bump when the shape changes; the app migrates older plans on import."),
     catalogYear: CatalogYearSchema,
-    matriculationTerm: TermIdSchema,
+    matriculationTerm: TermIdSchema.nullable().describe("null when the student has not recorded it. The engine then infers it as the earliest known completed-course term, and falls back to bounded evaluation (docs/API.md 2.7) where the inference would change an answer."),
     studentType: StudentTypeSchema,
     completed: z.array(CompletedCourseSchema),
     planned: z.array(PlannedCourseSchema),
@@ -80,7 +80,7 @@ export const StudentPlanSchema = z
   .meta({ id: "StudentPlan", description: "Everything the student has told the app. Persisted in localStorage, exported as JSON, shared in a URL fragment. Never transmitted." });
 export type StudentPlan = z.infer<typeof StudentPlanSchema>;
 
-export function emptyPlan(catalogYear: string, matriculationTerm: z.infer<typeof TermIdSchema>, studentType: z.infer<typeof StudentTypeSchema> = "firstYear"): StudentPlan {
+export function emptyPlan(catalogYear: string, matriculationTerm: z.infer<typeof TermIdSchema> | null = null, studentType: z.infer<typeof StudentTypeSchema> = "firstYear"): StudentPlan {
   return {
     schemaVersion: PLAN_SCHEMA_VERSION,
     catalogYear,
