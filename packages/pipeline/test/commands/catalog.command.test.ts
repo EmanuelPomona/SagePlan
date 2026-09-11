@@ -48,7 +48,7 @@ const seedCatalogWith = (courses: Course[]) => {
 describe("runCatalog", () => {
   test("writes a valid CatalogArtefact from a successful fetch", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ listLength: fixture.data.length, data: fixture.data }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 });
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
     const artefact = JSON.parse(readFileSync(catalogPath(), "utf8"));
     expect(CatalogArtefactSchema.safeParse(artefact).success).toBe(true);
     expect(artefact.courses.length).toBeGreaterThan(0);
@@ -56,14 +56,14 @@ describe("runCatalog", () => {
 
   test("sends the Origin header Coursedog requires", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: fixture.data }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 });
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
     const init = fetchImpl.mock.calls[0]![1] as RequestInit;
     expect((init.headers as Record<string, string>).Origin).toBe("https://catalog.pomona.edu");
   });
 
   test("throws on HTTP 401 and writes nothing", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(new Response('{"error":"Unauthenticated"}', { status: 401 }));
-    const err = await runCatalog([], { env: env({ COURSEDOG_ORIGIN: "https://wrong.example" }), fetchImpl, minCourses: 1 })
+    const err = await runCatalog([], { env: env({ COURSEDOG_ORIGIN: "https://wrong.example" }), fetchImpl, minPoCourses: 1 })
       .catch((e: unknown) => e);
     expect(err).toBeInstanceOf(PipelineError);
     expect((err as PipelineError).status).toBe(401);
@@ -74,13 +74,13 @@ describe("runCatalog", () => {
     seedCatalogWith([fakeHm]);
     const before = readFileSync(catalogPath(), "utf8");
     const fetchImpl = vi.fn().mockResolvedValue(new Response("no", { status: 401 }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 }).catch(() => {});
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 }).catch(() => {});
     expect(readFileSync(catalogPath(), "utf8")).toBe(before);
   });
 
   test("throws when the fetch returns zero courses, and writes nothing", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ listLength: 0, data: [] }));
-    const err = await runCatalog([], { env: env(), fetchImpl, minCourses: 1 }).catch((e: unknown) => e);
+    const err = await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 }).catch((e: unknown) => e);
     expect(err).toBeInstanceOf(PipelineError);
     expect((err as PipelineError).code).toBe("CATALOG_EMPTY");
     expect(existsSync(catalogPath())).toBe(false);
@@ -88,7 +88,7 @@ describe("runCatalog", () => {
 
   test("throws when the course count is below the sanity floor", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: fixture.data }));
-    const err = await runCatalog([], { env: env(), fetchImpl, minCourses: 100_000 }).catch((e: unknown) => e);
+    const err = await runCatalog([], { env: env(), fetchImpl, minPoCourses: 100_000 }).catch((e: unknown) => e);
     expect((err as PipelineError).code).toBe("CATALOG_TOO_SMALL");
     expect(existsSync(catalogPath())).toBe(false);
   });
@@ -96,7 +96,7 @@ describe("runCatalog", () => {
   test("preserves an existing non-PO course across a PO refresh", async () => {
     seedCatalogWith([fakeHm]);
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: fixture.data }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 });
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
     const artefact = JSON.parse(readFileSync(catalogPath(), "utf8")) as { courses: Course[] };
     const kept = artefact.courses.find((c) => courseKey(c.id) === "CSCI 005 HM");
     expect(kept).toBeDefined();
@@ -107,7 +107,7 @@ describe("runCatalog", () => {
     const stalePo: Course = { ...fakeHm, id: { department: "ZZZZ", courseNumber: 999, suffix: "", affiliation: "PO" }, title: "Removed last year" };
     seedCatalogWith([fakeHm, stalePo]);
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: fixture.data }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 });
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
     const artefact = JSON.parse(readFileSync(catalogPath(), "utf8")) as { courses: Course[] };
     expect(artefact.courses.find((c) => courseKey(c.id) === "ZZZZ 999 PO")).toBeUndefined();
     expect(artefact.courses.find((c) => courseKey(c.id) === "CSCI 005 HM")).toBeDefined();
@@ -118,30 +118,92 @@ describe("runCatalog", () => {
     (poisoned[0] as Record<string, unknown>).attributes = ["PO Area 9 Requirement"];
     (poisoned[0] as Record<string, unknown>).status = "Active";
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: poisoned }));
-    const err = await runCatalog([], { env: env(), fetchImpl, minCourses: 1 }).catch((e: unknown) => e);
+    const err = await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 }).catch((e: unknown) => e);
     expect((err as PipelineError).code).toBe("UNMAPPED_ATTRIBUTES");
     expect(existsSync(catalogPath())).toBe(false);
   });
 
   test("leaves no temp file behind after a failure", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: [] }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 }).catch(() => {});
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 }).catch(() => {});
     expect(readdirSync(join(dir, "data"))).toEqual([]);
   });
 
   test("--from-csv reads the export instead of calling the API", async () => {
     const csv = new URL("../fixtures/coursedog-sample.csv", import.meta.url).pathname;
     const fetchImpl = vi.fn();
-    await runCatalog(["--from-csv", csv], { env: env(), fetchImpl, minCourses: 1 });
+    await runCatalog(["--from-csv", csv], { env: env(), fetchImpl, minPoCourses: 1 });
     expect(fetchImpl).not.toHaveBeenCalled();
     expect(CatalogArtefactSchema.safeParse(JSON.parse(readFileSync(catalogPath(), "utf8"))).success).toBe(true);
   });
 
   test("every courseKey in the written catalog is unique", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: fixture.data }));
-    await runCatalog([], { env: env(), fetchImpl, minCourses: 1 });
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
     const artefact = JSON.parse(readFileSync(catalogPath(), "utf8")) as { courses: Course[] };
     const keys = artefact.courses.map((c) => courseKey(c.id));
     expect(new Set(keys).size).toBe(keys.length);
+  });
+});
+
+describe("AC-B01 / AC-B01b guards (ADR-017)", () => {
+  // AC-B01 pins the predicate: the count of id.affiliation === "PO" in the
+  // FINISHED catalog, after every exclusion. Counting the Coursedog set instead
+  // gave two readings 82 apart, and a floor of 2,000 made that decide pass/fail.
+  test("the floor counts PO courses in the finished catalog, not the fetched set", async () => {
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(jsonResponse({ data: fixture.data })));
+    const err = await runCatalog([], { env: env(), fetchImpl, minPoCourses: 100_000 }).catch((e: unknown) => e);
+    expect((err as PipelineError).code).toBe("CATALOG_TOO_SMALL");
+    expect((err as PipelineError).message).toMatch(/PO/);
+    expect(existsSync(catalogPath())).toBe(false);
+  });
+
+  test("passes when the PO count clears the floor", async () => {
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(jsonResponse({ data: fixture.data })));
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
+    const artefact = JSON.parse(readFileSync(catalogPath(), "utf8")) as { courses: Course[] };
+    expect(artefact.courses.filter((c) => c.id.affiliation === "PO").length).toBeGreaterThan(0);
+  });
+
+  // AC-B01b: the guard that actually catches a filter eating real courses. The
+  // floor never will — deleting six courses out of 2,005 still clears 1,900.
+  test("fails when the placeholder rules drop more records than the ceiling allows", async () => {
+    const poisoned = structuredClone(fixture.data) as Record<string, unknown>[];
+    poisoned.forEach((r, i) => { r.subjectCode = "TEST"; r.code = `TEST${String(i + 1).padStart(3, "0")} PO`; r.status = "Active"; });
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(jsonResponse({ data: poisoned })));
+    const err = await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1, maxExcluded: 2 }).catch((e: unknown) => e);
+    expect((err as PipelineError).code).toBe("EXCLUSION_CEILING_EXCEEDED");
+    expect(existsSync(catalogPath())).toBe(false);
+  });
+
+  test("allows exclusions up to the ceiling", async () => {
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(jsonResponse({ data: fixture.data })));
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1, maxExcluded: 25 });
+    expect(existsSync(catalogPath())).toBe(true);
+  });
+});
+
+describe("AC-B00 — the six real courses a substring filter would delete", () => {
+  // Measured by the manager against the shipped catalog: `title contains "test"`
+  // removes all six. The rule must stay exact.
+  const REAL: [string, string][] = [
+    ["ENGL", "Testamentary Fictions"],
+    ["HIST", "Pol Protest & Soc Mov Latin Amer"],
+    ["RLST", "Leadership, Authority, Protest"],
+    ["RLST", "New Testament Christian Origins"],
+    ["ENGL", "American Protest Literatures"],
+    ["CHST", "Digitizing our Testimonios"],
+  ];
+
+  test.each(REAL)("keeps %s — %s", async (dept, title) => {
+    const poisoned = structuredClone(fixture.data) as Record<string, unknown>[];
+    const first = poisoned.find((r) => r.status === "Active")!;
+    first.subjectCode = dept;
+    first.code = `${dept}170R PO`;
+    first.name = title;
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(jsonResponse({ data: poisoned })));
+    await runCatalog([], { env: env(), fetchImpl, minPoCourses: 1 });
+    const artefact = JSON.parse(readFileSync(catalogPath(), "utf8")) as { courses: Course[] };
+    expect(artefact.courses.some((c) => c.title === title)).toBe(true);
   });
 });

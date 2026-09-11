@@ -1,4 +1,7 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { courseKey, type Course } from "@gradguide/shared";
+import { PipelineError } from "./errors.ts";
 
 /**
  * Catalog membership (ADR-016, acceptance criterion AC-B00).
@@ -17,6 +20,31 @@ import { courseKey, type Course } from "@gradguide/shared";
  *   keep       — an ordinary course.
  */
 export type Verdict = "keep" | "exclude" | "suspicious";
+
+/**
+ * Exact courseKey strings to exclude, loaded from data/catalog-denylist.json.
+ *
+ * The standing rule from ADR-016: no pattern rule may ever be added to catch a
+ * single record. Both patterns that would catch THEA 007 PO destroy real data —
+ * `title contains "test"` deletes six real courses (five carrying GE attributes),
+ * and `department === "PREG"` deletes the 13 Associated Kyoto Program courses.
+ * An exact-key list cannot over-match, and every addition is a visible diff.
+ */
+export interface DenylistEntry { courseKey: string; reason: string }
+
+export function loadDenylist(dataDir: string): Map<string, string> {
+  const path = join(dataDir, "catalog-denylist.json");
+  if (!existsSync(path)) return new Map();
+  try {
+    const parsed = JSON.parse(readFileSync(path, "utf8")) as { denied?: DenylistEntry[] };
+    return new Map((parsed.denied ?? []).map((e) => [e.courseKey.trim(), e.reason]));
+  } catch (e) {
+    throw new PipelineError(
+      `${path} exists but could not be read (${(e as Error).message}). Refusing to run with an unreadable denylist.`,
+      "DENYLIST_UNREADABLE",
+    );
+  }
+}
 
 export interface Classification {
   verdict: Verdict;
@@ -39,9 +67,13 @@ const SUSPICIOUS_TITLE = [
   /\bdummy\b/i,
 ];
 
-export function classifyCourse(course: Course): Classification {
+export function classifyCourse(course: Course, denylist: ReadonlyMap<string, string> = new Map()): Classification {
   const title = String(course.title ?? "");
 
+  const denied = denylist.get(courseKey(course.id));
+  if (denied !== undefined) {
+    return { verdict: "exclude", reason: `on data/catalog-denylist.json: ${denied}` };
+  }
   if (course.id.department === "TEST") {
     return { verdict: "exclude", reason: "department TEST is a scheduling placeholder (ADR-016)" };
   }
@@ -78,13 +110,16 @@ export interface MembershipResult {
  * rule cannot be enforced on one source and forgotten on the other — which is
  * exactly how M-5 happened.
  */
-export function applyMembership(courses: readonly Course[]): MembershipResult {
+export function applyMembership(
+  courses: readonly Course[],
+  denylist: ReadonlyMap<string, string> = new Map(),
+): MembershipResult {
   const kept: Course[] = [];
   const excluded: ExcludedCourse[] = [];
   const suspicious: ExcludedCourse[] = [];
 
   for (const course of courses) {
-    const { verdict, reason } = classifyCourse(course);
+    const { verdict, reason } = classifyCourse(course, denylist);
     const row: ExcludedCourse = {
       key: courseKey(course.id),
       title: course.title,
@@ -99,16 +134,11 @@ export function applyMembership(courses: readonly Course[]): MembershipResult {
 }
 
 /** The report AC-B00 requires. */
-export function membershipReport(
-  result: MembershipResult,
-  totalConsidered: number,
-  pruned: readonly ExcludedCourse[] = [],
-): string {
+export function membershipReport(result: MembershipResult, totalConsidered: number): string {
   return [
     "# Records excluded from the catalog",
     "",
     `${totalConsidered} candidate course(s) considered; **${result.excluded.length}** excluded, `
-      + `**${pruned.length}** pruned as no longer offered, `
       + `**${result.suspicious.length}** kept but flagged, ${result.kept.length} in the catalog.`,
     "",
     "## Why this file exists",
@@ -125,17 +155,6 @@ export function membershipReport(
       ? ["_None._", ""]
       : ["| Course | Affiliation | Title | Rule |", "|---|---|---|---|",
          ...result.excluded.map((r) => `| ${r.key} | ${r.affiliation} | ${r.title} | ${r.reason} |`), ""]),
-    "## Pruned: no section in any ingested term",
-    "",
-    "ADR-016: a non-Pomona course enters the catalog only via a section in an",
-    "ingested term. These were in the previous catalog but are not offered in any",
-    "term currently on disk, so they are no longer reachable from the app. Pomona",
-    "courses are never pruned — they come from Coursedog, not from the schedule.",
-    "",
-    ...(pruned.length === 0
-      ? ["_None._", ""]
-      : ["| Course | Affiliation | Title |", "|---|---|---|",
-         ...pruned.map((r) => `| ${r.key} | ${r.affiliation} | ${r.title} |`), ""]),
     "## Kept, but flagged for a human",
     "",
     "These match no named exclusion rule, so they remain in the catalog. If any is",

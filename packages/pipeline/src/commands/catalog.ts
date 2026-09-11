@@ -7,7 +7,7 @@ import type { FetchImpl } from "../http.ts";
 import { makeMeta } from "../meta.ts";
 import { log, writeReport } from "../reports.ts";
 import { writeArtefact } from "../write.ts";
-import { applyMembership, membershipReport } from "../placeholders.ts";
+import { applyMembership, loadDenylist, membershipReport } from "../placeholders.ts";
 import { mergeCourses, readExistingCourses } from "../catalogMerge.ts";
 import { fetchCoursedogCourses, coursedogSearchUrl } from "../coursedog/client.ts";
 import { parseCoursedogCsv } from "../coursedog/csvFallback.ts";
@@ -19,13 +19,20 @@ export interface CatalogOptions {
   env?: PipelineEnv;
   fetchImpl?: FetchImpl;
   /**
-   * Non-empty sanity floor. Default 2000: the live catalog yields ~2,093 Pomona
-   * courses after the Active filter and de-duplication, and the guard exists to
-   * catch a truncated or broken fetch, not to assert an exact figure.
-   * (TASK-010 AC-B01 said 2,700, which counts Banked/Inactive placeholder rows;
-   * raised as CONTRACT CHANGE REQUEST item 1.)
+   * AC-B01 (ADR-017). The predicate is PINNED: the count of courses with
+   * `id.affiliation === "PO"` in the FINISHED catalog, after every exclusion.
+   * "Active Pomona courses" had two defensible readings 82 apart — 2,087 emitted
+   * by this command, 2,005 carrying affiliation PO — and a floor of 2,000 made
+   * that ambiguity decide pass/fail. Measured today: 2,005. The floor's only job
+   * is catching a truncated fetch, so it has headroom.
    */
-  minCourses?: number;
+  minPoCourses?: number;
+  /**
+   * AC-B01b. Ceiling on how many records the placeholder rules may drop. This is
+   * the guard that catches a filter eating real courses; the floor never will,
+   * because deleting six courses out of 2,005 still clears 1,900.
+   */
+  maxExcluded?: number;
 }
 
 function summariseIssues(issues: readonly NormaliseIssue[]): Record<string, number> {
@@ -36,7 +43,8 @@ function summariseIssues(issues: readonly NormaliseIssue[]): Record<string, numb
 
 export async function runCatalog(argv: readonly string[], opts: CatalogOptions = {}): Promise<void> {
   const env = opts.env ?? readEnv();
-  const minCourses = opts.minCourses ?? 2000;
+  const minPoCourses = opts.minPoCourses ?? 1900;
+  const maxExcluded = opts.maxExcluded ?? 25;
   const fromCsvIndex = argv.indexOf("--from-csv");
   const fetchedAt = new Date().toISOString();
 
@@ -88,22 +96,35 @@ export async function runCatalog(argv: readonly string[], opts: CatalogOptions =
   if (deduped.length === 0) {
     throw new PipelineError("no courses survived normalisation; keeping yesterday's catalog", "CATALOG_EMPTY");
   }
-  if (deduped.length < minCourses) {
-    throw new PipelineError(
-      `only ${deduped.length} courses after normalisation, below the floor of ${minCourses}; keeping yesterday's catalog`,
-      "CATALOG_TOO_SMALL",
-    );
-  }
 
   const catalogPath = join(env.dataDir, "catalog.json");
   const mergedRaw = mergeCourses(readExistingCourses(catalogPath), deduped, "PO");
 
   // ADR-016 / AC-B00. Applied to the whole merged list, not just the PO set: the
   // rule must hold for every writer of catalog.json.
-  const membership = applyMembership(mergedRaw);
+  const membership = applyMembership(mergedRaw, loadDenylist(env.dataDir));
   const merged = membership.kept;
-  writeReport("catalog-excluded", membershipReport(membership, mergedRaw.length), env.dataDir);
+  const poCount = merged.filter((c) => c.id.affiliation === "PO").length;
   const preserved = merged.filter((c) => c.id.affiliation !== "PO").length;
+
+  // Both guards run BEFORE anything is written, so a failure leaves yesterday's
+  // catalog exactly as it was.
+  if (membership.excluded.length > maxExcluded) {
+    throw new PipelineError(
+      `the placeholder rules dropped ${membership.excluded.length} record(s), above the ceiling of ${maxExcluded}. `
+        + `That is the signature of a filter eating real courses, not of placeholders. Excluded: `
+        + `${membership.excluded.slice(0, 5).map((e) => e.key).join(", ")}`,
+      "EXCLUSION_CEILING_EXCEEDED",
+    );
+  }
+  if (poCount < minPoCourses) {
+    throw new PipelineError(
+      `only ${poCount} course(s) with affiliation PO after exclusions, below the floor of ${minPoCourses}; keeping yesterday's catalog`,
+      "CATALOG_TOO_SMALL",
+    );
+  }
+
+  writeReport("catalog-excluded", membershipReport(membership, mergedRaw.length), env.dataDir);
 
   writeArtefact(
     catalogPath,
@@ -160,7 +181,7 @@ export async function runCatalog(argv: readonly string[], opts: CatalogOptions =
 
   log("catalog.write", {
     path: catalogPath, courses: merged.length,
-    po: merged.filter((c) => c.id.affiliation === "PO").length,
+    po: poCount,
     preserved, unmapped: 0, droppedRecords: dropped.length,
     excluded: membership.excluded.length, flagged: membership.suspicious.length,
   });

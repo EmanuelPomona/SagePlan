@@ -26,8 +26,14 @@ describe("categoriseDivergence", () => {
     expect(cat(["AREA_3"], ["AREA_2"])).toBe("area-mismatch");
   });
 
-  test("Areas and overlays both differ", () => {
-    expect(cat(["AREA_3"], ["AREA_2", "WRITING_INTENSIVE"])).toBe("mixed");
+  test("Areas and overlays both differ while the sets still overlap", () => {
+    // AC-P09 lists "disjoint sets" as its own shape, so "mixed" is reserved for
+    // sets that differ in both dimensions AND still share something.
+    expect(cat(["AREA_2", "AREA_3"], ["AREA_2", "WRITING_INTENSIVE"])).toBe("mixed");
+  });
+
+  test("areas and overlays differing with NO overlap is the disjoint shape", () => {
+    expect(cat(["AREA_3"], ["AREA_2", "WRITING_INTENSIVE"])).toBe("disjoint-sets");
   });
 
   test("a course the Registrar export does not list at all", () => {
@@ -52,5 +58,39 @@ describe("categoriseDivergence", () => {
 
   test("identical sets are not a divergence at all", () => {
     expect(categoriseDivergence(["AREA_2"], ["AREA_2"], true).id).toBe("none");
+  });
+});
+
+describe("the shapes AC-P09 names, and the unclassified bucket", () => {
+  test("disjoint sets are their own shape, not 'mixed'", () => {
+    expect(cat(["AREA_3"], ["WRITING_INTENSIVE"])).toBe("disjoint-sets");
+  });
+
+  test("overlapping-but-differing sets are 'mixed', not 'disjoint'", () => {
+    expect(cat(["AREA_2", "AREA_3"], ["AREA_2", "WRITING_INTENSIVE"])).toBe("mixed");
+  });
+
+  test("an empty side is not disjoint — it is an only-in shape", () => {
+    expect(cat([], ["AREA_3"])).toBe("area-only-in-registrar");
+    expect(cat(["AREA_3"], [])).toBe("area-only-in-coursedog");
+  });
+
+  test("every shape AC-P09 names is reachable", () => {
+    const reached = new Set([
+      cat(["AREA_3"], ["AREA_2"]),
+      cat(["AREA_2", "WRITING_INTENSIVE"], ["AREA_2"]),
+      cat(["AREA_2"], ["AREA_2", "WRITING_INTENSIVE"]),
+      cat(["AREA_4"], []),
+      cat([], ["AREA_4"]),
+      cat(["AREA_3"], ["WRITING_INTENSIVE"]),
+    ]);
+    expect(reached).toEqual(new Set([
+      "area-mismatch", "overlay-only-in-coursedog", "overlay-only-in-registrar",
+      "area-only-in-coursedog", "area-only-in-registrar", "disjoint-sets",
+    ]));
+  });
+
+  test("the unclassified bucket exists and says why it must stay empty", () => {
+    expect(DIVERGENCE_CATEGORIES["unclassified"]!.why).toContain("empty");
   });
 });

@@ -1,8 +1,8 @@
 # Exclusion anomalies
 
-**10** anomaly/anomalies across 2989 catalog courses.
+**11** anomaly/anomalies across 2980 catalog courses.
 
-- partial credit with a non-Area-6 Area tag: **5**
+- partial credit with a non-Area-6 Area tag: **6**
 - senior exercise (190–199) with an Area tag: **4**
 - two areas: **1**
 
@@ -22,6 +22,7 @@ these are fixed upstream or accepted as genuine exceptions — not patched in co
 | ENGL 195 PO | Criticism: Advanced Methods | 1 | AREA_1 | senior exercise (190–199) with an Area tag | both |
 | ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag | both |
 | ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | senior exercise (190–199) with an Area tag | both |
+| GEOL 189V PO | Research Methodologies, Geology | 0.5–1 | AREA_4 | partial credit with a non-Area-6 Area tag | both |
 | GRMT 180H PO | Germany Black and White | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag | both |
 | HIST 197 PZ | Seminar in History | 1 | AREA_3 | senior exercise (190–199) with an Area tag | both |
 | PHYS 072 PO | Introduc Electricity & Magnetism | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | both |

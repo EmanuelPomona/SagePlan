@@ -1,0 +1,18 @@
+{
+  "$comment": [
+    "Exact courseKey strings excluded from data/catalog.json (ADR-016 / AC-B00).",
+    "This list exists because BOTH pattern rules anyone would reach for to catch a",
+    "single bad record destroy real data:",
+    "  - `title contains \"test\"` deletes six real courses, five of which carry GE",
+    "    attributes (ENGL 170R PO carries AREA_1 and WRITING_INTENSIVE).",
+    "  - `department === \"PREG\"` deletes the 13 Associated Kyoto Program courses,",
+    "    which are exactly the provenance:abroad records the 16-credit residency",
+    "    requirement counts.",
+    "An exact-key list cannot over-match by construction, and every addition is a",
+    "visible one-line diff. STANDING RULE: no pattern rule may ever be added to",
+    "catch a single record."
+  ],
+  "denied": [
+    { "courseKey": "THEA 007 PO", "reason": "Coursedog Active record, not an academic course (title: 'repeat test course')" }
+  ]
+}

@@ -1,16 +1,91 @@
 # Coursedog vs Registrar — GE attribute divergences
 
-**282** Pomona course(s) disagree between the two sources.
-Threshold: warn from 1, fail above 300 (`PIPELINE_MAX_DIVERGENCES`).
+**282** Pomona course(s) disagree between the two sources, across **7** shape(s).
+**Unclassified: 0** — AC-P09 requires this to be zero.
+Build threshold: fail above 300 total (`PIPELINE_MAX_DIVERGENCES`), or on any unclassified row.
+
+The raw total is not itself a defect. The two sources have always disagreed:
+~282 of ~2004 Pomona courses is the steady state, and a guard that
+fires on the steady state is not a guard (ADR-016). What matters is that every
+divergence has a shape somebody has reasoned about.
+
+## Summary by shape
+
+| Shape | Count | More likely right |
+|---|---|---|
+| `area-only-in-registrar` | 139 | Registrar |
+| `missing-from-registrar-export` | 47 | Coursedog |
+| `missing-from-catalog` | 25 | Registrar |
+| `overlay-only-in-coursedog` | 23 | Coursedog |
+| `overlay-only-in-registrar` | 23 | Registrar |
+| `mixed` | 22 | neither — needs a row-by-row answer |
+| `area-only-in-coursedog` | 3 | neither — check before trusting |
+
+## Shapes
+
+### Registrar carries an overlay (WI / SI / AD / Language / PE) the catalog does not
+
+`overlay-only-in-registrar` — **23** course(s).
+
+**Sample:** `ANTH 107 PO` — catalog ANALYZING_DIFFERENCE, AREA_2 · Registrar ANALYZING_DIFFERENCE, AREA_2, SPEAKING_INTENSIVE
+
+**More likely right: Registrar.** Overlays are certified per offering by the Registrar, and the catalog record is edited by departments. A missing overlay in Coursedog is the commoner direction of error, and the cost of being wrong is high: the student is told they still owe a Writing Intensive they have already done.
+
+### The catalog carries an overlay the Registrar export does not
+
+`overlay-only-in-coursedog` — **23** course(s).
+
+**Sample:** `ANTH 105 PO` — catalog AREA_2, SPEAKING_INTENSIVE · Registrar AREA_2
+
+**More likely right: Coursedog.** The export is a snapshot taken on 2026-09-08 and the catalog is live, so a newly certified overlay appears in Coursedog first. Confirm the certification date with the Registrar before relying on it.
+
+### Registrar assigns a breadth Area the catalog does not
+
+`area-only-in-registrar` — **139** course(s).
+
+**Sample:** `AMST 103 PO` — catalog — · Registrar AREA_3
+
+**More likely right: Registrar.** Area designation is the Registrar's to make. A course tagged in the export but untagged in the catalog usually means the catalog record was not updated, and the student loses credit they have earned.
+
+### The catalog assigns a breadth Area the Registrar export does not
+
+`area-only-in-coursedog` — **3** course(s).
+
+**Sample:** `BIOL 047 PO` — catalog ANALYZING_DIFFERENCE, AREA_4 · Registrar ANALYZING_DIFFERENCE
+
+**More likely right: neither — check before trusting.** This is the direction that would wrongly tell a student a requirement is satisfied, so it should not be trusted without confirmation. It is equally consistent with a new designation post-dating the snapshot and with a catalog error.
+
+### Areas and overlays both differ, but the sets still overlap
+
+`mixed` — **22** course(s).
+
+**Sample:** `ARHI 127 PO` — catalog — · Registrar AREA_1, SPEAKING_INTENSIVE
+
+**More likely right: neither — needs a row-by-row answer.** More than one thing disagrees at once while some tags still match, so no single-shape rule of thumb applies and the per-shape reasoning above cannot be borrowed. These are the rows to put in front of the Registrar first.
+
+### Catalog course carrying GE attributes that the Registrar export does not list at all
+
+`missing-from-registrar-export` — **47** course(s).
+
+**Sample:** `ART 127 PO` — catalog AREA_6 · Registrar —
+
+**More likely right: Coursedog.** The export is a snapshot; a course created after it was taken cannot appear in it. Most of these are expected. Worth checking only where the course is clearly not new.
+
+### Registrar tags the course, but it is absent from the catalog entirely
+
+`missing-from-catalog` — **25** course(s).
+
+**Sample:** `CHEM 106 PO` — catalog — · Registrar AREA_4
+
+**More likely right: Registrar.** These matter most to a student: the course cannot be found in the app at all, so credit it should grant is unreachable. Usually the course is inactive in Coursedog while the export still carries it.
 
 ## How to resolve
 
 Neither source is authoritative and the pipeline never picks one. Coursedog is
-the live catalog; the Registrar export is a dated snapshot used only to validate.
-For each row, decide which record is right, fix it upstream, and write the reason
-in the Explanation column so the next run's diff is smaller. A row that is
-expected (for example a course retagged after the export was taken) can stay
-here with its explanation.
+the live catalog; the Registrar export is a dated snapshot (2026-09-08) used only
+to validate. The per-shape verdicts above are hypotheses to take to the Registrar,
+not actions the pipeline has taken. Work shape by shape rather than row by row:
+one decision about a shape usually settles every row in it.
 
 ## Registrar rows that could not be decomposed (1)
 

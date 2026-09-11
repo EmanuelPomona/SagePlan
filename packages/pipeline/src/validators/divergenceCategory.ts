@@ -56,11 +56,23 @@ export const DIVERGENCE_CATEGORIES: Readonly<Record<string, DivergenceCategory>>
     likelierCorrect: "Registrar",
     why: "A course cannot sit in two Areas (THEA 085 PO is the single documented exception), so exactly one source is wrong. The Registrar owns the designation, so its value is the better default — but every row here deserves an individual answer.",
   },
+  "disjoint-sets": {
+    id: "disjoint-sets",
+    label: "The two sources share no attribute at all",
+    likelierCorrect: "neither — needs a row-by-row answer",
+    why: "Nothing overlaps, so this is not a drift in one tag but two different descriptions of the same course. That shape usually means the course was re-designated wholesale, or one source has the wrong record entirely, and neither side's provenance argument survives it.",
+  },
   mixed: {
     id: "mixed",
-    label: "Areas and overlays both differ",
+    label: "Areas and overlays both differ, but the sets still overlap",
     likelierCorrect: "neither — needs a row-by-row answer",
-    why: "More than one thing disagrees at once, so no single rule of thumb applies. These are the rows to put in front of the Registrar first.",
+    why: "More than one thing disagrees at once while some tags still match, so no single-shape rule of thumb applies and the per-shape reasoning above cannot be borrowed. These are the rows to put in front of the Registrar first.",
+  },
+  unclassified: {
+    id: "unclassified",
+    label: "Fits no named shape",
+    likelierCorrect: "unknown",
+    why: "AC-P09 requires this bucket to be empty. A non-zero count means a divergence shape exists that nobody has reasoned about, which is the exact failure the criterion was rewritten to prevent.",
   },
   "missing-from-registrar-export": {
     id: "missing-from-registrar-export",
@@ -106,10 +118,16 @@ export function categoriseDivergence(
   const cdOverlays = cdOnly.filter((a) => !AREA(a));
   const rgOverlays = rgOnly.filter((a) => !AREA(a));
 
+  const shareNothing = cd.size > 0 && rg.size > 0 && [...cd].every((a) => !rg.has(a));
   const areaDiff = cdAreas.length > 0 || rgAreas.length > 0;
   const overlayDiff = cdOverlays.length > 0 || rgOverlays.length > 0;
 
-  if (areaDiff && overlayDiff) return DIVERGENCE_CATEGORIES["mixed"]!;
+  // The more specific shapes win. "catalog AREA_3 vs Registrar Area 2" shares no
+  // attribute, but AC-P09 names it "same count, different area", not "disjoint" —
+  // so disjoint only claims what no narrower shape explains.
+  if (areaDiff && overlayDiff) {
+    return shareNothing ? DIVERGENCE_CATEGORIES["disjoint-sets"]! : DIVERGENCE_CATEGORIES["mixed"]!;
+  }
 
   if (areaDiff) {
     if (cdAreas.length > 0 && rgAreas.length > 0) return DIVERGENCE_CATEGORIES["area-mismatch"]!;
@@ -119,7 +137,9 @@ export function categoriseDivergence(
   }
 
   if (cdOverlays.length > 0 && rgOverlays.length > 0) return DIVERGENCE_CATEGORIES["mixed"]!;
-  return cdOverlays.length > 0
-    ? DIVERGENCE_CATEGORIES["overlay-only-in-coursedog"]!
-    : DIVERGENCE_CATEGORIES["overlay-only-in-registrar"]!;
+  if (cdOverlays.length > 0) return DIVERGENCE_CATEGORIES["overlay-only-in-coursedog"]!;
+  if (rgOverlays.length > 0) return DIVERGENCE_CATEGORIES["overlay-only-in-registrar"]!;
+  // Unreachable given the checks above; present so a future shape lands in an
+  // explicit bucket rather than being mislabelled as one of the named ones.
+  return DIVERGENCE_CATEGORIES["unclassified"]!;
 }

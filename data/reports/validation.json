@@ -1,13 +1,20 @@
 {
-  "generatedAt": "2026-09-09T00:02:49.018Z",
+  "generatedAt": "2026-09-11T23:05:55.306Z",
   "generator": "@gradguide/pipeline@0.1.0 validate",
   "checks": [
     {
       "id": "ge-agreement",
       "status": "warn",
-      "summary": "282 Coursedog/Registrar GE divergence(s) across Pomona courses; 1 Registrar row(s) undecodable",
+      "summary": "282 Coursedog/Registrar GE divergence(s) across Pomona courses in 7 shape(s); 0 unclassified; 1 Registrar row(s) undecodable",
       "count": 282,
       "details": [
+        "area-only-in-registrar: 139",
+        "overlay-only-in-coursedog: 23",
+        "overlay-only-in-registrar: 23",
+        "mixed: 22",
+        "missing-from-registrar-export: 47",
+        "area-only-in-coursedog: 3",
+        "missing-from-catalog: 25",
         "Registrar row could not be decomposed: MUS031-042PO",
         "AMST 103 PO: coursedog=— registrar=AREA_3 (attribute sets differ)",
         "ANTH 080 PO: coursedog=— registrar=AREA_2 (attribute sets differ)",
@@ -20,21 +27,14 @@
         "ARHI 126 PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
         "ARHI 127 PO: coursedog=— registrar=AREA_1, SPEAKING_INTENSIVE (attribute sets differ)",
         "ARHI 139 PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
-        "ARHI 171 PO: coursedog=AREA_1 registrar=AREA_1, WRITING_INTENSIVE (attribute sets differ)",
-        "ARHI 186P PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
-        "ARHI 186U PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
-        "ARHI 186Y PO: coursedog=— registrar=AREA_1 (attribute sets differ)",
-        "ART 024 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
-        "ART 026 PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
-        "ART 027A PO: coursedog=— registrar=AREA_6 (attribute sets differ)",
-        "ART 082 PO: coursedog=— registrar=AREA_6 (attribute sets differ)"
+        "ARHI 171 PO: coursedog=AREA_1 registrar=AREA_1, WRITING_INTENSIVE (attribute sets differ)"
       ]
     },
     {
       "id": "exclusion-anomalies",
       "status": "warn",
-      "summary": "10 exclusion anomaly/anomalies for human review",
-      "count": 10,
+      "summary": "11 exclusion anomaly/anomalies for human review",
+      "count": 11,
       "details": [
         "CHEM 150 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
         "CHEM 165 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
@@ -42,6 +42,7 @@
         "ENGL 195 PO: senior exercise (190–199) with an Area tag (AREA_1)",
         "ENGL 195B PO: partial credit with a non-Area-6 Area tag (AREA_1)",
         "ENGL 195B PO: senior exercise (190–199) with an Area tag (AREA_1)",
+        "GEOL 189V PO: partial credit with a non-Area-6 Area tag (AREA_4)",
         "GRMT 180H PO: partial credit with a non-Area-6 Area tag (AREA_1)",
         "HIST 197 PZ: senior exercise (190–199) with an Area tag (AREA_3)",
         "PHYS 072 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
@@ -51,9 +52,19 @@
     {
       "id": "hyperschedule-attributes",
       "status": "warn",
-      "summary": "78 catalog/Hyperschedule GE disagreement(s), 0 unrecognised Pomona code(s)",
-      "count": 78,
+      "summary": "77 catalog/Hyperschedule GE disagreement(s), 10 unrecognised Pomona code(s)",
+      "count": 87,
       "details": [
+        "unrecognised Pomona course-area code \"1P1\" on 3 course(s), e.g. CHNT 168 PO, RUST 079 PO, SPAN 101 PO",
+        "unrecognised Pomona course-area code \"1P10\" on 10 course(s), e.g. PHIL 001 PO, PHIL 030 PZ, PHIL 031 PO",
+        "unrecognised Pomona course-area code \"1P2\" on 3 course(s), e.g. ASTR 001 PO, BIOL 040 PO, PSYC 160 PO",
+        "unrecognised Pomona course-area code \"1P3\" on 17 course(s), e.g. ECON 052 PO, ECON 102 PO, MATH 030 CM",
+        "unrecognised Pomona course-area code \"1P4\" on 9 course(s), e.g. ASTR 101 PO, ECON 057 PO, ECON 107 PO",
+        "unrecognised Pomona course-area code \"1P5\" on 10 course(s), e.g. ARHI 150 SC, ARHI 154 SC, ARHI 185 SC",
+        "unrecognised Pomona course-area code \"1P6\" on 12 course(s), e.g. ART 005 PO, ART 010 PO, ART 020 PO",
+        "unrecognised Pomona course-area code \"1P7\" on 11 course(s), e.g. ECON 051 PO, ECON 101 PO, LGCS 010 PO",
+        "unrecognised Pomona course-area code \"1P8\" on 2 course(s), e.g. HIST 020 PO, HIST 031 CH",
+        "unrecognised Pomona course-area code \"1P9\" on 5 course(s), e.g. HIST 017 CH, POLI 005 PO, PSYC 084 CH",
         "AFRI 145 PO: catalog=— sections=AREA_3",
         "ANTH 080 PO: catalog=— sections=AREA_2",
         "ANTH 125 PO: catalog=— sections=AREA_2",
@@ -63,17 +74,7 @@
         "ART 123 PO: catalog=— sections=AREA_6",
         "ASAM 070 PO: catalog=— sections=AREA_3",
         "BIOL 104A PO: catalog=— sections=AREA_4, SPEAKING_INTENSIVE",
-        "BIOL 189S PO: catalog=— sections=AREA_4",
-        "CHEM 010A PO: catalog=— sections=AREA_4",
-        "CHEM 020A PO: catalog=— sections=AREA_4",
-        "CHEM 050 PO: catalog=— sections=AREA_4",
-        "CHEM 101 PO: catalog=— sections=AREA_4",
-        "CHEM 103 PO: catalog=— sections=AREA_4",
-        "CHEM 105 PO: catalog=— sections=AREA_4, WRITING_INTENSIVE",
-        "CHIN 111H PO: catalog=— sections=AREA_1, LANGUAGE",
-        "CHST 102 PO: catalog=— sections=AREA_3",
-        "CSCI 051 PO: catalog=— sections=AREA_5",
-        "CSCI 134 PO: catalog=— sections=AREA_5"
+        "BIOL 189S PO: catalog=— sections=AREA_4"
       ]
     },
     {
@@ -89,10 +90,10 @@
       "summary": "every generated artefact is non-empty (5 collection(s))",
       "count": 0,
       "details": [
-        "catalog.json: 2989 courses",
-        "offering-history.json: 1416 history",
+        "catalog.json: 2980 courses",
+        "offering-history.json: 1414 history",
         "manifest.json: 1 sections",
-        "sections-FA2026.json: 2160 sections",
+        "sections-FA2026.json: 2163 sections",
         "sections-SP2027.json: absent (configured in PIPELINE_TERMS)"
       ]
     },

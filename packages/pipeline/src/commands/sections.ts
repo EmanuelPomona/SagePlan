@@ -7,8 +7,7 @@ import { makeMeta } from "../meta.ts";
 import { log, writeReport } from "../reports.ts";
 import { writeArtefact } from "../write.ts";
 import { readExistingCourses, readExistingMeta } from "../catalogMerge.ts";
-import { applyMembership, membershipReport, type ExcludedCourse } from "../placeholders.ts";
-import { readSections } from "../readSections.ts";
+import { applyMembership, loadDenylist, membershipReport } from "../placeholders.ts";
 import { fetchSections, sectionsUrl } from "../hyperschedule/client.ts";
 import { courseFromSection, isSectionIssue, normaliseSection } from "../hyperschedule/normalise.ts";
 import { mapGeCodes } from "../hyperschedule/geCodes.ts";
@@ -133,19 +132,22 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
   // that is also unoffered, so it never reaches the report — and "nothing is
   // dropped without being reported" is the whole point of the rule.
   const mergedRaw = [...byKey.values()].sort((a, b) => courseKey(a.id).localeCompare(courseKey(b.id)));
-  const membership = applyMembership(mergedRaw);
+  const membership = applyMembership(mergedRaw, loadDenylist(env.dataDir));
 
-  const offered = new Set<string>();
-  for (const s of readSections(env.dataDir).sections) offered.add(courseKey(s.course));
-  const pruned: ExcludedCourse[] = [];
-  const merged = membership.kept.filter((course) => {
-    const key = courseKey(course.id);
-    if (course.id.affiliation === "PO" || offered.has(key)) return true;
-    pruned.push({ key, title: course.title, affiliation: course.id.affiliation, reason: "no section in any ingested term" });
-    return false;
-  });
+  // NO PRUNE. I previously dropped non-PO courses with no section in an ingested
+  // term, reading ADR-016's "non-Pomona courses enter only via a section in an
+  // ingested term" as a retention rule. Measured, that removed 72 courses, 37 of
+  // them carrying GE attributes — AFRI 010 AF (AREA_3 + ANALYZING_DIFFERENCE),
+  // CHST 028 CH (AREA_3 + SPEAKING_INTENSIVE), and CHST 055 CH, which AC-B00
+  // names explicitly. The ruling governs ENTRY, not retention, and the two are
+  // not the same: sections cover upcoming terms, while a student's record
+  // reaches years back. Dropping a course a student already took makes the
+  // engine answer `unmet` for a requirement they satisfied — the exact failure
+  // this project is organised to prevent. Placeholders are removed by the
+  // membership rules above, which is the sanctioned mechanism.
+  const merged = membership.kept;
 
-  writeReport("catalog-excluded", membershipReport(membership, mergedRaw.length, pruned), env.dataDir);
+  writeReport("catalog-excluded", membershipReport(membership, mergedRaw.length), env.dataDir);
 
   // Keep the catalog's OWN provenance. This merge only tops the file up with
   // non-Pomona courses seen in the schedule; the catalog is fundamentally the
@@ -165,7 +167,7 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
   const byAff: Record<string, number> = {};
   for (const c of merged) byAff[c.id.affiliation] = (byAff[c.id.affiliation] ?? 0) + 1;
   log("sections.merge", {
-    before: existing.length, after: merged.length, added, refreshed, pruned: pruned.length,
+    before: existing.length, after: merged.length, added, refreshed,
     excluded: membership.excluded.length, flagged: membership.suspicious.length,
     unknownPomonaCodes: unknownPomonaTotal, ...byAff,
   });
