@@ -33,9 +33,11 @@ export function completed(
 ): CompletedCourse {
   return {
     course: cid(key),
-    term: opts.term ?? term("FA2025"),
-    grade: opts.grade ?? "A",
-    gradeMode: opts.gradeMode ?? "letter",
+    // `term`, `grade` and `gradeMode` are nullable now, so "not supplied" and
+    // "explicitly null" must stay distinguishable in a fixture.
+    term: "term" in opts ? (opts.term ?? null) : term("FA2025"),
+    grade: "grade" in opts ? (opts.grade ?? null) : "A",
+    gradeMode: "gradeMode" in opts ? (opts.gradeMode ?? null) : "letter",
     provenance: opts.provenance ?? "pomona",
     ...(opts.title !== undefined ? { title: opts.title } : {}),
     ...(opts.credits !== undefined ? { credits: opts.credits } : {}),

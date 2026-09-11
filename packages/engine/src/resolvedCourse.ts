@@ -14,20 +14,28 @@ export type ResolvedCourse = {
   credits: number;
   attributes: GeAttribute[];
   inCatalog: boolean;
-  /** isPassing(grade): any letter above F, or CR/P. In-progress grades are not passing. */
+  /**
+   * Any letter above F, or CR/P, or NO RECORDED GRADE. A null grade means the
+   * student passed (ADR-015): the app never asks for grades, so a course they
+   * failed is the one that must carry one.
+   */
   passing: boolean;
-  /** GPA points, or null for CR/P/NC/NP/IP. */
+  /** GPA points, or null for CR/P/NC/NP/IP and for an unrecorded grade. */
   letterPoints: number | null;
+  /** True when the student has not recorded when this course was taken. */
+  termUnknown: boolean;
 };
 
 export function resolveCompleted(completed: CompletedCourse, fromCatalog: Course | undefined): ResolvedCourse {
+  const grade = completed.grade;
   return {
     completed,
     key: courseKey(completed.course),
     credits: completed.credits ?? fromCatalog?.credits.min ?? 1,
     attributes: completed.attributes ?? fromCatalog?.attributes ?? [],
     inCatalog: fromCatalog !== undefined,
-    passing: isPassing(completed.grade),
-    letterPoints: gradePoints(completed.grade),
+    passing: grade === null ? true : isPassing(grade),
+    letterPoints: grade === null ? null : gradePoints(grade),
+    termUnknown: completed.term === null,
   };
 }

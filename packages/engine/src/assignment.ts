@@ -83,8 +83,10 @@ export function assignCourses(
   );
 
   const greedyScore = scoreOf(order, greedy);
+  // Sharing has no computable lower bound short of searching, but ZERO sharing
+  // is provably minimal, so that is the only safe early exit.
   const optimal = (score: Score): boolean =>
-    score.satisfied >= reachable.length && score.progress >= progressCeiling;
+    score.satisfied >= reachable.length && score.progress >= progressCeiling && score.shared === 0;
 
   if (optimal(greedyScore)) return { assignment: greedy, bounded: false };
 
@@ -123,12 +125,24 @@ export function assignCourses(
   return { assignment: best.assignment, bounded };
 }
 
-type Score = { satisfied: number; progress: number; used: number };
+type Score = { satisfied: number; progress: number; shared: number };
 
 /**
- * Ranking, in order: close the most requirements; then make the most progress
- * toward the ones left open (so a lone PE course still reports "1 of 2" rather
- * than vanishing); then spend the fewest distinct courses.
+ * Ranking, in order (ADR-013):
+ *   1. close the most requirements;
+ *   2. make the most progress toward the ones left open, so a lone PE course
+ *      still reports "1 of 2" rather than vanishing;
+ *   3. MINIMIZE SHARING, counting every (requirement, course) pair whose course
+ *      is also counted elsewhere.
+ *
+ * Step 3 replaces the superseded "leave the most courses unassigned", which
+ * contradicted its own parenthetical: leaving courses unassigned maximises
+ * sharing, so one course was credited to two requirements while an equally
+ * valid course sat unused. No verdict was wrong, but the attribution a student
+ * reads was, and the requirement map now prints it under every node.
+ *
+ * Sharing still happens whenever nothing else can close a requirement, which is
+ * the normal case for the overlays.
  */
 function scoreOf(order: Requirement[], assignment: Assignment): Score {
   let satisfied = 0;
@@ -138,13 +152,24 @@ function scoreOf(order: Requirement[], assignment: Assignment): Score {
     if (meetsDemand(req, selection)) satisfied += 1;
     progress = round2(progress + progressOf(req, selection));
   }
-  return { satisfied, progress, used: distinctUsed(assignment) };
+  return { satisfied, progress, shared: sharedPairs(assignment) };
+}
+
+/** How many (requirement, course) pairs sit on a course counted somewhere else. */
+function sharedPairs(assignment: Assignment): number {
+  const holders = new Map<string, number>();
+  for (const courses of assignment.values()) {
+    for (const c of courses) holders.set(c.key, (holders.get(c.key) ?? 0) + 1);
+  }
+  let shared = 0;
+  for (const count of holders.values()) if (count > 1) shared += count;
+  return shared;
 }
 
 function betterScore(a: Score, b: Score): boolean {
   if (a.satisfied !== b.satisfied) return a.satisfied > b.satisfied;
   if (a.progress !== b.progress) return a.progress > b.progress;
-  return a.used < b.used;
+  return a.shared < b.shared;
 }
 
 /** How much of this requirement the selection closes, never more than it asks for. */
@@ -174,13 +199,20 @@ function localBetter(
   const progressDelta = progressOf(req, option) - progressOf(req, incumbent);
   if (progressDelta !== 0) return progressDelta > 0;
 
+  // Prefer a course nothing else is already counting. The superseded rule did
+  // the opposite, and that is exactly how one course came to be credited twice.
   const already = new Set<string>();
   for (const [id, courses] of current) {
     if (id === req.id) continue;
     for (const c of courses) already.add(c.key);
   }
-  const fresh = (sel: ResolvedCourse[]) => sel.filter((c) => !already.has(c.key)).length;
-  return fresh(option) < fresh(incumbent);
+  const shared = (sel: ResolvedCourse[]) => sel.filter((c) => already.has(c.key)).length;
+  const delta = shared(option) - shared(incumbent);
+  if (delta !== 0) return delta < 0;
+
+  // Deterministic: the canonically first selection wins, so the same plan always
+  // produces the same attribution.
+  return false;
 }
 
 /** Does this selection fully close the requirement? */
@@ -196,9 +228,15 @@ export function meetsDemand(req: Requirement, selection: ResolvedCourse[]): bool
   return have >= rule.n;
 }
 
+/**
+ * Used only to decide whether a selection could close a distinctTerms rule, so
+ * an unrecorded term is read optimistically here: the rule's own settle step,
+ * running under both passes, is what decides the reported status.
+ */
 function distinctTermSubset(courses: ResolvedCourse[]): ResolvedCourse[] {
   const seen = new Set<string>();
   return courses.filter((c) => {
+    if (c.completed.term === null) return true;
     const t = termCode(c.completed.term);
     if (seen.has(t)) return false;
     seen.add(t);
@@ -296,12 +334,6 @@ function combinations(pool: ResolvedCourse[], k: number, cap: number): ResolvedC
 
 function sameSelection(a: ResolvedCourse[], b: ResolvedCourse[]): boolean {
   return a.length === b.length && a.every((c, i) => c.key === b[i]!.key);
-}
-
-function distinctUsed(assignment: Assignment): number {
-  const keys = new Set<string>();
-  for (const courses of assignment.values()) for (const c of courses) keys.add(c.key);
-  return keys.size;
 }
 
 function cloneAssignment(assignment: Assignment): Assignment {
