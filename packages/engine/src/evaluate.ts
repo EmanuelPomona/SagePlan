@@ -1,6 +1,7 @@
 import type { Course, Program, Requirement, Result, StudentPlan } from "@gradguide/shared";
 import { courseKey } from "@gradguide/shared";
 import { assignCourses, isCourseSelecting } from "./assignment.ts";
+import { settleBounded } from "./bounded.ts";
 import { buildContext, type EvalContext } from "./context.ts";
 import { blockedByDistinctDepartments, constraintViolations, type Assignment } from "./constraints.ts";
 import { attestationFor, overrideFor, waiverFor } from "./manual.ts";
@@ -54,7 +55,17 @@ function evaluateProgram(plan: StudentPlan, program: Program, ctx: EvalContext):
 
   // 4. Settle every requirement and stamp the shared fields.
   return program.requirements.map((req) => {
-    const settlement = manual.get(req.id) ?? settleRule(req, assignment.get(req.id) ?? [], ctx, used, eligible.get(req.id) ?? []);
+    const assigned = assignment.get(req.id) ?? [];
+    const forRule = eligible.get(req.id) ?? [];
+    const settlement =
+      manual.get(req.id) ??
+      settleBounded(
+        (pass) => settleRule(req, assigned, pass, used, forRule),
+        ctx,
+        // Name the courses this rule actually looks at, so the note says "add a
+        // term to PE 001 PO", not "add a term to something".
+        forRule.length > 0 ? forRule : ctx.passing,
+      );
     const flags = manualFlags(req, plan, manual.has(req.id));
     const reqViolations = violations.get(req.id);
     const affectedByBound = bounded && isCourseSelecting(req) && settlement.status !== "satisfied";

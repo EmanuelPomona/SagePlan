@@ -450,16 +450,5 @@
     "candidates": [],
     "children": [],
     "confidence": "draft"
-  },
-  {
-    "programId": "general-education-2026",
-    "requirementId": "gpa",
-    "status": "satisfied",
-    "satisfiedBy": [],
-    "remaining": null,
-    "candidates": [],
-    "children": [],
-    "confidence": "verified",
-    "note": "Grade point average 4.00 over 1 graded credits."
   }
 ]

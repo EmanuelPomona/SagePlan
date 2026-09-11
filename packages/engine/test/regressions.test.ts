@@ -47,7 +47,7 @@ describe("the bounded-search note is not applied to ordinary plans", () => {
     const plan = StudentPlanSchema.parse(read("./fixtures/plans/F-01.json"));
     const results = evaluate(plan, [GE], CATALOG);
 
-    expect(byId(results, "gpa").note ?? "").not.toMatch(/assignment/);
+    expect(byId(results, "total-credits").note ?? "").not.toMatch(/assignment/);
     expect(byId(results, "total-credits").note ?? "").not.toMatch(/assignment/);
   });
 });
@@ -133,9 +133,14 @@ describe("C-2 — the greedy short-circuit must not overstate what is still owed
 });
 
 describe("I-2 — GPA must not manufacture a failing verdict from zero-credit courses", () => {
+  // General education no longer has a gpa requirement (ADR-015: it is an
+  // advisory now), but the RULE KIND is still implemented for P1 majors, so it
+  // is exercised through a program that uses it.
+  const GPA_PROGRAM = program("gpa-only", [requirement("gpa", { kind: "gpa", min: 2.0, scope: "overall" })]);
+
   test("a zero-credit letter-graded course does not produce NaN", () => {
     const plan = planWith({ completed: [completed("CSCI 051 PO", { grade: "A", credits: 0 })] });
-    const gpa = evaluate(plan, [GE], CATALOG).find((r) => r.requirementId === "gpa")!;
+    const gpa = evaluate(plan, [GPA_PROGRAM], CATALOG).find((r) => r.requirementId === "gpa")!;
 
     expect(gpa.note ?? "").not.toContain("NaN");
     expect(gpa.status).toBe("unverifiable");
@@ -145,7 +150,7 @@ describe("I-2 — GPA must not manufacture a failing verdict from zero-credit co
     const plan = planWith({
       completed: [completed("CSCI 051 PO", { grade: "A", credits: 1 }), completed("GEOL 112 PO", { grade: "F", credits: 0 })],
     });
-    const gpa = evaluate(plan, [GE], CATALOG).find((r) => r.requirementId === "gpa")!;
+    const gpa = evaluate(plan, [GPA_PROGRAM], CATALOG).find((r) => r.requirementId === "gpa")!;
 
     expect(gpa.status).toBe("satisfied");
     expect(gpa.note).toContain("4.00");

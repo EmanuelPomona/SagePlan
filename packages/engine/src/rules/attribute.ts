@@ -33,8 +33,20 @@ export function settleAttribute(
 
   if (rule.distinctTerms) {
     const seenTerms = new Set<string>();
+    // An unrecorded term is read by the pass we are in: optimistically each
+    // such course is its own semester, pessimistically they all fall in one.
+    // When the two disagree the row goes unverifiable rather than guessing.
+    let unknownCounted = false;
     counted = assigned.filter((c) => {
-      const t = termCode(c.completed.term);
+      const term = c.completed.term;
+      if (term === null) {
+        ctx.modeSensitive.add(c.key);
+        if (ctx.mode === "optimistic") return true;
+        if (unknownCounted) return false;
+        unknownCounted = true;
+        return true;
+      }
+      const t = termCode(term);
       if (seenTerms.has(t)) return false;
       seenTerms.add(t);
       return true;
@@ -70,8 +82,10 @@ export function settleAttribute(
 
 function sharesTermWithCounted(eligible: ResolvedCourse[], counted: ResolvedCourse[]): boolean {
   const countedKeys = new Set(counted.map((c) => c.key));
-  const countedTerms = new Set(counted.map((c) => termCode(c.completed.term)));
-  return eligible.some((c) => !countedKeys.has(c.key) && countedTerms.has(termCode(c.completed.term)));
+  const countedTerms = new Set(counted.filter((c) => c.completed.term !== null).map((c) => termCode(c.completed.term!)));
+  return eligible.some(
+    (c) => !countedKeys.has(c.key) && c.completed.term !== null && countedTerms.has(termCode(c.completed.term)),
+  );
 }
 
 /** Catalog courses carrying the attribute that the student has not taken. */

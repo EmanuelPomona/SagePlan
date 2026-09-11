@@ -19,7 +19,10 @@ const groupsFor = (studentType: StudentType) => {
 };
 
 describe("grouping", () => {
-  test("the general education program yields its seven groups, in order", () => {
+  test("the general education program yields its six groups, in order", () => {
+    // No "Grade point average" group: ADR-015 moved the 2.00 rule into the
+    // advisories, so the app never asks for a grade and no grade ever travels
+    // inside a share link.
     expect(groupsFor("firstYear").map((g) => g.title)).toEqual([
       "Foundations",
       "Breadth",
@@ -27,7 +30,6 @@ describe("grouping", () => {
       "Language",
       "Physical education",
       "Credits",
-      "Grade point average",
     ]);
   });
 

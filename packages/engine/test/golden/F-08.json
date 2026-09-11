@@ -462,17 +462,6 @@
     "confidence": "draft"
   },
   {
-    "programId": "general-education-2026",
-    "requirementId": "gpa",
-    "status": "satisfied",
-    "satisfiedBy": [],
-    "remaining": null,
-    "candidates": [],
-    "children": [],
-    "confidence": "verified",
-    "note": "Grade point average 3.80 over 5 graded credits."
-  },
-  {
     "programId": "fake-major-cs",
     "requirementId": "cs-intro",
     "status": "satisfied",
@@ -496,13 +485,13 @@
     "satisfiedBy": [
       {
         "department": "CSCI",
-        "courseNumber": 51,
+        "courseNumber": 62,
         "suffix": "",
         "affiliation": "PO"
       },
       {
-        "department": "CSCI",
-        "courseNumber": 62,
+        "department": "MATH",
+        "courseNumber": 30,
         "suffix": "",
         "affiliation": "PO"
       }
@@ -531,12 +520,12 @@
   {
     "programId": "fake-major-cs",
     "requirementId": "cs-gpa",
-    "status": "unverifiable",
+    "status": "satisfied",
     "satisfiedBy": [],
     "remaining": null,
     "candidates": [],
     "children": [],
     "confidence": "draft",
-    "note": "A grade point average within a program is not evaluated yet, because the engine cannot yet tell which courses count toward a program."
+    "note": "Grade point average 3.80 over 5 graded credits."
   }
 ]

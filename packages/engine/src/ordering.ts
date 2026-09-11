@@ -16,8 +16,9 @@ export function sortIds(ids: CourseId[]): CourseId[] {
 /** Deterministic order for the student's own courses: key, then term. */
 export function byResolved(a: ResolvedCourse, b: ResolvedCourse): number {
   if (a.key !== b.key) return a.key < b.key ? -1 : 1;
-  const ta = termCode(a.completed.term);
-  const tb = termCode(b.completed.term);
+  // Courses with no recorded term sort last, deterministically.
+  const ta = a.completed.term === null ? "~" : termCode(a.completed.term);
+  const tb = b.completed.term === null ? "~" : termCode(b.completed.term);
   return ta < tb ? -1 : ta > tb ? 1 : 0;
 }
 

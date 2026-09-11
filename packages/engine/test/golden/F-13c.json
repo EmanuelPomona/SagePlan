@@ -2,10 +2,8 @@
   {
     "programId": "general-education-2026",
     "requirementId": "critical-inquiry",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": null,
-    "candidates": [
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "ID",
         "courseNumber": 1,
@@ -13,6 +11,8 @@
         "affiliation": "PO"
       }
     ],
+    "remaining": null,
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
@@ -22,7 +22,7 @@
     "status": "satisfied",
     "satisfiedBy": [
       {
-        "department": "DANC",
+        "department": "ARTH",
         "courseNumber": 51,
         "suffix": "",
         "affiliation": "PO"
@@ -39,158 +39,80 @@
   {
     "programId": "general-education-2026",
     "requirementId": "area-2",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 1,
-      "unit": "courses"
-    },
-    "candidates": [
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "ECON",
         "courseNumber": 51,
         "suffix": "",
         "affiliation": "PO"
-      },
-      {
-        "department": "GWS",
-        "courseNumber": 10,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "POLI",
-        "courseNumber": 1,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "PSYC",
-        "courseNumber": 52,
-        "suffix": "",
-        "affiliation": "SC"
-      },
-      {
-        "department": "SOC",
-        "courseNumber": 1,
-        "suffix": "",
-        "affiliation": "PO"
       }
     ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
   {
     "programId": "general-education-2026",
     "requirementId": "area-3",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 1,
-      "unit": "courses"
-    },
-    "candidates": [
-      {
-        "department": "AMST",
-        "courseNumber": 110,
-        "suffix": "",
-        "affiliation": "PO"
-      },
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "HIST",
         "courseNumber": 101,
         "suffix": "",
         "affiliation": "PO"
-      },
-      {
-        "department": "PHIL",
-        "courseNumber": 32,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "RLST",
-        "courseNumber": 40,
-        "suffix": "",
-        "affiliation": "PO"
       }
     ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
   {
     "programId": "general-education-2026",
     "requirementId": "area-4",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 1,
-      "unit": "courses"
-    },
-    "candidates": [
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "BIOL",
         "courseNumber": 41,
         "suffix": "",
         "affiliation": "PO"
-      },
-      {
-        "department": "CHEM",
-        "courseNumber": 51,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "GEOL",
-        "courseNumber": 20,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "PHYS",
-        "courseNumber": 41,
-        "suffix": "",
-        "affiliation": "PO"
       }
     ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
   {
     "programId": "general-education-2026",
     "requirementId": "area-5",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 1,
-      "unit": "courses"
-    },
-    "candidates": [
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "CSCI",
         "courseNumber": 51,
         "suffix": "",
         "affiliation": "PO"
-      },
-      {
-        "department": "CSCI",
-        "courseNumber": 62,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "MATH",
-        "courseNumber": 30,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "MATH",
-        "courseNumber": 60,
-        "suffix": "",
-        "affiliation": "PO"
       }
     ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
@@ -211,6 +133,12 @@
         "affiliation": "PO"
       },
       {
+        "department": "DANC",
+        "courseNumber": 120,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
         "department": "MUS",
         "courseNumber": 60,
         "suffix": "",
@@ -224,47 +152,25 @@
       }
     ],
     "children": [],
-    "confidence": "draft",
-    "note": "No two Breadth areas may be satisfied by courses from the same department.",
-    "violations": [
-      "distinctDepartments"
-    ]
+    "confidence": "draft"
   },
   {
     "programId": "general-education-2026",
     "requirementId": "writing-intensive",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 1,
-      "unit": "courses"
-    },
-    "candidates": [
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "ENGL",
         "courseNumber": 10,
         "suffix": "",
         "affiliation": "PO"
-      },
-      {
-        "department": "ENGL",
-        "courseNumber": 67,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "MUS",
-        "courseNumber": 81,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "PHIL",
-        "courseNumber": 32,
-        "suffix": "",
-        "affiliation": "PO"
       }
     ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
@@ -297,38 +203,20 @@
   {
     "programId": "general-education-2026",
     "requirementId": "analyzing-difference",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 1,
-      "unit": "courses"
-    },
-    "candidates": [
-      {
-        "department": "AMST",
-        "courseNumber": 110,
-        "suffix": "",
-        "affiliation": "PO"
-      },
+    "status": "satisfied",
+    "satisfiedBy": [
       {
         "department": "ANTH",
         "courseNumber": 25,
         "suffix": "",
         "affiliation": "PO"
-      },
-      {
-        "department": "GWS",
-        "courseNumber": 10,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "SOC",
-        "courseNumber": 1,
-        "suffix": "",
-        "affiliation": "PO"
       }
     ],
+    "remaining": {
+      "n": 0,
+      "unit": "courses"
+    },
+    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
@@ -367,19 +255,20 @@
   {
     "programId": "general-education-2026",
     "requirementId": "physical-education",
-    "status": "unmet",
-    "satisfiedBy": [],
-    "remaining": {
-      "n": 2,
-      "unit": "courses"
-    },
-    "candidates": [
+    "status": "partial",
+    "satisfiedBy": [
       {
         "department": "PE",
         "courseNumber": 1,
         "suffix": "",
         "affiliation": "PO"
-      },
+      }
+    ],
+    "remaining": {
+      "n": 1,
+      "unit": "courses"
+    },
+    "candidates": [
       {
         "department": "PE",
         "courseNumber": 2,
@@ -414,7 +303,7 @@
     "status": "partial",
     "satisfiedBy": [],
     "remaining": {
-      "n": 30.5,
+      "n": 1.75,
       "unit": "credits"
     },
     "candidates": [],
@@ -424,15 +313,16 @@
   {
     "programId": "general-education-2026",
     "requirementId": "post-matriculation-credits",
-    "status": "partial",
+    "status": "unverifiable",
     "satisfiedBy": [],
     "remaining": {
-      "n": 28.5,
+      "n": 0,
       "unit": "credits"
     },
     "candidates": [],
     "children": [],
-    "confidence": "verified"
+    "confidence": "verified",
+    "note": "Add the term to ECON 101 EXT so this can be checked. Without it the answer depends on when they were taken."
   },
   {
     "programId": "general-education-2026",
@@ -449,10 +339,10 @@
   {
     "programId": "general-education-2026",
     "requirementId": "pomona-residency-credits",
-    "status": "partial",
+    "status": "satisfied",
     "satisfiedBy": [],
     "remaining": {
-      "n": 14.5,
+      "n": 0,
       "unit": "credits"
     },
     "candidates": [],

@@ -67,6 +67,9 @@ function examGrantCourse(ec: ExternalCredit, ctx: EvalContext): ResolvedCourse {
     inCatalog: false,
     passing: true,
     letterPoints: null,
+    // An exam has no term, but its term is not UNKNOWN: it is not a course the
+    // student sat, so it never participates in a term-dependent rule.
+    termUnknown: false,
   };
 }
 

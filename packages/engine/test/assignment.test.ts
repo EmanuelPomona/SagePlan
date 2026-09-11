@@ -212,3 +212,74 @@ describe("assignment properties", () => {
     expect(assignment.get("area-4")).toEqual([]);
   });
 });
+
+describe("ADR-013 — minimize sharing, not maximize unassigned courses", () => {
+  // AMST 110 carries Area 3 AND Analyzing Difference; HIST 101 carries Area 3
+  // only. Nothing else covers either. One course could legally close both
+  // (allowAll), and the superseded tie-break preferred exactly that.
+  const reqs = [
+    requirement("area-3", attributeRule("AREA_3")),
+    requirement("analyzing-difference", attributeRule("ANALYZING_DIFFERENCE")),
+  ];
+  const catalog = [
+    catalogCourse("AMST 110 PO", ["AREA_3", "ANALYZING_DIFFERENCE"]),
+    catalogCourse("HIST 101 PO", ["AREA_3"]),
+  ];
+  const ctx = buildContext(planWith({ completed: [completed("AMST 110 PO"), completed("HIST 101 PO")] }), catalog);
+  const eligible = eligibleMap(reqs, ctx);
+
+  /**
+   * The SUPERSEDED rule, implemented here so the fixture actually discriminates:
+   * among options that satisfy the requirement, prefer the one adding the fewest
+   * NEW courses, which is what "leave the most courses unassigned" means in
+   * practice. A comment asserting this would prove nothing.
+   */
+  function supersededGreedy() {
+    const assignment = new Map<string, ResolvedCourse[]>();
+    const order = [...reqs].sort((a, b) => (eligible.get(a.id) ?? []).length - (eligible.get(b.id) ?? []).length);
+    for (const req of order) {
+      const used = new Set([...assignment.values()].flat().map((c) => c.key));
+      const options = (eligible.get(req.id) ?? []).map((c) => [c]);
+      // fewest new courses wins, ties by canonical order
+      const best = options.sort((a, b) => {
+        const fresh = (s: ResolvedCourse[]) => s.filter((c) => !used.has(c.key)).length;
+        return fresh(a) !== fresh(b) ? fresh(a) - fresh(b) : a[0]!.key < b[0]!.key ? -1 : 1;
+      })[0];
+      assignment.set(req.id, best ?? []);
+    }
+    return assignment;
+  }
+
+  test("the superseded tie-break credits ONE course to both and leaves the other unused", () => {
+    const old = supersededGreedy();
+
+    expect(old.get("area-3")?.map((c) => c.key)).toEqual(["AMST 110 PO"]);
+    expect(old.get("analyzing-difference")?.map((c) => c.key)).toEqual(["AMST 110 PO"]);
+    const used = new Set([...old.values()].flat().map((c) => c.key));
+    expect(used.has("HIST 101 PO")).toBe(false);
+  });
+
+  test("assignCourses credits the common course to Area 3 and the rare one to Analyzing Difference", () => {
+    const { assignment } = assignCourses(reqs, eligible, program("p", reqs), ctx);
+
+    expect(assignment.get("area-3")?.map((c) => c.key)).toEqual(["HIST 101 PO"]);
+    expect(assignment.get("analyzing-difference")?.map((c) => c.key)).toEqual(["AMST 110 PO"]);
+  });
+
+  test("HIST 101 PO is actually used, not left on the shelf", () => {
+    const { assignment } = assignCourses(reqs, eligible, program("p", reqs), ctx);
+    const used = new Set([...assignment.values()].flat().map((c) => c.key));
+
+    expect(used.has("HIST 101 PO")).toBe(true);
+    expect(used.has("AMST 110 PO")).toBe(true);
+  });
+
+  test("sharing still happens when nothing else can close a requirement", () => {
+    // Only one course, carrying both attributes: sharing is the only option.
+    const onlyShared = buildContext(planWith({ completed: [completed("AMST 110 PO")] }), catalog);
+    const { assignment } = assignCourses(reqs, eligibleMap(reqs, onlyShared), program("p", reqs), onlyShared);
+
+    expect(assignment.get("area-3")?.map((c) => c.key)).toEqual(["AMST 110 PO"]);
+    expect(assignment.get("analyzing-difference")?.map((c) => c.key)).toEqual(["AMST 110 PO"]);
+  });
+});

@@ -1,62 +1,81 @@
-import { useMemo } from "react";
-import { compareTerms } from "@gradguide/shared";
+import { useMemo, useState } from "react";
 import type { Course, ExternalCreditRules } from "@gradguide/shared";
 import type { PlanStore } from "../plan/planStore.ts";
+import { TranscriptPaste } from "../transcript/TranscriptPaste.tsx";
 import { buildCourseIndex } from "./courseIndex.ts";
-import { provenanceFor } from "./parsePaste.ts";
+import { provenanceFor } from "./inferProvenance.ts";
 import { CourseSearch } from "./CourseSearch.tsx";
 import { CourseTable } from "./CourseTable.tsx";
 import { ExternalCreditEntry } from "./ExternalCreditEntry.tsx";
 import { NonCatalogCourseForm } from "./NonCatalogCourseForm.tsx";
-import { PasteImport } from "./PasteImport.tsx";
 import { ProfileFields } from "./ProfileFields.tsx";
+import { RecordSummary } from "./RecordSummary.tsx";
 
 /**
- * The student's own record, and the first thing on the page. Everything below
- * it is derived from what is here.
+ * The record, collapsed to one line once it holds anything.
+ *
+ * This is what actually puts the requirement map above the fold (ADR-011): the
+ * v0 record was the tallest thing on the page and the student had already told
+ * it everything it needed.
  */
 export function RecordSection({ plan, catalog, rules }: { plan: PlanStore; catalog: Course[]; rules: ExternalCreditRules }) {
   const index = useMemo(() => buildCourseIndex(catalog), [catalog]);
-
-  // New courses land in the term the student was last working in, which is
-  // almost always the one they are still typing.
-  const defaultTerm = useMemo(() => {
-    const terms = plan.plan.completed.map((c) => c.term);
-    if (terms.length === 0) return plan.plan.matriculationTerm;
-    return terms.reduce((latest, t) => (compareTerms(t, latest) > 0 ? t : latest), terms[0]!);
-  }, [plan.plan.completed, plan.plan.matriculationTerm]);
-
   const empty = plan.plan.completed.length === 0 && plan.plan.externalCredits.length === 0;
+  const [open, setOpen] = useState(false);
+
+  // Empty opens expanded, because there is nothing to collapse and the student
+  // has to start somewhere.
+  const expanded = open || empty;
+
+  if (!expanded) {
+    return (
+      <section className="section section-record" aria-labelledby="record-heading">
+        <h2 id="record-heading" className="sr-only">Your record</h2>
+        <RecordSummary plan={plan.plan} catalog={catalog} onExpand={() => setOpen(true)} />
+      </section>
+    );
+  }
 
   return (
-    <section className="section" aria-labelledby="record-heading">
+    <section className="section section-record" aria-labelledby="record-heading">
       <div className="section-head">
         <h2 id="record-heading">Your record</h2>
-        <ProfileFields
-          matriculationTerm={plan.plan.matriculationTerm}
-          studentType={plan.plan.studentType}
-          onChange={plan.setProfile}
-        />
+        {!empty && (
+          <button type="button" className="link-button" onClick={() => setOpen(false)}>
+            Done editing
+          </button>
+        )}
       </div>
+
+      <ProfileFields plan={plan.plan} onChange={plan.setProfile} />
+
+      {empty ? (
+        <TranscriptPaste index={index} existing={plan.plan.completed} onAdd={(rows) => rows.forEach(plan.addCompleted)} />
+      ) : (
+        <details className="paste">
+          <summary>Paste more from a transcript or a spreadsheet</summary>
+          <TranscriptPaste index={index} existing={plan.plan.completed} onAdd={(rows) => rows.forEach(plan.addCompleted)} />
+        </details>
+      )}
 
       <CourseSearch
         index={index}
+        label="Or add one course at a time"
         onSelect={(course) =>
           plan.addCompleted({
             course: course.id,
-            term: defaultTerm,
-            grade: "",
-            gradeMode: "letter",
-            provenance: provenanceFor(course),
+            term: null,
+            grade: null,
+            gradeMode: null,
+            provenance: provenanceFor(course.id),
           })
         }
       />
 
-      {empty && (
-        <p className="empty">
-          No courses yet. Everything below shows what the catalog asks of you and
-          how many courses could satisfy each requirement. Add the courses you
-          have finished and the list becomes yours.
+      {plan.plan.completed.length > 0 && (
+        <p className="assumed-note">
+          Courses with no grade are <strong>assumed passed</strong>. If you did not
+          pass one, open its <em>edit</em> and say so.
         </p>
       )}
 
@@ -68,15 +87,9 @@ export function RecordSection({ plan, catalog, rules }: { plan: PlanStore; catal
       />
 
       <div className="record-tools">
-        <PasteImport
-          index={index}
-          defaultTerm={defaultTerm}
-          existing={plan.plan.completed}
-          onAdd={(rows) => rows.forEach(plan.addCompleted)}
-        />
         <NonCatalogCourseForm
           studentType={plan.plan.studentType}
-          defaultTerm={defaultTerm}
+          defaultTerm={plan.plan.matriculationTerm}
           onAdd={plan.addCompleted}
         />
         <ExternalCreditEntry

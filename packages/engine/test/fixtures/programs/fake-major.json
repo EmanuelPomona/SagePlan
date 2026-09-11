@@ -5,7 +5,7 @@
   "catalogYear": "2026-2027",
   "confidence": "draft",
   "sourceUrl": "https://catalog.pomona.edu/fixture-major",
-  "encodedBy": "packages/engine fixture — proves AC-P11",
+  "encodedBy": "packages/engine fixture \u2014 proves AC-P11",
   "encodedOn": "2026-09-08",
   "notes": "Exists to prove that adding a program requires only a JSON file: it uses ONLY the P0 rule kinds and no engine or app code changes with it.",
   "requirements": [
@@ -14,36 +14,82 @@
       "label": "Introduction to Computer Science",
       "explanation": "Every major starts with CSCI 051 PO.",
       "sourceQuote": "Students must complete CSCI 051 PO.",
-      "sourceRef": { "slug": "fixture-major", "url": "https://catalog.pomona.edu/fixture-major" },
-      "rule": { "kind": "course", "course": { "department": "CSCI", "courseNumber": 51, "suffix": "", "affiliation": "PO" }, "minGrade": "C-" },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "fixture-major",
+        "url": "https://catalog.pomona.edu/fixture-major"
+      },
+      "rule": {
+        "kind": "course",
+        "course": {
+          "department": "CSCI",
+          "courseNumber": 51,
+          "suffix": "",
+          "affiliation": "PO"
+        },
+        "minGrade": "C-"
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "cs-formal-reasoning",
       "label": "Two courses in formal reasoning",
       "explanation": "Two courses carrying the mathematical and formal reasoning attribute.",
       "sourceQuote": "Two courses in mathematical and formal reasoning are required.",
-      "sourceRef": { "slug": "fixture-major", "url": "https://catalog.pomona.edu/fixture-major" },
-      "rule": { "kind": "attribute", "attr": "AREA_5", "n": 2 },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "fixture-major",
+        "url": "https://catalog.pomona.edu/fixture-major"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_5",
+        "n": 2
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "cs-credits",
       "label": "Five credits in the major",
       "explanation": "Five course credits taken at Pomona or another Claremont college.",
       "sourceQuote": "The major requires five course credits.",
-      "sourceRef": { "slug": "fixture-major", "url": "https://catalog.pomona.edu/fixture-major" },
-      "rule": { "kind": "credits", "n": 5, "filter": { "provenance": ["pomona", "claremont"] } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "fixture-major",
+        "url": "https://catalog.pomona.edu/fixture-major"
+      },
+      "rule": {
+        "kind": "credits",
+        "n": 5,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ]
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "cs-gpa",
       "label": "Grade point average in the major",
-      "explanation": "A 2.0 average is required to graduate in the major.",
+      "explanation": "A 2.0 average over letter-graded courses is required to graduate in the major.",
       "sourceQuote": "A grade point average of 2.0 is required in the major.",
-      "sourceRef": { "slug": "fixture-major", "url": "https://catalog.pomona.edu/fixture-major" },
-      "rule": { "kind": "gpa", "min": 2.0, "scope": "program" },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "fixture-major",
+        "url": "https://catalog.pomona.edu/fixture-major"
+      },
+      "rule": {
+        "kind": "gpa",
+        "min": 2.0,
+        "scope": "overall"
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     }
   ]
 }

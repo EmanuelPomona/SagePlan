@@ -11,7 +11,9 @@ export type CourseRule = Extract<Rule, { kind: "course" }>;
 export function eligibleForCourseRule(rule: CourseRule, ctx: EvalContext): ResolvedCourse[] {
   return ctx.passing
     .filter((c) => sameCourse(c.completed.course, rule.course))
-    .filter((c) => rule.minGrade === undefined || gradeAtLeast(c.completed.grade, rule.minGrade))
+    // A minGrade needs a grade. An unrecorded grade means "passed", which is
+    // not the same as "passed well enough", so it cannot satisfy a minimum.
+    .filter((c) => rule.minGrade === undefined || (c.completed.grade !== null && gradeAtLeast(c.completed.grade, rule.minGrade)))
     .sort(byResolved);
 }
 
