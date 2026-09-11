@@ -77,3 +77,33 @@ describe("checkExclusionAnomalies with the Registrar as a second source", () => 
     expect(checkExclusionAnomalies([course("POLI", 195, ["AREA_1"])]).check.count).toBe(1);
   });
 });
+
+describe("partial-credit detection uses the minimum, not the maximum", () => {
+  const ranged = (min: number, max: number, attrs: GeAttribute[]): Course => ({
+    id: { department: "GEOL", courseNumber: 189, suffix: "V", affiliation: "PO" },
+    title: "Field Studies", description: "", department: "GEOL",
+    credits: { min, max, repeatable: false, maxRepeats: 0 },
+    attributes: attrs, gradeMode: "", prereqText: null, prereqRule: null,
+    catalogYear: "2026-2027", sourceUrl: "https://catalog.pomona.edu/x", lastVerified: "2026-09-08T00:00:00Z",
+  });
+
+  // H-4: GEOL 189V PO is 0.5-1 with AREA_4. Testing credits.max < 1 skipped it,
+  // so a real anomaly never reached the report.
+  test("flags a 0.5-1 course carrying a non-Area-6 Area tag", () => {
+    const { check, report } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]);
+    expect(check.count).toBe(1);
+    expect(report).toContain("GEOL 189V PO");
+  });
+
+  test("does not flag a 0.5-1 course whose only Area is Area 6", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 1, ["AREA_6"])]).check.count).toBe(0);
+  });
+
+  test("still flags a flat 0.5-credit course", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 0.5, ["AREA_2"])]).check.count).toBe(1);
+  });
+
+  test("does not flag a full-credit course", () => {
+    expect(checkExclusionAnomalies([ranged(1, 1, ["AREA_2"])]).check.count).toBe(0);
+  });
+});

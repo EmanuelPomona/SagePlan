@@ -39,7 +39,11 @@ export function checkExclusionAnomalies(
     if (c.id.courseNumber >= 190 && c.id.courseNumber <= 199 && areas.length > 0) {
       rows.push({ key, title: c.title, credits, attributes, kind: "senior exercise (190–199) with an Area tag", source });
     }
-    if (c.credits.max < 1 && areas.some((a) => a !== "AREA_6")) {
+    // `credits.min`, not `credits.max`. The catalog rule is that a course TAKEN
+    // for partial credit counts only toward Area 6, so a 0.5-1 course qualifies
+    // the moment it CAN be taken at 0.5. Testing max skipped GEOL 189V PO
+    // (0.5-1, AREA_4) entirely — reviewer H-4.
+    if (c.credits.min < 1 && areas.some((a) => a !== "AREA_6")) {
       rows.push({ key, title: c.title, credits, attributes, kind: "partial credit with a non-Area-6 Area tag", source });
     }
     if (areas.length > 1) {

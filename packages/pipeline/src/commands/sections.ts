@@ -4,9 +4,11 @@ import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import type { FetchImpl } from "../http.ts";
 import { makeMeta } from "../meta.ts";
-import { log } from "../reports.ts";
+import { log, writeReport } from "../reports.ts";
 import { writeArtefact } from "../write.ts";
 import { readExistingCourses, readExistingMeta } from "../catalogMerge.ts";
+import { applyMembership, membershipReport, type ExcludedCourse } from "../placeholders.ts";
+import { readSections } from "../readSections.ts";
 import { fetchSections, sectionsUrl } from "../hyperschedule/client.ts";
 import { courseFromSection, isSectionIssue, normaliseSection } from "../hyperschedule/normalise.ts";
 import { mapGeCodes } from "../hyperschedule/geCodes.ts";
@@ -123,7 +125,27 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
     else refreshed++;
     byKey.set(key, course);
   }
-  const merged = [...byKey.values()].sort((a, b) => courseKey(a.id).localeCompare(courseKey(b.id)));
+  // ADR-016: "non-Pomona courses enter only via a section in an ingested term".
+  // Without this, a non-PO course that has stopped being offered — or a
+  // placeholder ingested before the rule existed — lingers in the catalog for
+  // ever. The PO set is untouched: it comes from Coursedog, not from sections.
+  // Classify FIRST, then prune. The other order silently drops a placeholder
+  // that is also unoffered, so it never reaches the report — and "nothing is
+  // dropped without being reported" is the whole point of the rule.
+  const mergedRaw = [...byKey.values()].sort((a, b) => courseKey(a.id).localeCompare(courseKey(b.id)));
+  const membership = applyMembership(mergedRaw);
+
+  const offered = new Set<string>();
+  for (const s of readSections(env.dataDir).sections) offered.add(courseKey(s.course));
+  const pruned: ExcludedCourse[] = [];
+  const merged = membership.kept.filter((course) => {
+    const key = courseKey(course.id);
+    if (course.id.affiliation === "PO" || offered.has(key)) return true;
+    pruned.push({ key, title: course.title, affiliation: course.id.affiliation, reason: "no section in any ingested term" });
+    return false;
+  });
+
+  writeReport("catalog-excluded", membershipReport(membership, mergedRaw.length, pruned), env.dataDir);
 
   // Keep the catalog's OWN provenance. This merge only tops the file up with
   // non-Pomona courses seen in the schedule; the catalog is fundamentally the
@@ -142,7 +164,11 @@ export async function runSections(argv: readonly string[], opts: SectionsOptions
 
   const byAff: Record<string, number> = {};
   for (const c of merged) byAff[c.id.affiliation] = (byAff[c.id.affiliation] ?? 0) + 1;
-  log("sections.merge", { before: existing.length, after: merged.length, added, refreshed, unknownPomonaCodes: unknownPomonaTotal, ...byAff });
+  log("sections.merge", {
+    before: existing.length, after: merged.length, added, refreshed, pruned: pruned.length,
+    excluded: membership.excluded.length, flagged: membership.suspicious.length,
+    unknownPomonaCodes: unknownPomonaTotal, ...byAff,
+  });
   if (notPublished.length > 0) {
     log("sections.warn", { notPublishedYet: notPublished.join(","), count: notPublished.length });
   }

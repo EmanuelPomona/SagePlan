@@ -6,10 +6,17 @@ import { HYPERSCHEDULE_GE_CODES, type GeAttribute } from "@gradguide/shared";
  * surface codes nobody has classified yet.
  */
 const KNOWN_NON_ATTRIBUTE_PO_CODES = new Set([
-  "1DDP", // Dual Degree Program marker (brief section 7B says to drop it)
-  // Physical-education activity codes seen live on 2026-09-08 (1P1..1P10).
-  // The GE attribute is 1PE; these subdivide it by activity.
-  "1P1", "1P2", "1P3", "1P4", "1P5", "1P6", "1P7", "1P8", "1P9", "1P10",
+  // Dual Degree Program marker. Brief section 7B says to drop it, and the
+  // Hyperschedule /v4/course-areas description confirms what it is.
+  "1DDP",
+  // NOTE — 1P1..1P10 were allowlisted here with the comment "these subdivide
+  // 1PE by activity". That was FACTUALLY WRONG (reviewer L-7): of the 123
+  // FA2026 sections carrying a 1P<digit> code, 122 carry NO 1PE, and they are
+  // not PE courses at all — ARHI 150 SC carries 1A1 and 1P5, ART 005 PO carries
+  // 1A6 and 1P6. Allowlisting them on a false premise made validator 4 report
+  // "0 unrecognised Pomona codes", which was an artefact of this list rather
+  // than a fact about the data. They are now reported with their counts until
+  // somebody establishes what they mean.
 ]);
 
 export interface MappedGeCodes {

@@ -21,10 +21,17 @@ describe("mapGeCodes", () => {
     expect(r.unknownPomona).toEqual([]);
   });
 
-  test("treats the 1P1..1P10 activity codes as known non-attribute codes", () => {
+  // L-7: these were allowlisted as "PE activity codes". They are not — 122 of the
+  // 123 FA2026 sections carrying one have no 1PE, and they appear on Art History
+  // and Art courses. Reporting them is what AC-B04's "or is reported" requires.
+  test("reports the 1P1..1P10 codes as unrecognised rather than hiding them", () => {
     const r = mapGeCodes(["1P1", "1P10"]);
     expect(r.attrs).toEqual([]);
-    expect(r.unknownPomona).toEqual([]);
+    expect(r.unknownPomona).toEqual(["1P1", "1P10"]);
+  });
+
+  test("still allowlists 1DDP, whose meaning is established", () => {
+    expect(mapGeCodes(["1DDP"]).unknownPomona).toEqual([]);
   });
 
   test("keeps a subject code such as AFRI out of attributes", () => {
