@@ -57,8 +57,13 @@ Which upstream records become courses:
   `Inactive` records are administrative placeholders (`PE WAIVER`,
   `REG PENDING`, `Your Course 101`), 29 of which carry no `subjectCode` at all.
   Excluded counts are logged by status and written to `data/reports/`.
-- **The other Claremont colleges.** A course enters only through the
+- **The other Claremont colleges.** A course **enters** only through the
   Hyperschedule merge, i.e. it has at least one section in an ingested term.
+  **This governs entry and nothing else: no course is ever removed from the
+  catalog for not being offered.** Sections cover the terms ahead; a student's
+  record reaches years back. Deleting a course because it does not run next
+  spring makes the engine answer `unmet` for a requirement they already
+  satisfied (ADR-020).
   Records whose `department` is `TEST`, or whose title begins `DNR:`, are
   dropped and listed in `data/reports/catalog-excluded.md` (reviewer M-5).
   Anything else that looks like a placeholder is **reported, never silently

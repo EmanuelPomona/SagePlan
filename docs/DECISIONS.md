@@ -453,3 +453,64 @@ For `sinceMatriculation`, `provenance` constrains the term. A `pomona`, `claremo
 
 ### Process note
 The frontend implemented the contract as written, measured the consequence, prototyped the refinement, measured that, and **backed it out** when it contradicted `docs/ACCEPTANCE.md` — then raised the conflict rather than shipping its preference. That is exactly the behaviour ADR-017 was written to encourage, and it is the second time this project's spec has been corrected by someone running it rather than reading it.
+
+---
+
+## ADR-019 — The round counter moves to a reviewer-owned ledger, and integration merges the reviewer
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's structural finding
+
+### Context
+The reviewer measured the same task across all four branches:
+
+```
+TASK-010   agent/reviewer: round=1   agent/backend: round=0   agent/frontend: round=0   main: round=0
+TASK-020   agent/reviewer: round=1   agent/frontend: round=0                            main: round=0
+```
+
+Its round-1 increments existed only on `agent/reviewer`. Three reasonable protocol rules combine to guarantee that: section 21 makes the reviewer the incrementer, section 3 makes `docs/tasks/*.md` manager-owned, and `scripts/integrate.sh` merges backend, frontend and slice branches but **never `agent/reviewer`**. So `main` read `round: 0` for tasks already gated once, every future verdict would re-increment from zero, and section 21's safeguard — `CHANGES_REQUIRED` unavailable at round 3, forcing `ESCALATE` — could never fire. The fix loop had no terminator.
+
+The counter is the visible symptom of a larger defect: **nothing the reviewer produces reaches `main`.** The screenshot evidence in `docs/review/`, which protocol section 22 makes the difference between a verified claim and an asserted one, and `docs/DEBT.md`, the accepted-findings ledger, were stranded on the same unmerged branch.
+
+### Decision
+1. The counter moves to **`docs/review/rounds.md`**, a reviewer-owned append-only ledger — one row per verdict, never edited in place. This removes the cross-branch write into a manager-owned file entirely and puts loop control with the role that owns it, which is the reviewer's own preferred option of the three it offered.
+2. **`scripts/integrate.sh` merges `agent/reviewer` last**, after the workers, when the commits it merged for review are already present so only reviewer-authored work is added. A conflict outside `docs/review/`, `docs/DEBT.md` and verdicts means the reviewer edited something it does not own, and the script says so.
+3. `scripts/tasks.sh` reads the ledger for `docs/tasks/INDEX.md`, falling back to frontmatter where the ledger has no row. Protocol sections 3 and 21 are updated.
+
+### Alternatives considered
+- **Integration pulls task frontmatter from `agent/reviewer`** — cons: `docs/tasks/*.md` is `merge=union` in `.gitattributes`, so a union merge of YAML frontmatter produces duplicate keys. Why not: it would corrupt the files it is trying to update.
+- **The manager transcribes `round` on receiving each verdict** — cons: manual, and this manager has already demonstrated the failure mode by leaving two contract change requests unrouted. Why not: a safeguard that depends on my remembering is not a safeguard.
+
+### Consequences
+- Positive: the escalation safeguard can fire; review evidence and accepted debt reach `main`; `INDEX.md` on `main` now correctly shows round 1 for the ten gated tasks.
+- Negative: `round:` remains in task frontmatter, now unread. It is left in place rather than stripped from seventeen files while both workers have those files open; strip it at the next quiet point.
+- Risk: merging the reviewer's branch brings its review-time merges of worker branches. Ordering it last makes those no-ops, and `integrate.sh` stops on conflict.
+
+---
+
+## ADR-020 — Round-2 rulings: entry is not retention, and three criteria measured against the wrong population
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/backend's round-2 handoff and contract change request
+
+### Entry is not retention (a fourth over-matching near-miss)
+`docs/API.md` said non-Pomona courses "enter only through the Hyperschedule merge, i.e. it has at least one section in an ingested term." Backend read that as a **retention** rule and pruned courses with no section in an ingested term. Measured: **72 courses deleted, 37 carrying GE attributes**, including `AFRI 010 AF` (`AREA_3` + `ANALYZING_DIFFERENCE`) and `CHST 055 CH` — a course AC-B00 explicitly names as one that must survive. Backend's own acceptance test caught it and the prune was removed.
+
+The rule now says, in both `docs/API.md` and AC-B00: **this governs entry and nothing else; no course is ever removed from the catalog for not being offered.** Sections cover the terms ahead; a student's record reaches years back. Deleting a course because it does not run next spring makes the engine answer `unmet` for a requirement already satisfied.
+
+This is the **fourth** over-match to hit the same file in one day — title substring, department, and now offering — each looking reasonable and each destroying real data. The standing rule from ADR-016 holds and is worth restating in its general form: **any rule that removes data must be measured against the whole catalog before it ships, and must state whether it governs entry or retention.**
+
+### H-6, `Measure Values = 2`: no contract change, because we do not know what it means
+Backend verified that the Registrar export carries `2` on nineteen Physical Education rows, that the pivot's `>= 1` rule is the only reason AC-B02's PE count of 241 holds (a literal `=== "1"` gives 222), and that `Course` cannot express a per-course attribute weight. It proposed an optional `attributeWeights` field.
+
+**Deferred, not rejected on merit.** Backend verified only that the export *says* `2`, not what `2` *means* — plausibly "counts as two PE courses", plausibly a two-credit course, plausibly an artefact of the Tableau pivot. Adding a contract field to model a meaning nobody has confirmed is the same failure as encoding a guessed rule: it would look authoritative and be untestable. The catalog is also unhelpful here, since it says the requirement is "two physical education activity courses **in different semesters**", which one course cannot be whatever its weight.
+
+So: the `>= 1` rule is documented and tested, the nineteen courses are listed in a report, and **what `2` means joins the Registrar courtesy-review questions** alongside the GE divergence shapes. If the answer is "counts as two", `attributeWeights` is the right shape and it is additive with no `schemaVersion` bump, exactly as proposed.
+
+### Three criteria measured against the wrong population
+- **AC-B03** hardcoded "3 senior exercises, 10 non-Area-6 partial-credit" from the project brief's measurement of 2,811 raw Coursedog records. The finished catalog is a different, 12-campus, 2,980-course population; backend measured 4 and 6, the reviewer measured 18-in-range/2-PO from the export. Three measurements of "the same" check, three answers, because they are three populations. The criterion now **states its population** and records the counts as a baseline, and says outright not to tune the validator to reach a number. Backend deliberately did not bend it, which was right.
+- **AC-B04** required `sections-SP2027.json` (reviewer H-5). Verified against `/v4/term/all` on 2026-09-11: **SP2027 is not published.** Spring schedules appear shortly before spring registration — which is also when the "What satisfies this?" term filter becomes useful, so nothing is lost. A requested term upstream does not carry is now warned and skipped, not failed.
+- **AC-B07** cannot be verified anywhere: `git remote -v` is empty, so the repository exists only on this machine and the nightly workflow has never executed; `actionlint` and `act` are absent too. This is an **owner action** (create the remote and push), recorded in `docs/DEBT.md` as unverified rather than failed. The reviewer records BLOCKED on it, never APPROVED.
+
+### Consequences
+- Positive: three criteria that were unmeetable for reasons unrelated to the work are now measurable; a 37-course data-loss bug was caught before integration by the worker's own test.
+- Negative: AC-B07 stays open until the owner creates a remote, so one acceptance criterion cannot close on this machine.
