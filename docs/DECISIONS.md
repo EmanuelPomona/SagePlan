@@ -346,3 +346,31 @@ The owner: "People might not want to manually change the semester from fall and 
 - Positive: the catalog is honest about what a course is; a whole class of silent `unmet` answers is prevented; the divergence report becomes the artifact the Registrar courtesy review is built on rather than a number nobody can act on.
 - Negative: three acceptance criteria change after the fact (AC-B01, AC-P09, and the new AC-B00), which is the cost of having specified them from a brief figure rather than from the data.
 - Process: the manager not routing this request is the defect, not the worker raising it. **Integration must check every handoff for an open `CONTRACT CHANGE REQUEST` before anything else** — this is the second one this project missed (see ADR-014).
+
+---
+
+## ADR-017 — Acceptance criteria must name their instrument and their predicate
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, after agent/reviewer challenged three v1 criteria before any worker built to them
+
+### Context
+Within an hour of the v1 criteria being published, the reviewer challenged three of them — not the design, the *measurability*. All three challenges were right, and one of them I had already half-made myself. A criterion whose predicate or instrument is unstated is not a criterion; it is a coin flip that gets settled by whoever measures it first.
+
+1. **AC-B01 had two defensible readings 82 apart.** "≥ 2,000 Active Pomona courses" could mean the 2,087 that `pipeline:catalog` emits or the 2,005 carrying `affiliation: "PO"` in the finished catalog. With the floor at 2,000, that ambiguity decided pass/fail, and AC-B00 pulled against it by requiring exclusions that can only reduce the number.
+2. **AC-P09's largest category could not satisfy its own clause.** The report's "attribute sets differ" bucket is 74% of the rows and is not a category — it restates the divergence. "Which source is more likely right" is unanswerable for a bucket that heterogeneous, so one paragraph of hand-waving would have passed the criterion while the Registrar review it exists to feed got nothing.
+3. **AC-V02 said "1440x900" without saying whether that is a window or a viewport.** The reviewer hit this instrument error in round 1: a macOS Chrome window resized to 1440x1000 reports `innerHeight` 823, and window resizes floor at about 500px wide. A criterion written against a 900px viewport can pass under emulation while the map sits below the fold on the owner's laptop.
+
+### Decision
+Every quantitative criterion in `docs/ACCEPTANCE.md` states **the exact predicate** and, where it is measured in a browser, **the exact instrument**, including how the instrument proves itself.
+
+- AC-B01 pins the count to one runnable command and lowers the floor to 1,900 for headroom, because its only job is catching a truncated fetch. A new **AC-B01b** caps exclusions at 25, which is the check that actually catches a bad filter.
+- AC-P09 requires the heterogeneous bucket **subdivided by shape** before any which-source judgment attaches, with an explicit `unclassified` bucket whose count is the number required to be zero.
+- AC-V02 and AC-V03 specify a **1440x800 viewport via CDP device-metrics emulation**, with `innerWidth`/`innerHeight` read back from the page as evidence.
+
+### A finding from verifying the challenge
+Checking the reviewer's arithmetic turned up something neither of us had written down: the obvious implementation of AC-B00's placeholder rule — a substring match on "test" — **deletes six real courses** from the shipped catalog, including `ENGL 170R PO` "Testamentary Fictions" and `RLST 061 SC` "New Testament Christian Origins". Silently deleting a real course is worse than shipping a placeholder, because a missing course makes the engine answer `unmet` for a requirement the student satisfied. AC-B00 now carries that list and a test asserting all six survive. The reviewer's arithmetic was also slightly off — `THEA 007 PO` escapes the exact rule and is reported rather than dropped, so the PO count stays 2,005 — but the conclusion, that the margin was too thin to rest on, was right.
+
+### Consequences
+- Positive: four criteria that could have been argued about after a worker round are now settled before one. The instrument is agreed between the agent that builds to it and the agent that gates on it, which is the whole point of writing it down.
+- Negative: the criteria are longer and read as pedantic. That is the correct trade at this stage.
+- Process: **a reviewer challenging criteria before implementation is the cheapest review in the project.** Publish criteria to the reviewer for challenge before dispatching workers to build against them.

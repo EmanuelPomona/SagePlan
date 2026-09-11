@@ -19,7 +19,24 @@ text snapshotted in `data/sources/catalog-pages/` on 2026-09-08.
 - [ ] **AC-P06** The plan persists across a hard reload; export and re-import round-trip losslessly (byte-identical JSON after import). Evidence: reviewer's console transcript in `docs/review/R-console.txt` with the diff command.
 - [ ] **AC-P07** **No network request carries student data.** Every request during the primary flow is a same-origin GET of `/data/*`, a font/asset, or nothing. The CSP `connect-src 'self'` is present. Share links carry the plan in the URL **fragment**. Evidence: `docs/review/R-network.txt` (HAR summary or copied network tab) for the full demo flow including share-link open.
 - [ ] **AC-P08** The nightly pipeline runs green, emits stamped artefacts (every file has `meta.fetchedAt`, `sourceUrl`, `catalogYear`), and **fails loudly** on HTTP 401 or empty results, leaving the previous artefacts untouched. Evidence: a green workflow run URL plus a deliberately failing run (bad Origin header) showing non-zero exit and unchanged `data/`.
-- [ ] **AC-P09** Cross-source GE validation (Coursedog vs Registrar CSV) reports **zero uncategorised** divergences: every divergence in `data/reports/ge-divergences.md` carries a named category, the report totals each category, and each category says which source is more likely right and why (ADR-016). The raw count is ~260 and is not itself a defect — the two sources have always disagreed, and this report is what the Registrar courtesy review will be built on. Evidence: the report file.
+- [ ] **AC-P09** Cross-source GE validation (Coursedog vs Registrar CSV) reports **zero uncategorised** divergences, where a category is a **shape**, not a restatement of the divergence.
+
+  The v0 report already had three named buckets — "attribute sets differ" 210, "missing from Registrar export" 47, "missing from catalog" 25 — and the first, at 74% of the report, is not a category: it says only that they differ (reviewer, 2026-09-11). Judging "which source is more likely right" for a bucket that heterogeneous is either impossible or a paragraph of hand-waving that passes the criterion and tells the Registrar nothing.
+
+  So the "attribute sets differ" bucket must be **subdivided by shape** before any which-source judgment attaches. At minimum:
+
+  | Shape | Example |
+  |---|---|
+  | same count, different area | catalog `AREA_3`, Registrar `Area 2` |
+  | catalog carries an extra overlay | catalog `AREA_2 + WRITING_INTENSIVE`, Registrar `Area 2` |
+  | Registrar carries an extra overlay | the reverse |
+  | catalog carries an area the Registrar does not | catalog `AREA_4`, Registrar none |
+  | Registrar carries an area the catalog does not | the reverse |
+  | disjoint sets | no overlap at all |
+
+  Each shape carries its count, a sample row showing both sides, and one sentence on which source is more likely right **and why that follows from the shape**. Any divergence not fitting a named shape goes in an explicit `unclassified` bucket, and **that bucket's count is the number AC-P09 requires to be zero**.
+
+  The raw total (~260 of ~2,005 PO courses) is not itself a defect: the two sources have always disagreed, and this report is what the Registrar courtesy review is built on. Evidence: the report file.
 - [ ] **AC-P10** Golden-file engine tests pass for the whole fixture set below. Evidence: pasted `vitest` output naming each fixture.
 - [ ] **AC-P11** **Adding a hypothetical major requires only a new JSON file.** A fixture major that uses only P0 rule kinds evaluates correctly with no change to engine or app code, and the app lists it when it appears in the manifest. Evidence: the fixture file path, the passing test, and `git diff --stat` for the commit that added it showing only `data/` and test files.
 - [ ] **AC-P12** **One page.** No router, no tabs, no navigation to other views. Every screen in the brief is a section or an inline disclosure. Evidence: `grep -r "react-router\|createBrowserRouter" apps/web/src` returns nothing; screenshots show one continuous page.
@@ -34,8 +51,12 @@ These supersede any v0 criterion they contradict. Measurements are taken at
 **1440x900 with the F-01 demo plan loaded** unless stated otherwise.
 
 - [ ] **AC-V01** The requirement map is present above the detail rows, with twelve nodes in three labelled families (Breadth 6 / Overlays 3 / Foundations 3). Each node shows its state and, when satisfied, the course that satisfied it. Waived requirements are not drawn as nodes. Evidence: `docs/review/R-10-map-1440.png`.
-- [ ] **AC-V02** Masthead + collapsed record + the entire map are visible **without scrolling** at 1440x900. Evidence: a screenshot at exactly 1440x900 plus the measured pixel offset of the map's bottom edge pasted into the handoff.
-- [ ] **AC-V03** A collapsed requirement row is **<= 40px** and the map is **<= 320px** tall, measured in the browser (not asserted). Evidence: the measurement commands and their output. The v0 build was 57px and 1774px (reviewer M-06).
+- [ ] **AC-V02** Masthead + collapsed record + the entire map are visible **without scrolling** in a **1440x800 viewport**. Evidence: the screenshot, the measured pixel offset of the map's bottom edge, and the instrument read-back (below).
+
+  **The instrument is part of the criterion** (ADR-017). Set the viewport with CDP `Emulation.setDeviceMetricsOverride`, never by resizing a window, and paste `window.innerWidth` and `window.innerHeight` read back from the page to prove what was actually measured. The reviewer hit this exact error in round 1: a macOS Chrome window resized to 1440x1000 reported `innerHeight` **823**, and a window resize floors at about 500px wide.
+
+  **Why 800 and not 900:** a 1440x900 *display* yields roughly 765-800px of *viewport* once the macOS menu bar and Chrome's tab and address bars are subtracted. A criterion written against a 900px viewport can pass under emulation while the map sits below the fold on the owner's actual laptop, which is the only place it matters.
+- [ ] **AC-V03** A collapsed requirement row is **<= 40px** and the map is **<= 320px** tall, measured in the browser with `getBoundingClientRect()` (not asserted, not eyeballed), under the same instrument as AC-V02. Evidence: the measurement commands and their output. The v0 build was 57px rows and a 1774px audit (reviewer M-06).
 - [ ] **AC-V04** Clicking or pressing Enter on a map node expands that requirement's row below and scrolls it into view. No overlay, no modal, no route change. Evidence: before/after screenshots.
 - [ ] **AC-V05** There is **no GPA row and no grade is ever requested**. The 2.00 sentence appears, verbatim, in the collapsed "Other degree rules" line. Evidence: screenshot of the expanded line; `grep -rn "gpa" data/programs/general-education-2026.json` shows it only under `advisories`.
 - [ ] **AC-V06** A plan consisting only of course codes - no terms, no grades, no provenance touched - produces a correct audit. Term, grade and "Taken at" are behind a per-row `edit` disclosure and are absent from the default row. Evidence: screenshot of the default record; fixture F-13 passes.
@@ -69,9 +90,33 @@ These supersede any v0 criterion they contradict. Measurements are taken at
 
 ## Pipeline (backend)
 
-- [ ] **AC-B01** `npm run pipeline:catalog` emits `data/catalog.json` with **≥ 2,000 Active Pomona courses** (superseding the v0 threshold of 2,700, which counted `Banked` and `Inactive` placeholders — ADR-016), every course valid against `CourseSchema`, `courseKey` unique, and `--from-csv` producing an equivalent file from the catalog UI export. Evidence: pasted run output with the count and the excluded-by-status counts.
+- [ ] **AC-B01** `npm run pipeline:catalog` emits `data/catalog.json` in which **the count of courses with `id.affiliation === "PO"`, after every exclusion, is ≥ 1,900**; every course valid against `CourseSchema`; `courseKey` unique; `--from-csv` producing an equivalent file. Evidence: pasted run output with that exact count and the excluded-by-status counts.
+
+  The predicate is pinned because "Active Pomona courses" had two defensible readings 82 apart — 2,087 emitted by `pipeline:catalog`, 2,005 carrying `affiliation: "PO"` in the finished catalog — and a floor of 2,000 made that ambiguity decide pass/fail (reviewer, 2026-09-11). **Count it this way and no other:**
+
+  ```bash
+  python3 -c "import json;print(sum(1 for c in json.load(open('data/catalog.json'))['courses'] if c['id']['affiliation']=='PO'))"
+  ```
+
+  The measured value today is **2,005**, so 1,900 is a truncation guard with 5% of headroom, which is its only job. It is not a quality bar: AC-B00's exclusion ceiling is what catches a filter that starts eating real courses.
+- [ ] **AC-B01b** **Exclusion ceiling.** The number of records dropped by AC-B00's placeholder rules is reported, and the build **fails above 25**. Five are dropped today. This exists because the obvious implementation of AC-B00 is a substring match, and a substring match is measurably wrong here (see AC-B00). Evidence: the count in `catalog-excluded.md` and the guard's test.
 - [ ] **AC-B02** The Registrar CSV parser handles UTF-16 LE with CRLF, pivots the Tableau long format, and yields 5,768 distinct courses with per-attribute counts matching the brief's table (Area 1 730, Area 2 931, Area 3 776, Area 4 334, Area 5 307, Area 6 292, WI 179, SI 177, AD 140, Language 251, PE 241). Evidence: unit test asserting these counts.
-- [ ] **AC-B00** `data/catalog.json` contains no placeholder record. Specifically: no `department` `TEST`, no title beginning `DNR:`, no `Banked`/`Inactive` Coursedog record, and `data/reports/catalog-excluded.md` and `catalog-duplicates.md` list what was dropped and why (reviewer M-5, ADR-016). Evidence: the reports, plus a grep of the catalog for each pattern.
+- [ ] **AC-B00** `data/catalog.json` contains no placeholder record. The rule is exact and **must not be loosened into a substring match**: drop a record when `id.department === "TEST"`, or when its `title` **begins with** `DNR:`; drop every `Banked` and `Inactive` Coursedog record. `data/reports/catalog-excluded.md` and `catalog-duplicates.md` list what was dropped and why (reviewer M-5, ADR-016).
+
+  **Measured warning.** A `title contains "test"` filter deletes six real courses from the shipped catalog:
+
+  ```
+  ENGL 170R PO  Testamentary Fictions
+  HIST 132  PO  Pol Protest & Soc Mov Latin Amer
+  RLST 189N PO  Leadership, Authority, Protest
+  RLST 061  SC  New Testament Christian Origins
+  ENGL 076  PZ  American Protest Literatures
+  CHST 055  CH  Digitizing our Testimonios
+  ```
+
+  Silently deleting a real course is a worse defect than shipping a placeholder, because a missing course makes the engine answer `unmet` for a requirement the student satisfied. `THEA 007 PO` ("repeat test course", department `PREG`) deliberately escapes the exact rule: **report it, do not widen the rule to catch it.** The owner decides on reported records.
+
+  Evidence: the reports, the exclusion count, and a test asserting each of the six courses above survives.
 - [ ] **AC-B03** Validators 1–8 in `docs/API.md` §4 exist, each with a unit test on a fixture, and the exclusion-anomaly report lists the 3 senior exercises with Area tags, the 10 non-Area-6 partial-credit tagged courses, and THEA085 PO. Evidence: `data/reports/exclusion-anomalies.md`.
 - [ ] **AC-B04** `npm run pipeline:sections -- FA2026` emits ≥ 2,000 sections; every `geCodes` entry maps through `HYPERSCHEDULE_GE_CODES` or is reported. Evidence: run output.
 - [ ] **AC-B05** `npm run pipeline:history -- FA2026` emits offering history for ≥ 1,400 courses with `knownTerms` ascending. Evidence: run output.
