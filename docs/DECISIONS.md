@@ -342,6 +342,29 @@ The owner: "People might not want to manually change the semester from fall and 
 - **Newest edition wins** — pros: mechanical, needs no report; cons: measured to be wrong for 55 courses in the one way this product must never be wrong. Why not: the data says the newest edition is emptier.
 - **Make validator 3 warn-only** — pros: simplest; cons: then nothing ever catches an upstream regression in GE tagging. Why not: a guard with a sane baseline is better than no guard.
 
+### Amendment, 2026-09-11 — placeholder exclusion is an exact-key denylist, never a pattern
+
+Closing reviewer M-5 completely required one more record, `THEA 007 PO`
+("repeat test course"), which is Active upstream and escapes the exact rule.
+Both mechanical rules that would catch it were measured against the shipped
+catalog and both destroy real data:
+
+| Candidate rule | What it deletes |
+|---|---|
+| `title contains "test"` | six real courses, five carrying GE attributes, including `ENGL 170R PO` (`AREA_1` + `WRITING_INTENSIVE`) |
+| `department === "PREG"` | 13 real Associated Kyoto Program courses (`AKP 001-019 PO`) — the `provenance: abroad` study-abroad courses the residency requirement counts |
+
+The second is the more instructive near-miss: it looks like a clean
+administrative signal, and it would have quietly removed the study-abroad
+catalog that one of the seventeen GE requirements depends on.
+
+**Decision:** placeholder exclusion is `department === "TEST"`, `title` beginning
+`DNR:`, non-Active status, **and an exact-`courseKey` denylist**
+(`data/catalog-denylist.json`) with a reason per entry, seeded with
+`THEA 007 PO`. A denylist cannot over-match by construction and every addition
+is a visible diff. Everything else suspicious is reported for the owner, never
+guessed at. **No pattern rule may be added to catch a single record.**
+
 ### Consequences
 - Positive: the catalog is honest about what a course is; a whole class of silent `unmet` answers is prevented; the divergence report becomes the artifact the Registrar courtesy review is built on rather than a number nobody can act on.
 - Negative: three acceptance criteria change after the fact (AC-B01, AC-P09, and the new AC-B00), which is the cost of having specified them from a brief figure rather than from the data.
