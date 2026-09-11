@@ -84,3 +84,82 @@ per integrate.sh rather than hand-merged. Merge commit 63a19ee.
 - nothing. TASK-090 proper stays BACKLOG: it depends on TASK-013 + TASK-025, which
   are in REVIEW, not DONE. I executed its privacy audit, engine-golden review and
   skill audit early because the material existed.
+
+---
+
+# ROUND 2 — PREPARATION (holding; no worker gate performed yet)
+Last updated: 2026-09-11
+
+## Posture
+HOLDING. Not a partial round 2. `agent/frontend` has TASK-020..025 + TASK-030 at
+REVIEW but TASK-031/032/033 still READY, so the v1 interface (map, theme,
+transcript record) does not exist and AC-V01..V11 are not measurable.
+`agent/backend` has one round-2 commit (d61829a) with TASK-010..013 at REVIEW.
+Offered the manager a TASK-030-only gate; awaiting their dispatch call.
+
+## My branch is BEHIND main — re-run scripts/sync.sh before gating
+`main` is at 32b9863; my HEAD is behind. This already caused one bad read: I
+grepped my own working copy to confirm a manager amendment and got a stale
+answer. **Verify doc claims with `git show main:<path>`, not the working tree,
+until sync lands.**
+
+## What my round-1 findings became (verified against main, not taken on trust)
+- H-1 (unrouted CCRs) -> ADR-014 + ADR-016; ADR-016 adds a standing integration
+  rule: check every handoff for an open CCR first.
+- H-2 (AC-B01 2,700) -> SUPERSEDED. Now `id.affiliation === "PO"` counted after
+  exclusions, floor **1,900**; new **AC-B01b** caps AC-B00 exclusions at 25.
+- H-3 (AC-P09) -> SUPERSEDED. Now "zero **uncategorised**"; the 210-row
+  "attribute sets differ" bucket must be subdivided by SHAPE, with an explicit
+  `unclassified` bucket that must be zero. ~260 raw is the accepted steady state.
+- M-2 (F-06 / API.md 2.3 step 4) -> ADR-013 replaces prefer-most-unassigned with
+  minimize-sharing. F-06 must now assert exact attribution AND fail under the old
+  rule (mutation test).
+- M-3 -> ADR-014; fake-major moves to `scope:"overall"`; new F-14 covers deferred.
+- M-1 -> accepted; F-05's plan must total exactly 31.0 credits.
+- M-5 -> AC-B00 + AC-B01b + an exact-courseKey denylist
+  (`data/catalog-denylist.json`, **does not exist yet — backend's to create, do
+  NOT file its absence as a finding this round**).
+- M-6/M-7/M-8 + D-02/D-03 -> promoted from advisory debt to BLOCKING criteria
+  AC-V03 / AC-V08, because the owner complained independently.
+- D-09 -> ACCEPTANCE F-12 reconciled to ADR-007.
+- L-9 (F-03b asserts nothing) -> now an explicit TASK-030 deliverable.
+
+## The agreed instrument (part of the criterion — do not substitute)
+AC-V02/AC-V03 are measured in a **1440x800 viewport** via CDP
+`Emulation.setDeviceMetricsOverride`, with `innerWidth`/`innerHeight` **read back
+from the page** as evidence. Rationale: a macOS window resize floors near 500px
+wide and a 1440x900 window yields ~823px of viewport, so window resizing fakes
+both axes. Targets: collapsed row **<= 40px**, map **<= 320px**, map bottom edge
+above the fold. My v0 baseline was 57px rows / 1774px audit.
+
+## Open at the time of writing (raised to the manager, unresolved)
+1. **OPEN CCR** `agent/frontend` b1d4d62 — API.md 2.7's two sentences disagree.
+   Verified: `post-matriculation-credits` is
+   `{credits, n:30, sinceMatriculation, includeExternal:false}`, and
+   `agent/frontend:packages/engine/test/golden/F-13.json` has exactly one
+   `unverifiable` row — that requirement. **Collides with AC-V06** ("only course
+   codes produces a correct audit"). One of AC-V06, 2.7's second sentence, or
+   TASK-030's bounded test must give. Because `includeExternal:false`, exam
+   credit cannot be the distinguishing factor, so the task's "student with AP
+   credit and every term null" test is unsatisfiable alongside the refinement.
+2. **STRUCTURAL — the round counter cannot survive.** Measured: TASK-010 is
+   round=1 on agent/reviewer but round=**0** on main, agent/backend and
+   agent/frontend. A reviewer branch is never integrated, so protocol 21's
+   round-3 ESCALATE safeguard can never fire and the fix loop has no terminator.
+   Proposed moving the counter to a reviewer-owned `docs/review/rounds.md`.
+
+## Round-2 verification plan (what to do when the gate opens)
+- Re-run sync, then re-measure AC-V02/V03 under the instrument above.
+- AC-B01: count `id.affiliation === "PO"` in the finished catalog (>= 1,900);
+  AC-B01b: exclusions <= 25; AC-B00: assert `ENGL 170R PO` still carries BOTH
+  `AREA_1` and `WRITING_INTENSIVE` (not merely that it exists), and that the six
+  substring casualties survive.
+- AC-P09: check the `unclassified` bucket is zero AND that the shape
+  subdivisions are real, not one relabelled bucket.
+- F-13 bounded evaluation: **neutralise the pessimistic pass inside the test and
+  confirm the golden changes.** A golden recording only agreed cases is
+  unfalsifiable — this is how L-9 was found.
+- Transcript parser: confirm nothing is ever added without the preview step.
+- AC-V05: the 2.00 GPA sentence must still be on the page (collapsed "Other
+  degree rules"); the honesty rule is that we never hide a rule we do not check.
+- Evidence bar unchanged: no runtime evidence -> BLOCKED, never APPROVED.
