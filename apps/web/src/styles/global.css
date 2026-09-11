@@ -6,7 +6,17 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { color-scheme: light dark; }
+/*
+ * color-scheme must follow OUR theme, not the OS, or a student who picks Light
+ * on a dark-mode laptop gets dark native controls on a cream page: dark
+ * dropdown menus, dark autofill, a dark scrollbar. Light is the default here,
+ * and "System" is the only setting that defers to the OS.
+ */
+:root { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) { color-scheme: dark; }
+}
 
 body {
   margin: 0;
@@ -258,8 +268,27 @@ input, select, textarea, button {
   min-height: 32px;
   border-radius: 0;
 }
+
+/*
+ * Checkboxes and radios are not text fields. The rule above stretched them into
+ * 13 tall empty rectangles on the attribute list, because min-height and padding
+ * apply to a replaced control too. They opt out and keep their native box.
+ */
+input[type="checkbox"], input[type="radio"] {
+  min-height: 0;
+  padding: 0;
+  inline-size: auto;
+  accent-color: var(--ink);
+}
 textarea { font-family: var(--face-code); font-size: var(--t-small); width: 100%; min-height: 6rem; }
-select { cursor: pointer; }
+
+/*
+ * A select is as wide as its widest option unless told otherwise, and the exam
+ * list holds names like "IB Language A: Literature (Standard Level)". At 390px
+ * that one control pushed the LAYOUT viewport to 595px, so the whole page
+ * scrolled sideways the moment the exam section was opened.
+ */
+select { cursor: pointer; max-inline-size: 100%; }
 
 button {
   cursor: pointer;
@@ -285,10 +314,24 @@ button:disabled { color: var(--ink-2); border-color: var(--rule); cursor: not-al
 }
 .link-button:hover { color: var(--ink); background: none; }
 
-.field { display: flex; align-items: baseline; gap: var(--s-2); }
+/*
+ * min-inline-size: 0 on both the flex container and its controls. Without it a
+ * flex item refuses to shrink below its content width, so one long <option>
+ * pushed the whole page past the 390px viewport and the layout viewport grew to
+ * 412. Grid tracks need the same escape, via min() on the minmax floor.
+ */
+.field { display: flex; align-items: baseline; gap: var(--s-2); min-inline-size: 0; }
+.field > input, .field > select { min-inline-size: 0; max-inline-size: 100%; }
 .field label { font-size: var(--t-small); color: var(--ink-2); white-space: nowrap; }
 .field-wide { grid-column: span 2; }
-.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--s-3); margin: var(--s-3) 0; }
+@media (max-width: 30rem) { .field-wide { grid-column: span 1; } }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+  gap: var(--s-3);
+  margin: var(--s-3) 0;
+}
+.form-grid > * { min-inline-size: 0; }
 .profile-fields { display: flex; gap: var(--s-3); flex-wrap: wrap; align-items: baseline; }
 
 details { margin-top: var(--s-4); border-top: 1px solid var(--rule); padding-top: var(--s-3); }

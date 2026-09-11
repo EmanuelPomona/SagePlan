@@ -23,7 +23,7 @@ export function ImportPreview({
 
       <dl className="import-facts">
         <div><dt>Courses</dt><dd>{plan.completed.length}</dd></div>
-        <div><dt>Entered</dt><dd>{termCode(plan.matriculationTerm)}</dd></div>
+        <div><dt>Entered</dt><dd>{plan.matriculationTerm ? termCode(plan.matriculationTerm) : "not recorded"}</dd></div>
         <div><dt>Student type</dt><dd>{plan.studentType === "transfer" ? "transfer" : "first-year"}</dd></div>
         <div><dt>Exams</dt><dd>{plan.externalCredits.length}</dd></div>
         <div><dt>Substitutions</dt><dd>{plan.overrides.length}</dd></div>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type ThemePreference = "system" | "light" | "dark";
 
-const THEME_STORAGE_KEY = "gradguide:ui:v1";
+export const THEME_STORAGE_KEY = "gradguide:ui:v1";
 
 function storedPreference(): ThemePreference {
   try {
@@ -11,13 +11,17 @@ function storedPreference(): ThemePreference {
   } catch {
     // Storage unavailable: the system preference is a fine answer.
   }
-  return "system";
+  // Light, not system. The dark canvas people saw in v0 was the accident of a
+  // System default on a dark-mode laptop; the design was always drawn for cream
+  // (brief, v1 revision). "System" remains available, it is just not the default.
+  return "light";
 }
 
 /**
- * The page follows the system by default. The toggle exists because this is read
- * at 11pm as often as at 9am, and a student on a bright screen in a dark room is
- * the situation the brief describes.
+ * Light by default. The toggle exists because this is read at 11pm as often as
+ * at 9am, and a student on a bright screen in a dark room is the situation the
+ * brief describes; but the document register is a cream page, so that is what
+ * an unconfigured visitor sees.
  */
 export function useTheme(): { preference: ThemePreference; setPreference: (p: ThemePreference) => void } {
   const [preference, setPreferenceState] = useState<ThemePreference>(storedPreference);

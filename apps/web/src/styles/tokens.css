@@ -34,6 +34,24 @@
 
   --focus: #2f6fe4;
 
+  /*
+   * Family tints for the requirement map (ADR-011).
+   *
+   * MEASURED against the status hues on this canvas before use:
+   *   breadth     176deg, 5.21:1, 40deg from satisfied
+   *   overlay     228deg, 6.90:1, 10deg from unverifiable
+   *   foundation   27deg, 6.53:1,  9deg from partial
+   *
+   * Two of the three sit within ten degrees of a STATUS hue, and a node's ring
+   * already carries status by hue. The brief anticipated this and authorises
+   * dropping family hue when it reads as state, so these are used ONLY on the
+   * family label and the hairline under it, never on a node. Family is carried
+   * by position and label; hue on a node means one thing only.
+   */
+  --family-breadth: #2c6e6a;
+  --family-overlay: #3f4e8c;
+  --family-foundation: #7a4a24;
+
   /* Type. Three voices: the College quoted, the student's own record, the tool. */
   --face-quote: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
   --face-ui: "IBM Plex Sans", system-ui, sans-serif;
@@ -71,6 +89,9 @@
 /* Dark: a warm near-black for the same reason the light canvas is cream. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    --family-breadth: #7fc4bf;
+    --family-overlay: #9aa8e0;
+    --family-foundation: #c99a6a;
     --canvas: #1b1a17;
     --canvas-hover: #24221e;
     --canvas-pressed: #2c2a25;
@@ -88,6 +109,9 @@
 }
 
 :root[data-theme="dark"] {
+  --family-breadth: #7fc4bf;
+  --family-overlay: #9aa8e0;
+  --family-foundation: #c99a6a;
   --canvas: #1b1a17;
   --canvas-hover: #24221e;
   --canvas-pressed: #2c2a25;

@@ -20,7 +20,7 @@ export type PlanStatus = "ok" | "corrupt" | "quota";
 export type PlanStore = {
   plan: StudentPlan;
   status: PlanStatus;
-  setProfile(profile: { matriculationTerm: TermId; studentType: StudentType }): void;
+  setProfile(profile: { matriculationTerm: TermId | null; studentType: StudentType }): void;
   addCompleted(course: CompletedCourse): void;
   updateCompleted(index: number, patch: Partial<CompletedCourse>): void;
   removeCompleted(index: number): void;

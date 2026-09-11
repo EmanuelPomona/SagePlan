@@ -1,9 +1,15 @@
 import { useId, useState } from "react";
 import type { CompletedCourse, GeAttribute, Provenance, StudentType, TermId } from "@gradguide/shared";
-import { GRADE_VALUES } from "./parsePaste.ts";
+
 import { ATTRIBUTE_LABEL } from "./attributeLabels.ts";
 
 const ATTRIBUTES = Object.keys(ATTRIBUTE_LABEL) as GeAttribute[];
+
+/** Kept here now that the spreadsheet parser has been folded into the transcript one. */
+const GRADE_VALUES = [
+  "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F",
+  "CR", "P", "NC", "NP", "IP",
+] as const;
 
 /**
  * A course from another institution. It is not in the catalog, so the student
@@ -21,15 +27,15 @@ export function NonCatalogCourseForm({
   onAdd,
 }: {
   studentType: StudentType;
-  defaultTerm: TermId;
+  defaultTerm: TermId | null;
   onAdd: (course: CompletedCourse) => void;
 }) {
   const [department, setDepartment] = useState("");
   const [number, setNumber] = useState("");
   const [title, setTitle] = useState("");
   const [credits, setCredits] = useState("1");
-  const [season, setSeason] = useState<TermId["term"]>(defaultTerm.term);
-  const [year, setYear] = useState(String(defaultTerm.year));
+  const [season, setSeason] = useState<TermId["term"]>(defaultTerm?.term ?? "FA");
+  const [year, setYear] = useState(String(defaultTerm?.year ?? new Date().getFullYear()));
   const [grade, setGrade] = useState("");
   const [provenance, setProvenance] = useState<Provenance>("transfer");
   const [attributes, setAttributes] = useState<GeAttribute[]>([]);
