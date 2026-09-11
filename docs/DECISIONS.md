@@ -410,6 +410,29 @@ Every quantitative criterion in `docs/ACCEPTANCE.md` states **the exact predicat
 ### A finding from verifying the challenge
 Checking the reviewer's arithmetic turned up something neither of us had written down: the obvious implementation of AC-B00's placeholder rule — a substring match on "test" — **deletes six real courses** from the shipped catalog, including `ENGL 170R PO` "Testamentary Fictions" and `RLST 061 SC` "New Testament Christian Origins". Silently deleting a real course is worse than shipping a placeholder, because a missing course makes the engine answer `unmet` for a requirement the student satisfied. AC-B00 now carries that list and a test asserting all six survive. The reviewer's arithmetic was also slightly off — `THEA 007 PO` escapes the exact rule and is reported rather than dropped, so the PO count stays 2,005 — but the conclusion, that the margin was too thin to rest on, was right.
 
+### Amendment, 2026-09-11 — the same rule applies to fixtures, not just criteria
+
+A criterion can name its instrument perfectly and still rest on a fixture that
+cannot fail. `docs/ACCEPTANCE.md` now carries a standing rule: **a golden cited
+as evidence for a criterion must discriminate on it** — neutralise the rule the
+fixture exists to prove and the golden must change.
+
+This generalises three separate findings that were each handled case by case:
+F-06's tie-break (the manager required a mutation test), F-13's split (the same,
+after the reviewer pointed out a golden of agreed cases hides the failure mode),
+and **L-9, which is where the principle was originally filed and the only place
+it was not adopted** — because the manager mis-paraphrased the finding when
+relaying it, inverting "the golden cannot discriminate" into "the fixture lacks
+the entry", and then treated the frontend's correct refutation of that
+paraphrase as a refutation of L-9. Both the finding and the frontend were right;
+the relay was the defect.
+
+The frontend then found the rule's second failure mode while building F-13c:
+redundancy is not the only way a fixture fails to discriminate. **Slack** is the
+other — a bounded fixture whose optimistic and pessimistic totals land on the
+same side of the threshold agrees by accident. A disagreement fixture must sit
+on the boundary.
+
 ### Consequences
 - Positive: four criteria that could have been argued about after a worker round are now settled before one. The instrument is agreed between the agent that builds to it and the agent that gates on it, which is the whole point of writing it down.
 - Negative: the criteria are longer and read as pedantic. That is the correct trade at this stage.
