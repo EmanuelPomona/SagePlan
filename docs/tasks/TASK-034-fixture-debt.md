@@ -63,6 +63,20 @@ fresh one is spent (docs/API.md 2.3 step 4)"* — directly above code doing the
 opposite, and cites the section ADR-013 rewrote. The `localBetter` comment 145
 lines later is correct. Fix the comment and the citation.
 
+## 4. D-17 — the desktop map wraps badly (visual, advisory)
+
+At 1440 the three family panels are sized by their content, so Breadth takes
+five nodes on one row and wraps Area 6 alone onto a second, leaving a wide empty
+band; Overlays wraps 2+1 and Foundations 2+1, breaking "Physical Education"
+across two lines. The same map at 390 is a clean three-column grid per family
+and reads better than the desktop derived from it.
+
+No criterion is breached — the map measures 274px against a 320px bar — so this
+is advisory under protocol section 11 and did not block TASK-033's approval.
+But the brief asks the desktop to read crisply, and a three-column grid for
+Breadth (3x2) with panels of comparable width would fix the empty band and the
+broken label together. Take it if TASK-033's approval leaves you the room.
+
 ## Acceptance Criteria
 
 - [ ] **F-03c exists**, is listed in `docs/ACCEPTANCE.md`'s fixture table, and its golden changes when `ib-language-a-requirement` is neutralised. Paste the mutation result.
@@ -70,6 +84,7 @@ lines later is correct. Fix the comment and the citation.
 - [ ] **F-15 exists** and fails under `betterScore` inverted alone. Paste both mutation results: inverted-alone must fail, restored must pass.
 - [ ] `assignment.ts` Phase 1 comment describes the rule the code implements and cites the current `docs/API.md` 2.3.
 - [ ] `npm run typecheck`, `lint`, `test` pass at root; `packages/engine/src` still pure by grep; both determinism tests still pass.
+- [ ] **D-17 (advisory, take it or decline it in writing):** either the desktop map no longer wraps a family onto a near-empty second row and no node label breaks across two lines, or the handoff says why the current wrap is right. Evidence: a 1440x800 screenshot either way.
 
 ## Notes
 
