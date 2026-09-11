@@ -527,3 +527,167 @@ legend { font-size: var(--t-small); color: var(--ink-2); padding: 0 var(--s-2); 
 .import-facts dt { font-size: var(--t-small); color: var(--ink-2); margin: 0; }
 .import-facts dd { font-family: var(--face-code); margin: 0; }
 .import-warning { font-size: var(--t-small); border-left: 3px solid var(--partial); padding-left: var(--s-3); }
+
+/* ---- The requirement map ------------------------------------------------- */
+
+/*
+ * A diagram, not a dashboard. Twelve rings in three families, no percentage, no
+ * donut, no stat tiles. The height budget is the criterion: masthead ~160,
+ * collapsed record ~48, heading ~40, and this <= 320 has to clear an 800px
+ * viewport with room to spare.
+ */
+.map {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-4) var(--s-6) var(--s-3);
+}
+
+.map-families {
+  display: grid;
+  grid-template-columns: 6fr 3fr 3fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.map-family + .map-family { border-left: 1px solid var(--rule); padding-left: var(--s-6); }
+
+.family-name {
+  font-family: var(--face-ui);
+  font-size: var(--t-small);
+  font-weight: 600;
+  margin: 0 0 var(--s-2);
+  padding-bottom: var(--s-1);
+  border-bottom: 1px solid var(--rule);
+}
+/* Family is carried HERE, by the heading and by position. Never on a node: a
+   node's hue already means state, and it can only mean one thing at a time. */
+.family-breadth .family-name { color: var(--family-breadth); border-bottom-color: var(--family-breadth); }
+.family-overlays .family-name { color: var(--family-overlay); border-bottom-color: var(--family-overlay); }
+.family-foundations .family-name { color: var(--family-foundation); border-bottom-color: var(--family-foundation); }
+
+.family-nodes { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-4); }
+
+.node {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-items: center;
+  gap: 2px;
+  inline-size: 5.25rem;
+  min-block-size: 44px;
+  padding: var(--s-1) 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+  transition-property: background-color;
+  transition-duration: 120ms;
+}
+.node:hover { background: var(--canvas-hover); }
+.node:active { background: var(--canvas-pressed); }
+
+.node-ring { inline-size: 22px; block-size: 22px; }
+.node-satisfied { color: var(--satisfied); }
+.node-partial { color: var(--partial); }
+.node-unmet { color: var(--unmet); }
+.node-unverifiable { color: var(--unverifiable); }
+.node-override, .node-attested { color: var(--manual); }
+
+.node-label {
+  font-family: var(--face-quote);
+  font-size: var(--t-small);
+  color: var(--ink);
+  line-height: 1.2;
+}
+.node-beneath {
+  font-family: var(--face-code);
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* Totals, on one line, because nobody plans a semester around them. */
+.admin-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin: var(--s-3) 0 0;
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-small);
+}
+.admin-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  border: 0;
+  background: none;
+  padding: var(--s-1) 0;
+  min-height: 32px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.admin-item:hover { background: none; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.admin-figure { font-family: var(--face-code); color: var(--ink); font-variant-numeric: tabular-nums; }
+.admin-satisfied .admin-figure { color: var(--satisfied); }
+.admin-unverifiable .admin-figure { color: var(--unverifiable); }
+
+/* ---- The collapsed record summary ---------------------------------------- */
+
+.section-record { margin-top: var(--s-4); }
+.record-summary {
+  display: flex;
+  inline-size: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-2) 0;
+  border: 0;
+  border-block: 1px solid var(--rule);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--t-body);
+}
+.record-summary:hover { background: var(--canvas-hover); }
+.record-summary-facts { display: inline-flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap; }
+.record-summary-facts strong { font-family: var(--face-code); font-weight: 400; font-variant-numeric: tabular-nums; }
+.record-summary-sep { inline-size: 1px; block-size: 0.8em; background: var(--rule); }
+.record-summary-assumed { color: var(--ink-2); font-size: var(--t-small); font-style: italic; }
+.record-summary-action { color: var(--ink-2); font-size: var(--t-small); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- The record, grade free ---------------------------------------------- */
+
+.course-list { margin-top: var(--s-3); }
+.course-row { border-top: 1px solid var(--rule); }
+.course-row-main { display: grid; grid-template-columns: 9rem minmax(0, 1fr) auto auto; gap: var(--s-3); align-items: baseline; padding: var(--s-1) 0; min-height: var(--row-h); }
+.course-row-title { font-family: var(--face-quote); display: inline-flex; gap: var(--s-2); align-items: baseline; flex-wrap: wrap; }
+.course-row-term, .course-row-grade { font-family: var(--face-code); font-size: var(--t-small); color: var(--ink-2); }
+.mark-failed { font-family: var(--face-ui); font-size: var(--t-small); color: var(--unmet); }
+.course-row-detail { padding: 0 0 var(--s-3) 9rem; }
+.did-not-pass { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--t-small); min-height: 32px; }
+.assumed-note { font-size: var(--t-small); color: var(--ink-2); margin: var(--s-3) 0 0; max-width: 62ch; }
+.profile-inferred, .profile-correct { font-size: var(--t-small); color: var(--ink-2); margin: var(--s-2) 0 0; display: flex; gap: var(--s-3); align-items: baseline; flex-wrap: wrap; }
+.transcript-paste { margin-top: var(--s-4); }
+.transcript-paste > label { display: block; font-size: var(--t-small); color: var(--ink-2); margin-bottom: var(--s-2); max-width: 70ch; }
+.privacy-note { font-size: var(--t-small); color: var(--ink-2); border-left: 3px solid var(--satisfied); padding-left: var(--s-3); margin: var(--s-2) 0 0; max-width: 62ch; }
+.preview-detected { font-weight: 400; color: var(--ink-2); }
+
+/* ---- Map responsive ------------------------------------------------------ */
+
+@media (max-width: 60rem) {
+  .map-families { grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .map-family + .map-family { border-left: 0; padding-left: 0; }
+  .map-family:first-child { grid-column: 1 / -1; }
+  .course-row-detail { padding-left: 0; }
+}
+
+@media (max-width: 30rem) {
+  .map { padding-left: var(--s-4); padding-right: var(--s-4); }
+  .map-families { grid-template-columns: 1fr; }
+  .map-family:first-child { grid-column: auto; }
+  /* Every node stays a comfortable tap target at 390. */
+  .family-nodes { gap: var(--s-3); }
+  .node { inline-size: 4.75rem; min-block-size: 52px; }
+  .course-row-main { grid-template-columns: 1fr auto auto; }
+}

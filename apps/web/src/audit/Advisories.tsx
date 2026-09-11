@@ -10,11 +10,12 @@ export function Advisories({ program }: { program: Program }) {
   if (advisories.length === 0) return null;
 
   return (
-    <section className="advisories" aria-labelledby={`advisories-${program.id}`}>
-      <h3 id={`advisories-${program.id}`}>Not checked here</h3>
+    <details className="advisories">
+      <summary>Other degree rules ({advisories.length})</summary>
       <p className="advisories-intro">
         These come from the same catalog pages but need judgment or a term-by-term
-        plan, so this tool does not check them. Read them yourself.
+        plan, so this tool does not check them. Read them yourself. The ones that
+        belong to a requirement also appear inside that requirement's row.
       </p>
       <ul className="rows">
         {advisories.map((advisory) => (
@@ -29,6 +30,6 @@ export function Advisories({ program }: { program: Program }) {
           </li>
         ))}
       </ul>
-    </section>
+    </details>
   );
 }

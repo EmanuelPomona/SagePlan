@@ -1,4 +1,4 @@
-import { useId, useState, type ReactNode } from "react";
+import { forwardRef, useId, type ReactNode } from "react";
 import { courseKey, sameCourse } from "@gradguide/shared";
 import { EXAM_PSEUDO_ID } from "@gradguide/engine";
 import type { CourseId, ExternalCredit, Requirement, Result } from "@gradguide/shared";
@@ -10,26 +10,29 @@ import { ProgressCount } from "./ProgressCount.tsx";
  * what closed it, on the right the College's own sentence. The layout reserves
  * the margin on every row, so the page cannot show a verdict without its reason.
  */
-export function RequirementRow({
-  requirement,
-  result,
-  externalCredits,
-  startsCluster,
-  detail,
-}: {
+export const RequirementRow = forwardRef<HTMLLIElement, {
   requirement: Requirement;
   result: Result;
   externalCredits: ExternalCredit[];
   startsCluster: boolean;
+  open: boolean;
+  onToggle: () => void;
   detail: (open: boolean) => ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
+}>(function RequirementRow({
+  requirement,
+  result,
+  externalCredits,
+  startsCluster,
+  open,
+  onToggle,
+  detail,
+}, ref) {
   const detailId = useId();
   const verdict = verdictOf(result);
   const override = result.viaOverride ? requirement : null;
 
   return (
-    <li className={`row row-${verdict}${startsCluster ? " row-cluster" : ""}`} data-status={verdict}>
+    <li ref={ref} className={`row row-${verdict}${startsCluster ? " row-cluster" : ""}`} data-status={verdict}>
       <div className="row-main">
         <span className="row-status">
           <StatusGlyph status={verdict} />
@@ -42,7 +45,7 @@ export function RequirementRow({
             className="row-expand"
             aria-expanded={open}
             aria-controls={detailId}
-            onClick={() => setOpen((o) => !o)}
+            onClick={onToggle}
           >
             {requirement.label}
           </button>
@@ -77,19 +80,18 @@ export function RequirementRow({
         </span>
       </div>
 
-      <aside className="row-evidence">
-        <blockquote className="quote">
-          {result.status === "unverifiable" && result.note ? result.note : requirement.sourceQuote}
-        </blockquote>
-        {result.status !== "unverifiable" && result.note && <p className="row-note">{result.note}</p>}
-      </aside>
+      {/* The verbatim quote moved into the expanded row (brief, v1 revision): it
+          was roughly half the audit's height, and it is still one click from
+          every claim. What stays on the collapsed line is the note, when there
+          is something the student has to act on. */}
+      {result.note && <p className="row-note">{result.note}</p>}
 
       <div id={detailId} className="row-detail" hidden={!open}>
         {detail(open)}
       </div>
     </li>
   );
-}
+});
 
 /** An exam reports as the EXAM pseudo-id; the student needs its name. */
 function describeSatisfier(id: CourseId, externalCredits: ExternalCredit[]): string {
