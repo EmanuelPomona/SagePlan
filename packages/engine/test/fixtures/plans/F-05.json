@@ -528,6 +528,23 @@
       "provenance": "pomona",
       "title": "Elective 21",
       "credits": 1
+    },
+    {
+      "course": {
+        "department": "FILL",
+        "courseNumber": 22,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2026,
+        "term": "FA"
+      },
+      "grade": "B",
+      "gradeMode": "letter",
+      "provenance": "pomona",
+      "title": "Elective 22 (half credit)",
+      "credits": 0.5
     }
   ],
   "planned": [],

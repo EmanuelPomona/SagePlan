@@ -50,6 +50,17 @@ describe("resolveExternalCredit — F-03b threshold boundaries", () => {
     expect(out.qualifies).toBe(true);
   });
 
+  test("IB Language A at SL 6 satisfies Language too: 6 is the threshold, not 7 (ADR-007, L-9)", () => {
+    const out = resolveExternalCredit(ib("ib-spanish-a", 6, "SL"), RULES);
+
+    expect(out.grantsAttributes).toEqual(["LANGUAGE"]);
+    expect(out.credits).toBe(0);
+  });
+
+  test("IB Language A at SL 5 does NOT satisfy Language: the threshold bites from below", () => {
+    expect(resolveExternalCredit(ib("ib-spanish-a", 5, "SL"), RULES).qualifies).toBe(false);
+  });
+
   test("IB Standard Level never earns advanced standing credit", () => {
     const out = resolveExternalCredit(ib("ib-history", 7, "SL"), RULES);
 

@@ -19,20 +19,38 @@
   {
     "programId": "general-education-2026",
     "requirementId": "area-1",
-    "status": "satisfied",
-    "satisfiedBy": [
+    "status": "unmet",
+    "satisfiedBy": [],
+    "remaining": {
+      "n": 1,
+      "unit": "courses"
+    },
+    "candidates": [
+      {
+        "department": "ARTH",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
       {
         "department": "DANC",
         "courseNumber": 51,
         "suffix": "",
         "affiliation": "PO"
+      },
+      {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
+        "department": "MUS",
+        "courseNumber": 81,
+        "suffix": "",
+        "affiliation": "PO"
       }
     ],
-    "remaining": {
-      "n": 0,
-      "unit": "courses"
-    },
-    "candidates": [],
     "children": [],
     "confidence": "verified"
   },
@@ -211,6 +229,12 @@
         "affiliation": "PO"
       },
       {
+        "department": "DANC",
+        "courseNumber": 120,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      {
         "department": "MUS",
         "courseNumber": 60,
         "suffix": "",
@@ -224,11 +248,7 @@
       }
     ],
     "children": [],
-    "confidence": "draft",
-    "note": "No two Breadth areas may be satisfied by courses from the same department.",
-    "violations": [
-      "distinctDepartments"
-    ]
+    "confidence": "draft"
   },
   {
     "programId": "general-education-2026",
@@ -367,34 +387,16 @@
   {
     "programId": "general-education-2026",
     "requirementId": "physical-education",
-    "status": "unmet",
+    "status": "unverifiable",
     "satisfiedBy": [],
     "remaining": {
-      "n": 2,
+      "n": 0,
       "unit": "courses"
     },
-    "candidates": [
-      {
-        "department": "PE",
-        "courseNumber": 1,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "PE",
-        "courseNumber": 2,
-        "suffix": "",
-        "affiliation": "PO"
-      },
-      {
-        "department": "PE",
-        "courseNumber": 3,
-        "suffix": "",
-        "affiliation": "PO"
-      }
-    ],
+    "candidates": [],
     "children": [],
-    "confidence": "verified"
+    "confidence": "verified",
+    "note": "Add the term to PE 001 PO and PE 002 PO so this can be checked. Without it the answer depends on when they were taken."
   },
   {
     "programId": "general-education-2026",
@@ -414,7 +416,7 @@
     "status": "partial",
     "satisfiedBy": [],
     "remaining": {
-      "n": 30.5,
+      "n": 31.5,
       "unit": "credits"
     },
     "candidates": [],
@@ -424,15 +426,16 @@
   {
     "programId": "general-education-2026",
     "requirementId": "post-matriculation-credits",
-    "status": "partial",
+    "status": "unverifiable",
     "satisfiedBy": [],
     "remaining": {
-      "n": 28.5,
+      "n": 29.5,
       "unit": "credits"
     },
     "candidates": [],
     "children": [],
-    "confidence": "verified"
+    "confidence": "verified",
+    "note": "Add the term to PE 001 PO and PE 002 PO so this can be checked. Without it the answer depends on when they were taken."
   },
   {
     "programId": "general-education-2026",
@@ -452,7 +455,7 @@
     "status": "partial",
     "satisfiedBy": [],
     "remaining": {
-      "n": 14.5,
+      "n": 15.5,
       "unit": "credits"
     },
     "candidates": [],

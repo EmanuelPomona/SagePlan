@@ -36,6 +36,23 @@ describe("grade: null means PASSED (ADR-015)", () => {
     expect(ctx.courses[0]!.letterPoints).toBeNull();
   });
 
+  test("an unrecorded grade cannot satisfy a MINIMUM grade", () => {
+    // null means "passed", which is not the same as "passed well enough". A
+    // requirement asking for C- or better cannot be closed by a grade nobody
+    // recorded, or the app would be inventing the one fact it was not told.
+    const withMin = program("p", [requirement("ci", {
+      kind: "course",
+      course: { department: "HIST", courseNumber: 101, suffix: "", affiliation: "PO" },
+      minGrade: "C-",
+    })]);
+
+    const unrecorded = planWith({ completed: [completed("HIST 101 PO", { grade: null, gradeMode: null })] });
+    expect(evaluate(unrecorded, [withMin], CATALOG)[0]!.status).toBe("unmet");
+
+    const recorded = planWith({ completed: [completed("HIST 101 PO", { grade: "B" })] });
+    expect(evaluate(recorded, [withMin], CATALOG)[0]!.status).toBe("satisfied");
+  });
+
   test("a null matriculation term never throws", () => {
     const plan = planWith({ matriculationTerm: null, completed: [completed("HIST 101 PO", { grade: null, term: null })] });
     expect(() => evaluate(plan, [AREA_3], CATALOG)).not.toThrow();

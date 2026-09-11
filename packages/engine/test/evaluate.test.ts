@@ -58,8 +58,11 @@ describe("F-12 — the empty plan", () => {
     }
   });
 
-  test("GPA is unverifiable rather than a failing 0.0", () => {
-    expect(byId(results, "gpa").status).toBe("unverifiable");
+  test("general education no longer carries a GPA requirement at all (ADR-015)", () => {
+    // The 2.00 rule is now a quoted advisory, so grades never have to be asked
+    // for and never travel inside a share link.
+    expect(results.find((r) => r.requirementId === "gpa")).toBeUndefined();
+    expect(GE.advisories?.some((a) => a.id === "gpa")).toBe(true);
   });
 
   test("candidates are populated so the empty state can teach the structure", () => {

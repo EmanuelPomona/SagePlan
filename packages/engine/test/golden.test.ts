@@ -10,6 +10,7 @@ const read = (rel: string) => JSON.parse(readFileSync(at(rel), "utf8"));
 
 const GE: Program = ProgramSchema.parse(read("../../../data/programs/general-education-2026.json"));
 const FAKE_MAJOR: Program = ProgramSchema.parse(read("./fixtures/programs/fake-major.json"));
+const GPA_SCOPES: Program = ProgramSchema.parse(read("./fixtures/programs/gpa-scopes.json"));
 const DEFERRED_MAJOR: Program = ProgramSchema.parse(read("./fixtures/programs/deferred-major.json"));
 const CATALOG: Course[] = CatalogArtefactSchema.parse(read("./fixtures/catalog.fixture.json")).courses;
 
@@ -28,6 +29,9 @@ const FIXTURES: { id: string; programs: Program[]; describes: string }[] = [
   { id: "F-10", programs: [GE], describes: "one course tagged both WI and SI" },
   { id: "F-11", programs: [GE], describes: "two PE courses in the same term" },
   { id: "F-12", programs: [GE], describes: "empty plan" },
+  { id: "F-13", programs: [GE], describes: "the default v1 record: course codes only, no terms, no grades" },
+  { id: "F-13b", programs: [GE], describes: "two PE courses whose terms are unknown" },
+  { id: "F-14", programs: [GPA_SCOPES], describes: "gpa scope: overall evaluates, program is deferred" },
 ];
 
 const UPDATE = process.env.UPDATE_GOLDEN === "1";
@@ -51,6 +55,18 @@ describe("golden fixtures", () => {
 
   test("UPDATE_GOLDEN is never set in CI", () => {
     if (process.env.CI) expect(process.env.UPDATE_GOLDEN).not.toBe("1");
+  });
+
+  test("F-13 matches F-01 on every requirement that does not need a term (ADR-015)", () => {
+    const f01 = evaluate(StudentPlanSchema.parse(read("./fixtures/plans/F-01.json")), [GE], CATALOG);
+    const f13 = evaluate(StudentPlanSchema.parse(read("./fixtures/plans/F-13.json")), [GE], CATALOG);
+
+    // Everything an attribute rule decides: areas, overlays, language.
+    const termFree = f01.filter((r) => !["physical-education", "post-matriculation-credits"].includes(r.requirementId));
+    for (const before of termFree) {
+      const after = f13.find((r) => r.requirementId === before.requirementId)!;
+      expect(after.status, `${before.requirementId} should not need a term or a grade`).toBe(before.status);
+    }
   });
 
   test("evaluating a fixture twice is byte-identical", () => {

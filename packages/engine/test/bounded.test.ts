@@ -3,8 +3,11 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import { CatalogArtefactSchema, ProgramSchema } from "@gradguide/shared";
 import type { Course, Program, Result } from "@gradguide/shared";
+import { settleBounded } from "../src/bounded.ts";
+import { buildContext, withMode } from "../src/context.ts";
 import { evaluate } from "../src/index.ts";
-import { catalogCourse, completed, grant, planWith, term } from "./helpers.ts";
+import { eligibleCourses, settleAttribute } from "../src/rules/attribute.ts";
+import { completed, grant, planWith, term } from "./helpers.ts";
 
 const read = (rel: string) => JSON.parse(readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8"));
 const GE: Program = ProgramSchema.parse(read("../../../data/programs/general-education-2026.json"));
@@ -109,5 +112,89 @@ describe("bounded evaluation never throws and stays deterministic", () => {
   test("two runs over an unknown-heavy plan are byte identical", () => {
     const plan = planWith({ matriculationTerm: null, completed: [pe("PE 001 PO", null), pe("PE 002 PO", null)] });
     expect(JSON.stringify(evaluate(plan, [GE], CATALOG))).toBe(JSON.stringify(evaluate(plan, [GE], CATALOG)));
+  });
+});
+
+describe("the pessimistic pass is load-bearing, not decoration", () => {
+  /**
+   * A test that only records outcomes where the two passes AGREE cannot tell a
+   * working implementation from one that never runs the pessimistic pass at
+   * all, and "silently assuming in the student's favour" is the exact failure
+   * this mechanism exists to prevent.
+   *
+   * So neutralise it: feed settleBounded a settle function that returns the
+   * OPTIMISTIC answer whichever pass asks, and assert the outcome changes. If
+   * it does not change, the mechanism is vestigial.
+   */
+  const rule = { kind: "attribute", attr: "PHYSICAL_EDUCATION", n: 2, distinctTerms: true } as const;
+
+  function settlements() {
+    const plan = planWith({ matriculationTerm: null, completed: [pe("PE 001 PO", null), pe("PE 002 PO", null)] });
+    const ctx = buildContext(plan, CATALOG);
+    const eligible = eligibleCourses(rule, ctx);
+
+    const real = settleBounded((pass) => settleAttribute(rule, eligible, pass, new Set(), eligible), ctx, eligible);
+
+    // The pessimistic pass, neutralised: every pass answers optimistically.
+    const optimisticOnly = withMode(ctx, "optimistic");
+    const neutralised = settleBounded(
+      () => settleAttribute(rule, eligible, optimisticOnly, new Set(), eligible),
+      ctx,
+      eligible,
+    );
+
+    return { real, neutralised };
+  }
+
+  test("with the pessimistic pass neutralised the row claims SATISFIED", () => {
+    expect(settlements().neutralised.status).toBe("satisfied");
+  });
+
+  test("with it running the row is unverifiable instead, so the pass changes the answer", () => {
+    const { real, neutralised } = settlements();
+
+    expect(real.status).toBe("unverifiable");
+    expect(real.status).not.toBe(neutralised.status);
+  });
+
+  test("and the difference is exactly the claim a student would have been given wrongly", () => {
+    const { real } = settlements();
+    expect(real.satisfiedBy).toEqual([]);
+    expect(real.note).toMatch(/PE 001 PO/);
+  });
+});
+
+describe("null terms must not crash the overlap check", () => {
+  /**
+   * The round-1 fix for C-1 compares two entries of the same course by term, to
+   * stop a duplicated row closing two exclusive requirements at once. `term` is
+   * nullable now, and `sameTerm` is not null-safe, so a duplicated row with no
+   * recorded term threw. The 176-test suite missed it; a performance probe over
+   * a real plan with every term removed found it.
+   */
+  test("the same course listed twice with no terms does not throw", () => {
+    const plan = planWith({
+      matriculationTerm: null,
+      completed: [
+        completed("HIST 101 PO", { term: null, grade: null, gradeMode: null }),
+        completed("HIST 101 PO", { term: null, grade: null, gradeMode: null }),
+      ],
+    });
+    expect(() => evaluate(plan, [GE], CATALOG)).not.toThrow();
+  });
+
+  test("and it still cannot close two requirements at once (C-1 stays fixed)", () => {
+    const plan = planWith({
+      matriculationTerm: null,
+      completed: [
+        completed("PHIL 032 PO", { term: null, grade: null, gradeMode: null }),
+        completed("PHIL 032 PO", { term: null, grade: null, gradeMode: null }),
+      ],
+    });
+    const rs = evaluate(plan, [GE], CATALOG);
+    // writing-intensive and speaking-intensive are denyOnly against each other.
+    const wi = by(rs, "writing-intensive").satisfiedBy.length;
+    const si = by(rs, "speaking-intensive").satisfiedBy.length;
+    expect(wi + si).toBe(1);
   });
 });

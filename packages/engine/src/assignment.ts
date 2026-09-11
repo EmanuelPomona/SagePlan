@@ -306,11 +306,23 @@ function canAssign(
     // course in the same term are distinct objects with equal values, so
     // reference equality let a duplicated row slip past the overlap check and
     // close two exclusive requirements at once.
-    if (!held.some((c) => c.key === course.key && sameTerm(c.completed.term, course.completed.term))) continue;
+    //
+    // A term may now be unrecorded. Two rows for the same course with no terms
+    // cannot be told apart, so they are treated as the same sitting: that keeps
+    // the duplicate from closing two requirements, which is the whole point.
+    if (!held.some((c) => c.key === course.key && sameSitting(c, course))) continue;
     const other = byId.get(otherId);
     if (!other || !mayShare(req, other)) return false;
   }
   return !violatesConstraint(program, req.id, course, current);
+}
+
+/** Null-safe term comparison: unknown and unknown are indistinguishable. */
+function sameSitting(a: ResolvedCourse, b: ResolvedCourse): boolean {
+  const ta = a.completed.term;
+  const tb = b.completed.term;
+  if (ta === null || tb === null) return ta === tb;
+  return sameTerm(ta, tb);
 }
 
 function combinations(pool: ResolvedCourse[], k: number, cap: number): ResolvedCourse[][] {

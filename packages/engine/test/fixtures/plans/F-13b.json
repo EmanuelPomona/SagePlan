@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": null,
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}
