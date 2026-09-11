@@ -325,6 +325,24 @@ Skills are invoked at the stage where they matter, not at startup:
 Do not invoke all skills at project startup and then ignore them. The audit in
 section 2 records invocation position and will show it.
 
+### Invocation is per session and per new domain, not per round
+
+A skill is invoked when you need its guidance, **never to raise a counter**.
+Re-invoking identical static guidance inside one session, so that an audit shows
+two invocations instead of one, is the invocation theatre section 1 forbids — it
+is the same defect as claiming a skill you did not run, pointed the other way.
+
+- Invoke when the stage is new to you in this session, or the material is a kind
+  you have not applied the skill to.
+- Do **not** re-invoke for round 2 of the same material. Say in the handoff which
+  invocation covers which round, so the audit's count is explicable.
+- **Do** re-invoke if your context was compacted since, because then you no
+  longer have the guidance and the earlier invocation is only a memory of one.
+
+A handoff claiming a skill it did not invoke is a CRITICAL finding. A handoff
+invoking a skill it did not need is a quieter failure of the same kind, and the
+reviewer should say so rather than reward the count.
+
 ---
 
 ## 19. VISUAL CONSTRAINTS

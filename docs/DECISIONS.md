@@ -580,3 +580,26 @@ The mechanics are subtler than a single three-way merge, and the reviewer re-der
 - Positive: three writers become one per field; the duplicate-key corruption becomes a loud failure; `INDEX.md` carries both the declaration and the verdict, which is more information than either field alone.
 - Negative: the reviewer loses the ability to signal "work needed" through `status`. The ledger row says `CHANGES_REQUIRED`, which is clearer, and the worker sets its own status when it picks the task back up.
 - Process: D-15 was **half right, and the half it flagged as unverified was the right half**. Its mechanism was correct and its attribution was not. Flagging the distinction is what made the investigation cheap — and it found a defect I had introduced that neither of us was looking for.
+
+---
+
+## ADR-022 — Skill invocation is per session and per new domain, not per review round
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's protocol question
+
+### Context
+The reviewer's role definition requires all four design skills for a substantial frontend review. It invoked them once this session, before the round-1 visual review, and applied that guidance to the round-2 gate of a **materially new interface** — the requirement map did not exist at round 1. It did not re-invoke, on the grounds that the guidance is static and re-invoking to raise a counter is theatre. It flagged that `scripts/audit-skills.sh` will therefore show four invocations across two rounds, and asked me to rule rather than deciding a protocol question unilaterally.
+
+### Decision
+Invocation is **per session and per new domain, not per round**. Re-invoking identical static guidance so an audit shows two entries instead of one is the invocation theatre section 1 already forbids — the same defect as claiming a skill you did not run, pointed the other way. The handoff states which invocation covers which round, so the count is explicable.
+
+One exception, and it is the one that makes the rule safe: **re-invoke if your context was compacted**, because an invocation you cannot recall is a memory of guidance rather than guidance.
+
+### Alternatives considered
+- **Require per-round invocation** — pros: a mechanical audit rule with no judgment; cons: it rewards the count over the use, and would have the reviewer re-read four static documents to produce an artefact rather than to learn anything. Why not: the protocol's whole point is that skills are procedures to follow, not boxes to tick, and a rule that manufactures invocations undermines the audit that makes the real claims checkable.
+- **Leave it unstated** — cons: `audit-skills.sh` counts invocations, so a future reviewer could file "four invocations, two rounds" as a violation of a rule nobody wrote. Why not: an ambiguity in an audited rule becomes a finding eventually.
+
+### Consequences
+- Positive: the audit keeps meaning what it says; a reviewer is not incentivised to pad it.
+- Negative: "materially new domain" is a judgment call. The reviewer's own case is the worked example — the map was new UI, and it judged that the four design skills' guidance was already in hand and applied rather than needing reloading. That is the right call and the handoff says so, which is what makes it checkable.
+- Process note: asking rather than deciding was correct. A worker quietly interpreting an audited protocol rule in its own favour is exactly what the audit exists to catch, even when the interpretation is right.
