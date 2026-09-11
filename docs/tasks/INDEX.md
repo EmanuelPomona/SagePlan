@@ -19,8 +19,9 @@ Do not edit by hand — edit the task files and regenerate.
 | TASK-031 | READY | frontend | 0 | Light default, v1 palette, family hues, and the four visual defects from round 1 |
 | TASK-032 | READY | frontend | 0 | Record v1 — codes are the only required input, collapsed record, transcript paste |
 | TASK-033 | READY | frontend | 0 | Requirement map — twelve nodes in three families above the fold, denser audit, quotes on expand |
+| TASK-034 | READY | frontend | 0 | Fixture debt — F-03c, a guard for the second minimize-sharing site, and one rotten comment |
 | TASK-090 | BACKLOG | reviewer | 0 | P0 acceptance review — all criteria, privacy audit, engine golden review |
 | TASK-001 | DONE | manager | 0 | Shared contract package (zod schemas, codecs, OpenAPI emitter, artefact validator) |
 | TASK-002 | DONE | manager | 0 | Encode General Education 2026-27 and external credit rules as data with verbatim quotes |
 
-**Counts:** BACKLOG 1, DONE 2, READY 14
+**Counts:** BACKLOG 1, DONE 2, READY 15
