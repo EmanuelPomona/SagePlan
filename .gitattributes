@@ -3,6 +3,11 @@ docs/handoffs/*.md  merge=union
 docs/status/*.md    merge=union
 docs/tasks/*.md     merge=union
 
+# Append-only ledgers: the reviewer appends on its branch, the manager appends on
+# main, and neither should have to hand-resolve the other (ADR-019).
+docs/DEBT.md         merge=union
+docs/review/rounds.md merge=union
+
 # Lockfiles must never be auto-merged. Regenerate after integration instead.
 package-lock.json   -merge
 pnpm-lock.yaml      -merge
