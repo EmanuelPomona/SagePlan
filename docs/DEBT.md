@@ -47,3 +47,11 @@ student would see), and M-1…M-5.
 |---|---|---|---|---|---|
 | D-11 | TASK-013 | UNVERIFIED | AC-B07 (the nightly workflow opens a PR) has never executed anywhere. | `git remote -v` is empty on 2026-09-11: the repository exists only on this machine. `actionlint` and `act` are absent, so only YAML validity and structure could be checked. | **Owner action:** create the GitHub remote and push. Until then the reviewer records BLOCKED on AC-B07 rather than APPROVED (ADR-020). |
 | D-12 | TASK-011 | OPEN QUESTION | `Measure Values = 2` on nineteen Physical Education rows: verified to exist, meaning unknown. | A literal `=== "1"` pivot yields PE 222; the `>= 1` rule yields the expected 241. | Ask the Registrar what `2` means. If it means "counts as two PE courses", add the optional `attributeWeights` field backend proposed - additive, no `schemaVersion` bump (ADR-020). |
+
+## From Round 2 (2026-09-11) — TASK-030 engine gate, advisory
+
+| ID | Task | Kind | Finding | Measurement | Suggested fix |
+|---|---|---|---|---|---|
+| D-13 | TASK-030 | FUNCTIONAL | A one-site regression of ADR-013's minimize-sharing is invisible to the whole golden suite. | Minimize-sharing lives at two independent sites: `localBetter` (greedy, `assignment.ts:~211`) and `betterScore` (backtracking, `~172`). Inverting **either alone** leaves all 21 goldens green; only inverting **both** fails F-06. F-06 short-circuits in the greedy phase (`optimal()` requires `shared === 0`), so it never exercises `betterScore`. | Add a fixture where sharing is unavoidable so greedy is non-optimal and the backtracking path is forced, guarding each site independently. |
+| D-14 | TASK-030 | DOC | A stale comment describes the superseded tie-break directly above the code that replaced it. | `packages/engine/src/assignment.ts:57-60` (Phase 1 header): "add the fewest NEW courses, so a course that already counts elsewhere is reused before a fresh one is spent (docs/API.md 2.3 step 4)" — the superseded rule, citing the API.md section ADR-013 rewrote. The `localBetter` comment 145 lines later is correct and contrasts the old rule explicitly. | Rewrite the Phase 1 comment to ADR-013's rule and drop the stale 2.3-step-4 citation. |
+

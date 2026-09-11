@@ -27,3 +27,4 @@ Append a row per verdict. Never edit a past row; a task at round 3 has three row
 | TASK-023 | 1 | APPROVED | 2026-09-08 | verified live |
 | TASK-024 | 1 | APPROVED | 2026-09-08 | verified live |
 | TASK-025 | 1 | CHANGES_REQUIRED | 2026-09-08 | AC-D02 evidence gap, not a defect |
+| TASK-030 | 2 | APPROVED | 2026-09-11 | R2-M1 F-03c absent (AC-P16 still unevidenced); R2-L1 one-site tie-break regression invisible; R2-L2 stale phase-1 comment |

@@ -442,3 +442,137 @@ belongs to whoever fixes H-6).
 ## Commit
 
 `agent/reviewer` — see below.
+
+---
+
+# REVIEW VERDICT: APPROVED
+
+Round: 2
+Tasks reviewed: TASK-030 (engine round 2) — **this task only**, at the manager's dispatch
+Reviewed at: integrated `agent/reviewer` @ 318f442 (main 2475fde + agent/frontend)
+Scope note: TASK-031/032 are WIP on the same branch and were NOT reviewed. TASK-010..013
+and TASK-020..025 were not re-gated this round.
+
+## Every round-1 finding against the engine is fixed, and I re-measured each myself
+
+| Round-1 finding | Round-2 state | How I verified it |
+|---|---|---|
+| **M-1** F-05 golden `{1.5, credits}` vs ACCEPTANCE's `{1, credits}` | **FIXED** | Resolved all 33 completed courses against the fixture catalog: total is **exactly 31.0**, 0 unresolved. Golden reads `partial, remaining {n:1, unit:'credits'}` |
+| **M-2** F-06 shared the rare course; `HIST 101 PO` unused | **FIXED** | `area-3 <- HIST 101 PO` (the common course), `analyzing-difference <- AMST 110 PO` (the rare one) — exactly ACCEPTANCE:97 |
+| **M-3** `cs-gpa` unverifiable, AC-P11 unproven | **FIXED** | `fake-major.json` now `scope: "overall"`; F-08 `cs-gpa -> satisfied`; F-14 splits the two scopes (2 rows, `major-gpa` unverifiable) |
+| **§2.7 collision with AC-V06** (raised by me, ruled in ADR-018) | **FIXED** | F-13 is **17 rows, 0 unverifiable** — the default v1 record no longer demands twenty terms |
+
+## The discrimination checks — the part I was asked to be sceptical about
+
+I mutated the engine myself rather than reading the goldens, restoring `filters.ts`
+and `assignment.ts` from backup after each run (`git diff` clean, verified).
+
+**ADR-018's provenance constraint is load-bearing in both directions:**
+
+| Mutation | Meaning | Result |
+|---|---|---|
+| `canPredateMatriculation -> true` | revert to the pre-ADR-018 literal rule | **4 failures**: F-13, F-13b, F-13c, and "F-13 matches F-01" |
+| `canPredateMatriculation -> false` | over-suppress; nothing is ever unknown | **1 failure: F-13c, alone** |
+
+That second row is the answer to the manager's specific worry. A rule that quietly
+returns "agree" for everything passes F-13 and F-13b; **only F-13c catches it.** The
+fixture discriminates rather than suppresses, and it sits on the boundary as the
+standing rule requires — 29 Pomona + 1 Claremont courses that cannot predate
+matriculation, plus exactly one `provenance: transfer` course with no term, against
+`n = 30`. Composition verified in the fixture: 31 completed, all terms null,
+provenance `{pomona: 29, claremont: 1, transfer: 1}`.
+
+**ADR-013's tie-break: the AC is met, but only against a faithful two-site revert.**
+TASK-030's first AC requires F-06 to fail under the superseded tie-break. It does —
+and finding that took three mutations, which is itself the finding:
+
+| Mutation | Site | Result |
+|---|---|---|
+| C | `betterScore` only (backtracking) | 21/21 **pass** |
+| D | `localBetter` only (greedy) | 21/21 **pass** |
+| E | **both** — the actual superseded rule | **F-06 fails** (and F-08) |
+
+My first attempt was Mutation C alone, and I nearly filed "AC unmet" on it. F-06
+short-circuits in the greedy phase (`optimal(greedyScore)` requires `shared === 0`),
+so `betterScore` never executes for that fixture. The AC is satisfied; see R2-L1 for
+what the single-site survival means.
+
+## Findings
+
+### Medium
+
+**R2-M1 [FUNCTIONAL] — TASK-030 — F-03c does not exist, so AC-P16 is still unevidenced.**
+`packages/engine/test/golden/` holds F-01, F-02, F-03, F-03b, F-04..F-14. **No F-03c.**
+It is required in two authoritative places: `docs/ACCEPTANCE.md`'s fixture table (row
+F-03c, "Neutralising `ib-language-a-requirement` must flip it to `unmet`") and
+TASK-030's Notes ("Fix: add **F-03c**"). It is **not** in TASK-030's Acceptance
+Criteria checklist, which is the likely reason it slipped — the same structural class
+as the round-counter defect: a requirement recorded where the person ticking the boxes
+does not read it.
+
+Consequence is narrow but real: no engine behaviour is unproven —
+`externalCredit.test.ts` covers the rule, which is why L-9 was a Low — but ACCEPTANCE
+still cites F-03b as the evidence for AC-P16, and F-03b provably cannot discriminate
+(five LANGUAGE granters; `ib-spanish-a` at `credits: 0`, so removing the rule changes
+neither `language` nor `total-credits`). Until F-03c lands, **AC-P16 should cite the
+unit test, not the golden.** Does not block TASK-030, whose own checklist is met.
+
+### Low
+
+**R2-L1 [FUNCTIONAL] — a one-site regression of ADR-013 is invisible to the suite.**
+Minimize-sharing is implemented at two independent sites — `localBetter` (greedy,
+`assignment.ts:~211`) and `betterScore` (backtracking, `~172`). Inverting *either*
+alone leaves all 21 goldens green; only inverting both fails F-06. So if a future edit
+reverts one site, nothing notices, and the attribution defect M-2 was filed for returns
+silently on the paths that use that site. The AC as written is met; the suggestion is a
+second fixture that forces the backtracking path (greedy non-optimal, i.e. sharing
+unavoidable), so each site is independently guarded.
+
+**R2-L2 [DOC] — a stale comment describes the superseded rule above the code that replaced it.**
+`packages/engine/src/assignment.ts:57-60`, the Phase 1 header: *"add the fewest NEW
+courses, so a course that already counts elsewhere is reused before a fresh one is
+spent (docs/API.md 2.3 step 4)"*. That is the superseded rule, it sits directly above
+code doing the opposite, and it cites the API.md section ADR-013 rewrote. The
+`localBetter` comment 145 lines later is correct and explicitly contrasts the old rule.
+Comment rot on the exact line the ADR changed is the line most likely to be misread
+next time.
+
+## Verification Performed
+
+| Claim | Evidence |
+|---|---|
+| Merge is clean | `main` + `agent/frontend` into `agent/reviewer` @ 318f442, **0 conflicts** |
+| Typecheck / lint | `npm run typecheck` rc=0, `npm run lint` rc=0 |
+| Tests | `npm test` rc=0 — **629 passing** (engine **181**, pipeline 289, shared 13, web 146); engine was 149 in round 1 |
+| AC-I04 purity | grep for `Date.now|Math.random|new Date|document.|window.|localStorage|process.env|fetch(|require(` over `packages/engine/src` → **no matches** |
+| Determinism | "evaluating a fixture twice is byte-identical" and "shuffling the record leaves the result unchanged" both pass |
+| F-13 / F-13b / F-13c | 17 rows / 0 unverifiable; 17 / 1 (`physical-education`); 17 / 1 (`post-matriculation-credits`) — all as ACCEPTANCE specifies |
+| Goldens read by hand | handoff states it (`docs/handoffs/agent-frontend.md:264`) — an AC, and it is claimed |
+| Mutations restored | `git diff --quiet` on `filters.ts` and `assignment.ts` after every run |
+
+## What Was NOT Verified
+
+- **TASK-031 / TASK-032** — WIP on the same branch, deliberately out of scope. **AC-V01..V11
+  are not measurable yet** (no requirement map), so no visual criterion was gated.
+- **AC-V02 / AC-V03** — not measured this round. When they are, I will use a headless
+  Chrome launched by me and driven over raw CDP at a **1440x800** viewport with
+  `innerWidth`/`innerHeight` read back, per ADR-017. Note the `chrome-devtools` **MCP**
+  is disconnected in my session too; my instrument never depended on it.
+- **Backend round 2** (`1dbe812`, `240d7c2`) — not re-gated. I merged only
+  `agent/frontend` for this engine-only dispatch.
+- **`caps.externalCredits` (16), `partialCreditCourses` (8)** — still unreached by any
+  fixture, as in round 1.
+- **Attestations and `provenance: "abroad"`** end to end — still unit-tested only.
+- **Whether F-14's `major-gpa` note wording matches ACCEPTANCE** — status and shape
+  verified; exact note text not diffed.
+
+## Skills Used
+
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `superpowers:verification-before-completion` | immediately before this verdict | Its "verify agent reports independently" rule is why I mutated the engine myself instead of accepting "F-13c exists and discriminates" — and why I caught that Mutation C hit a dead path before filing an unmet AC on it |
+
+No other skill applied: this was a pure-logic engine gate with no UI, no new contract,
+no debugging, and no security surface. Invoking the four frontend-review skills here
+would have been the "installed is not used" theatre protocol §1 forbids — they apply
+when TASK-031/033 land.
