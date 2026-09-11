@@ -28,3 +28,8 @@ Append a row per verdict. Never edit a past row; a task at round 3 has three row
 | TASK-024 | 1 | APPROVED | 2026-09-08 | verified live |
 | TASK-025 | 1 | CHANGES_REQUIRED | 2026-09-08 | AC-D02 evidence gap, not a defect |
 | TASK-030 | 2 | APPROVED | 2026-09-11 | R2-M1 F-03c absent (AC-P16 still unevidenced); R2-L1 one-site tie-break regression invisible; R2-L2 stale phase-1 comment |
+| TASK-010 | 2 | APPROVED | 2026-09-11 | H-2 superseded (PO 2004 >= 1900); M-5 closed by denylist; ENGL 170R PO retains both attrs |
+| TASK-011 | 2 | APPROVED | 2026-09-11 | H-3 closed (7 shapes, Unclassified 0); H-4 rescoped to PO; H-6 recorded as open question D-12 |
+| TASK-012 | 2 | APPROVED | 2026-09-11 | H-5 closed by AC-B04 amendment (SP2027 unpublished upstream); L-7 codes now reported |
+| TASK-013 | 2 | APPROVED | 2026-09-11 | M-4 closed; AC-B07 UNVERIFIABLE — no git remote (D-12), not ticked |
+| — | — | FINDING | 2026-09-11 | R2-M2 docs/tasks/*.md merge=union silently dropped backend's REVIEW status; third instance of cross-branch declaration loss |

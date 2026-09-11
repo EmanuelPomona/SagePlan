@@ -576,3 +576,128 @@ No other skill applied: this was a pure-logic engine gate with no UI, no new con
 no debugging, and no security surface. Invoking the four frontend-review skills here
 would have been the "installed is not used" theatre protocol §1 forbids — they apply
 when TASK-031/033 land.
+
+---
+
+# REVIEW VERDICT: APPROVED
+
+Round: 2
+Tasks reviewed: TASK-010, TASK-011, TASK-012, TASK-013 (backend round 2)
+Reviewed at: integrated `agent/reviewer` @ 9a939a5 (main + agent/backend + agent/frontend)
+Scope: backend pipeline only. TASK-031/032/033 remain WIP, so **no AC-V criterion was
+measured**. TASK-030 stays APPROVED at round 2 and was not reopened.
+
+## Every backend finding from round 1 is resolved. I re-measured each myself.
+
+| Round-1 finding | Resolution | My measurement |
+|---|---|---|
+| **H-2** AC-B01's 2,700 unmeetable | superseded by amendment | `id.affiliation === "PO"` after exclusions = **2004** ≥ 1,900 **PASS** (2,980 total) |
+| **H-3** 282 divergences, all unexplained | **closed properly** | **7 real shapes**, summing to exactly 282, **`Unclassified: 0`**, each with a count and a "more likely right" judgment: `area-only-in-registrar` 139→Registrar, `missing-from-registrar-export` 47→Coursedog, `missing-from-catalog` 25→Registrar, `overlay-only-in-coursedog` 23, `overlay-only-in-registrar` 23, `mixed` 22→neither, `area-only-in-coursedog` 3→neither |
+| **H-4** exclusion report 4/5 vs the AC's 3/10 | rescoped, not tuned | Population now stated: PO in the finished catalog, **2004 of 2980**. **9 anomalies**, and the report says outright the counts are "whatever the data says", explaining that the v0 figures came from the brief's 2,811 raw records — a different population. Backend also caught that ADR-020 had silently reverted my H-4 by writing `credits.max` where I established `min`; ruled back to `min` |
+| **H-5** `sections-SP2027.json` absent | closed by amendment | AC-B04 now requires a file per term **Hyperschedule actually publishes**. `PIPELINE_TERMS=FA2026,SP2027`; SP2027 is unpublished upstream; `sections-FA2026.json` present. **Met as written** |
+| **H-6** PE `Measure Values = 2` collapsed silently | **the right resolution** — see below | `data/reports/pe-double-credit.md` |
+| **M-4** `pipeline:all` fails at the documented default of 25 | closed | threshold now 300, with the reasoning that "a guard that fires on the steady state is not a guard" |
+| **M-5** placeholders in the catalog | closed | **0** `id.department === TEST`, **0** titles beginning `DNR:`, and `THEA 007 PO` is gone via the exact-key denylist. All six substring casualties survive, and **`ENGL 170R PO` retains exactly `['AREA_1','WRITING_INTENSIVE']`** |
+| **L-7** geCodes allowlisted on a false premise | closed | the false comment is replaced by an explanation of why it was false, and the codes are now reported with counts via `unknownPomona` |
+
+### H-6 got the treatment the evidence justified, which is not a fix
+
+`pe-double-credit.md` records 19 courses, states that the spec claimed `0`/`1` while the
+data is `0`/`1`/`2`, states that `>= 1` is the only reason AC-B02's `PE 241` holds (a
+literal `=== "1"` yields 222), and then says what I could not determine either: **what
+`2` means is unconfirmed**, because the catalog requires two activity courses *in
+different semesters* and no weight makes one course two semesters. So the pipeline
+records the fact and changes nothing, proposing an additive `attributeWeights` field if
+the Registrar confirms. Its closing line is the correct disposition:
+
+> "Until then a student who satisfied PE with one of these courses is told they still
+> owe another. That is a known, recorded wrong answer, not a silent one."
+
+I verified the guard rather than trusting it: `peDoubleCredit.test.ts` asserts
+`count <= 19` (so an upward drift after a re-export fails the suite) and asserts that
+filtering `measureValue < 2` yields 0 — which proves the validator keys on the value 2
+rather than on PE in general. It emits a report and a log line but deliberately no
+`ValidationCheck`, which is right: an open question the Registrar has not ruled on
+should not warn on every nightly run.
+
+## Findings
+
+### Medium
+
+**R2-M2 [PROTOCOL/TOOLING] — `docs/tasks/*.md merge=union` silently dropped a status declaration. Third instance of the same class.**
+Measured on this merge:
+
+```
+merge-base          status: READY
+my side (HEAD~1)    status: READY
+agent/backend       status: REVIEW     <- backend's declaration
+merged result       status: READY      <- declaration lost
+```
+
+`git check-attr merge docs/tasks/TASK-010-….md` → `merge: union`. Union merge is correct
+for an append-only ledger (`DEBT.md`, `rounds.md`) and wrong for structured
+frontmatter, which is a map with unique keys: when both sides edit it, union emits
+**both** lines and `scripts/tasks.sh` takes the first match, so the index reports a
+stale status with no conflict and no warning.
+
+Honest limit on this finding: the *observed* loss above is measured, and the attribute is
+confirmed by `git check-attr`. The duplicate-key mechanism is **reasoned from union
+merge's documented behaviour, not measured** — I tried three times to demonstrate it in a
+throwaway repo and the sandbox's destructive-command gate blocked each attempt. Treat
+that half as a hypothesis worth one command by someone who can run it.
+
+This is the third time a cross-branch declaration has been lost: the round counter
+(stranded on my branch, ADR-019), the review evidence and `DEBT.md` (same mechanism),
+and now task status. Suggest dropping `docs/tasks/*.md` from the union list — task files
+are manager-owned and a real conflict there is information, not noise. Not a backend
+defect; it is in manager-owned `.gitattributes`.
+
+### Low
+
+**R2-L3 — `mixed` (22 of 282) is the one divergence shape that yields no which-source answer.**
+It is honestly labelled "neither — needs a row-by-row answer", and it is a genuine
+structural description rather than a restatement, so AC-P09's letter is satisfied. But it
+is the same residual-bucket shape as the old "attribute sets differ" at 8% instead of
+74%. Worth watching that it does not grow; if it does, it needs subdividing the way the
+210 did.
+
+## Verification Performed
+
+| Claim | Evidence |
+|---|---|
+| Merge clean | main + `agent/backend` + `agent/frontend` @ 9a939a5, **0 conflicts** |
+| Typecheck / lint | rc=0 / rc=0 |
+| Tests | **714 passing** — engine 181, **pipeline 374** (was 289), shared 13, web 146 |
+| Contract | `scripts/contract-test.sh` **exit 0**, "6 check(s), 0 failed", CONTRACT OK |
+| AC-B00 | 0 TEST depts, 0 `DNR:` titles, `THEA 007 PO` removed, denylist file present with its rationale, `ENGL 170R PO` attrs exactly `[AREA_1, WRITING_INTENSIVE]`, six casualties all present |
+| AC-B01 | PO = 2004 ≥ 1,900 |
+| AC-B01b | `catalog-excluded.md`: 2,985 candidates, **5 excluded**, 0 flagged, 2,980 in catalog — under the ceiling of 25 |
+| AC-P09 | 7 shapes summing to 282, `Unclassified: 0` |
+| AC-B03 | 9 anomalies, population stated as PO-in-finished-catalog |
+| AC-B04 | `sections-FA2026.json` present; SP2027 unpublished upstream |
+| Validators | `validation.json` carries the 8 contract validators by id |
+
+## What Was NOT Verified
+
+- **AC-B07 is UNVERIFIABLE and I have not ticked it.** `git remote -v` is empty — this
+  repository has no remote at all, so the nightly workflow cannot run and no PR can
+  exist. Carried as **D-12**. It is an environment limit, not a defect, but it must be
+  verified before launch: an unexecuted workflow is an untested workflow.
+- **No live pipeline run.** Every `pipeline:*` command writes into `data/`, so I verified
+  the committed artefacts, the reports and the source — not the runs. AC-P08's 401 path
+  and the exclusion ceiling's failure behaviour are argued from source.
+- **`--from-csv` against a genuine Coursedog UI export** — fixture-based only, as disclosed.
+- **AC-V01..V11** — not measurable; the requirement map does not exist yet.
+- **The duplicate-YAML-key half of R2-M2** — blocked by the sandbox gate, see above.
+- **Whether the 22 `mixed` divergences are individually correct** — I checked the shape
+  taxonomy and the totals, not 282 individual adjudications. That is the owner's
+  Registrar review, which is what the report exists to feed.
+
+## Skills Used
+
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `superpowers:verification-before-completion` | immediately before this verdict | Drove re-measuring every backend claim from the artefacts rather than the handoff — the PO count, the 7 shape totals, the six must-survive courses, the exclusion ceiling — and drove checking that the PE test actually discriminates rather than merely existing |
+
+No other skill applied: a data-pipeline gate with no UI, no new contract, and no live
+service. The four frontend-review skills belong to the TASK-031/033 gate.
