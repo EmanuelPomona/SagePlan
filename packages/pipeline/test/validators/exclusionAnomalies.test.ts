@@ -78,7 +78,7 @@ describe("checkExclusionAnomalies with the Registrar as a second source", () => 
   });
 });
 
-describe("partial-credit detection uses the minimum, not the maximum", () => {
+describe("partial-credit detection follows AC-B03's stated predicate", () => {
   const ranged = (min: number, max: number, attrs: GeAttribute[]): Course => ({
     id: { department: "GEOL", courseNumber: 189, suffix: "V", affiliation: "PO" },
     title: "Field Studies", description: "", department: "GEOL",
@@ -87,12 +87,23 @@ describe("partial-credit detection uses the minimum, not the maximum", () => {
     catalogYear: "2026-2027", sourceUrl: "https://catalog.pomona.edu/x", lastVerified: "2026-09-08T00:00:00Z",
   });
 
-  // H-4: GEOL 189V PO is 0.5-1 with AREA_4. Testing credits.max < 1 skipped it,
-  // so a real anomaly never reached the report.
-  test("flags a 0.5-1 course carrying a non-Area-6 Area tag", () => {
-    const { check, report } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]);
-    expect(check.count).toBe(1);
+  // AC-B03 (ADR-020) specifies credits.max < 1, which is the predicate reviewer
+  // H-4 called a bug. The contract wins for the headline count, but the H-4 case
+  // still reaches the report in its own section rather than disappearing.
+  test("does not COUNT a 0.5-1 course, per the stated predicate", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]).check.count).toBe(0);
+  });
+
+  test("still REPORTS a 0.5-1 course, so the H-4 finding is not lost", () => {
+    const { report, check } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]);
     expect(report).toContain("GEOL 189V PO");
+    expect(report).toContain("Variable-credit courses");
+    expect(check.summary).toContain("variable-credit");
+  });
+
+  test("a 0.5-1 course whose only Area is Area 6 is not reported either way", () => {
+    const { report } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_6"])]);
+    expect(report).not.toContain("GEOL 189V PO");
   });
 
   test("does not flag a 0.5-1 course whose only Area is Area 6", () => {

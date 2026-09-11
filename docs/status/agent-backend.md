@@ -1,11 +1,15 @@
 # STATUS: agent/backend
 Task: TASK-010..013 — round-2 fixes complete against ADR-016/ADR-017.
 Closed: M-5/AC-B00, H-2/AC-B01, AC-B01b, H-3/AC-P09, H-4, M-4, L-7, L-10, L-1, L-6.
-Open, not mine to close: H-5 (product decision), H-6 (CONTRACT CHANGE REQUEST filed),
-AC-B03's hardcoded figures (do not reproduce from any source; flagged for the manager),
-AC-B07 (workflow has never executed — no remote, no actionlint, no act).
+ADR-020 follow-ups done: AC-B03 re-measured against its now-stated population
+(2004 PO courses, 8 anomalies, not 3 and 10); D-12's nineteen double-credit PE
+courses listed; AC-B04 asserted by tests. H-5 ruled not-a-defect, H-6 deferred to
+D-12 pending the Registrar, AC-B07 is owner action D-11.
+OPEN FOR THE MANAGER: AC-B03 specifies credits.max < 1, the exact predicate
+reviewer H-4 called a bug. I implemented the contract and report the H-4 case
+(GEOL 189V PO) separately rather than retire the finding silently.
 Round: 2
-Last updated: 2026-09-11T23:08:44Z
+Last updated: 2026-09-11T23:16:59Z
 
 ## Skills invoked so far
 - `ecc:backend-patterns` @ before structuring packages/pipeline -> confirmed the

@@ -685,3 +685,79 @@ ge-divergences.md shapes:
 ### Known Issues
 - `validate-artefacts.ts` under-reports its own coverage (reviewer L-4). It is in
   `packages/shared`, which I do not own — left alone deliberately.
+
+---
+
+## HANDOFF-4 — agent/backend — 2026-09-11 (ADR-020 follow-ups)
+
+### Summary
+The two items ADR-020 assigned back to me are done: AC-B03 re-measured against the
+population it now states, and D-12's nineteen courses listed. AC-B04's restatement
+needed no code change — the behaviour was already warn-and-skip — but it is now
+asserted by tests rather than only described. D-11/AC-B07 is an owner action and I
+have not spent further time on it, as instructed.
+
+**One conflict to flag, because I implemented the contract over the reviewer.**
+
+### AC-B03 — re-measured, and a predicate conflict
+The criterion now states its population, which is what made the old figures
+irreproducible. Measured against it:
+
+```
+Population: courses with affiliation "PO" in the finished catalog — 2004 of 2980
+
+8 anomalies
+  partial credit with a non-Area-6 Area tag ... 5
+  senior exercise (190-199) with an Area tag ... 2
+  two areas .................................... 1   (THEA 085 PO)
+```
+Not 3 and 10. The validator was not tuned; the report states the population at the
+top, as the criterion requires.
+
+**The conflict:** AC-B03 as restated specifies `credits.max < 1`. That is the exact
+predicate reviewer H-4 called a bug — it skips `GEOL 189V PO` (0.5–1, `AREA_4`),
+a course a student MAY take at half credit, at which point the Area-6-only rule
+bites. I had changed it to `credits.min < 1` in round 2 on H-4's authority.
+
+I have implemented **the contract, not my previous fix**: the headline count uses
+`credits.max < 1`. But dropping the H-4 case entirely would silently retire a
+reviewer finding, so variable-credit courses are listed in their own section of
+the report, explicitly not counted. `GEOL 189V PO` is the only one today. **The
+manager decides whether to fold them in**; a one-word change to the criterion and
+a one-line change to the validator either way.
+
+### D-12 — the nineteen double-credit PE courses
+`data/reports/pe-double-credit.md` now lists them, with the question stated rather
+than answered: `Measure Values` is 0/1/2, all nineteen 2s are Physical Education,
+`pivot` tests `>= 1` which is the only reason AC-B02's `PE 241` holds (a literal
+`=== "1"` gives 222), and what `2` MEANS is unconfirmed. The report also records
+the manager's point that the catalog requires two PE courses *in different
+semesters*, which no weight makes one course satisfy — so the natural reading
+cannot simply be applied. The pipeline records the fact and changes nothing.
+
+### AC-B04 — no code change, now asserted
+Behaviour already matched the restatement. Added tests: every `upcomingTerms`
+entry has a file, `upcomingTerms` equals the set of sections files exactly,
+SP2027 is absent rather than fatal, and FA2026 carries ≥ 2,000 sections.
+Measured: `upcomingTerms ["FA2026"]`, sections files `["FA2026"]`.
+
+### Verification
+```
+typecheck 0 · lint 0 · build 0 · seed 0 · pipeline:all 0 · contract-test 0
+385 tests (372 pipeline + 13 shared), 0 failures
+
+AC-B03  population stated (2004 PO of 2980); 8 anomalies; GEOL 189V PO reported
+        separately as variable-credit, not counted
+AC-B04  upcomingTerms ["FA2026"] == sections files ["FA2026"]; FA2026 2163 sections
+D-12    19 courses listed in data/reports/pe-double-credit.md
+```
+
+### What Was NOT Verified
+- **AC-B07 / D-11** — untouched by instruction. The workflow has still never run.
+- **D-12 is recorded, not resolved.** A student who satisfied PE with one
+  double-credit dance course is still told they owe another. That is now a known
+  and documented wrong answer rather than a silent one, which is the most the
+  pipeline can honestly do before the Registrar answers.
+- I did not re-measure the senior-exercise figure against the registrar export
+  (the reviewer's 18-in-range/2-PO); the criterion now names the catalog
+  population, so that is the one I measured.

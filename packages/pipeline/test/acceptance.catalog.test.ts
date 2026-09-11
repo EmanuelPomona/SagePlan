@@ -75,3 +75,36 @@ describe("AC-B01 — the pinned predicate", () => {
     expect(CatalogArtefactSchema.safeParse(JSON.parse(readFileSync(path, "utf8"))).success).toBe(true);
   });
 });
+
+describe("AC-B04 — a file per term upstream actually publishes (ADR-020)", () => {
+  const manifestPath = fromRepoRoot("data/manifest.json");
+  const manifest = existsSync(manifestPath)
+    ? (JSON.parse(readFileSync(manifestPath, "utf8")) as {
+        upcomingTerms: string[];
+        sections: { term: string; sectionCount: number }[];
+      })
+    : { upcomingTerms: [], sections: [] };
+
+  test("every upcomingTerms entry has a sections file on disk", () => {
+    for (const term of manifest.upcomingTerms) {
+      expect(existsSync(fromRepoRoot(`data/sections-${term}.json`)), `sections-${term}.json must exist`).toBe(true);
+    }
+  });
+
+  test("upcomingTerms matches the set of sections files exactly", () => {
+    expect([...manifest.upcomingTerms].sort()).toEqual(manifest.sections.map((s) => s.term).sort());
+  });
+
+  test("a requested term upstream does not publish is absent, not a failure", () => {
+    // SP2027 is in PIPELINE_TERMS but Hyperschedule returns 404 for it: spring
+    // schedules land shortly before spring registration. Warned and skipped.
+    expect(manifest.upcomingTerms).not.toContain("SP2027");
+    expect(existsSync(fromRepoRoot("data/sections-SP2027.json"))).toBe(false);
+  });
+
+  test("FA2026 carries at least 2,000 sections", () => {
+    const fa = manifest.sections.find((s) => s.term === "FA2026");
+    expect(fa).toBeDefined();
+    expect(fa!.sectionCount).toBeGreaterThanOrEqual(2000);
+  });
+});
