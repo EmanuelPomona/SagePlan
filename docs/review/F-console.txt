@@ -1,18 +1,26 @@
-Browser console, full primary flow. Evidence for AC-F08.
-Chrome, http://localhost:3001/, dev server, 2026-09-08
+Browser console — Pomona GradGuide primary flow
+Captured: 2026-09-11
+Instrument: Chrome headless driven over CDP (Runtime.consoleAPICalled + Log.entryAdded),
+viewport set with Emulation.setDeviceMetricsOverride, dev server on FRONTEND_PORT=3001.
 
-Flow: open a share link -> preview -> Replace -> 20-course audit renders ->
-expand two requirement rows (lazy section + offering-history loads) -> export.
+Flow: open a share link -> Replace my record -> reload -> expand a requirement row
+      -> switch to dark -> reload at 390x844.
 
-Captured with mcp__claude-in-chrome__read_console_messages, pattern ".*"
-(unfiltered). THREE messages. Zero errors. Zero CSP violations.
+VERBATIM OUTPUT:
+  [console:debug] [vite] connecting...
+  [console:debug] [vite] connected.
+  [console:info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  [console:debug] [vite] connecting...
+  [console:debug] [vite] connected.
+  [console:info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  [console:debug] [vite] connecting...
+  [console:debug] [vite] connected.
+  [console:info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
 
-[1] DEBUG  @vite/client   [vite] connecting...
-[2] DEBUG  @vite/client   [vite] connected.
-[3] INFO   react-dom      Download the React DevTools for a better development experience
+Errors attributable to the application: none.
+The two [console:debug] vite lines and the React DevTools [console:info] notice are
+dev-server output and do not exist in a production build.
 
-Entries 1 and 2 are the dev server's hot-reload channel and entry 3 is React's
-development notice. None exists in a production build.
-
-NOT VERIFIED: the console of a production build. `npm run build` cannot run
-until data/manifest.json exists, by design (see F-network.txt).
+Separately captured (docs/review/F-05-state-error-data-unavailable.jpg): blocking
+/data/* with Fetch.failRequest logs 'net::ERR_FAILED http://localhost:3001/data/manifest.json'.
+That error is the induced failure the screenshot is evidence of, not a defect.

@@ -21,6 +21,7 @@ export function RequirementDetail({
   onAddOverride,
   onRemoveOverride,
   onAttest,
+  advisory,
 }: {
   requirement: Requirement;
   result: Result;
@@ -31,6 +32,7 @@ export function RequirementDetail({
   onAddOverride: (o: Override) => void;
   onRemoveOverride: (i: number) => void;
   onAttest: (value: boolean) => void;
+  advisory?: { label: string; text: string; sourceQuote: string } | undefined;
 }) {
   return (
     <div className="detail">
@@ -55,6 +57,14 @@ export function RequirementDetail({
                 ? "read from the catalog, but with an interpretation the Registrar has not confirmed."
                 : "read from a secondary source."}
             </p>
+          )}
+
+          {advisory && (
+            <>
+              <h4>Also worth knowing</h4>
+              <p className="detail-explanation">{advisory.text}</p>
+              <blockquote className="quote">{advisory.sourceQuote}</blockquote>
+            </>
           )}
 
           {result.satisfiedBy.length > 0 && (

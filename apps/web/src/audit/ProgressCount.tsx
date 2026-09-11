@@ -4,15 +4,12 @@
  * number nobody can act on and everybody misreads.
  */
 export function ProgressCount({ have, need, noun }: { have: number; need: number; noun: string }) {
-  const pct = need === 0 ? 0 : Math.min(100, (have / need) * 100);
+  // Just the number. A filled track behind a partial fill is dashboard
+  // furniture, and this page is a document: "5 of 6" already says it, and the
+  // bar was the only thing here that looked like an analytics panel.
   return (
     <span className="progress-count">
-      <span className="progress-figures">
-        <strong>{have}</strong> of <strong>{need}</strong> {noun}
-      </span>
-      <span className="progress-track" aria-hidden="true">
-        <span className="progress-fill" style={{ inlineSize: `${pct}%` }} />
-      </span>
+      <strong>{have}</strong> of <strong>{need}</strong> {noun}
     </span>
   );
 }

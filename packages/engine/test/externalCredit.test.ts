@@ -3,6 +3,16 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 import { ExternalCreditRulesSchema, type ExternalCreditInput, type ExternalCreditRules } from "@gradguide/shared";
 import { resolveExternalCredit } from "../src/externalCredit.ts";
+import { evaluate } from "../src/index.ts";
+import { CatalogArtefactSchema, ProgramSchema, StudentPlanSchema } from "@gradguide/shared";
+import { resolve } from "node:path";
+
+const GE_PROGRAM = ProgramSchema.parse(
+  JSON.parse(readFileSync(resolve(__dirname, "../../../data/programs/general-education-2026.json"), "utf8")),
+);
+const CATALOG_COURSES = CatalogArtefactSchema.parse(
+  JSON.parse(readFileSync(resolve(__dirname, "fixtures/catalog.fixture.json"), "utf8")),
+).courses;
 
 /** The real, reviewed rules file — these thresholds are the product's promise. */
 const RULES: ExternalCreditRules = ExternalCreditRulesSchema.parse(
@@ -148,5 +158,54 @@ describe("resolveExternalCredit — reported fields", () => {
   test("a missing score never throws", () => {
     const out = resolveExternalCredit({ kind: "AP", subjectKey: "ap-biology", score: null, grade: null, level: null }, RULES);
     expect(out.qualifies).toBe(false);
+  });
+});
+
+describe("F-03c — the ADR-007 correction is asserted by a golden that can discriminate (L-9)", () => {
+  /**
+   * F-03b carries five LANGUAGE-granting exams, so deleting the IB Language A
+   * rule changes nothing in its golden: the clause AC-P16 cites is carried by a
+   * fixture that cannot fail on it. That is the REDUNDANCY failure mode.
+   *
+   * F-03c isolates it. One IB Language A exam at SL 6, no language coursework,
+   * no other granter. Neutralise the rule and Language must flip.
+   */
+  const withoutLanguageA: ExternalCreditRules = {
+    ...RULES,
+    rules: RULES.rules.filter((r) => r.id !== "ib-language-a-requirement"),
+  };
+  const examInput = { kind: "IB", subjectKey: "ib-spanish-a", score: 6, grade: null, level: "SL" } as const;
+
+  test("with the rule in place the exam grants Language", () => {
+    expect(resolveExternalCredit(examInput, RULES).grantsAttributes).toEqual(["LANGUAGE"]);
+  });
+
+  test("with the rule neutralised it grants nothing, so the fixture discriminates", () => {
+    const out = resolveExternalCredit(examInput, withoutLanguageA);
+
+    expect(out.grantsAttributes).toEqual([]);
+    expect(out.qualifies).toBe(false);
+  });
+
+  test("and it is the ONLY rule that fires for this exam, so nothing else could carry it", () => {
+    expect(resolveExternalCredit(examInput, RULES).ruleIds).toEqual(["ib-language-a-requirement"]);
+  });
+
+  test("END TO END: the language row flips from satisfied to unmet when the rule is neutralised", () => {
+    // This is what L-9 asked for. Asserting the resolver alone would leave the
+    // same hole one level down: the GOLDEN has to be the thing that cannot pass
+    // with the correction removed.
+    const plan = StudentPlanSchema.parse(
+      JSON.parse(readFileSync(resolve(__dirname, "fixtures/plans/F-03c.json"), "utf8")),
+    );
+    const language = (rules: ExternalCreditRules) =>
+      evaluate(
+        { ...plan, externalCredits: [resolveExternalCredit(examInput, rules)] },
+        [GE_PROGRAM],
+        CATALOG_COURSES,
+      ).find((r) => r.requirementId === "language")!.status;
+
+    expect(language(RULES)).toBe("satisfied");
+    expect(language(withoutLanguageA)).toBe("unmet");
   });
 });

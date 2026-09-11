@@ -20,6 +20,7 @@ const FIXTURES: { id: string; programs: Program[]; describes: string }[] = [
   { id: "F-02", programs: [GE], describes: "transfer student with pre-matriculation Breadth" },
   { id: "F-03", programs: [GE], describes: "AP and IB credit, duplicate pair, advanced-standing cap" },
   { id: "F-03b", programs: [GE], describes: "exam threshold boundaries" },
+  { id: "F-03c", programs: [GE], describes: "IB Language A is the ONLY thing that could satisfy Language" },
   { id: "F-04", programs: [GE], describes: "chair-granted override" },
   { id: "F-05", programs: [GE], describes: "one course short of Area 4" },
   { id: "F-06", programs: [GE], describes: "assignment conflict: rare AD course also carries Area 3" },

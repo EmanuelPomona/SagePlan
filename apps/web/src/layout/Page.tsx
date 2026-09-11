@@ -6,6 +6,7 @@ import { RecordSection } from "../record/RecordSection.tsx";
 import { ExportImport } from "../share/ExportImport.tsx";
 import { ImportPreview } from "../share/ImportPreview.tsx";
 import { useFragmentImport } from "../share/useFragmentImport.ts";
+import { Advisories } from "../audit/Advisories.tsx";
 import { Footer } from "./Footer.tsx";
 import { Masthead } from "./Masthead.tsx";
 
@@ -105,6 +106,9 @@ function Ready({
       </main>
       <Footer>
         <ExportImport plan={plan} />
+        {data.programs.map((program) => (
+          <Advisories key={program.id} program={program} />
+        ))}
       </Footer>
     </>
   );
