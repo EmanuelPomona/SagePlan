@@ -1,33 +1,32 @@
 # STATUS: main
-Task: PLANNING (Mode A) complete — TASK-001, TASK-002 DONE; 10 tasks READY
+Task: v1 re-scope (Mode A) complete; TASK-030..033 READY for frontend
 Round: 0
-Last updated: 2026-09-08T21:30:00Z
+Last updated: 2026-09-11T16:10:00Z
 
 ## Skills invoked so far
-- superpowers:brainstorming @ start, before defining the solution -> classified architectural; three owner questions (engine owner, manager scope, CSV) answered; single-page instruction received mid-planning
-- ecc:product-lens @ before PRODUCT.md -> Mode 1 diagnostic written into docs/PRODUCT.md (who/pain/why now/10-star/MVP/anti-goal/metric, GO)
-- ecc:contract-first @ before finalizing shared interfaces -> packages/shared zod schemas as the one artifact, openapi.yaml generated, consumer/provider table and checklist in docs/API.md
-- superpowers:writing-plans @ before task decomposition -> 12 task files with files/interfaces/tests-first/AC by ID (repo convention: docs/tasks/, not a separate plan doc)
-- ecc:architecture-decision-records @ recording cross-cutting decisions -> ADR-001..010 in docs/DECISIONS.md (repo convention: single file)
-- superpowers:verification-before-completion @ immediately before handoff + commit -> re-ran typecheck/lint with explicit exit codes; evidence in docs/handoffs/main.md
+- (2026-09-08 planning) brainstorming, ecc:product-lens, ecc:contract-first, superpowers:writing-plans, ecc:architecture-decision-records, superpowers:verification-before-completion
+- ecc:architecture-decision-records @ recording the five v1 decisions -> ADR-011..015
+- superpowers:verification-before-completion @ before handoff 2 and the commit -> re-ran the five gates with explicit exit codes; caught the gitignore negation bug
 
 ## Done
-- [x] Read protocol, routing, template, brief (764 lines)
-- [x] docs/PRODUCT.md, DESIGN_BRIEF.md, ARCHITECTURE.md, API.md, DATABASE.md, ACCEPTANCE.md, DECISIONS.md, README.md written
-- [x] packages/shared: 10 src files, 2 scripts, 3 test files; `npx tsc -p packages/shared/tsconfig.json` OK; `npx vitest run --root packages/shared` 13 passed; `npx eslint .` OK
-- [x] docs/openapi.yaml generated (46 schemas, 93 $refs); `emit-openapi.ts --check` current
-- [x] data/programs/general-education-2026.json (18 req, 1 constraint, 7 advisories) + data/external-credit-rules.json (83 subjects, 8 rules): validate-artefacts 0 failures, all quotes verbatim
-- [x] data/sources/: Registrar CSV (4.9 MB UTF-16) + 10 catalog page snapshots + index.json
-- [x] scripts/contract-test.sh rewritten (exit 2 pre-pipeline), .env.example (no secrets), .gitignore, CI (node 22, contract step)
-- [x] docs/tasks/TASK-001,002 DONE; 010-013 backend READY; 020-025 frontend READY; 090 reviewer BACKLOG; INDEX regenerated
+- [x] Read reviewer round-1 verdict (CHANGES_REQUIRED), DEBT D-01..D-10, and the app screenshots
+- [x] Owner answered 4 v1 questions: paste-first transcript, one map not three overlays, light default + quiet family hues, quotes on expand
+- [x] Resolved the open gpa CONTRACT CHANGE REQUEST (ADR-014) and my own assignment tie-break spec bug (ADR-013)
+- [x] packages/shared: term/grade/gradeMode/matriculationTerm nullable; openapi regenerated; 13 tests pass
+- [x] GE program: gpa moved to advisories (17 requirements, 8 advisories); validate-artefacts 0 failed
+- [x] API.md 2.2/2.3/2.7, DESIGN_BRIEF v1 revision, ACCEPTANCE AC-V01..V11 + fixture corrections, PRODUCT v1 table, ADR-011..015
+- [x] TASK-030..033 written READY; INDEX regenerated (17 tasks)
+- [x] Owner reference image committed at docs/design-refs/v1-requirement-map-reference.png
 
 ## In progress
-- [x] verification run (see handoff); handoff written; committing to main
+- [ ] Dispatch to the three worker sessions (owner granted explicit permission 2026-09-11)
 
 ## Verified
-- shared typecheck/lint/tests -> see Done (commands and counts)
-- hand-written data valid + quotes verbatim -> `npx tsx packages/shared/scripts/validate-artefacts.ts` exit 2 with 0 failed (2 = generated artefacts not yet produced, by design)
-- catalog pages reachable server-rendered -> curl https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T HTTP 200
+- typecheck 0, lint 0, shared tests 13/13, openapi --check current, validate-artefacts 0 failed (rc 2 = generated artefacts absent, by design)
+- INDEX.md regenerates identically; design constraints in one file; no secrets; samples PDF ignored, its README tracked
 
 ## Blocked on
-- nothing. Owner follow-ups (not blocking): confirm 3 draft interpretations + A-Level cutoff with Registrar; name a successor in README before launch.
+- nothing for planning. Owner follow-ups: (1) drop a real transcript at data/sources/samples/ to unblock the PDF tier of ADR-012; (2) still name a successor in README before any public launch; (3) three GE requirements remain confidence: draft pending the Registrar.
+
+## Owed, not done
+- main has neither worker merged. Integration must happen in a FRESH session (protocol Mode B).
