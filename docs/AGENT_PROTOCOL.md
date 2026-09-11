@@ -389,6 +389,15 @@ manager-owned, and section 15 keeps the reviewer on a branch that
 fire. `scripts/integrate.sh` now merges `agent/reviewer` last, and
 `scripts/tasks.sh` reads the ledger for `docs/tasks/INDEX.md` (ADR-019).
 
+**One field, one owner.** The reviewer records its verdict in `docs/review/rounds.md`
+and **does not edit task frontmatter at all** — not `status`, not `round`. The
+worker owns `status:` (its declaration of what it has done); the manager owns the
+rest of the file. Two owners writing one field through `merge=union` produces a
+duplicate key that `scripts/tasks.sh` resolves silently, which is measured and
+real (ADR-021); `tasks.sh` now fails loudly if it ever happens. `INDEX.md` shows
+the worker's status and the reviewer's last verdict side by side, so neither has
+to overwrite the other to be seen.
+
 - **Rounds 1-2:** normal verdicts.
 - **Round 3:** `CHANGES_REQUIRED` is no longer available. The reviewer must issue
   `APPROVED-WITH-DEBT` (Medium/Low remaining, moved to `docs/DEBT.md`) or

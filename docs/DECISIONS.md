@@ -538,3 +538,40 @@ So: the `>= 1` rule is documented and tested, the nineteen courses are listed in
 ### Consequences
 - Positive: three criteria that were unmeetable for reasons unrelated to the work are now measurable; a 37-course data-loss bug was caught before integration by the worker's own test.
 - Negative: AC-B07 stays open until the owner creates a remote, so one acceptance criterion cannot close on this machine.
+
+---
+
+## ADR-021 — One field, one owner: the reviewer stops editing task frontmatter
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, investigating agent/reviewer's D-15
+
+### Context
+The reviewer filed D-15: `docs/tasks/*.md merge=union` silently dropped backend's `status: REVIEW`. It flagged, carefully, that it had measured the *loss* and the *attribute* but had only **reasoned** about the mechanism — a union merge emitting duplicate keys — because its sandbox blocked three attempts to demonstrate it. It asked for one command from an environment that allows it.
+
+Two experiments in an isolated temp repo, plus the branch history:
+
+**The mechanism is real.** With both sides editing the same frontmatter key, the union driver emits both lines and nothing warns:
+
+```
+status: REVIEW      <- worker
+status: BLOCKED     <- reviewer
+```
+
+**But it is not what happened.** With only one side editing the key, union merges normally and correctly. The observed `READY` came from the reviewer's own round-1 verdict commit `d5bd6a0`, which deliberately set `status: REVIEW -> READY` and `round: 0 -> 1` when issuing CHANGES_REQUIRED. The three-way inputs were base `REVIEW`, reviewer `READY` (changed), backend `REVIEW` (unchanged) — so git correctly kept the side that changed. No loss occurred on that merge.
+
+**The real defect is mine, and ADR-019 sharpened it.** `status:` has three writers: the worker declares `REVIEW`, the reviewer sends work back, the manager creates the file. That was survivable while the reviewer's branch was never merged. ADR-019 made `integrate.sh` merge `agent/reviewer` **last** — correctly, to rescue the round ledger and the evidence — which also means the reviewer's status edits now land last on `main` and can overwrite a worker's newer declaration. I introduced that hazard four hours ago.
+
+### Decision
+1. **The reviewer does not edit task frontmatter at all.** Its verdict lives in `docs/review/rounds.md`, which it already owns. The worker owns `status:`; the manager owns the rest.
+2. **`docs/tasks/INDEX.md` gains a `Last verdict` column**, read from the ledger. Neither role has to overwrite the other's field to be visible, which removes the contention rather than arbitrating it.
+3. **`scripts/tasks.sh` fails loudly on a duplicate frontmatter key**, naming the file and the key. The mechanism the reviewer reasoned about is real and now latent rather than silent.
+4. **`merge=union` stays on `docs/tasks/*.md`.** Removing it, as D-15 suggested, would force a hand-resolve on every concurrent Review History append — which is what union is right for. With one owner per key, the duplication case cannot arise.
+
+### Alternatives considered
+- **Remove `docs/tasks/*.md` from the union list** (the reviewer's suggestion) — pros: a real conflict is information; cons: Review History is genuinely append-from-two-sides, so this trades a rare silent corruption for a frequent manual merge, and the underlying two-owners problem would remain. Why not: fixing ownership removes the cause; removing union only makes one symptom louder.
+- **Move `status` out of frontmatter, as the round counter moved** — cons: `status` is wired through `tasks.sh`, the protocol, and every agent definition, and unlike `round` it has exactly one natural owner once the reviewer stops writing it. Why not: the cheaper fix is sufficient.
+
+### Consequences
+- Positive: three writers become one per field; the duplicate-key corruption becomes a loud failure; `INDEX.md` carries both the declaration and the verdict, which is more information than either field alone.
+- Negative: the reviewer loses the ability to signal "work needed" through `status`. The ledger row says `CHANGES_REQUIRED`, which is clearer, and the worker sets its own status when it picks the task back up.
+- Process: D-15 was **half right, and the half it flagged as unverified was the right half**. Its mechanism was correct and its attribution was not. Flagging the distinction is what made the investigation cheap — and it found a defect I had introduced that neither of us was looking for.
