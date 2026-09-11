@@ -414,3 +414,42 @@ Checking the reviewer's arithmetic turned up something neither of us had written
 - Positive: four criteria that could have been argued about after a worker round are now settled before one. The instrument is agreed between the agent that builds to it and the agent that gates on it, which is the whole point of writing it down.
 - Negative: the criteria are longer and read as pedantic. That is the correct trade at this stage.
 - Process: **a reviewer challenging criteria before implementation is the cheapest review in the project.** Publish criteria to the reviewer for challenge before dispatching workers to build against them.
+
+---
+
+## ADR-018 — The pessimistic pass may only consider values the unknown field could actually take
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, resolving agent/frontend's contract change request of 2026-09-11
+
+### Context
+`docs/API.md` 2.7 said the pessimistic pass treats an unknown term "in the way least favourable", and then claimed most students would see no `unverifiable` row. The frontend implemented the first sentence, measured the second, and found they contradict: under the literal rule `sinceMatriculation` reads an unknown term as mode-dependent, so for `post-matriculation-credits` (n=30) the optimistic pass counts every course and the pessimistic counts none.
+
+Measured on golden F-13 — which *is* the ADR-015 default record, the F-01 student with nothing but course codes:
+
+```
+F-13 vs F-01: 16 of 17 requirements identical
+CHANGED post-matriculation-credits  partial -> unverifiable
+  "Add the term to ANTH 025 PO, ARTH 051 PO, BIOL 041 PO and CHEM 051 PO, and 16 more so this can be checked."
+```
+
+So the record ADR-015 exists to create produced a row telling the student to go back and enter twenty terms, and it collided with AC-V06 ("a plan consisting only of course codes produces a correct audit"), which is the criterion the whole v1 record design rests on. Both the frontend and the reviewer verified this independently.
+
+### Decision
+Add a constraint rule to 2.7: **the pessimistic pass may only consider values the unknown field could actually take, given everything else known about the course.** Exploring impossible values produces `unverifiable` answers to questions that were never in doubt.
+
+For `sinceMatriculation`, `provenance` constrains the term. A `pomona`, `claremont` or `abroad` course cannot predate matriculation — and this is not a convenient assumption, it is the College's own categorisation. The catalog's Advanced Standing page reads: *"Advanced Standing credit includes … college credits completed prior to admission and matriculation to Pomona College or other college or university as a regular, degree-seeking undergraduate."* Pre-matriculation college work is posted as advanced standing or transfer credit, so it reaches the plan as an `ExternalCredit` or as `provenance: transfer`, never as unmarked Pomona coursework. So only `provenance: transfer` leaves an unrecorded term genuinely unknown.
+
+**TASK-030's bounded test is what gives, not AC-V06 and not 2.7's promise.** Its discriminator — "a student with AP credit and every term null goes unverifiable" — was unsatisfiable: `post-matriculation-credits` sets `includeExternal: false`, so exam credit never enters that sum and cannot distinguish anything. The corrected discriminator is provenance, and F-13 is split into three fixtures so the mechanism stays falsifiable: F-13 (all rows match F-01), F-13b (PE terms unknown → one `unverifiable`), F-13c (a transfer course with no term → one `unverifiable`, naming only that course).
+
+### Alternatives considered
+- **Drop 2.7's "most students are unaffected" promise and accept the row** — cons: it is the row ADR-015 was written to delete, on the record v1 is designed to produce. Why not: it would make AC-V06 false and hand the student back the data entry we just removed.
+- **Exclude unknown-term courses from `sinceMatriculation` entirely** — cons: silently understates progress, and understating is still guessing. Why not: 2.7 exists precisely to avoid deciding what we do not know.
+- **Ask for the matriculation term again when a term is missing** — cons: reintroduces the profile question ADR-015 removed, for a rule most students never come near. Why not: the constraint already answers it.
+
+### Consequences
+- Positive: 2.7's promise becomes true rather than aspirational; AC-V06 is satisfiable; the refinement is *more* correct than the literal rule, because the literal rule explored a state the Registrar's own categories exclude.
+- Negative: the pessimistic pass is now provenance-aware, which is one more thing to hold in mind when a future rule kind lands. The rule is stated generally so the next case has a principle to follow rather than a precedent to copy.
+- Risks: a student with genuine pre-matriculation Pomona coursework entered as `provenance: pomona` would be over-counted. That path requires the Registrar to have posted it as Pomona rather than advanced-standing credit, which their published policy says they do not do; and recording the term corrects it.
+
+### Process note
+The frontend implemented the contract as written, measured the consequence, prototyped the refinement, measured that, and **backed it out** when it contradicted `docs/ACCEPTANCE.md` — then raised the conflict rather than shipping its preference. That is exactly the behaviour ADR-017 was written to encourage, and it is the second time this project's spec has been corrected by someone running it rather than reading it.

@@ -389,6 +389,29 @@ is evaluated **twice**:
   whatever the rule least needs, e.g. the same term as another course for
   `distinctTerms`; their grade stays passing, since `null` means passed).
 
+**The pessimistic pass may only consider values the unknown field could actually
+take, given everything else known about the course.** An unknown term is not
+unconstrained: the course's `provenance` already narrows it. This is a
+correctness rule, not an optimisation — exploring impossible values produces
+`unverifiable` answers to questions that were never in doubt.
+
+The case that matters in P0 is `sinceMatriculation`. A course with `provenance`
+`pomona`, `claremont` or `abroad` **cannot** predate matriculation: you cannot
+cross-register at another Claremont College, or join a Pomona-run study-abroad
+programme, before matriculating, and the College's own categories put
+pre-matriculation college work somewhere else entirely — *"Advanced Standing
+credit includes … college credits completed prior to admission and matriculation
+to Pomona College or other college or university as a regular, degree-seeking
+undergraduate"*. Such work is posted as advanced standing or transfer credit, so
+it arrives in the plan as an `ExternalCredit` or as `provenance: transfer`,
+never as unmarked Pomona coursework.
+
+So under `sinceMatriculation`, an unrecorded term makes a course genuinely
+unknown **only when its `provenance` is `transfer`**. For the other three
+provenances both passes agree and the student is never asked for a term they do
+not need to give. `minTerm` is unaffected: it takes an arbitrary term, so
+provenance constrains nothing and both passes run as normal.
+
 If both passes yield the same `status`, that status is returned and the student
 is never troubled. If they differ, the result is **`unverifiable`**, with a
 `note` naming the missing field and the affected courses, e.g. *"Add terms to
@@ -396,9 +419,16 @@ PE 001 PO and PE 002 PO to check that they were in different semesters."*
 
 This is why term entry can be optional without the audit ever guessing. It
 applies to `distinctTerms`, to `CourseFilter.minTerm` and `sinceMatriculation`,
-and to the transfer pre-matriculation rule. Most students are unaffected: with
-no external or transfer credit, including or excluding unknown-term courses
-gives the same answer for every credit rule, so nothing goes `unverifiable`.
+and to the transfer pre-matriculation rule.
+
+**Most students see no `unverifiable` row at all**, and with the constraint rule
+above that sentence is now true rather than aspirational: a student whose record
+is nothing but Pomona and Claremont course codes gets the same answer for every
+credit rule whether or not they entered terms. The two things that do produce
+one are a `provenance: transfer` course with no term (for
+`sinceMatriculation`), and two Physical Education courses with no terms (for
+`distinctTerms`) — both of which are genuinely undecidable, and both of which
+name the specific courses whose term would settle it.
 
 `matriculationTerm: null` is first **inferred** as the earliest known
 completed-course term. If no course has a term, matriculation is unknown and the
