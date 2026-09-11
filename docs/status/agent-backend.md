@@ -1,7 +1,11 @@
 # STATUS: agent/backend
-Task: TASK-010, TASK-011, TASK-012, TASK-013 — implemented, reviewed, status REVIEW. No backend work outstanding.
-Round: 0
-Last updated: 2026-09-09T00:03:47Z
+Task: TASK-010..013 — round-2 fixes complete against ADR-016/ADR-017.
+Closed: M-5/AC-B00, H-2/AC-B01, AC-B01b, H-3/AC-P09, H-4, M-4, L-7, L-10, L-1, L-6.
+Open, not mine to close: H-5 (product decision), H-6 (CONTRACT CHANGE REQUEST filed),
+AC-B03's hardcoded figures (do not reproduce from any source; flagged for the manager),
+AC-B07 (workflow has never executed — no remote, no actionlint, no act).
+Round: 2
+Last updated: 2026-09-11T23:08:44Z
 
 ## Skills invoked so far
 - `ecc:backend-patterns` @ before structuring packages/pipeline -> confirmed the

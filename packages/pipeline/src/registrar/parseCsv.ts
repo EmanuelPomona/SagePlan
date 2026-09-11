@@ -1,5 +1,11 @@
 import { PipelineError } from "../errors.ts";
 
+export interface RegistrarParseResult {
+  rows: RegistrarRow[];
+  /** Raw `Measure Values` cells that were not a number. Counted, never silent. */
+  garbledMeasureValues: string[];
+}
+
 export interface RegistrarRow {
   courseNumber: string;
   courseTitle: string;
@@ -27,7 +33,28 @@ export function decodeUtf16(buf: Buffer): string {
   return text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
 }
 
+/**
+ * `Measure Values` is 0, 1 or 2 in the committed export — NOT 0/1 as the task
+ * spec states. All nineteen 2s are Physical Education on full-credit dance and
+ * PE courses, and AC-B02's PE count of 241 only holds if 2 counts as present.
+ *
+ * A cell that is neither is coerced to 0 ("overlay absent") — the safe direction,
+ * since inventing an attribute is worse than missing one — but it is COUNTED, so
+ * a format change cannot pass as a silent pile of absent overlays.
+ */
+function readMeasureValue(raw: string | undefined, garbled: string[]): number {
+  const text = (raw ?? "").trim();
+  if (text === "") return 0;
+  const n = Number(text);
+  if (!Number.isFinite(n)) { garbled.push(text); return 0; }
+  return n;
+}
+
 export function parseRegistrarCsv(buf: Buffer): RegistrarRow[] {
+  return parseRegistrarCsvDetailed(buf).rows;
+}
+
+export function parseRegistrarCsvDetailed(buf: Buffer): RegistrarParseResult {
   const lines = decodeUtf16(buf).split(/\r\n|\n/).filter((l) => l.length > 0);
   if (lines.length === 0) throw new PipelineError("registrar export is empty", "REGISTRAR_EMPTY");
 
@@ -48,6 +75,7 @@ export function parseRegistrarCsv(buf: Buffer): RegistrarRow[] {
   };
 
   const rows: RegistrarRow[] = [];
+  const garbledMeasureValues: string[] = [];
   for (const line of lines.slice(1)) {
     const f = line.split("\t");
     const courseNumber = (f[i.courseNumber] ?? "").trim();
@@ -59,8 +87,8 @@ export function parseRegistrarCsv(buf: Buffer): RegistrarRow[] {
       measureName: (f[i.measureName] ?? "").trim(),
       breadthAreaDescription: (f[i.breadthAreaDescription] ?? "").trim(),
       language: (f[i.language] ?? "").trim(),
-      measureValue: Number((f[i.measureValue] ?? "0").trim()) || 0,
+      measureValue: readMeasureValue(f[i.measureValue], garbledMeasureValues),
     });
   }
-  return rows;
+  return { rows, garbledMeasureValues };
 }
