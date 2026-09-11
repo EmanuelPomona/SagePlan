@@ -421,9 +421,35 @@ to overwrite the other to be seen.
   `APPROVED-WITH-DEBT` (Medium/Low remaining, moved to `docs/DEBT.md`) or
   `ESCALATE` (a Critical/High defect survived three rounds).
 - **Recurrence:** if a finding is materially the same as one filed in a previous
-  round for the same task, do not refile it. Issue `ESCALATE` immediately. A
-  finding that survives two fix attempts is a specification or comprehension
-  problem, not a fix problem, and a fourth attempt will not resolve it.
+  round for the same task, **and the worker has since declared a fix attempt**,
+  do not refile it. Issue `ESCALATE` immediately. A finding that survives two
+  fix attempts is a specification or comprehension problem, not a fix problem,
+  and a fourth attempt will not resolve it.
+
+  **Recurrence counts fix attempts, not gates.** Refiling a finding the worker
+  has not yet had a chance to address is not recurrence, and escalating it would
+  be an artefact of bookkeeping rather than a fact about the code (ADR-023).
+
+### Telling a fresh REVIEW from a stale one
+
+Since ADR-021 the reviewer does not write `status:`, so a task it sends back
+stays at `REVIEW` until its owner picks it up. `REVIEW` alone therefore cannot
+distinguish *awaiting a first gate* from *gated, sent back, not yet fixed*. Two
+mechanisms settle it, and the second is sound even when the first is forgotten:
+
+1. **The worker declares.** On picking up a task after `CHANGES_REQUIRED`, set
+   `status: IN_PROGRESS`; set it back to `REVIEW` when re-declaring. This is the
+   worker's own field, so it costs nothing and makes `INDEX.md` truthful in the
+   meantime.
+2. **The ledger records what was gated.** Each row in `docs/review/rounds.md`
+   carries the **commit** of the owning branch at the moment of the verdict. The
+   reviewer gates a task at `REVIEW` only when that branch's head differs from
+   its last ledger row for the task. Same head means nothing has happened since
+   the gate, so the `REVIEW` is stale.
+
+Where both are available and disagree, the ledger commit wins: it is a fact
+about the repository rather than a declaration someone may have forgotten to
+make.
 
 An `ESCALATE` must state the defect, the attempted fixes, and a hypothesis for why
 they failed.

@@ -603,3 +603,34 @@ One exception, and it is the one that makes the rule safe: **re-invoke if your c
 - Positive: the audit keeps meaning what it says; a reviewer is not incentivised to pad it.
 - Negative: "materially new domain" is a judgment call. The reviewer's own case is the worked example — the map was new UI, and it judged that the four design skills' guidance was already in hand and applied rather than needing reloading. That is the right call and the handoff says so, which is what makes it checkable.
 - Process note: asking rather than deciding was correct. A worker quietly interpreting an audited protocol rule in its own favour is exactly what the audit exists to catch, even when the interpretation is right.
+
+---
+
+## ADR-023 — Recurrence counts fix attempts, not gates; and how to tell a fresh REVIEW from a stale one
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's flag
+
+### Context
+Two of my own rulings combined into a defect neither mentioned.
+
+- I told the reviewer to **gate on `REVIEW` without waiting for a dispatch**, because a round-trip adds latency and nothing else.
+- **ADR-021** stopped the reviewer writing `status:` at all, to end the three-writer contention on that field.
+
+Together, a task the reviewer sends back with `CHANGES_REQUIRED` **stays at `REVIEW`** until its owner picks it up. So `REVIEW` no longer distinguishes *awaiting a first gate* from *gated, sent back, not yet fixed*. Followed literally, the reviewer would immediately re-gate, refile the same finding, and protocol section 21's recurrence rule — "materially the same as a previous round: do not refile, `ESCALATE` immediately" — would escalate a finding that is merely **not fixed yet**. A false escalation manufactured by bookkeeping, on a rule whose whole purpose is to detect specification problems.
+
+The reviewer found this before it fired, held rather than refiling, and flagged the mechanism rather than proposing to change a contract it does not own. Its interim rule — gate only when the branch has commits newer than the last ledger row touching the code the finding names — is sound, and it is inference standing in for a declaration that does not exist.
+
+### Decision
+1. **Recurrence counts fix attempts, not gates.** Section 21 now reads: materially the same finding **and the worker has since declared a fix attempt**. Refiling a finding the worker has not yet had a chance to address is not recurrence.
+2. **The worker declares.** On picking up a task after `CHANGES_REQUIRED`, set `status: IN_PROGRESS`; set `REVIEW` when re-declaring. `status` is the worker's own field under ADR-021, so this costs nothing and keeps `INDEX.md` honest in the meantime.
+3. **The ledger records what was gated.** `docs/review/rounds.md` gains a `Commit` column: the owning branch's head at the moment of the verdict. Gate a task at `REVIEW` only when that branch's head differs from its last row. Where the two mechanisms disagree, **the commit wins** — it is a fact about the repository rather than a declaration someone may have forgotten to make.
+
+### Alternatives considered
+- **A `CHANGES_REQUIRED` status the worker clears** — cons: the reviewer would have to write it, which is precisely the three-writer contention ADR-021 removed. Why not: it reintroduces the bug it would fix.
+- **The reviewer's file-level heuristic alone** (commits touching the files the finding names) — pros: more precise than a commit comparison; cons: it fails in the direction that matters, because a worker may legitimately fix a finding in a file the finding did not name, and it asks the gate to infer intent from a diff. Why not: kept as judgment, not as the rule.
+- **Commit comparison alone** — cons: a docs-only commit would license a re-gate, and the refiled finding could still trip recurrence. Why not: which is why decision 1 is the primary fix and the commit column is the backstop.
+
+### Consequences
+- Positive: the escalation safeguard now fires on what it was written to detect — a defect surviving two genuine fix attempts — rather than on a task that has not been touched. Two mechanisms, either sufficient, with a stated precedence.
+- Negative: a third small bookkeeping obligation on the worker. It is one field it already owns, at the moment it starts work.
+- Process: this is the second defect produced by one of my rulings interacting with another (ADR-019 loaded the status-overwrite gun that ADR-021 unloaded; ADR-021 created this one). Both were found by the agent subject to the rule rather than by me writing it. **A ruling should be checked against the rulings it composes with, not only against the problem it solves** — and the agent that has to live under a rule is better placed to find that than the one who wrote it.
