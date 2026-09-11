@@ -4,6 +4,17 @@ set -uo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit 1
 python3 - <<'PY'
 import glob,os,re
+# Round comes from the reviewer-owned ledger (ADR-019), not from task frontmatter:
+# the reviewer increments it on a branch that used to never reach main, so the
+# frontmatter counter was always stale. Frontmatter is the fallback when the
+# ledger has no row yet.
+ledger={}
+try:
+    for ln in open('docs/review/rounds.md',encoding='utf-8',errors='ignore'):
+        m=re.match(r'\|\s*(TASK-\d+)\s*\|\s*(\d+)\s*\|', ln)
+        if m: ledger[m.group(1)]=max(int(m.group(2)), ledger.get(m.group(1),0))
+except FileNotFoundError:
+    pass
 rows=[]
 for p in sorted(glob.glob('docs/tasks/*.md')):
     b=os.path.basename(p)
@@ -13,8 +24,10 @@ for p in sorted(glob.glob('docs/tasks/*.md')):
     if not m:
         print(f"WARN {p}: no frontmatter, skipped"); continue
     fm=dict(re.findall(r'^([a-z_]+):\s*(.*)$', m.group(1), re.M))
-    rows.append((fm.get('id','?'), fm.get('status','?'), fm.get('owner','?'),
-                 fm.get('round','0'), fm.get('title','?'), fm.get('blocked_on','').strip('"')))
+    tid=fm.get('id','?')
+    rnd=str(ledger.get(tid, fm.get('round','0')))
+    rows.append((tid, fm.get('status','?'), fm.get('owner','?'),
+                 rnd, fm.get('title','?'), fm.get('blocked_on','').strip('"')))
 order={'BLOCKED':0,'REVIEW':1,'IN_PROGRESS':2,'READY':3,'BACKLOG':4,'DONE':5}
 rows.sort(key=lambda r:(order.get(r[1],9), r[0]))
 out=["# Task Index","",
