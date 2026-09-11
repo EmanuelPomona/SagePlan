@@ -8,6 +8,11 @@ docs/tasks/*.md     merge=union
 docs/DEBT.md         merge=union
 docs/review/rounds.md merge=union
 
+# Generated, like the lockfiles: concatenating two versions is never right and
+# regenerating always is. Union produced two whole tables here, every task listed
+# twice with contradictory columns, silently (ADR-021, measured 2026-09-11).
+docs/tasks/INDEX.md  -merge
+
 # Lockfiles must never be auto-merged. Regenerate after integration instead.
 package-lock.json   -merge
 pnpm-lock.yaml      -merge
