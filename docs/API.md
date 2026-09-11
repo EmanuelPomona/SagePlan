@@ -198,12 +198,17 @@ A completed course **counts** only when `isPassing(grade)` (any letter grade
 above F, or CR/P). In-progress grades (`IP`, `N`) never count toward a
 requirement but are listed as the student's own courses in the UI.
 
+`grade: null` means the student did not record a grade and **is treated as
+passed**. Entering grades is optional by design (ADR-015): the app never asks
+for them, so a course the student did not pass must carry its grade explicitly.
+`isPassing(null)` is `true`.
+
 | Kind | Status rule | `satisfiedBy` | `remaining` | `candidates` |
 |---|---|---|---|---|
 | `course` | `satisfied` when the student completed exactly that course with a passing grade (and `minGrade` if present, letter grades only); else `unmet` | the course | `null` | the course itself if not completed |
 | `attribute` | count completed courses carrying `attr` that pass `filter`, plus granted attributes from qualifying `externalCredits` (each grant counts as one course, or as `credits` when `unit` is `credits`). `unit: courses` (default) compares count to `n`; `unit: credits` sums credit values. `distinctTerms` requires the counted courses to be from different terms. `satisfied` when ≥ `n`; `partial` when > 0; else `unmet` | the assigned courses (see 2.3) | `{ n - have, unit }` | catalog courses carrying `attr`, not completed, not assigned elsewhere under the overlap policy |
 | `credits` | sum credits of completed courses passing `filter` (default: all completed courses), plus external credits when `includeExternal` is true (default: true when no `filter`, else false), subject to `caps` (2.4). `satisfied` when ≥ `n`; `partial` when > 0; else `unmet` | `[]` (aggregate) | `{ n - have, "credits" }` | `[]` |
-| `gpa` | GPA over letter-graded completed courses with provenance `pomona`, `claremont` or `abroad`, weighted by credits, on `GRADE_POINTS`. `satisfied` when ≥ `min`; `unmet` otherwise; **`unverifiable`** with a note when there are no letter grades yet | `[]` | `null` | `[]` |
+| `gpa` | **`scope: "overall"`** averages every qualifying completed course: letter-graded, provenance `pomona`, `claremont` or `abroad`, weighted by credits, on `GRADE_POINTS`. `satisfied` when ≥ `min`; `unmet` otherwise; **`unverifiable`** with a note when there are no letter grades. **`scope: "program"` is deferred to P1** and returns `unverifiable` with a note, exactly like the deferred rule kinds, because the engine cannot yet tell which courses count toward a program (ADR-014). No GE requirement uses this kind: the 2.00 rule is carried as an advisory (ADR-015) | `[]` | `null` | `[]` |
 | `attested` | `satisfied` when `plan.attestations[id] === true`; else **`unverifiable`** with `note = prompt` | `[]` | `null` | `[]` |
 | `allOf`, `anyOf`, `chooseN`, `fromSet`, `milestone`, `not` | **`unverifiable`**, `note: "rule kind '<kind>' not yet supported"` | `[]` | `null` | `[]` |
 
@@ -237,9 +242,23 @@ assignment.
    alternative assignment exists, backtrack with a bounded search (depth bound
    equal to the number of course-selecting requirements; at ≈32 courses and
    ≈15 requirements this is microseconds). **No solver dependency.**
-4. Among assignments that satisfy the same number of requirements, prefer the
-   one that leaves the most courses unassigned (so a rare Analyzing Difference
-   course is not spent on a slot a common course could fill).
+4. Rank candidate assignments lexicographically:
+   1. **maximize** the number of requirements satisfied;
+   2. **minimize sharing** — the number of (requirement, course) pairs whose
+      course is also counted for another requirement. Prefer distinct courses
+      where distinct courses exist, so a course with a rare attribute is
+      credited for the rare requirement and a common course fills the common
+      slot. Sharing is still produced when nothing else can satisfy a
+      requirement, which is the normal case for the overlay requirements;
+   3. deterministic tie-break by `courseKey` ascending.
+
+   **This corrects an earlier version of this step**, which said to prefer the
+   assignment leaving the most courses unassigned. That maximised sharing and so
+   produced the exact outcome its own rationale said to avoid: with `HIST 101 PO`
+   (Area 3 only) and `AMST 110 PO` (Area 3 + Analyzing Difference), it credited
+   `AMST 110 PO` to both and left `HIST 101 PO` unused. The verdicts were right
+   and the attribution was wrong, and AC-P01 makes attribution a headline
+   feature. See ADR-013 and fixture F-06.
 
 Fixture 6 in `docs/ACCEPTANCE.md` is the test: naive greedy must fail it,
 constrained-first must pass it.
@@ -310,6 +329,35 @@ one. `children` is empty in P0 (populated by `allOf`/`anyOf`/`chooseN` in P1).
 
 Same inputs → byte-identical `Result[]`. Arrays are ordered: `satisfiedBy` and
 `candidates` by `courseKey` ascending. Golden files depend on this.
+
+### 2.7 Bounded evaluation under unknowns
+
+`term`, `grade`, `gradeMode` on a `CompletedCourse` and `matriculationTerm` on
+the plan may be `null`, because the app does not ask for them (ADR-015). A rule
+whose answer depends on a field that is unknown for at least one relevant course
+is evaluated **twice**:
+
+- **optimistic** — the unknown-term or unknown-grade courses are treated in the
+  way most favourable to the student (their term is whatever the rule needs,
+  their grade is passing);
+- **pessimistic** — they are treated in the way least favourable (their term is
+  whatever the rule least needs, e.g. the same term as another course for
+  `distinctTerms`; their grade stays passing, since `null` means passed).
+
+If both passes yield the same `status`, that status is returned and the student
+is never troubled. If they differ, the result is **`unverifiable`**, with a
+`note` naming the missing field and the affected courses, e.g. *"Add terms to
+PE 001 PO and PE 002 PO to check that they were in different semesters."*
+
+This is why term entry can be optional without the audit ever guessing. It
+applies to `distinctTerms`, to `CourseFilter.minTerm` and `sinceMatriculation`,
+and to the transfer pre-matriculation rule. Most students are unaffected: with
+no external or transfer credit, including or excluding unknown-term courses
+gives the same answer for every credit rule, so nothing goes `unverifiable`.
+
+`matriculationTerm: null` is first **inferred** as the earliest known
+completed-course term. If no course has a term, matriculation is unknown and the
+two passes above decide.
 
 ---
 

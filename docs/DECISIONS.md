@@ -210,3 +210,108 @@ GE is `Program #1` in `data/programs/`. There is no `checkGeneralEducation()`. T
 ### Consequences
 - Positive: no data migration when majors land; the data format is settled.
 - Negative: `unverifiable` rows appear for any P1 fixture used early; that is the intended honest behaviour.
+
+---
+
+## ADR-011 — v1 interface: one always-visible requirement map, not three overlays
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: project owner (v1 feedback + choice), manager
+
+### Context
+The v0 build shipped. The owner's complaint: "Scroll down to see area requirements → bad." The reviewer measured it independently (M-06): the audit block is **1774px at 1440x900** with 57px rows, against a brief that promised one viewport. The owner proposed three overlays — one for the Breadth areas, one for Analyzing Difference / Speaking / Writing, one for PE and Language — and asked for a recommendation first.
+
+### Decision
+Keep the owner's **grouping** and reject the **overlay**. A single always-visible requirement map sits above the detail rows, with twelve nodes in the three families the owner identified (Breadth 6 · Overlays 3 · Foundations 3). Administrative requirements (total credits, post-matriculation credits, residency) get a one-line strip, not nodes. Clicking a node opens that requirement's row below. The record section collapses to one line once it holds a course, which is what actually puts the map above the fold. The verbatim catalog quote moves into the expanded row.
+
+### Alternatives considered
+- **Three overlays as proposed** — pros: each view is focused and uncluttered; cons: an overlay converts scrolling into clicking without increasing what is visible at once, needs three visits to see everything, and covers the evidence rows while open, which is the opposite of the product's trust argument. Why not: it does not solve the stated problem.
+- **Map plus optional overlays** — pros: both; cons: two ways to see the same thing, more surface to build and review, and the overlay is redundant once the map exists. Why not: cost without a distinct job.
+- **Just shrink the rows** — pros: cheapest; cons: 17 rows at 40px is still ~700px, so "where do I stand" still requires scrolling past the record. Why not: insufficient alone (it is done as well, not instead).
+
+### Consequences
+- Positive: the answer is above the fold, the evidence is one click below it, and ADR-005's single page survives intact. The map is also the natural home for majors in P1 — a second family group, no new UI concept.
+- Negative: a new component with real a11y obligations (twelve nodes as buttons with meaningful labels); the density targets in the brief are now measurable commitments that can fail review.
+- Risks: family hues sit near status hues. The brief instructs frontend to drop family hue entirely if it reads as state, and to say so in the handoff.
+
+---
+
+## ADR-012 — Transcript ingestion: one tolerant parser, paste first, PDF once a sample exists
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: project owner, manager
+
+### Context
+"People don't wanna search up every class and manually select classes and grades. Maybe upload transcript?" Course entry is the highest-friction moment in the product and the thing most likely to lose a student to their existing spreadsheet. Nobody on this project has a sample Pomona transcript, so its layout is unknown.
+
+### Decision
+One tolerant parser, `parseTranscriptText`, that takes an arbitrary blob and finds course codes, and optionally terms and grades, anywhere in it. Two surfaces feed it now and later: **paste** (a student selects the portal's academic history, copies, pastes) ships immediately; a **PDF drop** using self-hosted pdf.js ships once the owner puts a real transcript at `data/sources/samples/` — gitignored, never committed, never uploaded. The parser is the hard part and is shared, so the PDF tier is a thin adapter.
+
+### Alternatives considered
+- **Build the PDF tier now, blind** — cons: guessing a layout produces a parser that fails quietly on the real thing, which is the worst failure mode for this product. Why not: no sample.
+- **Server-side parsing** — cons: a transcript is the most sensitive document a student has; uploading it would destroy the privacy argument that lets this project exist without institutional agreements. Why not: ADR-001.
+
+### Consequences
+- Positive: most of the value ships now with no new dependency and no CSP change; the privacy promise gets its strongest demonstration ("your transcript is read in this browser and never uploaded").
+- Negative: pdf.js is ~350KB and needs `worker-src 'self' blob:` in the CSP when it lands; the parser must be forgiving without being credulous, so its preview-before-add step is load-bearing.
+- Risks: a transcript parsed subtly wrong is worse than one not parsed. Mitigation: nothing is ever added without the preview, unparsed lines are shown, and every imported course is editable.
+
+---
+
+## ADR-013 — Assignment tie-break: minimize sharing, not maximize unassigned courses
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager (correcting own spec after reviewer finding M-2)
+
+### Context
+`docs/API.md` 2.3 step 4 said: among assignments satisfying the same number of requirements, "prefer the one that leaves the most courses unassigned (so a rare Analyzing Difference course is not spent on a slot a common course could fill)." The rule contradicts its own parenthetical: leaving the most courses unassigned *maximises sharing*. The engine implemented it literally and the reviewer verified the result: with `HIST 101 PO` (Area 3 only) and `AMST 110 PO` (Area 3 + Analyzing Difference), `AMST 110 PO` was credited to both and `HIST 101 PO` went unused. No verdict was wrong — sharing is legal under `allowAll` and both rows ended `satisfied` — but the attribution shown to the student was wrong, and AC-P01 makes attribution a headline feature.
+
+### Decision
+Rank assignments lexicographically: (1) maximize requirements satisfied; (2) **minimize sharing** — the count of (requirement, course) pairs whose course is also counted elsewhere; (3) deterministic by `courseKey`. Sharing still occurs whenever nothing else can satisfy a requirement, which is the normal case for overlays. Fixture F-06 must discriminate: the correct assignment is `HIST 101 PO` → Area 3, `AMST 110 PO` → Analyzing Difference.
+
+### Alternatives considered
+- **Leave it; no verdict is wrong** — cons: the map now prints the satisfying course under every node, so misattribution becomes the most prominent text on the page. Why not: v1 makes attribution more visible, not less.
+- **Weight courses by attribute rarity** — pros: directly expresses "don't spend a rare course"; cons: a second tunable that has to be explained to a student and re-tuned as the catalog changes. Why not: minimizing sharing achieves it without a magic number.
+
+### Consequences
+- Positive: `satisfiedBy` now means what a student reads it to mean; the engine is unchanged in verdicts, so no golden's statuses move.
+- Negative: F-06's golden changes and its assertion has to actually discriminate between the two strategies; the test must fail under the old rule.
+
+---
+
+## ADR-014 — `gpa` rule: `scope: "program"` is deferred to P1 and returns `unverifiable`
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, resolving agent/frontend's contract change request of 2026-09-08
+
+### Context
+`RuleSchema` has always defined `{ kind: "gpa"; min; scope: "overall" | "program" }`, and `docs/API.md` described only one computation. The engine had no notion of which completed courses belong to a program, so a program-scoped rule silently returned the **overall** average — a number that could approve or fail a major on the wrong basis. The frontend found this, implemented a fail-safe `unverifiable`, filed a `CONTRACT CHANGE REQUEST`, and the manager never routed it. The reviewer reported the unrouted request as a protocol finding (H-1) and its consequence as M-3.
+
+### Decision
+Accept the frontend's proposal 1 as written. `scope: "overall"` is specified in `docs/API.md` 2.2. `scope: "program"` is deferred to P1 and returns `unverifiable` with a note, exactly like the deferred rule kinds. The interim behaviour already shipped is the permanent behaviour. Reject proposal 2 (adding `courseSet?: CourseSetRef` to the rule) for now: no program needs it until majors land, and P1 should choose that shape against a real major rather than a hypothetical one.
+
+### Consequences
+- Positive: the contract now says what the engine does; no silent wrong number is possible; H-1's substance is resolved.
+- Negative: AC-P11 was ticked against fixture F-08, whose fake major uses `scope: "program"` and therefore contains an `unverifiable` row. The fixture must move to `scope: "overall"` so AC-P11 tests what it claims, and a separate fixture must assert the deferred behaviour.
+- Note on process: the protocol worked — the worker did not silently diverge — and the manager's failure to route the request is the defect. Integration must check for open `CONTRACT CHANGE REQUEST` blocks before anything else.
+
+---
+
+## ADR-015 — The app never asks for grades or terms; the 2.00 GPA rule becomes an advisory
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: project owner, manager
+
+### Context
+The owner: "People might not want to manually change the semester from fall and spring and the yr... Remove GPA? Majority of students are in good standing so not necessary and students wouldn't want to disclose their GPA." Measured against the engine: `grade` is needed only for pass/fail and for a `gpa` rule; `term` is needed only for the PE different-semesters rule, the 30-post-matriculation-credits filter, and the transfer pre-matriculation rule; `provenance` is derivable from the campus code in the course id. So most per-course input exists to serve one requirement that the owner wants removed.
+
+### Decision
+1. The `gpa` requirement moves out of `data/programs/general-education-2026.json` `requirements[]` and into `advisories[]`, keeping its verbatim catalog sentence. The `gpa` **rule kind stays implemented** for P1 majors.
+2. `CompletedCourse.term`, `.grade`, `.gradeMode` and `StudentPlan.matriculationTerm` become nullable. `grade: null` means **passed**, so a course the student failed must carry its grade.
+3. `matriculationTerm` is inferred as the earliest known course term; the profile no longer asks for it.
+4. Rules that depend on an unknown field are evaluated **twice**, optimistically and pessimistically (`docs/API.md` 2.7). Agreement returns the status; disagreement returns `unverifiable` naming the missing field. The audit never guesses.
+
+### Alternatives considered
+- **Keep GPA behind an opt-in toggle** — pros: the rule is real and still checkable; cons: keeps grade entry in the data model as a first-class ask, and a toggle that most students never touch is a feature nobody maintains. Why not: the advisory carries the same information at zero cost.
+- **Default unknown terms to "counts"** — cons: silently overstates progress on the 30-credit rule for students with AP or transfer credit, which is exactly the population that rule exists for. Why not: guessing in the student's favour is still guessing.
+- **Keep term required, drop only grade** — cons: term is the fiddlier of the two (a season dropdown and a year per course). Why not: bounded evaluation makes both safely optional.
+
+### Consequences
+- Positive: the default record is *just the list of courses you took*; a 32-course plan can be pasted and read with no further input. Grades stop travelling inside share links.
+- Negative: `StudentPlan` widens (no migration needed — nothing is deployed and every existing plan still validates); the engine gains a two-pass evaluation path; fixtures F-01 and F-12 lose their GPA rows and gain F-13.
+- Risks: a student who failed a course and does not record the grade gets it counted. Mitigation: the entry surface states "assumed passed" and offers "I did not pass this" on every row.

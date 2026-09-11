@@ -936,12 +936,20 @@ components:
         course:
           $ref: "#/components/schemas/CourseId"
         term:
-          $ref: "#/components/schemas/TermId"
+          anyOf:
+            - $ref: "#/components/schemas/TermId"
+            - type: "null"
+          description: "When the course was taken, or null when the student has not recorded it. Entering terms is optional by design: a rule that needs a term is evaluated both with and without the unknown-term courses, and reports unverifiable only when the two disagree. See docs/API.md 2.7."
         grade:
-          type: string
-          description: '"A-", "CR", "P", "IP" (in progress). Letter grades feed GPA; CR/P/NC/NP do not.'
+          description: '"A-", "CR", "P", "IP" (in progress), or null when not recorded. null is treated as PASSED, so a course the student did not pass must carry its grade. Letter grades feed a gpa rule; CR/P/NC/NP do not.'
+          type:
+            - string
+            - "null"
         gradeMode:
-          $ref: "#/components/schemas/GradeMode"
+          anyOf:
+            - $ref: "#/components/schemas/GradeMode"
+            - type: "null"
+          description: null when not recorded.
         provenance:
           $ref: "#/components/schemas/Provenance"
         title:
@@ -1125,7 +1133,10 @@ components:
         catalogYear:
           $ref: "#/components/schemas/CatalogYear"
         matriculationTerm:
-          $ref: "#/components/schemas/TermId"
+          anyOf:
+            - $ref: "#/components/schemas/TermId"
+            - type: "null"
+          description: null when the student has not recorded it. The engine then infers it as the earliest known completed-course term, and falls back to bounded evaluation (docs/API.md 2.7) where the inference would change an answer.
         studentType:
           $ref: "#/components/schemas/StudentType"
         completed:

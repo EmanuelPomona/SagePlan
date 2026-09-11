@@ -15,8 +15,12 @@ Do not edit by hand — edit the task files and regenerate.
 | TASK-023 | READY | frontend | 0 | Audit section — requirement rows with four states, margin of evidence, in-place detail, overrides and attestations |
 | TASK-024 | READY | frontend | 0 | "What satisfies this?" — candidates filtered to an upcoming term, dual-purpose marking, term ribbon |
 | TASK-025 | READY | frontend | 0 | Export, import, share link (URL fragment), demo plans, and the no-student-data-leaves-the-browser proof |
+| TASK-030 | READY | frontend | 0 | Engine round 2 — assignment attribution, gpa scope, optional terms and grades, bounded evaluation |
+| TASK-031 | READY | frontend | 0 | Light default, v1 palette, family hues, and the four visual defects from round 1 |
+| TASK-032 | READY | frontend | 0 | Record v1 — codes are the only required input, collapsed record, transcript paste |
+| TASK-033 | READY | frontend | 0 | Requirement map — twelve nodes in three families above the fold, denser audit, quotes on expand |
 | TASK-090 | BACKLOG | reviewer | 0 | P0 acceptance review — all criteria, privacy audit, engine golden review |
 | TASK-001 | DONE | manager | 0 | Shared contract package (zod schemas, codecs, OpenAPI emitter, artefact validator) |
 | TASK-002 | DONE | manager | 0 | Encode General Education 2026-27 and external credit rules as data with verbatim quotes |
 
-**Counts:** BACKLOG 1, DONE 2, READY 10
+**Counts:** BACKLOG 1, DONE 2, READY 14

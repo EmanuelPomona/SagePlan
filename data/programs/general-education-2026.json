@@ -7,71 +7,185 @@
   "sourceUrl": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T",
   "encodedBy": "manager (Claude, planning session) from the 2026-27 catalog Degree Requirements page, snapshotted 2026-09-08 in data/sources/catalog-pages/",
   "encodedOn": "2026-09-08",
-  "notes": "Every sourceQuote is a verbatim substring of the referenced snapshot (validated by packages/shared/scripts/validate-artefacts.ts). Program #1: a major later uses exactly this shape. Requirements marked draft carry an interpretation the Registrar has not confirmed; see each explanation. Course attributes come from the Registrar's tags, which already apply the catalog's eligibility exclusions, so no exclusion logic is encoded here.",
+  "notes": "Every sourceQuote is a verbatim substring of the referenced snapshot (validated by packages/shared/scripts/validate-artefacts.ts). Program #1: a major later uses exactly this shape. The 2.00 GPA rule is carried as an advisory, not a requirement, so the app never needs a student's grades (ADR-015); the gpa rule kind stays implemented for majors. Requirements marked draft carry an interpretation the Registrar has not confirmed; see each explanation. Course attributes come from the Registrar's tags, which already apply the catalog's eligibility exclusions, so no exclusion logic is encoded here.",
   "requirements": [
     {
       "id": "critical-inquiry",
       "label": "Critical Inquiry",
       "explanation": "First-year students take the Critical Inquiry seminar, ID 001 PO, in their first semester. Transfer students are not required to take it, so it is waived for them.",
       "sourceQuote": "First-year students are required to take the Critical Inquiry seminar (ID 001 PO) in the first semester.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "course", "course": { "department": "ID", "courseNumber": 1, "suffix": "", "affiliation": "PO" } },
-      "overlapPolicy": { "kind": "exclusive" },
-      "appliesWhen": { "studentType": ["firstYear"] }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "course",
+        "course": {
+          "department": "ID",
+          "courseNumber": 1,
+          "suffix": "",
+          "affiliation": "PO"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "exclusive"
+      },
+      "appliesWhen": {
+        "studentType": [
+          "firstYear"
+        ]
+      }
     },
     {
       "id": "area-1",
       "label": "Breadth Area 1",
       "explanation": "One course in Area 1, taken at one of The Claremont Colleges. Study abroad and other external coursework do not count, except pre-matriculation transfer work for students admitted as transfers.",
       "sourceQuote": "Area 1: Criticism, Analysis, and Contextual Study of Works of the Human Imagination",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "AREA_1", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_1",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "area-2",
       "label": "Breadth Area 2",
       "explanation": "One course in Area 2, taken at one of The Claremont Colleges. Mathematical and formal reasoning courses offered by these departments count toward Area 5 instead.",
       "sourceQuote": "Area 2: Social Institutions and Human Behavior",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "AREA_2", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_2",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "area-3",
       "label": "Breadth Area 3",
       "explanation": "One course in Area 3, taken at one of The Claremont Colleges.",
       "sourceQuote": "Area 3: History, Values, Ethics and Cultural Studies",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "AREA_3", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_3",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "area-4",
       "label": "Breadth Area 4",
       "explanation": "One course in Area 4, taken at one of The Claremont Colleges. GEOL 112 PO does not satisfy any area.",
       "sourceQuote": "Area 4: Physical and Biological Sciences",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "AREA_4", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_4",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "area-5",
       "label": "Breadth Area 5",
       "explanation": "One course in Area 5, taken at one of The Claremont Colleges. Statistics courses from any department count here.",
       "sourceQuote": "Area 5: Mathematical and Formal Reasoning",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "AREA_5", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_5",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "area-6",
       "label": "Breadth Area 6",
       "explanation": "One full course credit of Area 6 work at one of The Claremont Colleges. Area 6 is the only area where partial-credit courses count, so this rule sums credits rather than counting courses: two half-credit dance courses tagged Area 6 add up to one. The department chapters for Dance, Music and Theatre set further conditions this tool does not check.",
       "sourceQuote": "Area 6 may be completed with combined partial-credit courses in dance, music and theatre, subject to the rules found in the catalog chapters for those departments; otherwise, partial-credit courses do not satisfy area requirements.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "AREA_6", "n": 1, "unit": "credits", "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" },
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "AREA_6",
+        "n": 1,
+        "unit": "credits",
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
       "confidence": "draft"
     },
     {
@@ -79,87 +193,236 @@
       "label": "Writing Intensive",
       "explanation": "At least one Writing Intensive course, taken at one of The Claremont Colleges after Critical Inquiry. It may also count for a Breadth area or Analyzing Difference, but never for Speaking Intensive at the same time.",
       "sourceQuote": "Students must complete at least one writing-intensive course after the completion of the Critical Inquiry seminar for first-year students (ID 001 PO) and are expected to do so before the seventh semester.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "WRITING_INTENSIVE", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "denyOnly", "requirementIds": ["speaking-intensive"] }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "WRITING_INTENSIVE",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "denyOnly",
+        "requirementIds": [
+          "speaking-intensive"
+        ]
+      }
     },
     {
       "id": "speaking-intensive",
       "label": "Speaking Intensive",
       "explanation": "At least one Speaking Intensive course, taken at one of The Claremont Colleges. It may also count for a Breadth area or Analyzing Difference, but never for Writing Intensive at the same time.",
       "sourceQuote": "Students must complete at least one speaking-intensive course.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "SPEAKING_INTENSIVE", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "denyOnly", "requirementIds": ["writing-intensive"] }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "SPEAKING_INTENSIVE",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "denyOnly",
+        "requirementIds": [
+          "writing-intensive"
+        ]
+      }
     },
     {
       "id": "analyzing-difference",
       "label": "Analyzing Difference",
       "explanation": "At least one Analyzing Difference course, taken at one of The Claremont Colleges. It may also count for a Breadth area and for Writing or Speaking Intensive.",
       "sourceQuote": "Students must pass at least one Analyzing Difference course to graduate.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "ANALYZING_DIFFERENCE", "n": 1, "filter": { "provenance": ["pomona", "claremont"], "transferPolicy": "transferStudentsPreMatriculation" } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "ANALYZING_DIFFERENCE",
+        "n": 1,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont"
+          ],
+          "transferPolicy": "transferStudentsPreMatriculation"
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "language",
       "label": "Language",
       "explanation": "Language study through the third-semester level, or a qualifying exam. The Registrar tags exactly the qualifying courses with the Language Requirement attribute, so any tagged course, at Pomona or an approved equivalent elsewhere, satisfies it. A qualifying AP (4 or 5), IB Language B Higher Level or Language A (6 or 7), SAT-II (650, not a Romanized-script exam) or A-Level (B, not Chinese or Japanese) exam entered under external credit also satisfies it. The other catalog paths (a foreign school diploma, the Chinese or Japanese third-semester exam, the Korean proficiency exam, an FLRC-approved exam) cannot be checked here; confirm them with the Registrar and record an attestation.",
       "sourceQuote": "By passing the third semester or higher of a language or literature course at Pomona College (or an approved equivalent course at another eligible institution) in a language other than English. If a literature course is selected, it may not be in translation;",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "LANGUAGE", "n": 1 },
-      "overlapPolicy": { "kind": "allowAll" },
-      "attestable": { "prompt": "I have satisfied the language requirement another way recognized by the catalog (foreign school diploma, the Chinese or Japanese third-semester final exam, the Korean proficiency exam, or an FLRC-approved proficiency exam) and the Registrar has confirmed it." },
-      "grantedByAttributes": ["LANGUAGE"]
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "LANGUAGE",
+        "n": 1
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
+      "attestable": {
+        "prompt": "I have satisfied the language requirement another way recognized by the catalog (foreign school diploma, the Chinese or Japanese third-semester final exam, the Korean proficiency exam, or an FLRC-approved proficiency exam) and the Registrar has confirmed it."
+      },
+      "grantedByAttributes": [
+        "LANGUAGE"
+      ]
     },
     {
       "id": "physical-education",
       "label": "Physical Education",
       "explanation": "Two physical education activity courses, in different semesters. The College expects one of them in the first year.",
       "sourceQuote": "The requirement for physical education is satisfied by passing two physical education activity courses in different semesters.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "PHYSICAL_EDUCATION", "n": 2, "distinctTerms": true },
-      "overlapPolicy": { "kind": "allowAll" },
-      "appliesWhen": { "studentType": ["firstYear"] }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "PHYSICAL_EDUCATION",
+        "n": 2,
+        "distinctTerms": true
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
+      "appliesWhen": {
+        "studentType": [
+          "firstYear"
+        ]
+      }
     },
     {
       "id": "physical-education-transfer",
       "label": "Physical Education",
       "explanation": "Students admitted as transfers need only one physical education activity course.",
       "sourceQuote": "Students admitted as transfer students are required to take only one physical education activity course.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "attribute", "attr": "PHYSICAL_EDUCATION", "n": 1 },
-      "overlapPolicy": { "kind": "allowAll" },
-      "appliesWhen": { "studentType": ["transfer"] }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "attribute",
+        "attr": "PHYSICAL_EDUCATION",
+        "n": 1
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
+      "appliesWhen": {
+        "studentType": [
+          "transfer"
+        ]
+      }
     },
     {
       "id": "total-credits",
       "label": "32 course credits",
       "explanation": "Thirty-two course credits in total. Qualifying AP, IB and A-Level exams count, but at most two advanced standing credits and no credit for exams that duplicate each other. Work completed outside The Claremont Colleges, transfer coursework and advanced standing together, counts for at most 16 credits. Cumulative courses such as PE count for at most two credits from at most eight courses.",
       "sourceQuote": "Students must complete the equivalent of at least 32 course credits to graduate, 30 of which must be earned following matriculation as a degree-seeking student at Pomona College, or, for transfer students, at a regionally accredited college or university.",
-      "sourceRef": { "slug": "degree-requirements-tab-credit-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "credits", "n": 32, "includeExternal": true, "caps": { "advancedStandingCredits": 2, "externalCredits": 16, "partialCreditCourseCredits": 2, "partialCreditCourses": 8 } },
-      "overlapPolicy": { "kind": "allowAll" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-credit-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "credits",
+        "n": 32,
+        "includeExternal": true,
+        "caps": {
+          "advancedStandingCredits": 2,
+          "externalCredits": 16,
+          "partialCreditCourseCredits": 2,
+          "partialCreditCourses": 8
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
     },
     {
       "id": "post-matriculation-credits",
       "label": "30 credits after matriculation",
       "explanation": "Thirty of the 32 credits must be earned after matriculating at Pomona. Courses taken before your matriculation term and exam credit do not count here.",
       "sourceQuote": "30 of which must be earned following matriculation as a degree-seeking student at Pomona College",
-      "sourceRef": { "slug": "degree-requirements-tab-credit-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "credits", "n": 30, "filter": { "sinceMatriculation": true }, "includeExternal": false },
-      "overlapPolicy": { "kind": "allowAll" },
-      "appliesWhen": { "studentType": ["firstYear"] }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-credit-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "credits",
+        "n": 30,
+        "filter": {
+          "sinceMatriculation": true
+        },
+        "includeExternal": false
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
+      "appliesWhen": {
+        "studentType": [
+          "firstYear"
+        ]
+      }
     },
     {
       "id": "post-matriculation-credits-transfer",
       "label": "30 credits after matriculation",
       "explanation": "For transfer students, credits earned as a degree-seeking student at a regionally accredited college count toward the 30, so all transfer coursework counts here; exam credit does not. This reading of the catalog sentence has not been confirmed by the Registrar.",
       "sourceQuote": "or, for transfer students, at a regionally accredited college or university",
-      "sourceRef": { "slug": "degree-requirements-tab-credit-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "credits", "n": 30, "filter": { "provenance": ["pomona", "claremont", "abroad", "transfer"] }, "includeExternal": false, "caps": { "externalCredits": 16 } },
-      "overlapPolicy": { "kind": "allowAll" },
-      "appliesWhen": { "studentType": ["transfer"] },
+      "sourceRef": {
+        "slug": "degree-requirements-tab-credit-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "credits",
+        "n": 30,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "claremont",
+            "abroad",
+            "transfer"
+          ]
+        },
+        "includeExternal": false,
+        "caps": {
+          "externalCredits": 16
+        }
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
+      "appliesWhen": {
+        "studentType": [
+          "transfer"
+        ]
+      },
       "confidence": "draft"
     },
     {
@@ -167,29 +430,47 @@
       "label": "16 credits at Pomona",
       "explanation": "At least 16 credits earned at Pomona College or on a Pomona-approved external study program. The catalog lets Claremont Colleges courses apply with advisor approval; this tool does not count them automatically, so record an attestation if your advisor has approved them. The four-semester and final-semester residency rules are shown as advisories.",
       "sourceQuote": "At least 16 course credits must be earned, and at least four semesters spent in residence, at Pomona College or at a Pomona-approved external study program.",
-      "sourceRef": { "slug": "degree-requirements-tab-credit-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "credits", "n": 16, "filter": { "provenance": ["pomona", "abroad"] }, "includeExternal": false },
-      "overlapPolicy": { "kind": "allowAll" },
-      "attestable": { "prompt": "My advisor has approved Claremont Colleges courses toward the residency requirement and, counting them, I have at least 16 qualifying credits." },
+      "sourceRef": {
+        "slug": "degree-requirements-tab-credit-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      },
+      "rule": {
+        "kind": "credits",
+        "n": 16,
+        "filter": {
+          "provenance": [
+            "pomona",
+            "abroad"
+          ]
+        },
+        "includeExternal": false
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      },
+      "attestable": {
+        "prompt": "My advisor has approved Claremont Colleges courses toward the residency requirement and, counting them, I have at least 16 qualifying credits."
+      },
       "confidence": "draft"
-    },
-    {
-      "id": "gpa",
-      "label": "Minimum 2.00 GPA",
-      "explanation": "An overall grade point average of at least 2.00 over letter-graded courses at Pomona, the other Claremont Colleges and Pomona programs abroad. CR/NC, P/NP and transfer grades are not included.",
-      "sourceQuote": "In order to graduate, a student must attain an overall Pomona College grade point average of at least 2.00 (C).",
-      "sourceRef": { "slug": "degree-requirements-tab-grade-point-average-requirement", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" },
-      "rule": { "kind": "gpa", "min": 2.0, "scope": "overall" },
-      "overlapPolicy": { "kind": "allowAll" }
     }
   ],
   "constraints": [
     {
       "kind": "distinctDepartments",
-      "requirementIds": ["area-1", "area-2", "area-3", "area-4", "area-5", "area-6"],
+      "requirementIds": [
+        "area-1",
+        "area-2",
+        "area-3",
+        "area-4",
+        "area-5",
+        "area-6"
+      ],
       "explanation": "The six Breadth areas must be satisfied by courses from six different departments. Dance, Music, Theatre and Media Studies offer courses in both Area 1 and Area 6, so two courses from one of them cannot cover both.",
       "sourceQuote": "No two Breadth areas can be fulfilled with courses from the same department or program.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     }
   ],
   "advisories": [
@@ -198,49 +479,80 @@
       "label": "Breadth timing",
       "text": "The College encourages finishing the six Breadth areas in the first two years.",
       "sourceQuote": "Students are encouraged to fulfill the Breadth of Study requirements within the first two years.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     },
     {
       "id": "pe-first-year",
       "label": "PE timing",
       "text": "One PE activity course is expected during the first year.",
       "sourceQuote": "Students are expected to pass one physical education activity course during their first year.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     },
     {
       "id": "writing-intensive-timing",
       "label": "Writing Intensive timing",
       "text": "The Writing Intensive course is expected before the seventh semester and after Critical Inquiry. This tool does not check the order.",
       "sourceQuote": "and are expected to do so before the seventh semester.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     },
     {
       "id": "residency-semesters",
       "label": "Residency",
       "text": "At least four semesters in residence, with the final semester of the senior year on the Pomona campus. Term-sequence rules are not checked in this version.",
       "sourceQuote": "The final semester of the senior year must be taken in residence on the Pomona campus.",
-      "sourceRef": { "slug": "degree-requirements-tab-credit-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-credit-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     },
     {
       "id": "eight-semester-limit",
       "label": "Eight semesters",
       "text": "Students are expected to graduate after eight semesters; needing more requires a petition to the Academic Procedures Committee by the last week of the seventh semester.",
       "sourceQuote": "Students are expected to graduate at the completion of eight academic semesters at the College.",
-      "sourceRef": { "slug": "degree-requirements-tab-credit-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-credit-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     },
     {
       "id": "ge-credit-no-credit",
       "label": "Grading",
       "text": "GE requirements may be taken Credit/No Credit where the course allows it. Courses that also count for a major usually need a letter grade.",
       "sourceQuote": "General Education Requirements may be completed on a Credit/No Credit basis, so long as Credit/No Credit grading is not prohibited for a specific course, as indicated in the course schedule.",
-      "sourceRef": { "slug": "degree-requirements-tab-degree-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-degree-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     },
     {
       "id": "critical-inquiry-grade",
       "label": "Critical Inquiry grade",
       "text": "Below a C- in Critical Inquiry means probation in the second semester and an extra writing-intensive course by the end of sophomore year.",
       "sourceQuote": "Students who receive below a C-minus grade in the Critical Inquiry seminar are put on probation for the second semester of the first year.",
-      "sourceRef": { "slug": "degree-requirements-tab-general-education-requirements", "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T" }
+      "sourceRef": {
+        "slug": "degree-requirements-tab-general-education-requirements",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
+    },
+    {
+      "id": "gpa",
+      "label": "Minimum grade point average",
+      "text": "A cumulative grade point average of at least 2.00 is required to graduate. GradGuide does not check this, which is why it never asks you for your grades. Your GPA is on your official record in the portal.",
+      "sourceQuote": "In order to graduate, a student must attain an overall Pomona College grade point average of at least 2.00 (C).",
+      "sourceRef": {
+        "slug": "degree-requirements-tab-grade-point-average-requirement",
+        "url": "https://catalog.pomona.edu/pages/D3W4Xk0UrEr5WCruEh1T"
+      }
     }
   ]
 }
