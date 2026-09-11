@@ -6,9 +6,9 @@ Do not edit by hand — edit the task files and regenerate.
 | ID | Status | Owner | Round | Last verdict | Title |
 |---|---|---|---|---|---|
 | TASK-030 | REVIEW | frontend | 2 | APPROVED | Engine round 2 — assignment attribution, gpa scope, optional terms and grades, bounded evaluation |
-| TASK-031 | REVIEW | frontend | 0 | — | Light default, v1 palette, family hues, and the four visual defects from round 1 |
-| TASK-032 | REVIEW | frontend | 0 | — | Record v1 — codes are the only required input, collapsed record, transcript paste |
-| TASK-033 | REVIEW | frontend | 0 | — | Requirement map — twelve nodes in three families above the fold, denser audit, quotes on expand |
+| TASK-031 | REVIEW | frontend | 1 | APPROVED | Light default, v1 palette, family hues, and the four visual defects from round 1 |
+| TASK-032 | REVIEW | frontend | 1 | CHANGES_REQUIRED | Record v1 — codes are the only required input, collapsed record, transcript paste |
+| TASK-033 | REVIEW | frontend | 1 | APPROVED | Requirement map — twelve nodes in three families above the fold, denser audit, quotes on expand |
 | TASK-010 | READY | backend | 2 | APPROVED | Pipeline scaffold and Coursedog catalog ingestion into data/catalog.json |
 | TASK-011 | READY | backend | 2 | APPROVED | Registrar GE CSV parser, cross-source GE validator, exclusion-anomaly report |
 | TASK-012 | READY | backend | 2 | APPROVED | Hyperschedule sections and offering-history ingestion; merge non-Pomona courses into the catalog |

@@ -199,3 +199,65 @@ and the ledger reach main.
 **When gating TASK-030, be sceptical of F-13c specifically** (manager's own flag): a
 rule that quietly returns "agree" for everything passes F-13 and F-13b. F-13c must
 show the constraint discriminating, not suppressing.
+
+---
+
+# STATE AS OF 2026-09-11 (v1 gate complete)
+
+## READ THIS FIRST IF YOUR CONTEXT WAS COMPACTED
+**ADR-022: re-invoke the four frontend-review skills after a compaction.** The
+rule is per session and per new domain, NOT per round — but an invocation you
+cannot recall is a memory of guidance, not guidance. Skills invoked this session
+(round 1, before the first visual review), and they governed every round since:
+`ecc:browser-qa`, `frontend-design:frontend-design`, `ui-ux-pro-max:ui-ux-pro-max`,
+`ecc:make-interfaces-feel-better`, plus `ecc:contract-first`, `ecc:security-review`,
+`superpowers:verification-before-completion` (before every verdict).
+
+## My standing process rules (learned the hard way this session)
+1. **Re-run every measurement I publish, regardless of severity.** L-9 was a
+   subagent measurement I shipped without re-running. It happened to be right.
+2. **Mark each finding self-measured or relayed.** Marking D-15's unverified half
+   redirected an investigation that would otherwise have applied the wrong fix.
+3. **Check which code path a fixture exercises before filing "AC unmet".** I
+   nearly filed one on ADR-013 after mutating a comparator F-06 never reaches.
+4. **I do not write task frontmatter** (ADR-021). Status is the worker's; my
+   verdict is the row in `docs/review/rounds.md`, surfaced by INDEX's Last verdict.
+5. **Ask rather than decide on audited protocol questions** (ADR-022 came from this).
+
+## The instrument (part of the criterion, ADR-017)
+Headless Chrome I launch myself, driven over **raw CDP** — NOT the
+chrome-devtools MCP, which is disconnected in this session:
+`/Applications/Google Chrome.app/.../Google Chrome --headless=new
+--remote-debugging-port=9333 --user-data-dir=<scratch>`
+then `Emulation.setDeviceMetricsOverride` and **read `innerWidth`/`innerHeight`
+back from the page**. A macOS window resize floors near 500px and fakes both axes.
+Helper: `scratchpad/lib.mjs`. AC-V02/V03 are measured at **1440x800**.
+
+## Verdicts issued (ledger is docs/review/rounds.md — the source of truth)
+- Round 1: TASK-010..013, 020, 025 CHANGES_REQUIRED; 021..024 APPROVED.
+- Round 2: TASK-030 APPROVED; TASK-010..013 APPROVED.
+- v1 gate: TASK-031 APPROVED, TASK-033 APPROVED, **TASK-032 CHANGES_REQUIRED**.
+
+## OPEN — what a release gate still needs
+1. **V1-H1 (TASK-032, High).** AC-V07: a malformed line is silently dropped.
+   Measured: two lines, one valid + one OCR-corrupted (`CSCl O51 PO`) -> preview
+   says "1 course understood" with no rejection. AC-V07 now requires three-bucket
+   accounting (accepted / rejected-with-reason / consumed-as-context) and zero
+   unaccounted. **Not yet fixed** — frontend's only commit since my gate (3305119)
+   touches evidence images and status files, not the parser.
+2. **TASK-034** — F-15 (D-13: each sharing site independently guarded), D-14
+   (stale phase-1 comment), D-17 (desktop map wrap).
+3. **H-6, the Registrar question.** 19 courses carry `Measure Values = 2`. The
+   pipeline records it and changes nothing, which is right, but a student who
+   closed PE with one of them is still told they owe another. **Owner must ask
+   the Registrar.** The only open finding that changes a student-visible answer.
+4. **AC-B07** — unverifiable: this repo has no git remote, so the nightly
+   workflow has never run (D-11/D-12).
+
+## Re-gate rule I am using (see note sent to the manager)
+A task sitting at REVIEW is NOT automatically re-gateable: after a
+CHANGES_REQUIRED I do not touch status (ADR-021), so it stays REVIEW. Gate only
+when the owning branch has commits **newer than my last ledger row** for that
+task and they touch the code the finding names. Otherwise a re-gate refiles the
+same finding, and protocol 21's recurrence rule would push it to a spurious
+ESCALATE.
