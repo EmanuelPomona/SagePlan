@@ -761,3 +761,53 @@ D-12    19 courses listed in data/reports/pe-double-credit.md
 - I did not re-measure the senior-exercise figure against the registrar export
   (the reviewer's 18-in-range/2-PO); the criterion now names the catalog
   population, so that is the one I measured.
+
+---
+
+## HANDOFF-5 — agent/backend — 2026-09-11 (AC-B03 predicate ruled)
+
+### Summary
+The predicate conflict I flagged in HANDOFF-4 is ruled: **`credits.min < 1`**, with
+variable-credit cases **counted** as a labelled sub-group rather than excluded.
+Implemented and re-measured. This is the only outstanding backend item, so
+TASK-010..013 now have nothing open on my side.
+
+### What changed
+`exclusionAnomalies` keys on `credits.min < 1` again — "may be taken at partial
+credit", not "is always partial". The deciding fact, which the manager verified
+rather than assumed: **none of the six Area rules carries `partialCredit: exclude`**,
+by design, because the Registrar has already applied the catalog's exclusions when
+tagging. That makes the tag load-bearing, so the case worth surfacing is exactly
+the one where trusting it misleads — a variable-credit course counted toward an
+Area at half credit.
+
+Both sub-groups are now counted and each row is labelled, so the owner can tell
+the two apart without losing either from the total.
+
+### AC-B03 baseline, re-measured under the ruling
+```
+Population: affiliation "PO" in the finished catalog — 2004 of 2980
+
+9 anomalies
+  partial credit, non-Area-6 Area tag (always partial) ............. 5
+  senior exercise (190-199) with an Area tag ....................... 2
+  partial credit, non-Area-6 Area tag (may be taken at partial) .... 1   GEOL 189V PO
+  two areas ........................................................ 1   THEA 085 PO
+```
+One more than HANDOFF-4's 8, which is the row the ruling was about.
+
+### Verification
+```
+typecheck 0 · lint 0 · build 0 · seed 0 · pipeline:all 0 · contract-test 0
+387 tests (374 pipeline + 13 shared), 0 failures
+```
+
+### What Was NOT Verified
+- **AC-B07 / D-11** — the workflow has still never executed anywhere. `git remote -v`
+  is empty; `actionlint` and `act` are absent. Owner action, untouched by instruction.
+- **D-12** remains an open question, not a fix. A student who satisfied PE with one
+  of the nineteen double-credit courses is still told they owe another — recorded
+  in `data/reports/pe-double-credit.md` rather than silently wrong.
+- `--from-csv` column names are still unverified against a real catalog UI export.
+- The three client-rendered catalog pages still cannot be verified live; the
+  committed-snapshot gate covers their quotes offline (34 quotes, 0 failures).

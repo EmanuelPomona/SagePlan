@@ -10,10 +10,11 @@ brief's measurement of 2,811 raw Coursedog records, which is a different
 population from this 12-campus catalog, and three independent measurements of
 "the same" check produced three different answers.
 
-**8** anomaly/anomalies.
+**9** anomaly/anomalies.
 
-- partial credit with a non-Area-6 Area tag: **5**
+- partial credit with a non-Area-6 Area tag (always partial): **5**
 - senior exercise (190–199) with an Area tag: **2**
+- partial credit with a non-Area-6 Area tag (may be taken at partial credit): **1**
 - two areas: **1**
 
 ## How to resolve
@@ -26,22 +27,27 @@ these are fixed upstream or accepted as genuine exceptions — not patched in co
 
 | Course | Title | Credits | Attributes | Anomaly | Tagged by |
 |---|---|---|---|---|---|
-| CHEM 150 PO | Adv. Synthesis Lab | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | coursedog |
-| CHEM 165 PO | Adv. Biochemistry Lab | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | coursedog |
+| CHEM 150 PO | Adv. Synthesis Lab | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag (always partial) | coursedog |
+| CHEM 165 PO | Adv. Biochemistry Lab | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag (always partial) | coursedog |
 | ENGL 195 PO | Criticism: Advanced Methods | 1 | AREA_1 | senior exercise (190–199) with an Area tag | both |
-| ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag | both |
+| ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag (always partial) | both |
 | ENGL 195B PO | Literary Crit: Advd Methods II | 0.5 | AREA_1 | senior exercise (190–199) with an Area tag | both |
-| GRMT 180H PO | Germany Black and White | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag | both |
-| PHYS 072 PO | Introduc Electricity & Magnetism | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag | both |
+| GEOL 189V PO | Research Methodologies, Geology | 0.5–1 | AREA_4 | partial credit with a non-Area-6 Area tag (may be taken at partial credit) | both |
+| GRMT 180H PO | Germany Black and White | 0.5 | AREA_1 | partial credit with a non-Area-6 Area tag (always partial) | both |
+| PHYS 072 PO | Introduc Electricity & Magnetism | 0.5 | AREA_4 | partial credit with a non-Area-6 Area tag (always partial) | both |
 | THEA 085 PO | Advanced Lighting Design | 1 | AREA_1, AREA_6 | two areas | registrar |
 
-## Variable-credit courses (reported, NOT counted above)
+## Variable-credit sub-group (counted above, listed again here)
 
-AC-B03 specifies `credits.max < 1`, so a course offered at 0.5-1 credits is not
-in the headline count. Reviewer H-4 called that predicate a bug, because a
-student MAY take such a course at half credit, at which point the Area-6-only
-rule bites. Listed here so the finding is not lost; the manager decides whether
-to fold them into the criterion.
+These are the `credits.min < 1` cases that are NOT always partial — a course
+offered at, say, 0.5-1 credits. They are included in the count above; this
+section exists so the owner can tell "always partial" from "may be taken at
+partial credit" at a glance, because the two need different conversations.
+
+Why they count: the engine applies no partial-credit exclusion of its own, so
+the Registrar's tag is load-bearing. A variable-credit course carrying an Area
+tag can be counted toward that Area at half credit, which is precisely where
+trusting the tag could produce a wrong answer (reviewer H-4).
 
 | Course | Title | Credits | Attributes |
 |---|---|---|---|

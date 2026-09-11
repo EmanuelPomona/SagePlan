@@ -87,18 +87,29 @@ describe("partial-credit detection follows AC-B03's stated predicate", () => {
     catalogYear: "2026-2027", sourceUrl: "https://catalog.pomona.edu/x", lastVerified: "2026-09-08T00:00:00Z",
   });
 
-  // AC-B03 (ADR-020) specifies credits.max < 1, which is the predicate reviewer
-  // H-4 called a bug. The contract wins for the headline count, but the H-4 case
-  // still reaches the report in its own section rather than disappearing.
-  test("does not COUNT a 0.5-1 course, per the stated predicate", () => {
-    expect(checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]).check.count).toBe(0);
+  // AC-B03 as ruled: credits.min < 1 — "may be taken at partial credit". The
+  // engine applies no partial-credit exclusion of its own, so the Registrar tag
+  // is load-bearing and a variable-credit course counted toward an Area at half
+  // credit is exactly where trusting it misleads (reviewer H-4).
+  test("COUNTS a 0.5-1 course carrying a non-Area-6 Area tag", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]).check.count).toBe(1);
   });
 
-  test("still REPORTS a 0.5-1 course, so the H-4 finding is not lost", () => {
-    const { report, check } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]);
+  test("labels it 'may be taken at partial credit', not 'always partial'", () => {
+    const { report } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]);
     expect(report).toContain("GEOL 189V PO");
-    expect(report).toContain("Variable-credit courses");
-    expect(check.summary).toContain("variable-credit");
+    expect(report).toContain("may be taken at partial credit");
+    expect(report).toContain("Variable-credit sub-group");
+  });
+
+  test("labels an always-partial course differently", () => {
+    const { report } = checkExclusionAnomalies([ranged(0.5, 0.5, ["AREA_4"])]);
+    expect(report).toContain("always partial");
+  });
+
+  test("the sub-group is counted, not excluded from the total", () => {
+    const both = checkExclusionAnomalies([ranged(0.5, 0.5, ["AREA_4"]), ranged(0.5, 1, ["AREA_2"])]);
+    expect(both.check.count).toBe(2);
   });
 
   test("a 0.5-1 course whose only Area is Area 6 is not reported either way", () => {

@@ -46,18 +46,25 @@ export function checkExclusionAnomalies(
     if (c.id.courseNumber >= 190 && c.id.courseNumber <= 199 && areas.length > 0) {
       rows.push({ key, title: c.title, credits, attributes, kind: "senior exercise (190–199) with an Area tag", source });
     }
-    // AC-B03 specifies `credits.max < 1` — always-partial-credit courses.
-    if (c.credits.max < 1 && areas.some((a) => a !== "AREA_6")) {
-      rows.push({ key, title: c.title, credits, attributes, kind: "partial credit with a non-Area-6 Area tag", source });
-    }
-    // Reported SEPARATELY, not folded into the count above. Reviewer H-4 called
-    // `credits.max < 1` a bug because it skips a 0.5-1 course such as
-    // GEOL 189V PO (AREA_4), which a student MAY take at half credit. AC-B03 as
-    // restated specifies `max`, so `max` is what the headline count uses — but
-    // dropping the H-4 case entirely would silently lose a reviewer finding, so
-    // it gets its own section and the manager can fold it in or not.
-    if (c.credits.max >= 1 && c.credits.min < 1 && areas.some((a) => a !== "AREA_6")) {
-      variableCredit.push({ key, title: c.title, credits, attributes, kind: "variable credit, may be taken at partial credit", source });
+    // AC-B03: `credits.min < 1` — "may be taken at partial credit", not "is
+    // always partial". The engine applies no partial-credit exclusion of its own
+    // (none of the six Area rules carries `partialCredit: exclude`, by design,
+    // because the Registrar has already applied the catalog's exclusions when
+    // tagging). That makes the tag load-bearing, so the case worth surfacing is
+    // the one where trusting it could produce a wrong answer: GEOL 189V PO at
+    // 0.5-1 credits carrying AREA_4, counted toward an Area at half credit.
+    // Both sub-groups are COUNTED; they are labelled so the owner can tell
+    // "always partial" from "may be partial" at a glance.
+    if (c.credits.min < 1 && areas.some((a) => a !== "AREA_6")) {
+      const alwaysPartial = c.credits.max < 1;
+      const row = {
+        key, title: c.title, credits, attributes, source,
+        kind: alwaysPartial
+          ? "partial credit with a non-Area-6 Area tag (always partial)"
+          : "partial credit with a non-Area-6 Area tag (may be taken at partial credit)",
+      };
+      rows.push(row);
+      if (!alwaysPartial) variableCredit.push(row);
     }
     if (areas.length > 1) {
       rows.push({ key, title: c.title, credits, attributes, kind: "two areas", source });
@@ -100,13 +107,17 @@ export function checkExclusionAnomalies(
     "|---|---|---|---|---|---|",
     ...rows.map((r) => `| ${r.key} | ${r.title} | ${r.credits} | ${r.attributes} | ${r.kind} | ${r.source} |`),
     "",
-    "## Variable-credit courses (reported, NOT counted above)",
+    "## Variable-credit sub-group (counted above, listed again here)",
     "",
-    "AC-B03 specifies `credits.max < 1`, so a course offered at 0.5-1 credits is not",
-    "in the headline count. Reviewer H-4 called that predicate a bug, because a",
-    "student MAY take such a course at half credit, at which point the Area-6-only",
-    "rule bites. Listed here so the finding is not lost; the manager decides whether",
-    "to fold them into the criterion.",
+    "These are the `credits.min < 1` cases that are NOT always partial — a course",
+    "offered at, say, 0.5-1 credits. They are included in the count above; this",
+    "section exists so the owner can tell \"always partial\" from \"may be taken at",
+    "partial credit\" at a glance, because the two need different conversations.",
+    "",
+    "Why they count: the engine applies no partial-credit exclusion of its own, so",
+    "the Registrar's tag is load-bearing. A variable-credit course carrying an Area",
+    "tag can be counted toward that Area at half credit, which is precisely where",
+    "trusting the tag could produce a wrong answer (reviewer H-4).",
     "",
     ...(variableCredit.length === 0
       ? ["_None._", ""]

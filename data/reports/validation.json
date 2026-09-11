@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T23:17:14.132Z",
+  "generatedAt": "2026-09-11T23:21:39.377Z",
   "generator": "@gradguide/pipeline@0.1.0 validate",
   "checks": [
     {
@@ -33,16 +33,17 @@
     {
       "id": "exclusion-anomalies",
       "status": "warn",
-      "summary": "8 exclusion anomaly/anomalies across 2004 PO courses; 1 variable-credit course(s) reported separately",
-      "count": 8,
+      "summary": "9 exclusion anomaly/anomalies across 2004 PO courses; 1 variable-credit course(s) reported separately",
+      "count": 9,
       "details": [
-        "CHEM 150 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
-        "CHEM 165 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
+        "CHEM 150 PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_4)",
+        "CHEM 165 PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_4)",
         "ENGL 195 PO: senior exercise (190–199) with an Area tag (AREA_1)",
-        "ENGL 195B PO: partial credit with a non-Area-6 Area tag (AREA_1)",
+        "ENGL 195B PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_1)",
         "ENGL 195B PO: senior exercise (190–199) with an Area tag (AREA_1)",
-        "GRMT 180H PO: partial credit with a non-Area-6 Area tag (AREA_1)",
-        "PHYS 072 PO: partial credit with a non-Area-6 Area tag (AREA_4)",
+        "GEOL 189V PO: partial credit with a non-Area-6 Area tag (may be taken at partial credit) (AREA_4)",
+        "GRMT 180H PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_1)",
+        "PHYS 072 PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_4)",
         "THEA 085 PO: two areas (AREA_1, AREA_6)"
       ]
     },

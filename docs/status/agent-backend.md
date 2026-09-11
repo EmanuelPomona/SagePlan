@@ -5,11 +5,13 @@ ADR-020 follow-ups done: AC-B03 re-measured against its now-stated population
 (2004 PO courses, 8 anomalies, not 3 and 10); D-12's nineteen double-credit PE
 courses listed; AC-B04 asserted by tests. H-5 ruled not-a-defect, H-6 deferred to
 D-12 pending the Registrar, AC-B07 is owner action D-11.
-OPEN FOR THE MANAGER: AC-B03 specifies credits.max < 1, the exact predicate
-reviewer H-4 called a bug. I implemented the contract and report the H-4 case
-(GEOL 189V PO) separately rather than retire the finding silently.
+AC-B03's predicate is ruled: credits.min < 1, variable-credit counted as a
+labelled sub-group. Implemented and re-measured: 9 anomalies across 2004 PO
+courses. NOTHING OUTSTANDING on backend's side. Open elsewhere: D-11 (AC-B07,
+owner must create a remote) and D-12 (Registrar must say what Measure Values = 2
+means); neither is mine to close.
 Round: 2
-Last updated: 2026-09-11T23:16:59Z
+Last updated: 2026-09-11T23:21:24Z
 
 ## Skills invoked so far
 - `ecc:backend-patterns` @ before structuring packages/pipeline -> confirmed the
