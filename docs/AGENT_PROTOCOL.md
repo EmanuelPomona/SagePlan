@@ -72,11 +72,12 @@ Do not claim a skill from memory. If you cannot see the invocation in your own
 | `docs/API.md` + `docs/openapi.yaml` | manager (backend proposes) | the request/response contract |
 | `docs/DATABASE.md` | manager (backend proposes) | schema, entities, relationships |
 | `docs/ACCEPTANCE.md` | manager | what "done" means |
-| `docs/tasks/*.md` | manager | task definition, acceptance criteria, round count |
+| `docs/tasks/*.md` | manager | task definition, acceptance criteria |
 | `docs/DECISIONS.md` | manager | ADRs for cross-cutting decisions |
 | `docs/handoffs/<branch>.md` | that branch's agent | integration information for consumers |
 | `docs/status/<branch>.md` | that branch's agent | durable working state (section 20) |
 | `docs/review/` | reviewer | verification evidence (section 22) |
+| `docs/review/rounds.md` | reviewer | the `round` counter — source of truth (section 21) |
 | `docs/DEBT.md` | reviewer | accepted, unfixed findings |
 
 **Read only what your role needs.** Each agent definition lists its own read set.
@@ -377,8 +378,16 @@ file. A summarized context is not evidence.
 
 ## 21. LOOP CONTROL
 
-Every task carries a `round` counter in its `docs/tasks/<id>.md` frontmatter. The
-reviewer increments it on each verdict.
+Every task carries a `round` counter. It lives in **`docs/review/rounds.md`**, the
+reviewer-owned ledger, and the reviewer appends a row per verdict.
+
+It used to live in each task's frontmatter, where it could not survive: section 21
+makes the reviewer the incrementer, section 3 makes `docs/tasks/*.md`
+manager-owned, and section 15 keeps the reviewer on a branch that
+`scripts/integrate.sh` did not merge. Every increment was stranded, `main` read
+`round: 0` for tasks already gated, and the escalation safeguard below could never
+fire. `scripts/integrate.sh` now merges `agent/reviewer` last, and
+`scripts/tasks.sh` reads the ledger for `docs/tasks/INDEX.md` (ADR-019).
 
 - **Rounds 1-2:** normal verdicts.
 - **Round 3:** `CHANGES_REQUIRED` is no longer available. The reviewer must issue

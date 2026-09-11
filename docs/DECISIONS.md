@@ -342,6 +342,46 @@ The owner: "People might not want to manually change the semester from fall and 
 - **Newest edition wins** — pros: mechanical, needs no report; cons: measured to be wrong for 55 courses in the one way this product must never be wrong. Why not: the data says the newest edition is emptier.
 - **Make validator 3 warn-only** — pros: simplest; cons: then nothing ever catches an upstream regression in GE tagging. Why not: a guard with a sane baseline is better than no guard.
 
+### Amendment, 2026-09-11 — placeholder exclusion is an exact-key denylist, never a pattern
+
+Closing reviewer M-5 completely required one more record, `THEA 007 PO`
+("repeat test course"), which is Active upstream and escapes the exact rule.
+Both mechanical rules that would catch it were measured against the shipped
+catalog and both destroy real data:
+
+| Candidate rule | What it deletes |
+|---|---|
+| `title contains "test"` | six real courses, five carrying GE attributes, including `ENGL 170R PO` (`AREA_1` + `WRITING_INTENSIVE`) |
+| `department === "PREG"` | 13 real Associated Kyoto Program courses (`AKP 001-019 PO`), 93% of that department |
+
+The two fail in different ways, and the distinction is the reason the standing
+rule below is worded as it is.
+
+- The **substring rule silently changes an answer.** Five of its six casualties
+  carry GE attributes and `ENGL 170R PO` carries two, so a student who took it
+  would be told they still owe both an Area 1 and their Writing Intensive. This
+  is the load-bearing example.
+- The **department rule over-matches into real data** without changing a
+  verdict. Corrected on the reviewer's challenge, and measured: none of the 13
+  `AKP` courses carries a GE attribute, and `provenance` is a property of the
+  student's plan entry rather than of the catalog course, so a student who did
+  Kyoto could still enter them by hand as `abroad` and the residency requirement
+  would still count them. The harm is 13 courses forced down the manual entry
+  path, on a release whose entire purpose is removing entry friction. Real, and
+  a different kind of defect from a wrong answer.
+
+An earlier draft of this amendment claimed the department rule would have broken
+the residency requirement outright. It would not have, and the claim is removed:
+a standing rule is strongest when every harm cited for it is exactly what was
+measured, and the evidence was in the verification output at the time.
+
+**Decision:** placeholder exclusion is `department === "TEST"`, `title` beginning
+`DNR:`, non-Active status, **and an exact-`courseKey` denylist**
+(`data/catalog-denylist.json`, created by backend under AC-B00) with a reason per
+entry, its first entry `THEA 007 PO`. A denylist cannot over-match by construction and every addition
+is a visible diff. Everything else suspicious is reported for the owner, never
+guessed at. **No pattern rule may be added to catch a single record.**
+
 ### Consequences
 - Positive: the catalog is honest about what a course is; a whole class of silent `unmet` answers is prevented; the divergence report becomes the artifact the Registrar courtesy review is built on rather than a number nobody can act on.
 - Negative: three acceptance criteria change after the fact (AC-B01, AC-P09, and the new AC-B00), which is the cost of having specified them from a brief figure rather than from the data.
@@ -374,3 +414,103 @@ Checking the reviewer's arithmetic turned up something neither of us had written
 - Positive: four criteria that could have been argued about after a worker round are now settled before one. The instrument is agreed between the agent that builds to it and the agent that gates on it, which is the whole point of writing it down.
 - Negative: the criteria are longer and read as pedantic. That is the correct trade at this stage.
 - Process: **a reviewer challenging criteria before implementation is the cheapest review in the project.** Publish criteria to the reviewer for challenge before dispatching workers to build against them.
+
+---
+
+## ADR-018 — The pessimistic pass may only consider values the unknown field could actually take
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, resolving agent/frontend's contract change request of 2026-09-11
+
+### Context
+`docs/API.md` 2.7 said the pessimistic pass treats an unknown term "in the way least favourable", and then claimed most students would see no `unverifiable` row. The frontend implemented the first sentence, measured the second, and found they contradict: under the literal rule `sinceMatriculation` reads an unknown term as mode-dependent, so for `post-matriculation-credits` (n=30) the optimistic pass counts every course and the pessimistic counts none.
+
+Measured on golden F-13 — which *is* the ADR-015 default record, the F-01 student with nothing but course codes:
+
+```
+F-13 vs F-01: 16 of 17 requirements identical
+CHANGED post-matriculation-credits  partial -> unverifiable
+  "Add the term to ANTH 025 PO, ARTH 051 PO, BIOL 041 PO and CHEM 051 PO, and 16 more so this can be checked."
+```
+
+So the record ADR-015 exists to create produced a row telling the student to go back and enter twenty terms, and it collided with AC-V06 ("a plan consisting only of course codes produces a correct audit"), which is the criterion the whole v1 record design rests on. Both the frontend and the reviewer verified this independently.
+
+### Decision
+Add a constraint rule to 2.7: **the pessimistic pass may only consider values the unknown field could actually take, given everything else known about the course.** Exploring impossible values produces `unverifiable` answers to questions that were never in doubt.
+
+For `sinceMatriculation`, `provenance` constrains the term. A `pomona`, `claremont` or `abroad` course cannot predate matriculation — and this is not a convenient assumption, it is the College's own categorisation. The catalog's Advanced Standing page reads: *"Advanced Standing credit includes … college credits completed prior to admission and matriculation to Pomona College or other college or university as a regular, degree-seeking undergraduate."* Pre-matriculation college work is posted as advanced standing or transfer credit, so it reaches the plan as an `ExternalCredit` or as `provenance: transfer`, never as unmarked Pomona coursework. So only `provenance: transfer` leaves an unrecorded term genuinely unknown.
+
+**TASK-030's bounded test is what gives, not AC-V06 and not 2.7's promise.** Its discriminator — "a student with AP credit and every term null goes unverifiable" — was unsatisfiable: `post-matriculation-credits` sets `includeExternal: false`, so exam credit never enters that sum and cannot distinguish anything. The corrected discriminator is provenance, and F-13 is split into three fixtures so the mechanism stays falsifiable: F-13 (all rows match F-01), F-13b (PE terms unknown → one `unverifiable`), F-13c (a transfer course with no term → one `unverifiable`, naming only that course).
+
+### Alternatives considered
+- **Drop 2.7's "most students are unaffected" promise and accept the row** — cons: it is the row ADR-015 was written to delete, on the record v1 is designed to produce. Why not: it would make AC-V06 false and hand the student back the data entry we just removed.
+- **Exclude unknown-term courses from `sinceMatriculation` entirely** — cons: silently understates progress, and understating is still guessing. Why not: 2.7 exists precisely to avoid deciding what we do not know.
+- **Ask for the matriculation term again when a term is missing** — cons: reintroduces the profile question ADR-015 removed, for a rule most students never come near. Why not: the constraint already answers it.
+
+### Consequences
+- Positive: 2.7's promise becomes true rather than aspirational; AC-V06 is satisfiable; the refinement is *more* correct than the literal rule, because the literal rule explored a state the Registrar's own categories exclude.
+- Negative: the pessimistic pass is now provenance-aware, which is one more thing to hold in mind when a future rule kind lands. The rule is stated generally so the next case has a principle to follow rather than a precedent to copy.
+- Risks: a student with genuine pre-matriculation Pomona coursework entered as `provenance: pomona` would be over-counted. That path requires the Registrar to have posted it as Pomona rather than advanced-standing credit, which their published policy says they do not do; and recording the term corrects it.
+
+### Process note
+The frontend implemented the contract as written, measured the consequence, prototyped the refinement, measured that, and **backed it out** when it contradicted `docs/ACCEPTANCE.md` — then raised the conflict rather than shipping its preference. That is exactly the behaviour ADR-017 was written to encourage, and it is the second time this project's spec has been corrected by someone running it rather than reading it.
+
+---
+
+## ADR-019 — The round counter moves to a reviewer-owned ledger, and integration merges the reviewer
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's structural finding
+
+### Context
+The reviewer measured the same task across all four branches:
+
+```
+TASK-010   agent/reviewer: round=1   agent/backend: round=0   agent/frontend: round=0   main: round=0
+TASK-020   agent/reviewer: round=1   agent/frontend: round=0                            main: round=0
+```
+
+Its round-1 increments existed only on `agent/reviewer`. Three reasonable protocol rules combine to guarantee that: section 21 makes the reviewer the incrementer, section 3 makes `docs/tasks/*.md` manager-owned, and `scripts/integrate.sh` merges backend, frontend and slice branches but **never `agent/reviewer`**. So `main` read `round: 0` for tasks already gated once, every future verdict would re-increment from zero, and section 21's safeguard — `CHANGES_REQUIRED` unavailable at round 3, forcing `ESCALATE` — could never fire. The fix loop had no terminator.
+
+The counter is the visible symptom of a larger defect: **nothing the reviewer produces reaches `main`.** The screenshot evidence in `docs/review/`, which protocol section 22 makes the difference between a verified claim and an asserted one, and `docs/DEBT.md`, the accepted-findings ledger, were stranded on the same unmerged branch.
+
+### Decision
+1. The counter moves to **`docs/review/rounds.md`**, a reviewer-owned append-only ledger — one row per verdict, never edited in place. This removes the cross-branch write into a manager-owned file entirely and puts loop control with the role that owns it, which is the reviewer's own preferred option of the three it offered.
+2. **`scripts/integrate.sh` merges `agent/reviewer` last**, after the workers, when the commits it merged for review are already present so only reviewer-authored work is added. A conflict outside `docs/review/`, `docs/DEBT.md` and verdicts means the reviewer edited something it does not own, and the script says so.
+3. `scripts/tasks.sh` reads the ledger for `docs/tasks/INDEX.md`, falling back to frontmatter where the ledger has no row. Protocol sections 3 and 21 are updated.
+
+### Alternatives considered
+- **Integration pulls task frontmatter from `agent/reviewer`** — cons: `docs/tasks/*.md` is `merge=union` in `.gitattributes`, so a union merge of YAML frontmatter produces duplicate keys. Why not: it would corrupt the files it is trying to update.
+- **The manager transcribes `round` on receiving each verdict** — cons: manual, and this manager has already demonstrated the failure mode by leaving two contract change requests unrouted. Why not: a safeguard that depends on my remembering is not a safeguard.
+
+### Consequences
+- Positive: the escalation safeguard can fire; review evidence and accepted debt reach `main`; `INDEX.md` on `main` now correctly shows round 1 for the ten gated tasks.
+- Negative: `round:` remains in task frontmatter, now unread. It is left in place rather than stripped from seventeen files while both workers have those files open; strip it at the next quiet point.
+- Risk: merging the reviewer's branch brings its review-time merges of worker branches. Ordering it last makes those no-ops, and `integrate.sh` stops on conflict.
+
+---
+
+## ADR-020 — Round-2 rulings: entry is not retention, and three criteria measured against the wrong population
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/backend's round-2 handoff and contract change request
+
+### Entry is not retention (a fourth over-matching near-miss)
+`docs/API.md` said non-Pomona courses "enter only through the Hyperschedule merge, i.e. it has at least one section in an ingested term." Backend read that as a **retention** rule and pruned courses with no section in an ingested term. Measured: **72 courses deleted, 37 carrying GE attributes**, including `AFRI 010 AF` (`AREA_3` + `ANALYZING_DIFFERENCE`) and `CHST 055 CH` — a course AC-B00 explicitly names as one that must survive. Backend's own acceptance test caught it and the prune was removed.
+
+The rule now says, in both `docs/API.md` and AC-B00: **this governs entry and nothing else; no course is ever removed from the catalog for not being offered.** Sections cover the terms ahead; a student's record reaches years back. Deleting a course because it does not run next spring makes the engine answer `unmet` for a requirement already satisfied.
+
+This is the **fourth** over-match to hit the same file in one day — title substring, department, and now offering — each looking reasonable and each destroying real data. The standing rule from ADR-016 holds and is worth restating in its general form: **any rule that removes data must be measured against the whole catalog before it ships, and must state whether it governs entry or retention.**
+
+### H-6, `Measure Values = 2`: no contract change, because we do not know what it means
+Backend verified that the Registrar export carries `2` on nineteen Physical Education rows, that the pivot's `>= 1` rule is the only reason AC-B02's PE count of 241 holds (a literal `=== "1"` gives 222), and that `Course` cannot express a per-course attribute weight. It proposed an optional `attributeWeights` field.
+
+**Deferred, not rejected on merit.** Backend verified only that the export *says* `2`, not what `2` *means* — plausibly "counts as two PE courses", plausibly a two-credit course, plausibly an artefact of the Tableau pivot. Adding a contract field to model a meaning nobody has confirmed is the same failure as encoding a guessed rule: it would look authoritative and be untestable. The catalog is also unhelpful here, since it says the requirement is "two physical education activity courses **in different semesters**", which one course cannot be whatever its weight.
+
+So: the `>= 1` rule is documented and tested, the nineteen courses are listed in a report, and **what `2` means joins the Registrar courtesy-review questions** alongside the GE divergence shapes. If the answer is "counts as two", `attributeWeights` is the right shape and it is additive with no `schemaVersion` bump, exactly as proposed.
+
+### Three criteria measured against the wrong population
+- **AC-B03** hardcoded "3 senior exercises, 10 non-Area-6 partial-credit" from the project brief's measurement of 2,811 raw Coursedog records. The finished catalog is a different, 12-campus, 2,980-course population; backend measured 4 and 6, the reviewer measured 18-in-range/2-PO from the export. Three measurements of "the same" check, three answers, because they are three populations. The criterion now **states its population** and records the counts as a baseline, and says outright not to tune the validator to reach a number. Backend deliberately did not bend it, which was right.
+- **AC-B04** required `sections-SP2027.json` (reviewer H-5). Verified against `/v4/term/all` on 2026-09-11: **SP2027 is not published.** Spring schedules appear shortly before spring registration — which is also when the "What satisfies this?" term filter becomes useful, so nothing is lost. A requested term upstream does not carry is now warned and skipped, not failed.
+- **AC-B07** cannot be verified anywhere: `git remote -v` is empty, so the repository exists only on this machine and the nightly workflow has never executed; `actionlint` and `act` are absent too. This is an **owner action** (create the remote and push), recorded in `docs/DEBT.md` as unverified rather than failed. The reviewer records BLOCKED on it, never APPROVED.
+
+### Consequences
+- Positive: three criteria that were unmeetable for reasons unrelated to the work are now measurable; a 37-course data-loss bug was caught before integration by the worker's own test.
+- Negative: AC-B07 stays open until the owner creates a remote, so one acceptance criterion cannot close on this machine.
