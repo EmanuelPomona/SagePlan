@@ -76,7 +76,8 @@ Do not touch `packages/shared` (it is already changed) or `apps/web`.
 ## Tests to write first
 
 1. `assignment.test.ts` — **write this one so it fails under the old rule.** With `AMST 110 PO` (Area 3 + AD) and `HIST 101 PO` (Area 3 only): assert `area-3 <- HIST 101 PO` and `analyzing-difference <- AMST 110 PO` by exact `satisfiedBy`, and assert `HIST 101 PO` is used. Then assert that an assignment ranked by the superseded rule would not satisfy the assertion (a comment is not enough — implement the old ranking in the test as a local function and assert it produces the wrong attribution).
-2. `bounded.test.ts` — two PE courses, terms null: `unverifiable` with both course keys in the note. The same two with distinct terms: `satisfied`. A student with no external credit and every term null: `total-credits` and `post-matriculation-credits` return the same status as with terms present. A student **with** AP credit and every term null: `post-matriculation-credits` is `unverifiable`.
+2. **`bounded.test.ts` must be falsifiable.** A golden that records only the cases where the two passes agree cannot distinguish a working implementation from one that never runs the pessimistic pass, and the failure mode this whole mechanism exists to prevent — silently assuming in the student's favour — is exactly the one such a golden hides. So, as with F-06's tie-break: **neutralise the pessimistic pass inside the test** (stub it to return the optimistic result) and assert the outcome changes. If it does not change, the mechanism is vestigial and the test is decoration. The reviewer will apply this technique independently; it is cheaper to build it in.
+   Then the cases: two PE courses, terms null: `unverifiable` with both course keys in the note. The same two with distinct terms: `satisfied`. A student with no external credit and every term null: `total-credits` and `post-matriculation-credits` return the same status as with terms present. A student **with** AP credit and every term null: `post-matriculation-credits` is `unverifiable`.
 3. `grades.test.ts` — `grade: null` counts as passed; `grade: "F"` does not; `grade: "IP"` does not.
 4. `golden.test.ts` — F-13 asserts every area, overlay and language status equals F-01's.
 
@@ -95,6 +96,7 @@ Do not touch `packages/shared` (it is already changed) or `apps/web`.
 
 - Skills: `superpowers:systematic-debugging` before touching the assignment ranking (it is the subtlest code in the project), `superpowers:test-driven-development` for every module here, `superpowers:requesting-code-review`, `superpowers:verification-before-completion`.
 - Performance: bounded evaluation doubles the work only when something is unknown. Short-circuit to a single pass when `ctx.unknowns` is empty, and say in the handoff what the evaluation time is for a 32-course plan in both cases.
+- **Also close reviewer finding L-9 while you are in the fixtures:** F-03b is specified in `docs/ACCEPTANCE.md` to assert the ADR-007 correction — that an **IB Language A exam at Standard Level with a 6 or 7 satisfies the language requirement while earning no credit** — but the fixture as built does not contain such an entry, so the correction is untested. The brief said "IB SL never qualifies"; the catalog says that is true for credit and false for Language A, and that distinction is currently resting on nothing.
 - Your round-1 CCR is resolved in ADR-014 — read it before starting; the manager accepted your proposal 1 and rejected proposal 2, with reasons.
 
 ## Review History

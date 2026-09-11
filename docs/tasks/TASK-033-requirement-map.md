@@ -85,7 +85,7 @@ TASK-032.
 ## Acceptance Criteria
 
 - [ ] AC-V01, AC-V02, AC-V03, AC-V04, AC-V09, AC-V10, AC-V11 in `docs/ACCEPTANCE.md`, each with the evidence it names.
-- [ ] **AC-V02 is a measurement, not an impression:** at exactly 1440x900 with the F-01 demo plan, paste the pixel offset of the map's bottom edge and show it is under 900.
+- [ ] **AC-V02 is a measurement, and the instrument is part of it** (ADR-017, amended after the reviewer flagged the ambiguity): a **1440x800 viewport** set with CDP `Emulation.setDeviceMetricsOverride`, never a window resize, with `window.innerWidth`/`innerHeight` read back from the page and pasted as proof. A macOS window resized to 1440x1000 reports `innerHeight` 823, so "1440x900" measured as a window is a different and stricter test than measured as a viewport. 800 is the target because a 1440x900 display leaves roughly 765-800px of viewport after the menu bar and browser chrome — the owner's actual laptop is the only place this matters.
 - [ ] **AC-V03 is a measurement:** paste the measured height of a collapsed row (target <= 40px, was 57) and of the map (target <= 320px).
 - [ ] AC-P02 still holds: the verbatim quote is one click from every claim, in the expanded row.
 - [ ] Responsive: at 768 the three families stack two-up or wrap sensibly; at 390 they stack in one column and every node stays >= 44px in its tappable dimension. Screenshots at all three widths.
