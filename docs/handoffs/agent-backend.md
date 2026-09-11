@@ -515,3 +515,299 @@ known-good sentinel course is present.
 ### Commit
 `b14d3cb` (review fixes), on `1acb4e6`, `a44ed99`, `fd5cc06`, `e3a87d8`,
 `ef81a0f`, `d162e78`. Branch `agent/backend`, no remote.
+
+---
+
+## CONTRACT CHANGE REQUEST — H-6 — double-credit PE courses — 2026-09-11
+
+The manager asked: "tell me what the spec should say and I will change it."
+Three separate things are wrong; only the third needs a contract change.
+
+### 1. `docs/tasks/TASK-011.md` "Upstream facts" is factually wrong — fix the prose
+
+**Says:** "`Measure Values` is `0`/`1`", and the test list says `Measure Values "0"
+rows add nothing`.
+
+**Measured in the committed export:** `{"0": 27857, "1": 969, "2": 19}`. All
+nineteen 2s are `Physical Education`, on full-credit dance and PE courses —
+`DANC012 PPO`, `DANC050/051`, `DANC120/122/124`, `DANC150C PO`, `DANC175/176 PO`,
+`THEA053HG PO`, `MSL 099 CM`, `PE 077E/080 PO`.
+
+**Should say:** "`Measure Values` is `0`, `1` or `2`. `0` means the measure does
+not apply. `1` means it does. `2` appears only on `Physical Education` and marks a
+course the Registrar counts as **two** PE courses. AC-B02's `PE 241` only holds if
+`2` counts as present; a literal `=== "1"` reading gives 222."
+
+No code change: `pivot.ts` already tests `>= 1`, which is why AC-B02 passes. It is
+now covered by a test and a comment that name the value-2 case explicitly, which
+is what was missing.
+
+### 2. The multiplicity is then discarded — and this one produces a wrong answer
+
+`pivotRegistrar` yields `Set<GeAttribute>`, so `DANC 012` becomes "has
+PHYSICAL_EDUCATION" exactly like a single-credit PE course. The GE rule is
+`{kind:"attribute", attr:"PHYSICAL_EDUCATION", n:2, distinctTerms:true}`, and
+`distinctTerms` makes it structurally impossible for one course to close both
+halves. **A student who satisfied PE with one double-credit dance course is told
+they still owe another.**
+
+### 3. What the contract should say — three options, with a recommendation
+
+`Course` has no way to express a per-course attribute weight. `attribute` rules
+carry `unit: "courses" | "credits"` but that describes the RULE, not the course.
+
+| Option | Change | Cost |
+|---|---|---|
+| **A (recommended)** | Add `attributeWeights?: Partial<Record<GeAttribute, number>>` to `Course`, defaulting to 1. The engine counts `weight` instead of 1 per assignment, and `distinctTerms` applies per *assignment*, not per course. | One optional field; additive, so no `schemaVersion` bump. Engine change is small and local to the `attribute` evaluator. |
+| B | Encode the nineteen courses as a `courseSet` exception inside the GE program JSON. | Keeps the contract still, but puts a data fact in a requirement — and ADR rule 2 says requirements are data, not that data is requirements. It also does not generalise if another attribute ever doubles. |
+| C | Drop `distinctTerms` for PE. | Wrong for the right reason: the constraint exists so a student cannot close PE in one term with two ordinary courses. Removing it to fix nineteen courses breaks the rule for all 241. |
+
+**Recommended: A.** It is additive, it says the true thing (this course is worth
+two PE courses), and it leaves `distinctTerms` doing its real job.
+
+**Blocked on the Registrar either way.** I have verified *that* the export says 2;
+nobody has confirmed what the Registrar MEANS by it. Encode it
+`confidence: draft` until they answer — this is exactly the case that field exists
+for. I have not implemented any of the three options.
+
+**Scope note:** the fix spans `packages/shared` (the `Course` field),
+`packages/engine` (the `attribute` evaluator, frontend's), and this pipeline
+(populating the weight). It is not mine to make unilaterally.
+
+---
+
+## HANDOFF-3 — agent/backend — 2026-09-11 (round 2)
+
+### Summary
+Round-2 fixes against ADR-016/ADR-017 and the reviewer's round-1 findings.
+M-5 (first priority), H-2, H-3, H-4, M-4 and L-7/L-10 are closed. H-5 is a
+product decision, not code. H-6 has a CONTRACT CHANGE REQUEST above, as asked.
+
+**The most important thing in this handoff is a defect I introduced and removed.**
+Implementing AC-B00 I also pruned non-PO courses with no section in an ingested
+term, reading ADR-016's "non-Pomona courses enter only via a section in an
+ingested term" as a retention rule. Measured against the real catalog, that
+deleted **72 courses, 37 of them carrying GE attributes** — `AFRI 010 AF`
+(AREA_3 + ANALYZING_DIFFERENCE), `CHST 028 CH` (AREA_3 + SPEAKING_INTENSIVE), and
+`CHST 055 CH`, which AC-B00 names explicitly as a course that must survive. Entry
+and retention are not the same thing: sections cover upcoming terms, a student's
+record reaches years back, and deleting a course they already took makes the
+engine answer `unmet` for a requirement they satisfied. I removed the prune. That
+is the third instance of this trap in one round — the `test` substring, the `PREG`
+department, and this — and it is the one that was mine.
+
+### Tasks Completed (round 2 fixes)
+- **M-5 / AC-B00** — membership is enforced by `src/placeholders.ts` for BOTH
+  writers of `catalog.json`, so it cannot hold on one source and lapse on the
+  other, which is how M-5 happened. Rules are exactly ADR-016's and no wider:
+  non-Active status, `id.department === "TEST"`, title beginning `DNR:`, plus an
+  exact-courseKey denylist (`data/catalog-denylist.json`, seeded with
+  `THEA 007 PO`). No pattern rule catches a single record. Anything else that
+  merely looks like a placeholder is reported and kept.
+- **H-2 / AC-B01** — the floor is the pinned predicate: courses with
+  `id.affiliation === "PO"` in the finished catalog after every exclusion,
+  floor 1,900. **Measured 2,004.**
+- **AC-B01b** — exclusion ceiling of 25; **5 dropped today**. This is the guard
+  that catches a filter eating real courses; the floor never would, since
+  deleting six of 2,005 still clears 1,900.
+- **H-3 / AC-P09** — divergences carry a SHAPE, not a restatement. Seven shapes,
+  each with a count, a sample showing both sides, and one sentence on which
+  source is likelier right and why that follows from the shape.
+  **Unclassified: 0**, and a non-zero unclassified count now fails the validator.
+- **H-4 / AC-B03** — `exclusionAnomalies` tested `credits.max < 1`, skipping
+  0.5–1 courses; `GEOL 189V PO` (0.5–1, AREA_4) never reached the report. Keyed
+  on `credits.min` now.
+- **M-4** — `PIPELINE_MAX_DIVERGENCES` defaults to 300 per ADR-016, so
+  `pipeline:all` completes under its own documented default; the hard-coded
+  `"300"` is gone from the workflow, which now inherits it.
+- **L-7** — `1P1..1P10` were allowlisted as "PE activity codes". False: of the 123
+  FA2026 sections carrying a `1P<digit>` code, **122 carry no `1PE`**, and they sit
+  on Art History and Art courses. The allowlist was manufacturing validator 4's
+  "0 unrecognised codes". Reported with counts now; `1DDP` stays allowlisted.
+- **L-10** — a garbled `Measure Values` is still coerced to absent (the safe
+  direction) but is now counted, so a format change cannot pass as a silent pile.
+- **L-1 / L-6** — this handoff. Figures below are re-measured, not restated.
+
+### Files Changed
+`packages/pipeline/src/placeholders.ts` (new), `validators/divergenceCategory.ts`
+(new), `data/catalog-denylist.json` (new), `test/acceptance.catalog.test.ts` (new),
+`test/placeholders.test.ts` (new), plus `commands/{catalog,sections}.ts`,
+`validators/{geAgreement,exclusionAnomalies}.ts`, `hyperschedule/geCodes.ts`,
+`registrar/parseCsv.ts`, `env.ts`, `.github/workflows/pipeline.yml`, `/data`.
+Not touched: `packages/shared`, `docs/API.md`, `docs/ACCEPTANCE.md`,
+`docs/DECISIONS.md`, `data/programs/`, `docs/tasks/INDEX.md`.
+
+### Contracts
+Unchanged. One OPEN request above (H-6). `data/catalog-denylist.json` is a new
+pipeline input, hand-maintained, one exact key per line with a reason.
+
+### Verification
+Run fresh, immediately before this handoff, with no work after it.
+```
+typecheck 0 · lint 0 · build 0 · seed 0 · pipeline:all 0 · contract-test.sh 0
+npm test  -> 373 tests (360 pipeline + 13 shared), 0 failures
+
+AC-B01  (pinned predicate)            2004 PO courses      floor 1900   PASS
+AC-B01b exclusions                    5 excluded           ceiling 25   PASS
+AC-B00  department TEST               0                                 PASS
+AC-B00  titles beginning DNR:         0                                 PASS
+AC-B00  THEA 007 PO present           False (exact-key denylist)        PASS
+AC-B00  AKP courses surviving         13                                PASS
+AC-B00  ENGL 170R PO attributes       ['AREA_1', 'WRITING_INTENSIVE']   PASS
+AC-P09  unclassified divergences      0   (282 total, 7 shapes)         PASS
+AC-B04  FA2026 sections               2163                 floor 2000   PASS
+AC-B05  offering history              1414                 floor 1400   PASS
+
+ge-divergences.md shapes:
+  area-only-in-registrar 139 | missing-from-registrar-export 47
+  missing-from-catalog 25 | overlay-only-in-coursedog 23
+  overlay-only-in-registrar 23 | mixed 22 | area-only-in-coursedog 3
+```
+
+### What Was NOT Verified
+- **AC-B07 remains unverified.** No git remote, no `actionlint`, no `act`; the
+  workflow has still never executed. Structure reviewed only.
+- **H-5 (SP2027) is untouched** — upstream still 404s, `upcomingTerms` is
+  `["FA2026"]`. The reviewer called it a product decision and I agree; there is
+  no code fix, and I have not invented one.
+- **H-6 is NOT implemented** — contract request only, and it needs the Registrar
+  to confirm what `Measure Values = 2` means before anyone encodes it.
+- **AC-B03's hardcoded figures still do not reproduce.** The AC wants "3 senior
+  exercises, 10 non-Area-6 partial-credit". After the `credits.min` fix I measure
+  **4 senior exercises and 6 partial-credit** against the 2,980-course catalog. The
+  reviewer independently got different numbers again from the registrar export
+  (18 in range, 2 PO). The three populations differ, so the AC's figures need
+  re-measuring against a named source rather than the validator being bent to hit
+  them. **Flagging, not fixing** — the AC is the manager's.
+- `--from-csv` column names are still unverified against a real UI export.
+- The three client-rendered catalog pages still cannot be verified live.
+
+### Known Issues
+- `validate-artefacts.ts` under-reports its own coverage (reviewer L-4). It is in
+  `packages/shared`, which I do not own — left alone deliberately.
+
+---
+
+## HANDOFF-4 — agent/backend — 2026-09-11 (ADR-020 follow-ups)
+
+### Summary
+The two items ADR-020 assigned back to me are done: AC-B03 re-measured against the
+population it now states, and D-12's nineteen courses listed. AC-B04's restatement
+needed no code change — the behaviour was already warn-and-skip — but it is now
+asserted by tests rather than only described. D-11/AC-B07 is an owner action and I
+have not spent further time on it, as instructed.
+
+**One conflict to flag, because I implemented the contract over the reviewer.**
+
+### AC-B03 — re-measured, and a predicate conflict
+The criterion now states its population, which is what made the old figures
+irreproducible. Measured against it:
+
+```
+Population: courses with affiliation "PO" in the finished catalog — 2004 of 2980
+
+8 anomalies
+  partial credit with a non-Area-6 Area tag ... 5
+  senior exercise (190-199) with an Area tag ... 2
+  two areas .................................... 1   (THEA 085 PO)
+```
+Not 3 and 10. The validator was not tuned; the report states the population at the
+top, as the criterion requires.
+
+**The conflict:** AC-B03 as restated specifies `credits.max < 1`. That is the exact
+predicate reviewer H-4 called a bug — it skips `GEOL 189V PO` (0.5–1, `AREA_4`),
+a course a student MAY take at half credit, at which point the Area-6-only rule
+bites. I had changed it to `credits.min < 1` in round 2 on H-4's authority.
+
+I have implemented **the contract, not my previous fix**: the headline count uses
+`credits.max < 1`. But dropping the H-4 case entirely would silently retire a
+reviewer finding, so variable-credit courses are listed in their own section of
+the report, explicitly not counted. `GEOL 189V PO` is the only one today. **The
+manager decides whether to fold them in**; a one-word change to the criterion and
+a one-line change to the validator either way.
+
+### D-12 — the nineteen double-credit PE courses
+`data/reports/pe-double-credit.md` now lists them, with the question stated rather
+than answered: `Measure Values` is 0/1/2, all nineteen 2s are Physical Education,
+`pivot` tests `>= 1` which is the only reason AC-B02's `PE 241` holds (a literal
+`=== "1"` gives 222), and what `2` MEANS is unconfirmed. The report also records
+the manager's point that the catalog requires two PE courses *in different
+semesters*, which no weight makes one course satisfy — so the natural reading
+cannot simply be applied. The pipeline records the fact and changes nothing.
+
+### AC-B04 — no code change, now asserted
+Behaviour already matched the restatement. Added tests: every `upcomingTerms`
+entry has a file, `upcomingTerms` equals the set of sections files exactly,
+SP2027 is absent rather than fatal, and FA2026 carries ≥ 2,000 sections.
+Measured: `upcomingTerms ["FA2026"]`, sections files `["FA2026"]`.
+
+### Verification
+```
+typecheck 0 · lint 0 · build 0 · seed 0 · pipeline:all 0 · contract-test 0
+385 tests (372 pipeline + 13 shared), 0 failures
+
+AC-B03  population stated (2004 PO of 2980); 8 anomalies; GEOL 189V PO reported
+        separately as variable-credit, not counted
+AC-B04  upcomingTerms ["FA2026"] == sections files ["FA2026"]; FA2026 2163 sections
+D-12    19 courses listed in data/reports/pe-double-credit.md
+```
+
+### What Was NOT Verified
+- **AC-B07 / D-11** — untouched by instruction. The workflow has still never run.
+- **D-12 is recorded, not resolved.** A student who satisfied PE with one
+  double-credit dance course is still told they owe another. That is now a known
+  and documented wrong answer rather than a silent one, which is the most the
+  pipeline can honestly do before the Registrar answers.
+- I did not re-measure the senior-exercise figure against the registrar export
+  (the reviewer's 18-in-range/2-PO); the criterion now names the catalog
+  population, so that is the one I measured.
+
+---
+
+## HANDOFF-5 — agent/backend — 2026-09-11 (AC-B03 predicate ruled)
+
+### Summary
+The predicate conflict I flagged in HANDOFF-4 is ruled: **`credits.min < 1`**, with
+variable-credit cases **counted** as a labelled sub-group rather than excluded.
+Implemented and re-measured. This is the only outstanding backend item, so
+TASK-010..013 now have nothing open on my side.
+
+### What changed
+`exclusionAnomalies` keys on `credits.min < 1` again — "may be taken at partial
+credit", not "is always partial". The deciding fact, which the manager verified
+rather than assumed: **none of the six Area rules carries `partialCredit: exclude`**,
+by design, because the Registrar has already applied the catalog's exclusions when
+tagging. That makes the tag load-bearing, so the case worth surfacing is exactly
+the one where trusting it misleads — a variable-credit course counted toward an
+Area at half credit.
+
+Both sub-groups are now counted and each row is labelled, so the owner can tell
+the two apart without losing either from the total.
+
+### AC-B03 baseline, re-measured under the ruling
+```
+Population: affiliation "PO" in the finished catalog — 2004 of 2980
+
+9 anomalies
+  partial credit, non-Area-6 Area tag (always partial) ............. 5
+  senior exercise (190-199) with an Area tag ....................... 2
+  partial credit, non-Area-6 Area tag (may be taken at partial) .... 1   GEOL 189V PO
+  two areas ........................................................ 1   THEA 085 PO
+```
+One more than HANDOFF-4's 8, which is the row the ruling was about.
+
+### Verification
+```
+typecheck 0 · lint 0 · build 0 · seed 0 · pipeline:all 0 · contract-test 0
+387 tests (374 pipeline + 13 shared), 0 failures
+```
+
+### What Was NOT Verified
+- **AC-B07 / D-11** — the workflow has still never executed anywhere. `git remote -v`
+  is empty; `actionlint` and `act` are absent. Owner action, untouched by instruction.
+- **D-12** remains an open question, not a fix. A student who satisfied PE with one
+  of the nineteen double-credit courses is still told they owe another — recorded
+  in `data/reports/pe-double-credit.md` rather than silently wrong.
+- `--from-csv` column names are still unverified against a real catalog UI export.
+- The three client-rendered catalog pages still cannot be verified live; the
+  committed-snapshot gate covers their quotes offline (34 quotes, 0 failures).

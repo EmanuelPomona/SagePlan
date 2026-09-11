@@ -88,12 +88,20 @@ describe("unknown Pomona GE codes reach the validation report", () => {
     expect(check.details.join(" ")).toContain("1ZZZ");
   });
 
-  test("known non-attribute Pomona codes are not reported as unknown", () => {
+  test("1DDP, whose meaning is established, is not reported as unknown", () => {
     const { check } = checkHyperscheduleAttributes(
       [course("CSCI", 51, "PO", ["AREA_5"])],
-      [section("CSCI", 51, "PO", ["1A5", "1DDP", "1P3"])],
+      [section("CSCI", 51, "PO", ["1A5", "1DDP"])],
     );
     expect(check.count).toBe(0);
+  });
+
+  test("a 1P<digit> code IS reported, because its meaning was never established", () => {
+    const { check } = checkHyperscheduleAttributes(
+      [course("CSCI", 51, "PO", ["AREA_5"])],
+      [section("CSCI", 51, "PO", ["1A5", "1P3"])],
+    );
+    expect(check.details.join(" ")).toContain("1P3");
   });
 });
 

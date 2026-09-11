@@ -10,7 +10,7 @@ describe("readEnv", () => {
     expect(env.coursedogOrigin).toBe("https://catalog.pomona.edu");
     expect(env.hyperscheduleBaseUrl).toBe("https://banana.hyperschedule.io");
     expect(env.terms).toEqual(["FA2026", "SP2027"]);
-    expect(env.maxDivergences).toBe(25);
+    expect(env.maxDivergences).toBe(300);
   });
 
   test("takes overrides from the environment", () => {
@@ -25,7 +25,7 @@ describe("readEnv", () => {
   });
 
   test("ignores a non-numeric PIPELINE_MAX_DIVERGENCES rather than producing NaN", () => {
-    expect(readEnv({ PIPELINE_MAX_DIVERGENCES: "many" }).maxDivergences).toBe(25);
+    expect(readEnv({ PIPELINE_MAX_DIVERGENCES: "many" }).maxDivergences).toBe(300);
   });
 });
 

@@ -233,3 +233,70 @@ describe("runSections refreshes non-Pomona courses", () => {
     expect(catalog.courses.find((c) => courseKey(c.id) === "AFRI 010A PO")!.title).toBe(poCourse.title);
   });
 });
+
+describe("AC-B00 catalog membership (ADR-016)", () => {
+  const placeholder = (dept: string, title: string, aff: string): Course => ({
+    ...poCourse,
+    id: { department: dept, courseNumber: 1, suffix: "", affiliation: aff },
+    title,
+  });
+
+  test("drops a TEST-department course that arrived before the rule existed", async () => {
+    seedCatalog([poCourse, placeholder("TEST", "Test Course-Disregard", "PZ")]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    expect(catalog.courses.some((c) => c.id.department === "TEST")).toBe(false);
+  });
+
+  test("drops a DNR: course", async () => {
+    seedCatalog([poCourse, placeholder("REG", "DNR: Add No Restrictions", "SC")]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    expect(catalog.courses.some((c) => /^DNR:/i.test(c.title))).toBe(false);
+  });
+
+  test("writes catalog-excluded.md naming what it dropped and why", async () => {
+    seedCatalog([poCourse, placeholder("TEST", "Test Course-Disregard", "PZ")]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const report = readFileSync(join(dir, "data", "reports", "catalog-excluded.md"), "utf8");
+    expect(report).toContain("TEST 001 PZ");
+    expect(report).toContain("ADR-016");
+  });
+
+  test("KEEPS a non-PO course not offered this term — a student may have taken it", async () => {
+    // Measured: pruning these removed 72 courses, 37 carrying GE attributes.
+    // "Enter only via a section" is an entry rule, not a retention rule.
+    const past: Course = {
+      ...poCourse,
+      id: { department: "AFRI", courseNumber: 10, suffix: "", affiliation: "AF" },
+      title: "Intro to Africana Studies", attributes: ["AREA_3", "ANALYZING_DIFFERENCE"],
+    };
+    seedCatalog([poCourse, past]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    const kept = catalog.courses.find((c) => courseKey(c.id) === "AFRI 010 AF");
+    expect(kept).toBeDefined();
+    expect(kept!.attributes).toEqual(["AREA_3", "ANALYZING_DIFFERENCE"]);
+  });
+
+  test("never prunes a Pomona course, which comes from Coursedog not from sections", async () => {
+    seedCatalog([poCourse]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    expect(catalog.courses.some((c) => courseKey(c.id) === "AFRI 010A PO")).toBe(true);
+  });
+
+  test("keeps a suspicious-but-unnamed course and flags it in the report", async () => {
+    seedCatalog([poCourse, { ...poCourse, id: { department: "THEA", courseNumber: 7, suffix: "", affiliation: "PO" }, title: "repeat test course" }]);
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(json(sectionsFixture)));
+    await runSections(["FA2026"], { env: env(), fetchImpl, minSections: 1 });
+    const catalog = CatalogArtefactSchema.parse(JSON.parse(readFileSync(join(dir, "data", "catalog.json"), "utf8")));
+    expect(catalog.courses.some((c) => courseKey(c.id) === "THEA 007 PO")).toBe(true);
+    expect(readFileSync(join(dir, "data", "reports", "catalog-excluded.md"), "utf8")).toContain("THEA 007 PO");
+  });
+});

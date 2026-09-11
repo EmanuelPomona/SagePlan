@@ -38,7 +38,11 @@ const DEFAULTS = {
   HYPERSCHEDULE_BASE_URL: "https://banana.hyperschedule.io",
   PIPELINE_TERMS: "FA2026,SP2027",
   REGISTRAR_GE_CSV: "data/sources/registrar-ge-export-2026-09-08.csv",
-  PIPELINE_MAX_DIVERGENCES: "25",
+  // 300, ratified in ADR-016 and mirrored in .env.example and docs/API.md section 4.
+  // The measured steady state is ~260 divergences across ~2,000 PO courses; a guard
+  // that fires on the steady state is not a guard. Under the old default of 25,
+  // validator 3 failed every run and pipeline:all could never write a manifest.
+  PIPELINE_MAX_DIVERGENCES: "300",
   PIPELINE_DATA_DIR: "data",
   PIPELINE_CATALOG_YEAR: "2026-2027",
 } as const;
@@ -57,7 +61,7 @@ export function readEnv(env: Record<string, string | undefined> = process.env): 
     hyperscheduleBaseUrl: pick(env, "HYPERSCHEDULE_BASE_URL"),
     terms: pick(env, "PIPELINE_TERMS").split(",").map((t) => t.trim()).filter((t) => t.length > 0),
     registrarCsvPath: fromRepoRoot(pick(env, "REGISTRAR_GE_CSV")),
-    maxDivergences: Number.isFinite(rawMax) ? rawMax : 25,
+    maxDivergences: Number.isFinite(rawMax) ? rawMax : Number(DEFAULTS.PIPELINE_MAX_DIVERGENCES),
     dataDir: fromRepoRoot(pick(env, "PIPELINE_DATA_DIR")),
     catalogYear: pick(env, "PIPELINE_CATALOG_YEAR"),
   };

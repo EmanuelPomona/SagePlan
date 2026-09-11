@@ -15,6 +15,7 @@ import { checkProvenance } from "../validators/provenance.ts";
 import { checkSourceQuotes } from "../validators/sourceQuotes.ts";
 import { checkManifest } from "../validators/manifest.ts";
 import { checkNonEmpty } from "../validators/nonEmpty.ts";
+import { doubleCreditPeReport } from "../validators/peDoubleCredit.ts";
 import { readSections } from "../readSections.ts";
 import type { FetchImpl } from "../http.ts";
 import { ValidationReportSchema } from "@gradguide/shared";
@@ -53,7 +54,14 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
   const catalog = readCatalog(env.dataDir);
   const checks: ValidationCheck[] = [];
 
-  const registrar = pivotRegistrar(parseRegistrarCsv(readFileSync(env.registrarCsvPath)));
+  const registrarRows = parseRegistrarCsv(readFileSync(env.registrarCsvPath));
+  const registrar = pivotRegistrar(registrarRows);
+
+  // D-12: record the double-weighted PE courses so the open question can be put
+  // to the Registrar with its data attached. Not a check — nothing to fail yet.
+  const pe = doubleCreditPeReport(registrarRows);
+  writeReport("pe-double-credit", pe.report, env.dataDir);
+  log("validate.pe-double-credit", { courses: pe.count, status: "open question D-12" });
   log("validate.registrar", { courses: registrar.byCourse.size, unparseable: registrar.unparseable.length });
 
   if (registrar.unparseable.length > 0) {

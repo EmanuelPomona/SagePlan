@@ -1,7 +1,24 @@
 # Hyperschedule GE codes vs catalog attributes
 
-**78** course(s) offered this term disagree between the catalog and the schedule.
-**0** unrecognised Pomona course-area code(s).
+**77** course(s) offered this term disagree between the catalog and the schedule.
+**10** unrecognised Pomona course-area code(s).
+
+## Unrecognised Pomona codes
+
+Each of these is a GE attribute being dropped from every course that carries it.
+Add it to `HYPERSCHEDULE_GE_CODES` in `packages/shared`, or to the known
+non-attribute list in `src/hyperschedule/geCodes.ts`, before the next run.
+
+- unrecognised Pomona course-area code "1P1" on 3 course(s), e.g. CHNT 168 PO, RUST 079 PO, SPAN 101 PO
+- unrecognised Pomona course-area code "1P10" on 10 course(s), e.g. PHIL 001 PO, PHIL 030 PZ, PHIL 031 PO
+- unrecognised Pomona course-area code "1P2" on 3 course(s), e.g. ASTR 001 PO, BIOL 040 PO, PSYC 160 PO
+- unrecognised Pomona course-area code "1P3" on 17 course(s), e.g. ECON 052 PO, ECON 102 PO, MATH 030 CM
+- unrecognised Pomona course-area code "1P4" on 9 course(s), e.g. ASTR 101 PO, ECON 057 PO, ECON 107 PO
+- unrecognised Pomona course-area code "1P5" on 10 course(s), e.g. ARHI 150 SC, ARHI 154 SC, ARHI 185 SC
+- unrecognised Pomona course-area code "1P6" on 12 course(s), e.g. ART 005 PO, ART 010 PO, ART 020 PO
+- unrecognised Pomona course-area code "1P7" on 11 course(s), e.g. ECON 051 PO, ECON 101 PO, LGCS 010 PO
+- unrecognised Pomona course-area code "1P8" on 2 course(s), e.g. HIST 020 PO, HIST 031 CH
+- unrecognised Pomona course-area code "1P9" on 5 course(s), e.g. HIST 017 CH, POLI 005 PO, PSYC 084 CH
 
 ## How to resolve
 
@@ -41,7 +58,6 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | ENGL 157 PO | Diaries and Daybooks | — | AREA_6, WRITING_INTENSIVE |
 | ENGL 170H PO | Latinx Lit & Cultural Critique | — | ANALYZING_DIFFERENCE, AREA_1, WRITING_INTENSIVE |
 | FREN 101 PO | From Page to Paris | AREA_1, LANGUAGE, SPEAKING_INTENSIVE, WRITING_INTENSIVE | AREA_1, SPEAKING_INTENSIVE, WRITING_INTENSIVE |
-| FREN 189B PO | After French Indochina | — | AREA_1 |
 | GEOL 179 PO | Isotopes in Earth Sciences | — | AREA_4 |
 | GWS 036 PO | Introduction to Queer Studies | — | AREA_3 |
 | GWS 143 PO | Black Genders, Black Sexualities | — | AREA_3 |

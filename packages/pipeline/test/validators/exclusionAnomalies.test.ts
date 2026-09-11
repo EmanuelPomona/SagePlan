@@ -77,3 +77,55 @@ describe("checkExclusionAnomalies with the Registrar as a second source", () => 
     expect(checkExclusionAnomalies([course("POLI", 195, ["AREA_1"])]).check.count).toBe(1);
   });
 });
+
+describe("partial-credit detection follows AC-B03's stated predicate", () => {
+  const ranged = (min: number, max: number, attrs: GeAttribute[]): Course => ({
+    id: { department: "GEOL", courseNumber: 189, suffix: "V", affiliation: "PO" },
+    title: "Field Studies", description: "", department: "GEOL",
+    credits: { min, max, repeatable: false, maxRepeats: 0 },
+    attributes: attrs, gradeMode: "", prereqText: null, prereqRule: null,
+    catalogYear: "2026-2027", sourceUrl: "https://catalog.pomona.edu/x", lastVerified: "2026-09-08T00:00:00Z",
+  });
+
+  // AC-B03 as ruled: credits.min < 1 — "may be taken at partial credit". The
+  // engine applies no partial-credit exclusion of its own, so the Registrar tag
+  // is load-bearing and a variable-credit course counted toward an Area at half
+  // credit is exactly where trusting it misleads (reviewer H-4).
+  test("COUNTS a 0.5-1 course carrying a non-Area-6 Area tag", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]).check.count).toBe(1);
+  });
+
+  test("labels it 'may be taken at partial credit', not 'always partial'", () => {
+    const { report } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_4"])]);
+    expect(report).toContain("GEOL 189V PO");
+    expect(report).toContain("may be taken at partial credit");
+    expect(report).toContain("Variable-credit sub-group");
+  });
+
+  test("labels an always-partial course differently", () => {
+    const { report } = checkExclusionAnomalies([ranged(0.5, 0.5, ["AREA_4"])]);
+    expect(report).toContain("always partial");
+  });
+
+  test("the sub-group is counted, not excluded from the total", () => {
+    const both = checkExclusionAnomalies([ranged(0.5, 0.5, ["AREA_4"]), ranged(0.5, 1, ["AREA_2"])]);
+    expect(both.check.count).toBe(2);
+  });
+
+  test("a 0.5-1 course whose only Area is Area 6 is not reported either way", () => {
+    const { report } = checkExclusionAnomalies([ranged(0.5, 1, ["AREA_6"])]);
+    expect(report).not.toContain("GEOL 189V PO");
+  });
+
+  test("does not flag a 0.5-1 course whose only Area is Area 6", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 1, ["AREA_6"])]).check.count).toBe(0);
+  });
+
+  test("still flags a flat 0.5-credit course", () => {
+    expect(checkExclusionAnomalies([ranged(0.5, 0.5, ["AREA_2"])]).check.count).toBe(1);
+  });
+
+  test("does not flag a full-credit course", () => {
+    expect(checkExclusionAnomalies([ranged(1, 1, ["AREA_2"])]).check.count).toBe(0);
+  });
+});
