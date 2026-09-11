@@ -36,3 +36,21 @@ Append a row per verdict. Never edit a past row; a task at round 3 has three row
 | TASK-031 | 1 | APPROVED | 2026-09-11 | AC-V08 met in full; reviewer D-01/D-02/D-03 all closed and re-measured |
 | TASK-033 | 1 | APPROVED | 2026-09-11 | AC-V01/V02/V03/V04/V09/V10/V11 measured and met; map 274px, rows 38px, above the fold at 1440x800 |
 | TASK-032 | 1 | CHANGES_REQUIRED | 2026-09-11 | V1-H1: AC-V07 unmet — a malformed course line is silently dropped, no rejection reported |
+**`Commit` is the owning branch's head at the moment of the verdict.** It is what
+distinguishes a fresh `REVIEW` from a task sent back and not yet picked up: gate a
+task at `REVIEW` only when its branch head differs from its last row here
+(`docs/AGENT_PROTOCOL.md` section 21, ADR-023). Rows seeded before this column
+existed carry `—`.
+
+| Task | Round | Verdict | Date | Commit | Findings |
+|---|---|---|---|---|---|
+| TASK-010 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | H-1, H-2, M-5 |
+| TASK-011 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | H-3, H-4, H-6 |
+| TASK-012 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | H-5, M-5, L-7 |
+| TASK-013 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | M-4; AC-B07 unverifiable |
+| TASK-020 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | M-1, M-2, M-3, unrouted gpa CCR |
+| TASK-021 | 1 | APPROVED | 2026-09-08 | — | M-6, M-8 advisory -> DEBT |
+| TASK-022 | 1 | APPROVED | 2026-09-08 | — | M-7 advisory -> DEBT |
+| TASK-023 | 1 | APPROVED | 2026-09-08 | — | verified live |
+| TASK-024 | 1 | APPROVED | 2026-09-08 | — | verified live |
+| TASK-025 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | AC-D02 evidence gap, not a defect |

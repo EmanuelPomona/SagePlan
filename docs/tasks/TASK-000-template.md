@@ -2,6 +2,9 @@
 id: TASK-000
 title: Task name
 status: BACKLOG        # BACKLOG | READY | IN_PROGRESS | BLOCKED | REVIEW | DONE
+                       # Worker-owned (ADR-021). After a CHANGES_REQUIRED verdict
+                       # set IN_PROGRESS on pickup, REVIEW when re-declaring, so a
+                       # stale REVIEW is never mistaken for a fresh one (ADR-023).
 owner: frontend        # frontend | backend | <slice-id>
 branch: agent/frontend
 priority: HIGH         # HIGH | MEDIUM | LOW
