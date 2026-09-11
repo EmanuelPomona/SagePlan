@@ -178,6 +178,11 @@ depend on the nightly data) evaluated against the real
 against a committed golden JSON. Determinism (`docs/API.md` §2.6) makes this
 byte-stable.
 
+**Standing rule: a golden cited as evidence for a criterion must discriminate on it.** Neutralise the rule the fixture exists to prove; the golden must change. If it does not, the fixture is not evidence for that criterion and this document must cite the unit test instead. Two ways a fixture silently fails to discriminate, both found in this project:
+
+- **Redundancy.** F-03b carried five exams granting LANGUAGE, so neutralising the IB Language A rule left the golden byte-identical (reviewer L-9).
+- **Slack.** A bounded-evaluation fixture whose optimistic and pessimistic totals fall on the *same side* of the threshold agrees by accident rather than by correctness. F-13c only discriminates at 29 Pomona credits plus 1 transfer credit against `n = 30`; with 20 and 19 both passes returned `partial` and the fixture proved nothing (frontend, 2026-09-11). **A disagreement fixture must sit on the boundary, not merely contain the ambiguous field.**
+
 | ID | Fixture | Must show |
 |---|---|---|
 | F-01 | Straightforward on-track student: 20 Pomona courses covering CI, five areas, WI, AD, one PE, every course carrying a term and a grade | those satisfied with courses named; Area 6, SI, Language unmet; PE partial (1 of 2); credits partial with correct remaining. **No GPA row exists** (ADR-015) |
@@ -196,6 +201,7 @@ byte-stable.
 | F-13 | **Unknown terms and grades** (ADR-015, ADR-018): the F-01 student with every `term` and `grade` set to `null` | **every one of the 17 rows returns the same status as F-01.** Not most of them — all of them. This is the ADR-015 default record, and a single `unverifiable` row in it is the failure the whole design exists to prevent. `grade: null` counts as passed |
 | F-13b | The same, plus two Physical Education courses whose terms are unknown | `physical-education` returns `unverifiable` naming both PE courses, because the two passes genuinely disagree and no other field constrains the answer. Every other row still matches F-01 |
 | F-13c | The same, plus one `provenance: transfer` course with no term | `post-matriculation-credits` returns `unverifiable` naming **that course only**, because a transfer course is the one kind that can genuinely predate matriculation (ADR-018). Proves the constraint rule discriminates rather than suppressing: the Pomona and Claremont courses in the same plan do not trigger it |
+| F-03c | **Isolated IB Language A** (L-9): the IB Language A SL 6-7 exam is the only thing in the plan that could satisfy Language — no other LANGUAGE-granting exam, no LANGUAGE-tagged coursework | `language` `satisfied` by the exam with 0 credits. Neutralising `ib-language-a-requirement` must flip it to `unmet`; F-03b's golden cannot do this because five exams there grant LANGUAGE |
 | F-14 | **`gpa` scope** (ADR-014): a fixture program with one `scope: "overall"` rule and one `scope: "program"` rule | `overall` evaluates; `program` returns `unverifiable` with the deferred-kind note. `packages/engine/test/fixtures/programs/fake-major.json` must use `scope: "overall"` only, so AC-P11 tests what it claims |
 
 ---
