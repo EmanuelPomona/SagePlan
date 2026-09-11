@@ -47,6 +47,51 @@ any accidental one fail loudly.
 Not part of the contract (never fetched by the app): `data/reports/*` (validator
 output for humans), `data/sources/*` (committed inputs).
 
+### Catalog membership and identity (ADR-016)
+
+**`courseKey(course.id)` is unique within `courses`.**
+
+Which upstream records become courses:
+
+- **Pomona.** Coursedog records with `status === "Active"` only. `Banked` and
+  `Inactive` records are administrative placeholders (`PE WAIVER`,
+  `REG PENDING`, `Your Course 101`), 29 of which carry no `subjectCode` at all.
+  Excluded counts are logged by status and written to `data/reports/`.
+- **The other Claremont colleges.** A course enters only through the
+  Hyperschedule merge, i.e. it has at least one section in an ingested term.
+  Records whose `department` is `TEST`, or whose title begins `DNR:`, are
+  dropped and listed in `data/reports/catalog-excluded.md` (reviewer M-5).
+  Anything else that looks like a placeholder is **reported, never silently
+  dropped** - the owner decides.
+
+**Duplicate editions.** The upstream carries several editions of one course,
+distinguished only by a year suffix on `_id`; among Active records 139 groups
+hold more than one, and 56 disagree on GE attributes. In 55 of those 56, taking
+the highest year **discards the attributes and keeps an empty record** - which
+would make the engine answer `unmet` for a requirement the student satisfied. So
+the winner is the **most complete record**, in this order:
+
+1. most GE attributes;
+2. then a non-empty `description`;
+3. then the highest `_id` edition.
+
+Discarded records are listed in `data/reports/catalog-duplicates.md`.
+
+**Attribute tokens.** Coursedog `attributes[]` entries are semicolon-delimited
+composites (`"PO Area 2 Requirement ;All Government/Politics ;Politics"`), so the
+map is keyed on the split-and-trimmed token. The complete Pomona GE vocabulary is
+twelve tokens - `PO Area 1..6 Requirement`, `PO Writing Intensive Req`,
+`PO Speaking Intensive`, `PO Analyzing Difference`, `PO Language Requirement`,
+`PO Phys Ed Requirement`, `PO Community Partnership` - plus `PO DDP Courses`,
+which is dropped exactly as Hyperschedule's `1DDP` is. A token that is known to
+be non-GE may be allowlisted **only** with a comment saying why; every token that
+is neither mapped nor allowlisted must be **reported with its count**, never
+silently dropped (reviewer D-08).
+
+A record that cannot be represented - `ENGL195B PO` has an empty `name` against
+`title: z.string().min(1)` - is dropped and counted as a normalise issue. Do not
+invent a title.
+
 ### Load order and failure states
 
 1. `GET /data/manifest.json` → parse with `ManifestSchema`. Failure (404, not
@@ -379,7 +424,7 @@ two passes above decide.
 |---|---|---|---|
 | 1 | Every fetched record parses with the shared schema; every emitted artefact re-parses | yes | first 20 issues in the log |
 | 2 | Non-empty guard: zero courses, zero sections for a requested term, or HTTP 401/403 from Coursedog | yes, **keep yesterday's files** | log |
-| 3 | Cross-source GE agreement: Coursedog `attributes` vs Registrar CSV per Pomona course; every divergence listed, neither source preferred | warn (fail if divergence count exceeds `PIPELINE_MAX_DIVERGENCES`, default 25) | `data/reports/ge-divergences.md` |
+| 3 | Cross-source GE agreement: Coursedog `attributes` vs Registrar CSV per Pomona course. Every divergence is listed **and assigned a named category**, with a count per category and which side is more likely right. Neither source is preferred | warn (fail if the count exceeds `PIPELINE_MAX_DIVERGENCES`, **default 300**). The measured steady state is ~260 of ~2,000 PO courses: the guard exists to catch a jump above the known baseline, not to fire on the baseline (ADR-016) | `data/reports/ge-divergences.md` |
 | 4 | Hyperschedule `geCodes` vs catalog `attributes` per course | warn | `data/reports/hyperschedule-attribute-diff.md` |
 | 5 | Exclusion anomalies: senior exercises (190–199) with an Area tag; partial-credit courses with a non-Area-6 Area tag; any course with two Area tags (`THEA085 PO`) | warn | `data/reports/exclusion-anomalies.md` |
 | 6 | Provenance stamping: every artefact has `meta` with `fetchedAt`, `sourceUrl`, `catalogYear` | yes | – |

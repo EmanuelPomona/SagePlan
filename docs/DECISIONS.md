@@ -315,3 +315,34 @@ The owner: "People might not want to manually change the semester from fall and 
 - Positive: the default record is *just the list of courses you took*; a 32-course plan can be pasted and read with no further input. Grades stop travelling inside share links.
 - Negative: `StudentPlan` widens (no migration needed — nothing is deployed and every existing plan still validates); the engine gains a two-pass evaluation path; fixtures F-01 and F-12 lose their GPA rows and gain F-13.
 - Risks: a student who failed a course and does not record the grade gets it counted. Mitigation: the entry surface states "assumed passed" and offers "I did not pass this" on every row.
+
+---
+
+## ADR-016 — Catalog membership, duplicate editions, and what the divergence threshold is for
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, resolving agent/backend's four-item contract change request of 2026-09-08
+
+### Context
+`agent/backend` raised a measured `CONTRACT CHANGE REQUEST` against TASK-010 before implementing, set the task `BLOCKED`, and continued with unaffected work — the protocol working exactly as intended. The manager never routed it; the reviewer reported that as H-1 and the worker's subsequent self-unblocking as a protocol violation. Four items, all measured against a live 2,811-record fetch.
+
+### Decision
+
+**Item 1 — accept.** AC-B01's "≥ 2,700 courses" was derived from the raw payload count in the project brief, which counts `Banked` (458) and `Inactive` (118) administrative placeholders: `PE WAIVER`, `REG PENDING`, `Your Course 101`, and 29 records with no `subjectCode` at all. No filter that excludes the junk reaches 2,700, so the criterion was satisfiable only by shipping junk into the autocomplete. Ingest `status === "Active"` only; the floor becomes **≥ 2,000 Active Pomona courses**; the 401/403 and zero-course hard fails are unchanged. Excluded counts are logged by status.
+
+**Item 2 — accept as proposed, verbatim.** `courseKey` is unique within `courses`; where the upstream carries several editions, the **most complete** record wins (most GE attributes, then non-empty description, then highest `_id` edition), and discards are listed in `data/reports/catalog-duplicates.md`. The intuitive "newest wins" rule discards the GE attributes on **55 of the 56 disagreeing groups**, because the 2024 edition is partial rather than newer-and-better. That would have made the engine answer `unmet` for requirements a student had actually satisfied — precisely the silent-correctness failure this project is organised around. This is the most valuable finding of the round.
+
+**Item 4 — accept the number, reject the framing.** `PIPELINE_MAX_DIVERGENCES` default rises from 25 to **300**. A guard that fires on the steady state is not a guard: the real count is ~260 across ~2,005 PO courses and always will be, because the two sources have always disagreed. But raising the threshold must not be confused with meeting AC-P09, which is a data-quality bar, not a build guard. **AC-P09 is restated**: zero *uncategorised* divergences. Every divergence carries a named category, the report totals each category and says which source is more likely right. The raw count is not a defect; an uncategorised pile is.
+
+**Item 3 — confirmed, no contract change.** The two upstream `credits` shapes are the normaliser's to absorb. The semicolon-composite `attributes[]` and its twelve-token GE vocabulary are now documented in `docs/API.md`. Dropping `ENGL195B PO` for an empty `name` and counting it is right; do not invent a title. On the guard allowlist for `All Languages` and `Physical Education`: allowlisting a **known non-GE** token with a comment is fine, but — per reviewer D-08, which found the same pattern hiding unrecognised codes on the Hyperschedule side — every token that is neither mapped nor allowlisted must be **reported with its count**, never silently dropped.
+
+**Additionally (reviewer M-5).** The Active filter applied to Coursedog only, so placeholder records still reached the catalog through the Hyperschedule merge and were reachable from the autocomplete. Non-Pomona courses enter only via a section in an ingested term; `department` `TEST` and titles beginning `DNR:` are dropped to `data/reports/catalog-excluded.md`; anything else suspicious is reported, not silently dropped.
+
+### Alternatives considered
+- **Keep 2,700 and ship the placeholders** — why not: "Registration Pending" in a course autocomplete is a nonsense entry and a nonsense denominator for "352 courses could satisfy this".
+- **Newest edition wins** — pros: mechanical, needs no report; cons: measured to be wrong for 55 courses in the one way this product must never be wrong. Why not: the data says the newest edition is emptier.
+- **Make validator 3 warn-only** — pros: simplest; cons: then nothing ever catches an upstream regression in GE tagging. Why not: a guard with a sane baseline is better than no guard.
+
+### Consequences
+- Positive: the catalog is honest about what a course is; a whole class of silent `unmet` answers is prevented; the divergence report becomes the artifact the Registrar courtesy review is built on rather than a number nobody can act on.
+- Negative: three acceptance criteria change after the fact (AC-B01, AC-P09, and the new AC-B00), which is the cost of having specified them from a brief figure rather than from the data.
+- Process: the manager not routing this request is the defect, not the worker raising it. **Integration must check every handoff for an open `CONTRACT CHANGE REQUEST` before anything else** — this is the second one this project missed (see ADR-014).
