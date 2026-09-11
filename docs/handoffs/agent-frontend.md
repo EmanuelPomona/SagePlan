@@ -821,3 +821,213 @@ divergence is visible rather than silent; rewrite it when you rule.
 **Task status.** TASK-030 is **not** blocked: the contract as written is
 implemented, tested and shipped. This is a correctness-of-experience question
 for TASK-032 and TASK-033, which is why I am raising it before building them.
+
+---
+
+## HANDOFF-5 — agent/frontend — 2026-09-11
+
+### Summary
+Round 2 of the frontend: the requirement map (TASK-033), the v1 palette and the
+four round-1 visual defects (TASK-031), the grade-free record and transcript
+paste (TASK-032), and engine round 2 (TASK-030). All four are REVIEW.
+
+The map is the page's new centrepiece and the piece the owner asked for: twelve
+nodes in three families, above the fold, with the audit rows below it and the
+catalog's own sentence one click from every claim.
+
+Every number in this handoff was measured in a browser at a proven viewport.
+None of it is asserted from source.
+
+### Tasks Completed
+
+**TASK-033 — requirement map**
+- AC-V01: twelve nodes in three labelled families (Breadth 6 / Overlays 3 /
+  Foundations 3), each showing state and, when satisfied, the satisfying course.
+  Waived requirements are not drawn. `nodeCount = 12`; `families.test.ts` pins
+  the partition and the waived cases. Evidence `F-01-desktop-1440.jpg`.
+- AC-V02: masthead + collapsed record + whole map with no scrolling at
+  1440x800. Measured, instrument included — see Verification.
+- AC-V03: collapsed row 37-38px (budget 40, was 57); map 274px (budget 320).
+- AC-V04: clicking the "Area 6" node expands that row and scrolls it into view.
+  Before `{expanded: 0, scrollY: 0, overlays: 0}`, after `expandedCount 1`,
+  `expandedRowLabel "Breadth Area 6"`, `expandedRowInViewport true`,
+  `scrollY 756`, `overlays 0`, URL unchanged. Evidence `F-14-node-click-expands.jpg`.
+- AC-V09: advisories are out of the page body and behind one footer line,
+  "Other degree rules (8)", collapsed by default. Opening it shows all 8 with
+  real content. Evidence `F-15-other-degree-rules.jpg`. **Second clause not met
+  — see CONTRACT CHANGE REQUEST below.**
+- AC-V10: all twelve nodes are `button`, all keyboard-focusable, all carrying an
+  aria-label naming requirement, status and next action. Accessibility tree
+  pasted below.
+- AC-V11: family hue appears only on family headings and their 1px brackets.
+  Status is carried by glyph + word + hue, never hue alone.
+- AC-P02: expanding "Critical Inquiry" reveals a panel headed "What the catalog
+  says" with the verbatim sentence; `.quote` count 8 -> 9. Evidence
+  `F-06-what-satisfies.jpg`.
+
+**TASK-031 / TASK-032** — light default, v1 palette, family hues, the four
+round-1 visual defects, the grade-free record, the collapsed record summary
+(39px) and transcript paste. Covered by 159 web tests including 30 over the
+transcript parser.
+
+**TASK-030** — engine round 2: attribution (ADR-013), gpa scope, optional terms
+and grades, bounded evaluation (ADR-015/018). 186 engine tests.
+
+### Files Changed
+- `apps/web/src/map/` — `families.ts`, `RequirementMap.tsx`, `RequirementNode.tsx`,
+  `AdministrativeStrip.tsx` (new)
+- `apps/web/src/audit/ProgressCount.tsx` — progress track removed
+- `apps/web/src/share/useFragmentImport.ts` — hashchange fix
+- `apps/web/src/test/useFragmentImport.test.ts` (new), `families.test.ts`
+- `apps/web/src/styles/global.css`, `tokens.css`, `apps/web/index.html`
+- `packages/engine/src/` — `assignment.ts`, `bounded.ts` (new), `filters.ts`
+- `apps/web/src/transcript/parseTranscriptText.ts`, `apps/web/src/record/`
+- `docs/review/` — 16 screenshots, `F-console.txt`
+- `docs/tasks/INDEX.md` — regenerated with `scripts/tasks.sh` (see Known Issues)
+
+### Contracts
+The engine's exported surface is unchanged: `evaluate(plan, programs, catalog)`.
+`packages/shared` was not modified — `git diff 049f55d..HEAD -- packages/shared`
+is empty.
+
+#### CONTRACT CHANGE REQUEST — Advisory has no requirement link
+- **Current shape** (`packages/shared/src/program.ts`, `AdvisorySchema`):
+  `{ id, label, text, sourceQuote, sourceRef }`.
+- **Proposed shape:** add `appliesTo: z.array(z.string()).default([])`, holding
+  requirement ids.
+- **Why:** AC-V09 requires that "each advisory that belongs to a requirement
+  appears inside that requirement's expanded row". Nothing in the data says
+  which requirement an advisory belongs to. Four of the eight clearly belong to
+  one (`critical-inquiry-grade`, `pe-first-year`, `writing-intensive-timing`,
+  `breadth-first-two-years`), but inferring that from id substrings would be a
+  guess dressed as a feature, and a wrong guess puts the wrong rule under a
+  student's requirement.
+- **What breaks without it:** AC-V09's second clause cannot be implemented. The
+  footer half is done and all eight advisories remain reachable, so nothing is
+  lost to the student; the AC simply cannot be fully met.
+- I implemented the contract as written and did not invent a linkage.
+
+### Skills Used
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `ecc:frontend-design-direction` | before any UI code (TASK-021) | set the document register and the anti-character |
+| `frontend-design:frontend-design` | before the UI, again before the map | type pairing, the margin of evidence, the map's family grouping |
+| `ui-ux-pro-max:ui-ux-pro-max` | before the UI system | row grid, four verdict states, responsive plan |
+| `design-taste-frontend` | after the map was built, as TASK-033's required critique | removed the filled progress track; rewrote the administrative strip copy; em-dash audit (no UI hits) |
+| `vercel:react-best-practices` | during the store and derived-state work | memoised evaluation, no state derived in effects |
+| `ecc:frontend-a11y` | during the audit UI | combobox semantics, aria-expanded rows, focus handling |
+| `ecc:make-interfaces-feel-better` | after the structure was right | spacing, hit areas, tabular numerals, explicit transitions |
+| `superpowers:test-driven-development` | before each logic module, and before the hashchange fix | every logic module had a watched RED first |
+| `superpowers:systematic-debugging` | the share-link defect, and earlier engine defects | found same-document navigation as the cause rather than patching the symptom |
+| `superpowers:receiving-code-review` | on the reviewer's round-1 findings | two Criticals fixed, one finding refuted with evidence |
+| `superpowers:requesting-code-review` | after round-2 verification, before this handoff | see Verification |
+| `superpowers:verification-before-completion` | immediately before this handoff | caught that my first evidence run measured the wrong state |
+
+`scripts/audit-skills.sh`: "all claims corroborated by the transcript".
+
+### Verification
+
+**Instrument.** The chrome-devtools MCP failed to connect this session, so the
+browser evidence comes from a dependency-free Node script driving Chrome over
+CDP. Viewport set with `Emulation.setDeviceMetricsOverride` — never a window
+resize — with `innerWidth`/`innerHeight` read back from inside the page, as
+ADR-017 requires.
+
+```
+proof_innerWidth 1440   proof_innerHeight 800   dpr 2
+mapTop 277   mapBottom 551   mapHeight 274   fitsAboveFold TRUE
+nodeCount 12   collapsedRowHeights [38, 37]   recordSectionHeight 39
+docHeight 1948   fixtureBannerHeight 52 (dev-only banner)
+
+768x1024:  mapHeight 294, families in 2 rows (672 / 328+328), overflow FALSE
+390x844:   layoutViewport 390, minNodeTapDimension 60, nodesUnder44 0, overflow FALSE
+dark:      data-theme=dark, color-scheme dark, canvas rgb(27,26,23)
+```
+
+**Accessibility tree for the map (AC-V10), verbatim from `Accessibility.queryAXTree`:**
+```
+heading: Breadth
+button: Breadth Area 1, satisfied, ARTH 051
+button: Breadth Area 2, satisfied, ECON 051
+button: Breadth Area 3, satisfied, HIST 101
+button: Breadth Area 4, satisfied, BIOL 041
+button: Breadth Area 5, satisfied, CSCI 051
+button: Breadth Area 6, unmet, 2 in SP27
+heading: Overlays
+button: Writing Intensive, satisfied, ENGL 010
+button: Speaking Intensive, unmet, 1 in SP27
+button: Analyzing Difference, satisfied, ANTH 025
+heading: Foundations
+button: Critical Inquiry, satisfied, ID 001
+button: Language, unmet, 1 in SP27
+button: Physical Education, partial, 1 of 2
+button: 32 course credits, partial, 12.75 to go
+button: 30 credits after matriculation, partial, 10.75 to go
+button: 16 credits at Pomona, satisfied, met
+```
+
+**Commands.**
+```
+npm run typecheck   -> exit 0
+npm run lint        -> exit 0
+npm run test        -> engine 186, shared 13, web 159 = 358 passed, exit 0
+scripts/audit-skills.sh -> all claims corroborated
+scripts/slop-check.sh apps packages -> 1 hit, the popover shadow, already
+    justified in DESIGN_BRIEF.md line 345 ("elevation semantics")
+```
+
+**Console.** `docs/review/F-console.txt`. Zero errors attributable to the
+application across the primary flow. The favicon 404 that was the only error is
+gone — the page now carries an inline SVG favicon.
+
+**Artifacts.** `docs/review/`: `F-01-desktop-1440.jpg`, `F-02-tablet-768.jpg`,
+`F-03-mobile-390.jpg`, `F-04-desktop-1440-full.jpg`,
+`F-05-state-error-data-unavailable.jpg`, `F-06-what-satisfies.jpg`,
+`F-07-state-share-import.jpg`, `F-09-mobile-390-record.jpg`,
+`F-10-state-empty-first-visit.jpg`, `F-11-dark-1440.jpg`,
+`F-12-state-loading.jpg`, `F-13-map-a11y.jpg`, `F-14-node-click-expands.jpg`,
+`F-15-other-degree-rules.jpg`, `F-console.txt`.
+
+### What Was NOT Verified
+- **`npm run build` does not pass.** It stops at my own guard: "Refusing to
+  build: data/manifest.json is missing, so only dev fixtures are available."
+  That guard is working as designed — fixture data must never ship as the
+  catalog — but it means DoD item 5 is unmet until the backend's pipeline
+  package exists. Nothing in this handoff was verified against a production
+  build.
+- **All browser evidence is against dev fixtures, not the real catalog.** Every
+  screenshot carries the "Sample data" banner for that reason. The map's twelve
+  nodes are the real GE structure, but the courses satisfying them are fixture
+  courses.
+- **AC-V09's second clause is not implemented** (advisory-to-requirement
+  linkage). See the contract change request. The footer half is verified.
+- **Transfer-student map not captured as a screenshot.** `families.test.ts`
+  asserts it renders 11 nodes; I did not photograph it.
+- **No real screen reader.** AC-V10's evidence is Chrome's accessibility tree,
+  which is what the AC asks for, but no NVDA/VoiceOver pass was run.
+- **Touch was not tested on a device.** The 44px floor at 390px is a measured
+  `getBoundingClientRect` minimum (60px), not a finger.
+- **`prefers-reduced-motion`** is honoured in CSS but I did not capture evidence
+  of the row expansion under the emulated setting.
+- The engine's correctness beyond its 186 tests and the goldens is unproven;
+  the reviewer's round-1 pass found two Criticals that the suite did not.
+
+### Known Issues
+- **A transfer student gets 11 map nodes, not the 12 TASK-033 assumes.**
+  `critical-inquiry` is waived for transfers as well as the requirement the task
+  names. The test records the measured 11.
+- **The map does not fit above the fold when arriving on a share link.** That
+  state carries a 194px import preview and an expanded record, putting the map
+  at 967-1240. It is the transient first-visit-via-link state; every later visit
+  is the 277-551 measurement above. Recorded rather than quietly measured away.
+- `docs/tasks/INDEX.md` had duplicate rows and two `Counts:` lines from a union
+  merge; `scripts/tasks.sh` regenerated and repaired it. The file is
+  manager-owned but derived, and its header says to regenerate it — flagging
+  because the repair rides in on this branch.
+- The `--partial` colour remains `#8C5C15` rather than the brief's `#B0731A`,
+  which measures 3.48:1 on the cream canvas and fails AA. Documented in-file.
+- DESIGN_BRIEF's justified-exceptions table still permits progress bars; the
+  only one is now gone. Harmless, worth tidying at integration.
+
+### Commit
+`079ab7d` plus the follow-up commit below.

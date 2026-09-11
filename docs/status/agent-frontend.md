@@ -1,9 +1,23 @@
 # STATUS: agent/frontend
-Task: ALL SIX FRONTEND TASKS COMPLETE (TASK-020..025, all REVIEW)
-Round: 0
-Last updated: 2026-09-09T00:26:03Z
+Task: TASK-020..025 and TASK-030..033 — all ten REVIEW
+Round: 0 for TASK-030..033, round 1 for TASK-020..025
+Last updated: 2026-09-11T16:58:00Z
 
-## Skills invoked so far
+## Skills invoked so far (round 2 additions at the top)
+- design-taste-frontend @ after the map was built, as the anti-generic critique
+  TASK-033 requires -> three applicable hits, all applied: removed the filled
+  progress track behind "N of M" (the dashboard tell), rewrote the administrative
+  strip to read as sentences ("12.75 more course credits", not "12.75 to go
+  course credits"), and stripped the leading count the figure already repeats.
+  The skill declares itself out of scope for dense product UI in its own
+  section 13, so only its anti-generic rules were applied. Em-dash audit run
+  over the v1 UI strings: no hits in UI copy.
+- superpowers:systematic-debugging @ the share-link defect the evidence pass
+  surfaced -> found the real cause (same-document fragment navigation) instead
+  of the "import is flaky" symptom.
+- superpowers:test-driven-development @ the hashchange fix -> RED watched with
+  exactly one failing case isolating the defect, then GREEN.
+- superpowers:requesting-code-review @ after round-2 verification, before handoff
 - superpowers:verification-before-completion @ round-0 blocked record -> forced
   mechanical proof of every claim; caught 3 sub-checks that silently failed on
   macOS (`cat -A` is GNU-only) and a skill listed as invoked when only preloaded.
@@ -112,13 +126,74 @@ docs/review/F-01..F-09 plus F-console.txt (3 messages, zero errors) and
 F-network.txt (98 requests, all same-origin, zero to hyperschedule.io, zero
 POST). Share link measured at 638 characters; fragment cleared after import.
 
+## TASK-030 to TASK-033 — COMPLETE (round 2)
+
+TASK-030 engine round 2, TASK-031 theme/palette v1, TASK-032 record v1 and
+transcript paste, TASK-033 the requirement map. All four REVIEW.
+
+### The map, measured at a proven viewport (AC-V02, AC-V03)
+The instrument is part of the claim: Chrome driven over CDP, viewport set with
+`Emulation.setDeviceMetricsOverride`, never a window resize, with innerWidth and
+innerHeight read back from inside the page. No chrome-devtools MCP this session
+(it failed to connect), so the harness is a dependency-free Node script talking
+CDP over Chrome's debugging socket.
+
+    proof_innerWidth 1440   proof_innerHeight 800   dpr 2
+    mapTop 277   mapBottom 551   mapHeight 274   fitsAboveFold TRUE
+    nodeCount 12   collapsedRowHeights [38, 37]   recordSectionHeight 39
+    fixtureBannerHeight 52 (dev only; absent in a production build)
+
+All three headline targets met: the map closes at 551 against an 800 fold, its
+height 274 is inside the 320 budget, and a collapsed row is 37-38px against the
+40 budget, down from 57 in round 1.
+
+### The state that does NOT fit above the fold
+Arriving on a share link is a different state: it carries a 194px import
+preview and an expanded record, which puts the map at mapTop 967, mapBottom
+1240, fitsAboveFold FALSE. That is the transient first-visit-via-link state, not
+the state the owner sees on every later visit. Recorded here rather than
+quietly measuring only the flattering one.
+
+### Responsive (measured, not eyeballed)
+- 768x1024: mapTop 277, mapHeight 294, families fall into 2 rows (one full
+  width at 672px, then two at 328px), horizontalOverflow FALSE.
+- 390x844: layout viewport exactly 390 (the 412 defect from round 1 stays
+  fixed), one column, minNodeTapDimension 60px so no node is under the 44px
+  floor, nodesUnder44 = 0, horizontalOverflow FALSE.
+
+### AC-P02, verified by doing it rather than by reading the code
+Clicking the "Critical Inquiry" row: aria-expanded false -> true, a detail
+panel appears headed "What the catalog says" carrying the verbatim sentence,
+.quote count 8 -> 9. The 8 already on screen are the always-visible margin
+sidenotes, which is the signature element, not expansion output.
+
+## Defect found and fixed during the evidence pass
+`useFragmentImport` read the fragment on mount only. Pasting a share link into
+a tab that already had GradGuide open is a same-document navigation: nothing
+reloads, nothing remounts, so the link did nothing at all and looked broken.
+Reproduced at the CDP level (base URL, then the same URL plus fragment: the
+import preview never appeared), fixed by also reading on `hashchange`. Accept
+and dismiss clear the fragment with `replaceState`, which fires no hashchange,
+so the offer cannot loop — that is pinned by a test.
+
 ## In progress
-- [ ] Nothing. All six frontend tasks are REVIEW, awaiting the reviewer.
+- [ ] Nothing. All ten frontend tasks are REVIEW, awaiting the reviewer.
 
 ## Blocked on
 - nothing
 
 ## For the manager
+- **A transfer student gets 11 map nodes, not 12.** TASK-033's parenthetical
+  says the transfer case drops one node; it drops two, because
+  `critical-inquiry` is waived for transfers as well. `families.test.ts` records
+  the measured truth (11) rather than the number in the task text.
+- `docs/tasks/INDEX.md` had accumulated duplicate rows and two `Counts:` lines
+  from a union merge. `scripts/tasks.sh` regenerated it, which repaired it. The
+  file is manager-owned but derived, and regenerating is what its own header
+  says to do; flagging it because the repair rides in on my branch.
+- The `--partial` progress-bar exception in DESIGN_BRIEF's justified-exceptions
+  table is now partly moot: the only progress bar is gone. The exception permits
+  rather than requires, so nothing is broken; worth a tidy at integration.
 - CONTRACT CHANGE REQUEST: the gpa rule's `scope: "program"` is undefined in
   API.md. Interim behaviour is `unverifiable`. Full request in the handoff.
 - F-06's fixture proves nothing, so the constrained-first guarantee that API.md

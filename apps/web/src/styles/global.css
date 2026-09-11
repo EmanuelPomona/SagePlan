@@ -627,7 +627,7 @@ legend { font-size: var(--t-small); color: var(--ink-2); padding: 0 var(--s-2); 
   cursor: pointer;
 }
 .admin-item:hover { background: none; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.admin-figure { font-family: var(--face-code); color: var(--ink); font-variant-numeric: tabular-nums; }
+.admin-figure { font-family: var(--face-code); color: var(--ink); font-variant-numeric: tabular-nums; margin-inline-start: var(--s-1); }
 .admin-satisfied .admin-figure { color: var(--satisfied); }
 .admin-unverifiable .admin-figure { color: var(--unverifiable); }
 

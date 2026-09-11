@@ -33,24 +33,27 @@ export function AdministrativeStrip({
           type="button"
           className={`admin-item admin-${result.status}`}
           onClick={() => onOpen(requirement.id)}
-          aria-label={`${requirement.label}, ${result.status}${result.remaining ? `, ${result.remaining.n} ${result.remaining.unit} to go` : ""}`}
+          aria-label={`${requirement.label}, ${result.status}, ${figure(result)}`}
         >
+          <span className="admin-label">{requirement.label}</span>
           <span className="admin-figure">{figure(result)}</span>
-          <span className="admin-label">{shortLabel(requirement.label)}</span>
         </button>
       ))}
     </p>
   );
 }
 
-/** Reads as a sentence: "12.75 more  course credits", "done  credits at Pomona". */
+/**
+ * The rule's own name, then where the student stands: "32 course credits
+ * 12.75 to go", "16 credits at Pomona met". Name first is how a transcript
+ * line reads, and it is the only order that stays a sentence in every state --
+ * figure first turned the satisfied case into "done credits at Pomona".
+ *
+ * The accessible name is this same string, so what is announced matches what
+ * is on screen.
+ */
 function figure(result: Result): string {
-  if (result.status === "satisfied") return "done";
+  if (result.status === "satisfied") return "met";
   if (result.status === "unverifiable") return "unknown";
-  return result.remaining ? `${result.remaining.n} more` : result.status;
-}
-
-/** "32 course credits" is the rule's name; the strip already shows the number. */
-function shortLabel(label: string): string {
-  return label.replace(/^\d+(\.\d+)?\s+/, "");
+  return result.remaining ? `${result.remaining.n} to go` : result.status;
 }
