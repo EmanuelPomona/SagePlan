@@ -280,3 +280,24 @@ parents (backend r2 9013eb5, TASK-030 049f55d, v1 gate 079ab7d). **After any mer
 that touches this file, check for a second header row and duplicate (task, round)
 pairs before trusting it.** `tasks.sh` parses a corrupted ledger silently.
 
+## Final state 2026-09-11 — ledgers are the handoff, not this file
+- `docs/review/rounds.md`: 19 verdicts, `Commit` column filled from
+  `git rev-parse --short <merge>^2` where verifiable. Guard green.
+- `docs/DEBT.md`: 18 rows, one table, `Status` + `Source` columns. Status was
+  **measured on 2026-09-11**, not recalled: 6 fixed, 11 open, 1 resolved by a
+  different route than the fix it suggests (D-15, closed by ADR-021/023
+  ownership rather than by removing the union attribute). D-09 is explicitly
+  marked NOT re-verified.
+- The ADR-024 guard now keys on invariants (unique ids, row matches its own
+  section header), so sectioned ledgers are allowed. I kept one table and put
+  provenance in a `Source` column instead: position does not survive a reformat,
+  which is the failure this project hit four times.
+
+## The two that need a person outside this system
+- **D-12 / H-6.** Nineteen courses carry `Measure Values = 2` on Physical
+  Education. The pipeline records the fact and changes nothing, which is right,
+  but a student who closed PE with one of them is still told they owe another.
+  **Someone must ask the Registrar what `2` means.** No agent can close this.
+- **D-11 / AC-B07.** `git remote -v` is empty, so the nightly workflow has never
+  run and no PR can exist. Needs the owner to create a remote.
+
