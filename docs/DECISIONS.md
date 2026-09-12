@@ -690,6 +690,22 @@ the time; now that the guard permits sections it is free to re-section without
 asking. A reviewer-owned document should not be single-table because a script
 assumed it.
 
+**The constructive half, which the reviewer found and which is worth more than the
+warning.** Offered the choice between one table and restored sections, it took
+neither: `docs/DEBT.md` keeps a single table and gains a **`Source`** column
+(`round 1`, `TASK-030 gate`, `backend r2`, `v1 gate`, `manager`), each value
+derived from the commit that introduced the row via
+`git log -S'| D-nn |' -- docs/DEBT.md` rather than reconstructed from memory.
+
+Sections made provenance *visible* but left it encoded as **position**, which is
+precisely what does not survive a reformat — the failure mode this document
+records four times. A column answers the same question ("what came out of the v1
+gate?") from data, and it sorts and filters. So the pair of lessons is:
+
+- **guard invariants, not conventions** — "ids are unique" survives a reformat,
+  "one header row" did not survive a single section heading;
+- **record provenance as data, not position** — for the same reason.
+
 As the reviewer observed, this class does not bottom out — the guard is now itself
 a premise about these files, and if their shape ever legitimately changes again,
 the guard is what will be wrong. That is an argument for guarding invariants

@@ -1,7 +1,7 @@
 # STATUS: main
 Task: v1 planning + live rulings. TASK-030..033 dispatched; backend round 2 closed.
 Round: n/a (manager)
-Last updated: 2026-09-11T18:40:00Z
+Last updated: 2026-09-11T20:15:00Z
 
 ## Skills invoked so far
 - (2026-09-08 planning) brainstorming, ecc:product-lens, ecc:contract-first, superpowers:writing-plans, ecc:architecture-decision-records, superpowers:verification-before-completion
@@ -43,8 +43,18 @@ Last updated: 2026-09-11T18:40:00Z
 6. Wrote to reviewer-owned DEBT.md from main, causing the first conflict; ledgers are now merge=union
 7. Dispatched workers before giving the reviewer the criteria to challenge (ADR-017's stated lesson)
 
+## Gated since
+- TASK-010..013 APPROVED round 2 (backend complete). TASK-020 + TASK-030 APPROVED (engine complete).
+- TASK-031 + TASK-033 APPROVED: the map measures 274px (bar 320), rows 38px (bar 40), above the fold at
+  1440x800 with 313px headroom, against a 1774px/57px round-1 baseline. AC-V06 holds end to end:
+  a codes-only plan produces zero unverifiable rows through the UI.
+- TASK-032 CHANGES_REQUIRED on V1-H1 only: the transcript parser silently drops unrecognised lines.
+- ADR-021..024 written on live findings: one field one owner; recurrence counts fix attempts not gates;
+  merge attributes are shape assumptions; guard invariants not conventions.
+
 ## In progress
-- [ ] frontend: TASK-033 (the map) + F-03c; reviewer: gating TASK-030 alone; backend: done, awaiting gate
+- [ ] frontend: V1-H1 on TASK-032, then TASK-034 (F-03c landed; F-15, D-14, D-17 open)
+- [ ] reviewer: holding until TASK-032's branch head advances past the gated commit
 
 ## Blocked on
 - nothing for planning.
