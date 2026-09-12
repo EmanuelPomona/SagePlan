@@ -60,7 +60,20 @@ function evaluateProgram(plan: StudentPlan, program: Program, ctx: EvalContext):
     const settlement =
       manual.get(req.id) ??
       settleBounded(
-        (pass) => settleRule(req, assigned, pass, used, forRule),
+        (pass) => {
+          // Eligibility is recomputed INSIDE each pass. Filters such as the
+          // transfer pre-matriculation rule (ADR-018) and CourseFilter.minTerm
+          // read the mode, so computing eligibility once before the two passes
+          // made them unreachable: the pessimistic pass re-settled a set the
+          // optimistic pass had already chosen, and could never disagree.
+          //
+          // A course the pass would not admit is also dropped from what the
+          // assignment handed this requirement, since the assignment itself ran
+          // optimistically.
+          const forPass = eligibleFor(req, pass);
+          const admitted = new Set(forPass.map((c) => c.key));
+          return settleRule(req, assigned.filter((c) => admitted.has(c.key)), pass, used, forPass);
+        },
         ctx,
         // Name the courses this rule actually looks at, so the note says "add a
         // term to PE 001 PO", not "add a term to something".

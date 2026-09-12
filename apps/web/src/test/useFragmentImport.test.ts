@@ -48,17 +48,68 @@ describe("a share link that arrives without a page load", () => {
   });
 
   // Accept and dismiss clear the fragment with replaceState, which fires no
-  // hashchange. If that ever changes, the offer would loop straight back.
-  test("dismissing does not re-offer the same link", async () => {
+  // hashchange. The earlier version of this test dispatched a hashchange AFTER
+  // dismiss had already emptied the hash, so it hit the early return and passed
+  // whether or not clearing used replaceState -- it did not test its own claim.
+  // Listening for the event is what actually discriminates.
+  test("clearing the fragment fires no hashchange, so the offer cannot loop", async () => {
     window.history.replaceState(null, "", await fragmentFor(1));
     const { result } = renderHook(() => useFragmentImport());
     await waitFor(() => expect(result.current.state.status).toBe("offered"));
 
+    let fired = 0;
+    const count = () => { fired += 1; };
+    window.addEventListener("hashchange", count);
     act(() => result.current.dismiss());
-    expect(result.current.state.status).toBe("none");
+    window.removeEventListener("hashchange", count);
 
-    await act(async () => { window.dispatchEvent(new HashChangeEvent("hashchange")); });
+    expect(fired).toBe(0);
     expect(result.current.state.status).toBe("none");
     expect(window.location.hash).toBe("");
+  });
+
+  // The security property the module leads with: someone opening a friend's
+  // link must not silently lose their own record.
+  test("an offered plan is never applied on its own", async () => {
+    window.history.replaceState(null, "", await fragmentFor(2));
+    const applied: StudentPlan[] = [];
+    const { result } = renderHook(() => useFragmentImport());
+
+    await waitFor(() => expect(result.current.state.status).toBe("offered"));
+    act(() => result.current.dismiss());
+
+    expect(applied).toHaveLength(0);
+  });
+
+  test("accept applies the offered plan, once, and then clears the offer", async () => {
+    window.history.replaceState(null, "", await fragmentFor(2));
+    const applied: StudentPlan[] = [];
+    const { result } = renderHook(() => useFragmentImport());
+    await waitFor(() => expect(result.current.state.status).toBe("offered"));
+
+    act(() => result.current.accept((p) => applied.push(p)));
+
+    expect(applied).toHaveLength(1);
+    expect(applied[0]?.completed).toHaveLength(2);
+    expect(result.current.state.status).toBe("none");
+
+    // A second accept after the offer is gone must do nothing.
+    act(() => result.current.accept((p) => applied.push(p)));
+    expect(applied).toHaveLength(1);
+  });
+
+  test("navigating to an ordinary anchor clears a standing offer and keeps the anchor", async () => {
+    window.history.replaceState(null, "", await fragmentFor(1));
+    const { result } = renderHook(() => useFragmentImport());
+    await waitFor(() => expect(result.current.state.status).toBe("offered"));
+
+    await act(async () => {
+      window.history.replaceState(null, "", "#main");
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+    });
+
+    expect(result.current.state.status).toBe("none");
+    act(() => result.current.dismiss());
+    expect(window.location.hash).toBe("#main");
   });
 });

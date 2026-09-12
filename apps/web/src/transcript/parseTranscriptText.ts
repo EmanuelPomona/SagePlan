@@ -17,6 +17,17 @@ const GRADES = new Set([
   "CR", "P", "NC", "NP", "IP", "W",
 ]);
 
+/**
+ * A course line whose campus code is not one of ours: "ECON 101 UCLA".
+ *
+ * Deliberately narrow. The number must be two or three digits and the unknown
+ * code three or four letters, so ordinary transcript furniture ("Page 1 of 2",
+ * "Cumulative GPA 3.85") cannot trip it and be reported as a failed course.
+ */
+const FOREIGN_CODE = new RegExp(
+  String.raw`\b[A-Z]{2,5}\s?0*\d{2,3}[A-Z]{0,2}\s+([A-Z]{3,4})\b`,
+);
+
 const SEASONS: Record<string, "FA" | "SP"> = {
   FA: "FA", FALL: "FA", F: "FA",
   SP: "SP", SPRING: "SP", S: "SP",
@@ -70,6 +81,35 @@ export function parseTranscriptText(
       if (heading) {
         headingTerm = heading;
         detectedTerms = true;
+        return;
+      }
+      // A line that is SHAPED like a term heading but did not parse must clear
+      // the previous one. Leaving it in force silently stamps the old term onto
+      // the new term's courses, and a wrong term is worse than no term: it
+      // feeds distinctTerms, sinceMatriculation and matriculation inference.
+      // Ordinary furniture ("Credits Earned: 4.00") is not term-shaped and is
+      // still skipped in silence, so a heading's own courses keep their term.
+      // A department, a course number and a campus code we do not recognise is
+      // a course line we failed to read -- typically outside coursework on a
+      // transfer student's record. Filing it as furniture left them with
+      // "0 courses understood" and no reason.
+      const foreign = FOREIGN_CODE.exec(upper);
+      if (foreign?.[1]) {
+        rejected.push({
+          line: i + 1,
+          text: line,
+          reason: `"${foreign[1]}" is not a Claremont campus code, so this course could not be read. Add it by hand if it transferred in.`,
+        });
+        return;
+      }
+
+      if (looksLikeTermHeading(line)) {
+        headingTerm = null;
+        rejected.push({
+          line: i + 1,
+          text: line,
+          reason: "This looks like a term heading but could not be read, so the courses under it have no term.",
+        });
       }
       return;
     }
@@ -92,7 +132,7 @@ export function parseTranscriptText(
 
     const grade = findGrade(rest);
     if (grade === "invalid") {
-      rejected.push({ line: i + 1, text: line, reason: `Could not read the grade "${gradeShaped(rest)}".` });
+      rejected.push({ line: i + 1, text: line, reason: `Could not read the grade "${gradeColumn(rest)}".` });
       return;
     }
     if (grade !== null) detectedGrades = true;
@@ -123,17 +163,44 @@ const slot = (id: CourseId, term: TermId | null) => `${courseKey(id)}@${term ? t
 
 /** A whole line that is nothing but a term, e.g. "Fall 2025" or "2025-26 Fall". */
 function parseTermText(line: string): TermId | null {
-  const text = line.trim().toUpperCase().replace(/\s+/g, " ");
+  // Registrars label the same heading a dozen ways. Strip the labelling words
+  // and punctuation, then read what is left: "Term: Fall 2025", "Fall 2025
+  // Semester" and "FALL SEMESTER 2025" are all the same heading.
+  const text = line
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, " ")
+    .replace(/^(TERM|SEMESTER|QUARTER|ACADEMIC TERM)\s*[:.-]?\s*/, "")
+    .replace(/\s+(TERM|SEMESTER|QUARTER)\b/g, "")
+    .replace(/[:.,]+$/, "")
+    .trim();
   const ranged = /^(\d{4})\s*-\s*\d{2,4}\s+([A-Z]+)$/.exec(text);
   if (ranged?.[1] && ranged[2]) {
     const season = SEASONS[ranged[2]];
     if (season) return { year: Number(ranged[1]), term: season };
   }
   const m = /^([A-Z]+)\s*(\d{2}|\d{4})$/.exec(text);
-  if (!m?.[1] || !m[2]) return null;
-  const season = SEASONS[m[1]];
-  if (!season) return null;
-  return toTerm(season, m[2]);
+  if (m?.[1] && m[2]) {
+    const season = SEASONS[m[1]];
+    if (season) return toTerm(season, m[2]);
+  }
+  // "2025 Fall", the other way round.
+  const reversed = /^(\d{4})\s+([A-Z]+)$/.exec(text);
+  if (reversed?.[1] && reversed[2]) {
+    const season = SEASONS[reversed[2]];
+    if (season) return toTerm(season, reversed[1]);
+  }
+  return null;
+}
+
+/**
+ * Term-SHAPED: a season word and a year, in a line short enough to be a
+ * heading rather than prose that happens to mention a season.
+ */
+function looksLikeTermHeading(line: string): boolean {
+  const text = line.trim().toUpperCase();
+  if (text.split(/\s+/).length > 5) return false;
+  return /\b(FALL|SPRING|FA|SP)\b/.test(text) && /\b(19|20)\d{2}\b/.test(text);
 }
 
 /** A term appearing somewhere inside a line that also holds a course. */
@@ -152,21 +219,37 @@ function toTerm(season: "FA" | "SP", digits: string): TermId | null {
 }
 
 /**
- * A grade, or "invalid" when the line ends in something grade-SHAPED that is not
- * one. Credits ("1.00") and title words are not grade-shaped, so they pass by.
+ * The grade, when the line actually carries one.
+ *
+ * Two rules, both learned from real transcript text:
+ *
+ * 1. A grade lives in its own COLUMN, so it must be separated by a tab or two
+ *    or more spaces. "Spanish for Heritage Speakers A" ends in a lone "A" one
+ *    space after the title; that is the title, not an A.
+ * 2. A trailing token that is grade-SHAPED but is not a grade is title text,
+ *    not an error. "Calculus II", "Calculus I" and "History of US" all end in
+ *    grade-shaped tokens, and rejecting those lines threw away three of the
+ *    most common courses on any transcript while blaming a grade that was
+ *    never there. Grades are optional everywhere in this app (ADR-015), so the
+ *    course is kept and the grade is simply left unread.
  */
 function findGrade(rest: string): string | null | "invalid" {
-  const candidate = gradeShaped(rest);
+  const candidate = gradeColumn(rest);
   if (candidate === null) return null;
   return GRADES.has(candidate) ? candidate : "invalid";
 }
 
-/** The trailing token, when it has the shape of a grade. */
-function gradeShaped(rest: string): string | null {
-  const tokens = rest.split(/[\s,\t]+/).filter(Boolean);
-  const last = tokens.at(-1);
-  if (last === undefined) return null;
-  return /^[A-Z]{1,2}[+-]?$/.test(last) ? last : null;
+/**
+ * The trailing token when it sits in a GRADE COLUMN: separated by a tab, a
+ * comma, or two or more spaces, or standing as the whole remainder of the line.
+ *
+ * A single space does not make a column. "Spanish for Heritage Speakers A" and
+ * "Modern Europe since 1789 A" end in a lone "A" that is part of the title, and
+ * reading it as an A invented a grade the student never typed.
+ */
+function gradeColumn(rest: string): string | null {
+  const m = /(?:^|\t|,\s*| {2,})([A-Z]{1,2}[+-]?)\s*$/.exec(rest.trim());
+  return m?.[1] ?? null;
 }
 
 function gradeModeFor(grade: string | null): GradeMode | null {

@@ -30,16 +30,44 @@ export function settleBounded(
   const decided = new Set<string>();
   const optimistic = settle(withMode(ctx, "optimistic", decided));
   const pessimistic = settle(withMode(ctx, "pessimistic", decided));
-  if (optimistic.status === pessimistic.status) return optimistic;
 
-  const affected = relevant.filter((c) => c.termUnknown && decided.has(c.key));
+  if (optimistic.status === pessimistic.status) {
+    // Agreeing on the status is not agreeing on the numbers. Returning the
+    // optimistic settlement wholesale printed the friendlier remainder as a
+    // fact: "27 credits to go" when the pessimistic reading of the same record
+    // says 28. The status stands -- docs/API.md 2.7 asks only that the two
+    // passes agree on it -- but the student is told the figure is not settled.
+    const optimisticN = optimistic.remaining?.n;
+    const pessimisticN = pessimistic.remaining?.n;
+    if (optimisticN !== undefined && pessimisticN !== undefined && optimisticN !== pessimisticN) {
+      return { ...optimistic, note: rangeNote(optimisticN, pessimisticN, unknownsBehind(ctx, relevant, decided)) };
+    }
+    return optimistic;
+  }
+
+  const affected = unknownsBehind(ctx, relevant, decided);
   return {
     status: "unverifiable",
     satisfiedBy: [],
     remaining: optimistic.remaining,
     candidates: optimistic.candidates,
-    note: missingTermNote(affected.length > 0 ? affected : ctx.unknownTermCourses),
+    note: missingTermNote(affected),
   };
+}
+
+/** The unknown-term courses a pass actually had to decide, for naming in a note. */
+function unknownsBehind(ctx: EvalContext, relevant: ResolvedCourse[], decided: Set<string>): ResolvedCourse[] {
+  const affected = relevant.filter((c) => c.termUnknown && decided.has(c.key));
+  return affected.length > 0 ? affected : ctx.unknownTermCourses;
+}
+
+/** Both readings of a figure the record does not settle, with what would settle it. */
+function rangeNote(optimistic: number, pessimistic: number, courses: ResolvedCourse[]): string {
+  const low = Math.min(optimistic, pessimistic);
+  const high = Math.max(optimistic, pessimistic);
+  const keys = [...new Set(courses.map((c) => courseKey(c.completed.course)))].sort();
+  const named = keys.slice(0, 3).join(", ");
+  return `This is between ${low} and ${high} depending on when ${named || "some courses"} ${keys.length === 1 ? "was" : "were"} taken.`;
 }
 
 /** Says what to add and to which courses, rather than that something is missing. */

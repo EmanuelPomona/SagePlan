@@ -53,8 +53,10 @@ export const RequirementRow = forwardRef<HTMLLIElement, {
 
         <span className="row-answer">
           {result.satisfiedBy.length > 0 ? (
-            result.satisfiedBy.map((id) => (
-              <span key={courseKey(id)} className="course-code">
+            // A repeatable course legitimately appears twice (PE 001 in two
+            // semesters is two PE courses), so the key carries the position.
+            result.satisfiedBy.map((id, i) => (
+              <span key={`${courseKey(id)}#${i}`} className="course-code">
                 {describeSatisfier(id, externalCredits)}
               </span>
             ))

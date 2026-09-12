@@ -201,3 +201,88 @@ describe("robustness", () => {
     expect(run(noise).rows).toEqual([]);
   });
 });
+
+describe("a heading the parser does not understand must not attribute its term to later courses", () => {
+  // Found in review. parseTermText accepted only a line that was NOTHING but
+  // "SEASON YEAR", so "Spring 2025 Term" fell through to furniture and the
+  // PREVIOUS heading stayed in force -- silently stamping FA2024 onto a spring
+  // course. A wrong term is worse than no term: it feeds distinctTerms,
+  // sinceMatriculation and the matriculation inference.
+  test("an unparsed but term-shaped heading clears the previous term", () => {
+    const out = run("Fall 2024\nMATH 030 PO Calculus\nSpring 2025 Term\nCSCI 051 PO Intro");
+
+    expect(out.rows).toHaveLength(2);
+    expect(termCode(out.rows[0]!.term!)).toBe("FA2024");
+    expect(out.rows[1]!.term === null || termCode(out.rows[1]!.term) !== "FA2024").toBe(true);
+  });
+
+  test.each([
+    ["Fall 2025 Semester", "FA2025"],
+    ["Term: Fall 2025", "FA2025"],
+    ["2025 Fall", "FA2025"],
+    ["FALL SEMESTER 2025", "FA2025"],
+    ["Spring 2026 Term", "SP2026"],
+  ])("understands the common registrar heading %j", (heading, expected) => {
+    const out = run(`${heading}\nMATH 030 PO Calculus`);
+
+    expect(out.rows[0]!.term).not.toBeNull();
+    expect(termCode(out.rows[0]!.term!)).toBe(expected);
+  });
+
+  test("ordinary furniture between a heading and its courses does not clear the term", () => {
+    const out = run("Fall 2024\nCredits Earned: 4.00\nDean's List\nMATH 030 PO Calculus");
+
+    expect(termCode(out.rows[0]!.term!)).toBe("FA2024");
+  });
+});
+
+describe("a course title must not be mistaken for a grade", () => {
+  // Roman numerals and short title words are grade-SHAPED. Rejecting the line
+  // was the worst possible answer: these are among the most common courses in
+  // any transcript, and the stated reason ("Could not read the grade") is false.
+  test.each([
+    "MATH 030 PO   Calculus II",
+    "MATH 030 PO   Calculus I",
+    "HIST 101 PO   History of US",
+  ])("keeps the course in %j", (line) => {
+    const out = run(line);
+
+    expect(out.rejected).toHaveLength(0);
+    expect(out.rows).toHaveLength(1);
+    expect(out.rows[0]!.grade).toBeNull();
+  });
+
+  test("a real grade in its own column is still read", () => {
+    const out = run("CSCI 051 PO   Introduction to Computer Science   A");
+
+    expect(out.rows[0]!.grade).toBe("A");
+  });
+
+  test("a trailing title word one space from the title is not a grade", () => {
+    const out = run("HIST 101 PO   Modern Europe since 1789 A");
+
+    expect(out.rows).toHaveLength(1);
+    expect(out.rows[0]!.grade).toBeNull();
+  });
+});
+
+describe("a course line it cannot read is reported, not silently dropped", () => {
+  // Found in review. A line carrying a department, a number and a campus code
+  // the parser does not know matched nothing and was filed as furniture, so a
+  // transfer student pasting their outside coursework saw "0 courses
+  // understood" and no reason at all.
+  test("an unknown campus code is named", () => {
+    const out = run("ECON 101 UCLA  Microeconomics  A");
+
+    expect(out.rows).toHaveLength(0);
+    expect(out.rejected).toHaveLength(1);
+    expect(out.rejected[0]!.reason).toContain("UCLA");
+  });
+
+  test("real transcript furniture is still skipped in silence", () => {
+    const out = run("Page 1 of 2\nCumulative GPA 3.85\nDean's List\nCredits Earned: 4.00");
+
+    expect(out.rows).toHaveLength(0);
+    expect(out.rejected).toHaveLength(0);
+  });
+})

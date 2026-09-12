@@ -1,9 +1,18 @@
 # STATUS: agent/frontend
 Task: TASK-020..025 and TASK-030..033 — all ten REVIEW
 Round: 0 for TASK-030..033, round 1 for TASK-020..025
-Last updated: 2026-09-11T16:58:00Z
+Last updated: 2026-09-11T18:40:00Z
 
-## Skills invoked so far (round 2 additions at the top)
+## Skills invoked so far (most recent at the top)
+- superpowers:requesting-code-review @ after round-2 verification -> 1 Critical,
+  5 Important, 6 Minor findings, each with a reproduction.
+- superpowers:receiving-code-review @ on those findings -> verified each against
+  the code before fixing. Ten fixed, M-3 refuted in part (the "squashed" claim
+  is about the department and number, which works and has a test), M-1 turned
+  into a contract change request.
+- superpowers:test-driven-development @ every review fix -> 25 new tests, each
+  watched fail first. For M-4 I reverted each half of the fix separately to
+  prove the new test discriminates.
 - design-taste-frontend @ after the map was built, as the anti-generic critique
   TASK-033 requires -> three applicable hits, all applied: removed the filled
   progress track behind "N of M" (the dashboard tell), rewrote the administrative
@@ -176,6 +185,34 @@ import preview never appeared), fixed by also reading on `hashchange`. Accept
 and dismiss clear the fragment with `replaceState`, which fires no hashchange,
 so the offer cannot loop — that is pinned by a test.
 
+## Round-2 code review — all findings addressed
+
+C-1 (Critical): two sittings of one course defeated every overlap policy.
+Reproduced, then fixed at the root -- `ResolvedCourse.repeatable` comes from the
+catalog, and two rows are distinct sittings only for a repeatable course with
+two recorded, differing terms. PE twice still counts twice; PHIL 032 twice does
+not earn its flags twice.
+
+I-1: the bounded double pass never reached `CourseFilter`, so the transfer
+pre-matriculation rule ADR-018 exists for could not fire. Eligibility is now
+recomputed inside each pass.
+
+I-2: agreed status was printing optimistic numbers with no note. The row now
+says "between 27 and 28 depending on when X was taken".
+
+I-3, I-4, M-2: the transcript parser attributed a stale term after an unreadable
+heading, rejected "Calculus II" as a bad grade, invented a grade from a title
+word, and dropped unknown-campus lines in silence. All four fixed with tests,
+including a test that ordinary furniture still stays silent.
+
+I-5: a `distinctTerms` partial under-reported (latent on shipped data).
+
+M-4, M-5, M-6: fixed, including a test of my own that proved nothing.
+
+Tests: 383 (engine 194, shared 13, web 176). Typecheck and lint clean. Browser
+re-measured after the engine changed: page unchanged for the demo plan, which is
+the expected result.
+
 ## In progress
 - [ ] Nothing. All ten frontend tasks are REVIEW, awaiting the reviewer.
 
@@ -183,6 +220,11 @@ so the offer cannot loop — that is pinned by a test.
 - nothing
 
 ## For the manager
+- **CONTRACT CHANGE REQUEST (new):** the assignment ranking in `docs/API.md` 2.3
+  and ADR-013 says *(satisfied, shared, courseKey)*; the engine implements
+  *(satisfied, progress, shared)*. `progress` is what fixes F-11. The documents
+  describe an engine that does not exist and should be amended, or I restore the
+  documented rule and re-open F-11. Full request in HANDOFF-6.
 - **A transfer student gets 11 map nodes, not 12.** TASK-033's parenthetical
   says the transfer case drops one node; it drops two, because
   `critical-inquiry` is waived for transfers as well. `families.test.ts` records

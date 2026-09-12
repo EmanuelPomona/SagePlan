@@ -102,10 +102,15 @@ function underLabel(
     if (sameCourse(first, EXAM_PSEUDO_ID)) {
       return externalCredits.find((c) => c.qualifies && c.grantsAttributes.length > 0)?.label ?? "an exam";
     }
-    return result.satisfiedBy.map((c) => courseKey(c).replace(/ (PO|SC|HM|CM|PZ)$/, "")).join(", ");
+    // "PE 001, PE 001" is two sittings of one repeatable course. Say that,
+    // rather than printing the same code twice as if they were two courses.
+    const codes = result.satisfiedBy.map((c) => courseKey(c).replace(/ (PO|SC|HM|CM|PZ)$/, ""));
+    const counts = new Map<string, number>();
+    for (const c of codes) counts.set(c, (counts.get(c) ?? 0) + 1);
+    return [...counts].map(([code, n]) => (n > 1 ? `${code} x${n}` : code)).join(", ");
   }
   if (verdict === "partial" && result.remaining) {
-    const need = result.remaining.unit === "credits" ? result.remaining.n : result.remaining.n;
+    const need = result.remaining.n;
     const have = result.satisfiedBy.length;
     return result.remaining.unit === "credits" ? `${need} more` : `${have} of ${have + need}`;
   }

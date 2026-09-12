@@ -70,6 +70,9 @@ function examGrantCourse(ec: ExternalCredit, ctx: EvalContext): ResolvedCourse {
     // An exam has no term, but its term is not UNKNOWN: it is not a course the
     // student sat, so it never participates in a term-dependent rule.
     termUnknown: false,
+    // Exams already get distinct internal keys per subject, so they never need
+    // the repeat allowance -- and one exam must never count twice.
+    repeatable: false,
   };
 }
 

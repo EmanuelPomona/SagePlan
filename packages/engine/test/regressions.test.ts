@@ -101,6 +101,42 @@ describe("C-1 — overlap must not be bypassed by a duplicated course row", () =
     expect(satisfied).toHaveLength(1);
   });
 
+  // Round 2. The fix above compared sittings, which was right for a repeat of a
+  // REPEATABLE course (two terms of PE really are two PE courses) and wrong for
+  // everything else: retaking PHIL 032 does not earn its Writing and Speaking
+  // flags twice. The catalog already says which is which.
+  test("two sittings of a NON-repeatable course still cannot close two requirements", () => {
+    const reqs = [
+      requirement("x-one", attributeRule("AREA_1"), { kind: "exclusive" }),
+      requirement("y-two", attributeRule("AREA_1"), { kind: "exclusive" }),
+    ];
+    const prog = program("dup-test", reqs);
+    const catalog = [catalogCourse("DANC 051 PO", ["AREA_1"])]; // repeatable: false
+    const twoTerms = planWith({
+      completed: [completed("DANC 051 PO", { term: term("FA2025") }), completed("DANC 051 PO", { term: term("SP2026") })],
+    });
+
+    const satisfied = evaluate(twoTerms, [prog], catalog).filter((r) => r.status === "satisfied");
+
+    expect(satisfied).toHaveLength(1);
+  });
+
+  test("a REPEATABLE course taken in two terms still counts twice", () => {
+    // The other half of the same rule: PE 001 across two semesters is exactly
+    // what the two-course PE requirement is asking for.
+    const reqs = [requirement("pe", attributeRule("PHYSICAL_EDUCATION", 2, { distinctTerms: true }))];
+    const prog = program("pe-test", reqs);
+    const pe = catalogCourse("PE 001 PO", ["PHYSICAL_EDUCATION"], 0.25);
+    const repeatable = { ...pe, credits: { ...pe.credits, repeatable: true, maxRepeats: 3 } };
+    const twoTerms = planWith({
+      completed: [completed("PE 001 PO", { term: term("FA2025") }), completed("PE 001 PO", { term: term("SP2026") })],
+    });
+
+    const result = evaluate(twoTerms, [prog], [repeatable]).find((r) => r.requirementId === "pe");
+
+    expect(result?.status).toBe("satisfied");
+  });
+
   test("the same plan with a single row behaves identically", () => {
     const reqs = [
       requirement("x-one", attributeRule("AREA_1"), { kind: "exclusive" }),
@@ -219,5 +255,85 @@ describe("the exam note must not claim a requirement is satisfied when it is not
 
     expect(s.status).toBe("satisfied");
     expect(s.note).toContain("AP Spanish Language");
+  });
+});
+
+/** area-1's rule exactly as data/programs/general-education-2026.json ships it. */
+const AREA_1_AS_SHIPPED = attributeRule("AREA_1", 1, {
+  filter: { provenance: ["pomona", "claremont"], transferPolicy: "transferStudentsPreMatriculation" },
+});
+
+describe("I-1 — the bounded double pass must reach CourseFilter-driven unknowns", () => {
+  // docs/API.md 2.7 names the transfer pre-matriculation rule as one of the
+  // things bounded evaluation covers, and ADR-018 was filed to add it. But
+  // eligibility was computed ONCE, before the two passes, so a filter that is
+  // mode-sensitive could never make the passes disagree: the pessimistic pass
+  // re-settled an optimistically filtered set and always agreed.
+  test("a transfer course with no term cannot definitively satisfy a Breadth area", () => {
+    const prog = program("ge", [requirement("area-1", AREA_1_AS_SHIPPED)]);
+    const catalog = [catalogCourse("ARTH 051 PO", ["AREA_1"])];
+    const plan = planWith({
+      studentType: "transfer",
+      completed: [completed("ARTH 051 PO", { term: null, provenance: "transfer" })],
+    });
+
+    const result = evaluate(plan, [prog], catalog).find((r) => r.requirementId === "area-1");
+
+    // Optimistically it counts (taken after matriculation); pessimistically it
+    // predates matriculation and does not. That is a disagreement, so the
+    // honest answer is that it cannot be checked without the term.
+    expect(result?.status).toBe("unverifiable");
+    expect(result?.note).toMatch(/ARTH 051 PO/);
+  });
+
+  // Both controls matter: with the term recorded the answer is DEFINITE either
+  // way, and which way it goes depends on the side of matriculation it lands
+  // on. Without them the test above would pass against an engine that simply
+  // answered "unverifiable" whenever a transfer course appeared.
+  test("recorded BEFORE matriculation, the transfer policy admits it definitively", () => {
+    const prog = program("ge", [requirement("area-1", AREA_1_AS_SHIPPED)]);
+    const catalog = [catalogCourse("ARTH 051 PO", ["AREA_1"])];
+    const plan = planWith({
+      studentType: "transfer",
+      completed: [completed("ARTH 051 PO", { term: term("SP2025"), provenance: "transfer" })],
+    });
+
+    expect(evaluate(plan, [prog], catalog).find((r) => r.requirementId === "area-1")?.status).toBe("satisfied");
+  });
+
+  test("recorded AFTER matriculation, it is definitively unmet, not unverifiable", () => {
+    const prog = program("ge", [requirement("area-1", AREA_1_AS_SHIPPED)]);
+    const catalog = [catalogCourse("ARTH 051 PO", ["AREA_1"])];
+    const plan = planWith({
+      studentType: "transfer",
+      completed: [completed("ARTH 051 PO", { term: term("SP2026"), provenance: "transfer" })],
+    });
+
+    expect(evaluate(plan, [prog], catalog).find((r) => r.requirementId === "area-1")?.status).toBe("unmet");
+  });
+});
+
+describe("I-5 — a distinctTerms partial must report the best reachable count", () => {
+  // Found in review. Selections were enumerated at size exactly k = ceil(n).
+  // When the distinctTerms filter rejected every size-k combination, the only
+  // fallback was a selection of ONE, so a student holding 2 of 3 distinct terms
+  // was told they had 1 of 3. Sizes between 2 and k-1 were never candidates.
+  test("five courses across two distinct terms report 2 of 3, not 1 of 3", () => {
+    const prog = program("pe", [requirement("pe", attributeRule("PHYSICAL_EDUCATION", 3, { distinctTerms: true }))]);
+    const pe = catalogCourse("PE 001 PO", ["PHYSICAL_EDUCATION"], 0.25);
+    const catalog = [pe, catalogCourse("PE 002 PO", ["PHYSICAL_EDUCATION"], 0.25), catalogCourse("PE 003 PO", ["PHYSICAL_EDUCATION"], 0.25)];
+    const plan = planWith({
+      completed: [
+        completed("PE 001 PO", { term: term("FA2025") }),
+        completed("PE 002 PO", { term: term("FA2025") }),
+        completed("PE 003 PO", { term: term("SP2026") }),
+      ],
+    });
+
+    const result = evaluate(plan, [prog], catalog).find((r) => r.requirementId === "pe");
+
+    expect(result?.status).toBe("partial");
+    expect(result?.satisfiedBy).toHaveLength(2);
+    expect(result?.remaining?.n).toBe(1);
   });
 });

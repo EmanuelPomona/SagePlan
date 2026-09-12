@@ -944,6 +944,24 @@ docHeight 1948   fixtureBannerHeight 52 (dev-only banner)
 dark:      data-theme=dark, color-scheme dark, canvas rgb(27,26,23)
 ```
 
+**Transfer student, measured (`Emulation` + the F-02-transfer demo plan seeded
+into `gradguide:plan:v1`), evidence `F-16-transfer-map.jpg`:**
+```
+nodeCount 11   mapBottom 536   fitsAboveFold TRUE
+Breadth Area 1..6, Writing Intensive, Speaking Intensive, Analyzing Difference,
+Language, Physical Education        <- no Critical Inquiry node
+```
+
+**`prefers-reduced-motion: reduce`, emulated with `Emulation.setEmulatedMedia`,
+evidence `F-17-reduced-motion.jpg`:**
+```
+reducedMotionMatches TRUE   expanded 1
+rowTransitionDuration 1e-05s   detailTransitionDuration 1e-05s
+detailAnimationDuration 1e-05s
+```
+The row still expands; the motion is gone. Without the emulation the same
+detail measures 0.15s.
+
 **Accessibility tree for the map (AC-V10), verbatim from `Accessibility.queryAXTree`:**
 ```
 heading: Breadth
@@ -1001,21 +1019,21 @@ gone — the page now carries an inline SVG favicon.
   courses.
 - **AC-V09's second clause is not implemented** (advisory-to-requirement
   linkage). See the contract change request. The footer half is verified.
-- **Transfer-student map not captured as a screenshot.** `families.test.ts`
-  asserts it renders 11 nodes; I did not photograph it.
 - **No real screen reader.** AC-V10's evidence is Chrome's accessibility tree,
   which is what the AC asks for, but no NVDA/VoiceOver pass was run.
 - **Touch was not tested on a device.** The 44px floor at 390px is a measured
   `getBoundingClientRect` minimum (60px), not a finger.
-- **`prefers-reduced-motion`** is honoured in CSS but I did not capture evidence
-  of the row expansion under the emulated setting.
 - The engine's correctness beyond its 186 tests and the goldens is unproven;
   the reviewer's round-1 pass found two Criticals that the suite did not.
 
 ### Known Issues
-- **A transfer student gets 11 map nodes, not the 12 TASK-033 assumes.**
-  `critical-inquiry` is waived for transfers as well as the requirement the task
-  names. The test records the measured 11.
+- **A transfer student gets 11 map nodes, not the 12 TASK-033 assumes.** The
+  task's line 82 reads "twelve for a `transfer` student (the PE variant swaps
+  in, the waived one drops out)". The PE variant does swap in, but
+  `critical-inquiry` is waived for transfers as well, so the count is 12 minus
+  one, not 12. Measured above: 11 nodes, no Critical Inquiry node.
+  `families.test.ts` pins the measured 11 rather than the number in the task.
+  **The task text is what needs amending, not the code.**
 - **The map does not fit above the fold when arriving on a share link.** That
   state carries a 194px import preview and an expanded record, putting the map
   at 967-1240. It is the transient first-visit-via-link state; every later visit
@@ -1031,3 +1049,179 @@ gone — the page now carries an inline SVG favicon.
 
 ### Commit
 `079ab7d` plus the follow-up commit below.
+
+---
+
+## HANDOFF-6 — agent/frontend — 2026-09-11
+
+### Summary
+Code review of the round-2 work returned 1 Critical, 5 Important and 6 Minor
+findings, each with a reproduction. Ten are fixed, one is refuted in part, and
+one produces the contract change request below. Every fix has a test that was
+watched fail first.
+
+Tests: **383 passing** (engine 194, shared 13, web 176), up from 358.
+
+### Findings and what I did
+
+**C-1 (Critical) — two sittings of one course defeated every overlap policy.**
+Confirmed exactly as reported: two rows for PHIL 032 in different terms closed
+both `writing-intensive` and `speaking-intensive`, which are `denyOnly` to each
+other. My round-1 fix compared *sittings* to stop a duplicated row closing two
+requirements; that was right for a repeatable course and wrong for everything
+else.
+
+The catalog already carries the answer, so the fix reads it: `ResolvedCourse`
+now has `repeatable`, and two rows are distinct sittings only when the course is
+repeatable **and** both terms are recorded and differ. PE 001 across two
+semesters still counts twice; retaking PHIL 032 does not earn its Writing and
+Speaking flags twice. Both directions are pinned by tests. The duplicate React
+key this surfaced (`RequirementRow.tsx`) is fixed, and the map now renders a
+genuine repeat as "PE 001 x2" rather than "PE 001, PE 001".
+
+**I-1 (Important) — the bounded double pass never reached `CourseFilter`.**
+Confirmed. Eligibility was computed once, before the two passes, so a filter
+that reads the mode could never make them disagree — including the transfer
+pre-matriculation rule that ADR-018 was filed to add and that `docs/API.md` 2.7
+names explicitly. A transfer student with an untermed transfer course was told
+`satisfied` on a Breadth area that the pessimistic reading leaves `unmet`.
+Eligibility is now recomputed inside each pass, and a course a pass would not
+admit is dropped from what the assignment handed that requirement. The test uses
+`area-1`'s rule exactly as shipped, with controls on both sides of matriculation
+so it cannot pass against an engine that simply answers "unverifiable" whenever
+a transfer course appears.
+
+**I-2 (Important) — agreement on status was treated as agreement on the numbers.**
+Confirmed. The optimistic settlement was returned wholesale, so "27 credits to
+go" was printed as fact where the pessimistic reading said 28, with no note. The
+status still comes from agreement, as `docs/API.md` 2.7 specifies, but when the
+two passes disagree on the figure the row now carries "This is between 27 and 28
+depending on when X was taken." No contract change: the note is additive.
+
+**I-3 (Important) — an unreadable term heading left the previous term in force.**
+Confirmed: "Fall 2024 / MATH 030 / Spring 2025 Term / MATH 031" stamped FA2024
+on the spring course. `parseTermText` now understands the common registrar
+forms ("Fall 2025 Semester", "Term: Fall 2025", "2025 Fall", "FALL SEMESTER
+2025"), and a line that is term-*shaped* but still unreadable clears the heading
+and is reported rather than silently ignored. Ordinary furniture between a
+heading and its courses does not clear it — there is a test for that, because
+the reviewer's minimal fix would have.
+
+**I-4 (Important) — Roman-numeral titles were rejected as bad grades.**
+Confirmed and embarrassing: "Calculus II", "Calculus I" and "History of US" were
+all thrown away with the false reason `Could not read the grade "II"`, while
+"Spanish for Heritage Speakers A" invented a grade of A. A grade is now read
+only from a real column — a tab, a comma, two or more spaces, or the whole
+remainder of the line — and a single space no longer makes one. A genuinely
+mistyped grade in a column ("CSCI 051 PO  Q+") is still reported, which is the
+behaviour the existing test protects.
+
+**I-5 (Important, latent) — a `distinctTerms` partial under-reported.**
+Confirmed as latent: selections were enumerated at size exactly `ceil(n)`, so
+when the filter rejected all of them the only fallback held ONE course, and a
+student with 2 of 3 distinct terms was told 1 of 3. It cannot fire on the
+shipped data (PE is `n=2`), but it fires on any `n >= 3`. Fixed by offering the
+maximal distinct-term subset as a candidate selection.
+
+**M-2 (Minor) — silent drops.** A line with a department, a number and an
+unrecognised campus code ("ECON 101 UCLA") matched nothing and was filed as
+furniture, so a transfer student saw "0 courses understood" and no reason. It is
+now reported by name. The detector is deliberately narrow — two-or-three-digit
+number, three-or-four-letter code — and there is a test that "Page 1 of 2" and
+"Cumulative GPA 3.85" stay silent, because a false rejection is worse than a
+silent skip.
+
+**M-4 (Minor) — three nits on my own `useFragmentImport`.** All three fixed:
+`clearFragment` now only clears a fragment that is ours (it was wiping ordinary
+in-page anchors), a non-plan hash clears a standing offer, and a generation
+counter stops two rapid fragments racing.
+
+**M-5 (Minor) — a test of mine proved nothing.** Correct. The dismiss test
+dispatched `hashchange` *after* dismiss had already emptied the hash, so it hit
+the early return and passed whether or not clearing used `replaceState` — it did
+not test its own stated invariant. It now counts the event. Added the two tests
+the reviewer noted were missing: that `accept` applies the plan exactly once,
+and that an offered plan is never applied without it. I verified the new
+anchor-clearing test fails when either half of the fix is reverted.
+
+**M-6 (Minor)** — the identical-branches ternary in `RequirementNode.tsx` is
+gone.
+
+**M-3 (Minor) — partly refuted.** Two of its three parts stand and are recorded
+as debt below. The third claims the module's doc promises squashed *affiliation*
+support; the comment says "spaced or squashed" about the department and number
+("CSCI051 PO"), which works and has a test. No change.
+
+**M-1 (Minor) — the process finding is right.** See the contract change request.
+
+### Contracts
+
+#### CONTRACT CHANGE REQUEST — the assignment ranking in API.md 2.3 / ADR-013
+- **Current contract:** rank assignments by *(satisfied, shared, courseKey)*.
+- **Implemented:** *(satisfied, progress, shared)*, where `progress` is the
+  number of requirements showing partial progress.
+- **Why:** ranking on `satisfied` alone made the search prefer assigning
+  *nothing* to a requirement it could not fully close, so a student with one of
+  two PE courses was told they owed two (fixture F-11). `progress` is what
+  fixes that. The documented `courseKey` final tie-break is absent; the search
+  keeps the first equal-scoring assignment it finds.
+- **What breaks if it is not changed:** nothing at runtime — but `docs/API.md`
+  2.3 and ADR-013 currently describe an engine that does not exist, and the next
+  reader will believe the document. The reviewer built a case where the two
+  rules diverge; I could not construct one on the shipped GE program.
+- **Requested:** amend API.md 2.3 and ADR-013 to the implemented ranking, or
+  tell me to restore the documented one and re-open F-11.
+
+The earlier request from HANDOFF-5 (an `appliesTo` link on `Advisory`) still
+stands. `packages/shared` remains untouched.
+
+### Skills Used
+| Skill | Stage invoked | What it actually changed |
+|---|---|---|
+| `superpowers:requesting-code-review` | after round-2 verification | produced the 12 findings above |
+| `superpowers:receiving-code-review` | on the findings | verified each against the code before fixing; refuted part of M-3 with the test that covers it |
+| `superpowers:systematic-debugging` | C-1 and I-1 | reproduced both before touching either; found my own synthetic I-1 repro was wrong and switched to the shipped rule |
+| `superpowers:test-driven-development` | every fix | 25 new tests, each watched fail first; M-4's two fixes verified by reverting each |
+| `superpowers:verification-before-completion` | before this handoff | caught that the browser evidence needed re-measuring after the engine changed |
+
+### Verification
+```
+npm run typecheck -> 0 errors
+npm run lint      -> clean
+npm run test      -> engine 194, shared 13, web 176 = 383 passed
+```
+Browser re-measured after the engine changes, same instrument as HANDOFF-5:
+```
+proof_innerWidth 1440  proof_innerHeight 800
+mapBottom 551  mapHeight 274  fitsAboveFold TRUE  docHeight 1948
+768: mapHeight 294, overflow FALSE    390: layoutViewport 390, minTap 60, overflow FALSE
+dark: data-theme=dark      console: no application errors
+```
+The rendered page is unchanged for the demo plan, which is the expected result:
+every fix bites only on unknown terms, repeated courses or transfer records.
+
+### What Was NOT Verified
+- **The fixes' effect on a transfer student's page was not re-photographed.**
+  `F-16-transfer-map.jpg` predates the I-1 fix. The engine tests cover the new
+  behaviour; the screenshot does not.
+- **I did not re-run the reviewer's own reproductions against the built app**,
+  only against the engine and parser through tests.
+- `npm run build` still stops at the fixture-data guard, unchanged from
+  HANDOFF-5. Nothing here was verified against a production build.
+- The I-2 note's wording has no browser screenshot: no demo plan triggers it.
+- Everything in HANDOFF-5's "What Was NOT Verified" still applies.
+
+### Known Issues
+- **M-3 debt (not fixed):** a grade that is not the trailing token is silently
+  dropped (`"CSCI 051 PO  Intro CS  A  1.00"` -> `grade: null`), and only the
+  first course on a line is read (`"CSCI 051 PO\tMATH 030 PO"` drops both).
+  Both are safe-direction failures — a missing grade, never a wrong one — and
+  grades are optional everywhere in this app.
+- **M-6 second half (not fixed):** `RequirementMap.tsx` calls `useSections`
+  unconditionally at page load, which contradicts `useLazyData`'s stated
+  "fetched only when a student first asks". It is a correctness-neutral
+  eagerness, but it is a real contradiction of the module's own contract.
+- The map's twelve nodes still assume a first-year student; see HANDOFF-5.
+
+### Commit
+See below.

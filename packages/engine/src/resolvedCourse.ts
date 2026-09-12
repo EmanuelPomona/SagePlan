@@ -24,6 +24,14 @@ export type ResolvedCourse = {
   letterPoints: number | null;
   /** True when the student has not recorded when this course was taken. */
   termUnknown: boolean;
+  /**
+   * True when the catalog marks this course repeatable for credit. Two sittings
+   * of a repeatable course are two courses; two sittings of anything else are
+   * one course taken twice, and may not satisfy two requirements. A course the
+   * catalog does not know is treated as not repeatable, which is the safe
+   * direction: it can never inflate what the student is told they have.
+   */
+  repeatable: boolean;
 };
 
 export function resolveCompleted(completed: CompletedCourse, fromCatalog: Course | undefined): ResolvedCourse {
@@ -37,5 +45,6 @@ export function resolveCompleted(completed: CompletedCourse, fromCatalog: Course
     passing: grade === null ? true : isPassing(grade),
     letterPoints: grade === null ? null : gradePoints(grade),
     termUnknown: completed.term === null,
+    repeatable: fromCatalog?.credits.repeatable ?? false,
   };
 }

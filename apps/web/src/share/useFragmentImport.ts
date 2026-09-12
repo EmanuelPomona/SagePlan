@@ -30,13 +30,22 @@ export function useFragmentImport(): {
 
   useEffect(() => {
     let cancelled = false;
+    // Two fragments in quick succession must not race: only the newest read may
+    // set state, however the decodes interleave.
+    let generation = 0;
 
     const read = () => {
+      const mine = ++generation;
       const hash = window.location.hash;
-      if (!hash.startsWith(FRAGMENT_PREFIX)) return;
+      if (!hash.startsWith(FRAGMENT_PREFIX)) {
+        // Navigating to an ordinary anchor is not a share link. Any standing
+        // offer or failure belongs to a fragment that is no longer there.
+        setState({ status: "none" });
+        return;
+      }
 
       void decodePlan(hash.slice(FRAGMENT_PREFIX.length)).then((result) => {
-        if (cancelled) return;
+        if (cancelled || mine !== generation) return;
         setState(result.ok ? { status: "offered", plan: result.plan } : { status: "failed", detail: result.detail });
       });
     };
@@ -50,6 +59,9 @@ export function useFragmentImport(): {
   }, []);
 
   const clearFragment = () => {
+    // Only ever clear OUR fragment. Stripping the hash unconditionally would
+    // also throw away an ordinary in-page anchor the student had navigated to.
+    if (!window.location.hash.startsWith(FRAGMENT_PREFIX)) return;
     window.history.replaceState(null, "", window.location.pathname + window.location.search);
   };
 

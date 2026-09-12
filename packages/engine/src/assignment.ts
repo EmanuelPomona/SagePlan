@@ -282,6 +282,15 @@ function selectionsFor(
         if (rule.distinctTerms && distinctTermSubset(combo).length < combo.length) continue;
         options.push(combo);
       }
+      // Combinations are enumerated at size exactly k, so when distinctTerms
+      // rejects every one of them the only remaining option was a selection of
+      // ONE, and a student holding two of three distinct terms was told they
+      // held one. The maximal distinct-term subset is the best reachable
+      // selection, and it is what a partial should report.
+      if (rule.distinctTerms) {
+        const best = distinctTermSubset(assignable).slice(0, k);
+        if (best.length > 1 && !options.some((o) => sameSelection(o, best))) options.push(best);
+      }
     }
   }
 
@@ -310,19 +319,32 @@ function canAssign(
     // A term may now be unrecorded. Two rows for the same course with no terms
     // cannot be told apart, so they are treated as the same sitting: that keeps
     // the duplicate from closing two requirements, which is the whole point.
-    if (!held.some((c) => c.key === course.key && sameSitting(c, course))) continue;
+    if (!held.some((c) => c.key === course.key && !distinctSittings(c, course))) continue;
     const other = byId.get(otherId);
     if (!other || !mayShare(req, other)) return false;
   }
   return !violatesConstraint(program, req.id, course, current);
 }
 
-/** Null-safe term comparison: unknown and unknown are indistinguishable. */
-function sameSitting(a: ResolvedCourse, b: ResolvedCourse): boolean {
+/**
+ * Are these two rows two separate courses, for overlap purposes?
+ *
+ * Only a REPEATABLE course can be: PE 001 in the autumn and PE 001 in the
+ * spring are two PE courses, and the two-course PE requirement is asking for
+ * exactly that. Retaking a non-repeatable course is one course taken twice --
+ * it does not earn its Writing and Speaking flags a second time, so it must
+ * not close two requirements that refuse to share.
+ *
+ * Terms are compared BY VALUE (TermId is an object), and an unrecorded term is
+ * never distinct from anything: two rows we cannot tell apart are treated as
+ * one sitting, which is the conservative direction.
+ */
+function distinctSittings(a: ResolvedCourse, b: ResolvedCourse): boolean {
+  if (!a.repeatable || !b.repeatable) return false;
   const ta = a.completed.term;
   const tb = b.completed.term;
-  if (ta === null || tb === null) return ta === tb;
-  return sameTerm(ta, tb);
+  if (ta === null || tb === null) return false;
+  return !sameTerm(ta, tb);
 }
 
 function combinations(pool: ResolvedCourse[], k: number, cap: number): ResolvedCourse[][] {

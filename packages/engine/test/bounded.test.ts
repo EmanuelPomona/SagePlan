@@ -4,6 +4,7 @@ import { describe, expect, test } from "vitest";
 import { CatalogArtefactSchema, ProgramSchema } from "@gradguide/shared";
 import type { Course, Program, Result } from "@gradguide/shared";
 import { settleBounded } from "../src/bounded.ts";
+import type { Settlement } from "../src/rules/settlement.ts";
 import { buildContext, withMode } from "../src/context.ts";
 import { evaluate } from "../src/index.ts";
 import { eligibleCourses, settleAttribute } from "../src/rules/attribute.ts";
@@ -205,5 +206,48 @@ describe("null terms must not crash the overlap check", () => {
     const wi = by(rs, "writing-intensive").satisfiedBy.length;
     const si = by(rs, "speaking-intensive").satisfiedBy.length;
     expect(wi + si).toBe(1);
+  });
+});
+
+/** A context holding one course whose term the student never recorded. */
+function contextWithUnknownTerm() {
+  return buildContext(
+    planWith({ completed: [completed("CSCI 051 PO", { term: null })] }),
+    [],
+  );
+}
+
+describe("I-2 — agreement on status is not agreement on the numbers", () => {
+  // Found in review. When both passes agreed on the status, the OPTIMISTIC
+  // settlement was returned wholesale: its `remaining`, its `satisfiedBy` and
+  // no note. The student read "27 credits to go" as a fact, when the pessimistic
+  // reading of the same record says 28, on a page whose whole argument is that
+  // it does not guess.
+  test("a partial whose remainder depends on an unrecorded term says so", () => {
+    let call = 0;
+    const settle = (): Settlement => {
+      call += 1;
+      // Same status both passes, different remainder.
+      return { status: "partial", satisfiedBy: [], remaining: { n: call === 1 ? 27 : 28, unit: "credits" }, candidates: [] };
+    };
+    const ctx = contextWithUnknownTerm();
+
+    const out = settleBounded(settle, ctx);
+
+    expect(out.status).toBe("partial");
+    expect(out.remaining?.n).toBe(27);
+    expect(out.note).toBeDefined();
+    expect(out.note).toMatch(/28/);
+  });
+
+  test("a partial both passes agree on completely carries no note", () => {
+    const settle = (): Settlement => ({
+      status: "partial", satisfiedBy: [], remaining: { n: 27, unit: "credits" }, candidates: [],
+    });
+
+    const out = settleBounded(settle, contextWithUnknownTerm());
+
+    expect(out.status).toBe("partial");
+    expect(out.note).toBeUndefined();
   });
 });
