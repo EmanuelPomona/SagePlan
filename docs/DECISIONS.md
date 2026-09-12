@@ -665,6 +665,36 @@ line 45  | Task | Round | Verdict | Date | Commit | Findings |   <- main
 - **Remove union from the ledgers** — cons: reintroduces a hand-merge on every concurrent append, which is the common case; the schema change is the rare one. Why not: optimise the guard for the rare failure, not the common success.
 - **Coordinate schema changes by process** — cons: it is a rule that lives in someone's memory, and this project has now produced three corruptions that a machine check would have caught immediately. Why not: process is the weaker half; it is kept as the reason the guard exists, not as the mechanism.
 
+### Amendment, 2026-09-11 — the guard immediately became an instance of what it guards against
+
+The first version treated **more than one header row** as corruption. `docs/DEBT.md`
+carried six deliberate section tables, one per review round, written that way for
+readability — so the guard turned CI red on a clean file, and a sectioned ledger
+was indistinguishable from a damaged one.
+
+That is this ADR's own failure mode, one level up: I encoded an assumption about a
+file's **formatting** and called it an invariant. Header count is a convention.
+The real invariants are that **ids are unique** and that **a row matches its own
+table's header** — both of which hold whether or not the file has sections, and
+both of which the union corruption violated.
+
+The guard now keys on those, resetting the expected column count at each section
+header, and mentions a multi-header file only as a *possible cause* when some
+other problem is found. Verified on four cases: clean files pass; the real
+corrupted `rounds.md` is still caught with every duplicate named; a sectioned
+`DEBT.md` passes; a genuine duplicate id inside a section is still caught.
+
+**The shape of `docs/DEBT.md` is the reviewer's call**, not the parser's. It
+rebuilt the file as a single table while CI was red, which was the right move at
+the time; now that the guard permits sections it is free to re-section without
+asking. A reviewer-owned document should not be single-table because a script
+assumed it.
+
+As the reviewer observed, this class does not bottom out — the guard is now itself
+a premise about these files, and if their shape ever legitimately changes again,
+the guard is what will be wrong. That is an argument for guarding invariants
+rather than conventions, not against guarding.
+
 ### Consequences
 - Positive: the file protocol section 21's escalation safeguard reads is now shape-checked in CI. Loop control was the one machine-read ledger with no guard, which was precisely backwards given the stakes.
 - Negative: `tasks.sh` grows a validator that is not about tasks. It is the script that already reads both files and already runs in CI, so the alternative is a second script nobody runs.
