@@ -25,22 +25,31 @@ dupes=[]
 # ADR-024.
 ledger_problems=[]
 def _check_ledger(path, idcol):
+    # Guards the INVARIANT (ids are unique; a row matches its own table's header),
+    # never the FORMATTING. An earlier version treated "more than one header row"
+    # as corruption, which made a deliberately sectioned ledger indistinguishable
+    # from a damaged one and turned CI red on a clean file. That was the guard
+    # becoming a premise about a file's shape - the exact failure ADR-024 was
+    # written to name. Sections are legitimate; duplicate ids are not.
     probs=[]
     try: lines=open(path,encoding='utf-8',errors='ignore').read().splitlines()
     except FileNotFoundError: return probs
     heads=[i for i,l in enumerate(lines) if re.match(r'^\|\s*'+idcol+r'\s*\|', l)]
-    if len(heads)>1:
-        probs.append(f"{path}: {len(heads)} header rows (lines {', '.join(str(h+1) for h in heads)}) - a union merge appended a second table")
-    ncol=lines[heads[0]].count('|') if heads else 0
-    seen=set()
+    ncol=0; seen={}
     for i,l in enumerate(lines):
+        if i in heads: ncol=l.count('|'); continue      # a new section resets the shape
         m=re.match(r'^\|\s*((?:TASK|D)-\d+)\s*\|\s*(\d*)', l)
         if not m: continue
         if ncol and l.count('|')!=ncol:
-            probs.append(f"{path}:{i+1}: {l.count('|')-1} columns, header has {ncol-1}")
+            probs.append(f"{path}:{i+1}: {l.count('|')-1} columns, its table's header has {ncol-1}")
         key=(m.group(1), m.group(2))
-        if key in seen: probs.append(f"{path}:{i+1}: duplicate row for {m.group(1)}" + (f" round {m.group(2)}" if m.group(2) else ""))
-        seen.add(key)
+        if key in seen:
+            probs.append(f"{path}:{i+1}: duplicate row for {m.group(1)}"
+                         + (f" round {m.group(2)}" if m.group(2) else "")
+                         + f" (first at line {seen[key]+1})")
+        else: seen[key]=i
+    if probs and len(heads)>1:
+        probs.append(f"{path}: {len(heads)} header rows (lines {', '.join(str(h+1) for h in heads)}) - if these are not deliberate sections, a union merge appended a table")
     return probs
 ledger_problems += _check_ledger('docs/review/rounds.md','Task')
 ledger_problems += _check_ledger('docs/DEBT.md','ID')
