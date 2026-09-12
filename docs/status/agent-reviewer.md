@@ -254,10 +254,29 @@ Helper: `scratchpad/lib.mjs`. AC-V02/V03 are measured at **1440x800**.
 4. **AC-B07** — unverifiable: this repo has no git remote, so the nightly
    workflow has never run (D-11/D-12).
 
-## Re-gate rule I am using (see note sent to the manager)
-A task sitting at REVIEW is NOT automatically re-gateable: after a
-CHANGES_REQUIRED I do not touch status (ADR-021), so it stays REVIEW. Gate only
-when the owning branch has commits **newer than my last ledger row** for that
-task and they touch the code the finding names. Otherwise a re-gate refiles the
-same finding, and protocol 21's recurrence rule would push it to a spurious
-ESCALATE.
+## Re-gate rule — ADR-023 (SUPERSEDES the interim rule I wrote earlier)
+Protocol 21's recurrence rule now requires a finding to be materially the same
+**and the worker to have since declared a fix attempt**. Refiling something the
+worker has not had a chance to address is not recurrence.
+
+Two mechanisms, either sufficient, **commit wins on disagreement**:
+1. Worker declares `IN_PROGRESS` on pickup after CHANGES_REQUIRED, `REVIEW` when
+   re-declaring. Its own field under ADR-021.
+2. `docs/review/rounds.md` has a **`Commit`** column — the owning branch's head at
+   the moment of the verdict. Gate a task at REVIEW only when that branch's head
+   differs from its last row. **Fill this column on every future verdict** (get it
+   from the merge commit's second parent: `git rev-parse --short <merge>^2`).
+
+My file-level refinement (does the diff touch the code the finding names?) was
+explicitly NOT adopted as the rule — it asks the gate to infer intent from a diff.
+Keep it as judgment only.
+
+## The ledger is mine to keep clean
+`docs/review/rounds.md` is `merge=union`. That is right for appends and **wrong
+across a schema change**: when the Commit column was added on main, union produced
+two header rows and duplicated all ten round-1 rows. I rebuilt it — 19 unique
+rows, one header — and filled Commit for the verdicts I could verify from merge
+parents (backend r2 9013eb5, TASK-030 049f55d, v1 gate 079ab7d). **After any merge
+that touches this file, check for a second header row and duplicate (task, round)
+pairs before trusting it.** `tasks.sh` parses a corrupted ledger silently.
+
