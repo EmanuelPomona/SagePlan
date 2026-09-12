@@ -634,3 +634,38 @@ The reviewer found this before it fired, held rather than refiling, and flagged 
 - Positive: the escalation safeguard now fires on what it was written to detect — a defect surviving two genuine fix attempts — rather than on a task that has not been touched. Two mechanisms, either sufficient, with a stated precedence.
 - Negative: a third small bookkeeping obligation on the worker. It is one field it already owns, at the moment it starts work.
 - Process: this is the second defect produced by one of my rulings interacting with another (ADR-019 loaded the status-overwrite gun that ADR-021 unloaded; ADR-021 created this one). Both were found by the agent subject to the rule rather than by me writing it. **A ruling should be checked against the rulings it composes with, not only against the problem it solves** — and the agent that has to live under a rule is better placed to find that than the one who wrote it.
+
+---
+
+## ADR-024 — A merge attribute encodes an assumption about a file's shape, and a schema change invalidates it
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's third corruption report
+
+### Context
+ADR-019 exempted `docs/review/rounds.md` from the union concerns because it is append-only. ADR-021 kept union on the hand-written task files for the same reason, and moved the generated `INDEX.md` to `-merge`. Both were right.
+
+Then ADR-023 added a `Commit` column to the round ledger, and the reasoning quietly stopped applying. Main re-seeded ten round-1 rows in the new six-column shape; the reviewer's branch held the same ten in the old five-column shape; union **appended rather than reconciled**:
+
+```
+line 18  | Task | Round | Verdict | Date | Findings |            <- reviewer's branch
+line 45  | Task | Round | Verdict | Date | Commit | Findings |   <- main
+28 data rows where there should be 18; every round-1 verdict duplicated
+```
+
+`scripts/tasks.sh` parsed it without complaint and `INDEX.md` looked correct. The reviewer found it only by counting rows, and only because it re-read its own status file for an unrelated reason.
+
+**The generalisation is the reviewer's and it is sharper than the fix.** The first two composition defects came from two rulings interacting. This one did not: it was a **schema change to a file governed by an older ruling whose premise no longer covered it**. "Append-only, therefore union" was true of the file's *content* and false the moment its *shape* changed. That is harder to catch, because nothing in the new change looks like it touches the old decision.
+
+### Decision
+1. **`scripts/tasks.sh` validates both ledgers** — `docs/review/rounds.md` and `docs/DEBT.md` — and exits non-zero on: more than one header row, a data row whose column count differs from the header, or a duplicate `(id, round)` pair. It runs in CI, so the silence is gone. Verified against the real corrupted file rather than a synthetic one: it names both header lines and all ten duplicated rows.
+2. **Union stays on both ledgers.** Concurrent appends from two roles are the normal case and are what union is for. The guard converts the rare schema-change failure from silent to loud, which is the same trade as the frontmatter duplicate-key guard.
+3. **The standing rule:** a merge attribute is an assumption about a file's shape. **Changing a file's schema invalidates every merge attribute and parser premise that depends on it** — so a schema change to a machine-read file must be checked against the attributes governing it, and the check belongs in a guard rather than in someone's memory.
+
+### Alternatives considered
+- **Remove union from the ledgers** — cons: reintroduces a hand-merge on every concurrent append, which is the common case; the schema change is the rare one. Why not: optimise the guard for the rare failure, not the common success.
+- **Coordinate schema changes by process** — cons: it is a rule that lives in someone's memory, and this project has now produced three corruptions that a machine check would have caught immediately. Why not: process is the weaker half; it is kept as the reason the guard exists, not as the mechanism.
+
+### Consequences
+- Positive: the file protocol section 21's escalation safeguard reads is now shape-checked in CI. Loop control was the one machine-read ledger with no guard, which was precisely backwards given the stakes.
+- Negative: `tasks.sh` grows a validator that is not about tasks. It is the script that already reads both files and already runs in CI, so the alternative is a second script nobody runs.
+- Process: **three corruptions, three different mechanisms, all silent, all caught by counting rather than by the tooling.** Each is now loud. The pattern worth keeping is not any one guard but the reviewer's rule for finding them — ask whether a change invalidates the *premise* of an existing decision, not only whether it conflicts with its *conclusion*.

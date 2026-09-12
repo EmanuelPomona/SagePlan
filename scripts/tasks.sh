@@ -18,6 +18,32 @@ try:
 except FileNotFoundError:
     pass
 dupes=[]
+# Ledger shape guards. These files are merge=union because they are append-only,
+# which is true of their CONTENT and false the moment their SCHEMA changes: a new
+# column produces a second header and a duplicated table that parses fine and is
+# silently wrong. Loop control reads rounds.md, so that silence is expensive.
+# ADR-024.
+ledger_problems=[]
+def _check_ledger(path, idcol):
+    probs=[]
+    try: lines=open(path,encoding='utf-8',errors='ignore').read().splitlines()
+    except FileNotFoundError: return probs
+    heads=[i for i,l in enumerate(lines) if re.match(r'^\|\s*'+idcol+r'\s*\|', l)]
+    if len(heads)>1:
+        probs.append(f"{path}: {len(heads)} header rows (lines {', '.join(str(h+1) for h in heads)}) - a union merge appended a second table")
+    ncol=lines[heads[0]].count('|') if heads else 0
+    seen=set()
+    for i,l in enumerate(lines):
+        m=re.match(r'^\|\s*((?:TASK|D)-\d+)\s*\|\s*(\d*)', l)
+        if not m: continue
+        if ncol and l.count('|')!=ncol:
+            probs.append(f"{path}:{i+1}: {l.count('|')-1} columns, header has {ncol-1}")
+        key=(m.group(1), m.group(2))
+        if key in seen: probs.append(f"{path}:{i+1}: duplicate row for {m.group(1)}" + (f" round {m.group(2)}" if m.group(2) else ""))
+        seen.add(key)
+    return probs
+ledger_problems += _check_ledger('docs/review/rounds.md','Task')
+ledger_problems += _check_ledger('docs/DEBT.md','ID')
 rows=[]
 for p in sorted(glob.glob('docs/tasks/*.md')):
     b=os.path.basename(p)
@@ -54,10 +80,17 @@ open('docs/tasks/INDEX.md','w').write("\n".join(out)+"\n")
 print(f"docs/tasks/INDEX.md regenerated — {len(rows)} task(s)")
 for i,s,o,r,ti,bo,v in rows:
     if s in ('BLOCKED','REVIEW') or int(r or 0)>=3: print(f"  ATTENTION {i} {s} round={r} {ti[:40]}")
+if ledger_problems:
+    print("\nLEDGER SHAPE PROBLEM (ADR-024) - these files are machine-read:")
+    for d in ledger_problems: print("  "+d)
+    print("  A union merge combines rows without reconciling them, so a schema change")
+    print("  duplicates the whole table and still parses. Repair by hand; the owning")
+    print("  role is the reviewer for both docs/review/rounds.md and docs/DEBT.md.")
 if dupes:
     print("\nDUPLICATE FRONTMATTER KEYS — a union merge combined two writers (ADR-021):")
     for d in dupes: print("  "+d)
     print("  Fix the file by hand. One field, one owner: status is the worker's, round and")
     print("  verdict are the reviewer's in docs/review/rounds.md, the rest are the manager's.")
+if dupes or ledger_problems:
     raise SystemExit(1)
 PY
