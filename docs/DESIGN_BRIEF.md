@@ -237,12 +237,17 @@ gathers its nodes. Never a fill, never a node, never a row background, because
 | Overlays | `#3E6F76` deep teal | `#7FB0B8` |
 | Foundations | `#7A5C46` warm brown | `#C2A088` |
 
-These sit in a crowded space: teal neighbours the satisfied green, warm brown
-neighbours the partial ochre. Restricting them to hairlines and small-caps text
-is what keeps them reading as *grouping* rather than as *state*. **Verify that
-at 1440, 768 and 390. If a family hue is mistaken for a status at a glance, drop
-family hue entirely and group by position and label alone** - and say so in the
-handoff rather than shipping an ambiguous page.
+These sit in a crowded space, and the measurement came back against them.
+Measured on the cream canvas (frontend, 2026-09-11): family-overlay sits **10
+degrees** from the unverifiable slate and family-foundation **9 degrees** from
+the partial ochre, against five status hues already spread across 7, 36, 137,
+218 and 282 degrees. There is no room for three more a student could tell apart
+from state.
+
+**Resolved: family hue never touches a node.** It is used on the family label
+and its 1px bracket only, so hue on a node ring means exactly one thing — status
+— and grouping is carried by position and label. This is the outcome this
+section authorised, taken on a measurement rather than an impression.
 
 ## Information density
 

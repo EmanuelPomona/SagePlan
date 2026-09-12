@@ -410,6 +410,29 @@ Every quantitative criterion in `docs/ACCEPTANCE.md` states **the exact predicat
 ### A finding from verifying the challenge
 Checking the reviewer's arithmetic turned up something neither of us had written down: the obvious implementation of AC-B00's placeholder rule — a substring match on "test" — **deletes six real courses** from the shipped catalog, including `ENGL 170R PO` "Testamentary Fictions" and `RLST 061 SC` "New Testament Christian Origins". Silently deleting a real course is worse than shipping a placeholder, because a missing course makes the engine answer `unmet` for a requirement the student satisfied. AC-B00 now carries that list and a test asserting all six survive. The reviewer's arithmetic was also slightly off — `THEA 007 PO` escapes the exact rule and is reported rather than dropped, so the PO count stays 2,005 — but the conclusion, that the margin was too thin to rest on, was right.
 
+### Amendment, 2026-09-11 — the same rule applies to fixtures, not just criteria
+
+A criterion can name its instrument perfectly and still rest on a fixture that
+cannot fail. `docs/ACCEPTANCE.md` now carries a standing rule: **a golden cited
+as evidence for a criterion must discriminate on it** — neutralise the rule the
+fixture exists to prove and the golden must change.
+
+This generalises three separate findings that were each handled case by case:
+F-06's tie-break (the manager required a mutation test), F-13's split (the same,
+after the reviewer pointed out a golden of agreed cases hides the failure mode),
+and **L-9, which is where the principle was originally filed and the only place
+it was not adopted** — because the manager mis-paraphrased the finding when
+relaying it, inverting "the golden cannot discriminate" into "the fixture lacks
+the entry", and then treated the frontend's correct refutation of that
+paraphrase as a refutation of L-9. Both the finding and the frontend were right;
+the relay was the defect.
+
+The frontend then found the rule's second failure mode while building F-13c:
+redundancy is not the only way a fixture fails to discriminate. **Slack** is the
+other — a bounded fixture whose optimistic and pessimistic totals land on the
+same side of the threshold agrees by accident. A disagreement fixture must sit
+on the boundary.
+
 ### Consequences
 - Positive: four criteria that could have been argued about after a worker round are now settled before one. The instrument is agreed between the agent that builds to it and the agent that gates on it, which is the whole point of writing it down.
 - Negative: the criteria are longer and read as pedantic. That is the correct trade at this stage.
@@ -508,9 +531,171 @@ So: the `>= 1` rule is documented and tested, the nineteen courses are listed in
 
 ### Three criteria measured against the wrong population
 - **AC-B03** hardcoded "3 senior exercises, 10 non-Area-6 partial-credit" from the project brief's measurement of 2,811 raw Coursedog records. The finished catalog is a different, 12-campus, 2,980-course population; backend measured 4 and 6, the reviewer measured 18-in-range/2-PO from the export. Three measurements of "the same" check, three answers, because they are three populations. The criterion now **states its population** and records the counts as a baseline, and says outright not to tune the validator to reach a number. Backend deliberately did not bend it, which was right.
+- **AC-B03's predicate is `credits.min < 1`, not `max`.** The restatement above originally said `max`, which silently reverted reviewer finding H-4 — backend implemented the contract and flagged the conflict rather than picking a winner, which is the behaviour this project wants. `min` is right because the engine applies no partial-credit exclusion of its own (no Area rule carries `partialCredit: exclude`, by design, since the Registrar's tags are assumed to encode the exclusions). The tag is therefore load-bearing, and the case worth surfacing is exactly the one where trusting it misleads: `GEOL 189V PO` (0.5-1 credits, `AREA_4`) counted toward an Area at half credit. One extra row today.
 - **AC-B04** required `sections-SP2027.json` (reviewer H-5). Verified against `/v4/term/all` on 2026-09-11: **SP2027 is not published.** Spring schedules appear shortly before spring registration — which is also when the "What satisfies this?" term filter becomes useful, so nothing is lost. A requested term upstream does not carry is now warned and skipped, not failed.
 - **AC-B07** cannot be verified anywhere: `git remote -v` is empty, so the repository exists only on this machine and the nightly workflow has never executed; `actionlint` and `act` are absent too. This is an **owner action** (create the remote and push), recorded in `docs/DEBT.md` as unverified rather than failed. The reviewer records BLOCKED on it, never APPROVED.
 
 ### Consequences
 - Positive: three criteria that were unmeetable for reasons unrelated to the work are now measurable; a 37-course data-loss bug was caught before integration by the worker's own test.
 - Negative: AC-B07 stays open until the owner creates a remote, so one acceptance criterion cannot close on this machine.
+
+---
+
+## ADR-021 — One field, one owner: the reviewer stops editing task frontmatter
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, investigating agent/reviewer's D-15
+
+### Context
+The reviewer filed D-15: `docs/tasks/*.md merge=union` silently dropped backend's `status: REVIEW`. It flagged, carefully, that it had measured the *loss* and the *attribute* but had only **reasoned** about the mechanism — a union merge emitting duplicate keys — because its sandbox blocked three attempts to demonstrate it. It asked for one command from an environment that allows it.
+
+Two experiments in an isolated temp repo, plus the branch history:
+
+**The mechanism is real.** With both sides editing the same frontmatter key, the union driver emits both lines and nothing warns:
+
+```
+status: REVIEW      <- worker
+status: BLOCKED     <- reviewer
+```
+
+**But it is not what happened.** With only one side editing the key, union merges normally and correctly. The observed `READY` came from the reviewer's own round-1 verdict commit `d5bd6a0`, which deliberately set `status: REVIEW -> READY` and `round: 0 -> 1` when issuing CHANGES_REQUIRED. Git correctly kept the side that changed, and no loss occurred on that merge.
+
+The mechanics are subtler than a single three-way merge, and the reviewer re-derived them: these branches are a **criss-cross**, so `git merge-base --all` returns **two** bases disagreeing on this very field — one carrying `READY`, one carrying `REVIEW`. The recursive strategy builds a virtual ancestor from them (`REVIEW`, since only one side changed it there), and then merges virtual `REVIEW` against reviewer `READY` (changed) and backend `REVIEW` (unchanged), keeping `READY`.
+
+**Deliberately not pinning commit ids here.** An earlier draft named one; the reviewer corrected it; checking the correction showed the id it named *was* a merge-base, while the pair it reported had itself moved. Both readings were accurate at the moment each was taken. The merge-base **set changes as the branches advance**, so any id written down here is stale by the next commit and will mislead the next reader in a way the general description does not. `git merge-base --all <a> <b>` is the command; its answer is a function of when you ask.
+
+**The real defect is mine, and ADR-019 sharpened it.** `status:` has three writers: the worker declares `REVIEW`, the reviewer sends work back, the manager creates the file. That was survivable while the reviewer's branch was never merged. ADR-019 made `integrate.sh` merge `agent/reviewer` **last** — correctly, to rescue the round ledger and the evidence — which also means the reviewer's status edits now land last on `main` and can overwrite a worker's newer declaration. I introduced that hazard four hours ago.
+
+### Decision
+1. **The reviewer does not edit task frontmatter at all.** Its verdict lives in `docs/review/rounds.md`, which it already owns. The worker owns `status:`; the manager owns the rest.
+2. **`docs/tasks/INDEX.md` gains a `Last verdict` column**, read from the ledger. Neither role has to overwrite the other's field to be visible, which removes the contention rather than arbitrating it.
+3. **`scripts/tasks.sh` fails loudly on a duplicate frontmatter key**, naming the file and the key. The mechanism the reviewer reasoned about is real and now latent rather than silent.
+4. **`docs/tasks/INDEX.md` is marked `-merge`.** It is generated by `scripts/tasks.sh`, so there is no append to preserve: concatenation is never right and regeneration always is, exactly as for the lockfiles. This is not hypothetical — union produced **two complete tables** in the live repo, every task listed twice with contradictory columns, no conflict and no warning (measured by the reviewer, 2026-09-11). `integrate.sh` already regenerates the index after merging.
+5. **`merge=union` stays on the hand-written `docs/tasks/TASK-*.md`.** Removing it, as D-15 suggested, would force a hand-resolve on every concurrent Review History append — which is what union is right for. With one owner per key, the duplication case cannot arise.
+
+### Alternatives considered
+- **Remove `docs/tasks/*.md` from the union list** (the reviewer's suggestion) — pros: a real conflict is information; cons: Review History is genuinely append-from-two-sides, so this trades a rare silent corruption for a frequent manual merge, and the underlying two-owners problem would remain. Why not: fixing ownership removes the cause; removing union only makes one symptom louder.
+- **Move `status` out of frontmatter, as the round counter moved** — cons: `status` is wired through `tasks.sh`, the protocol, and every agent definition, and unlike `round` it has exactly one natural owner once the reviewer stops writing it. Why not: the cheaper fix is sufficient.
+
+### Consequences
+- Positive: three writers become one per field; the duplicate-key corruption becomes a loud failure; `INDEX.md` carries both the declaration and the verdict, which is more information than either field alone.
+- Negative: the reviewer loses the ability to signal "work needed" through `status`. The ledger row says `CHANGES_REQUIRED`, which is clearer, and the worker sets its own status when it picks the task back up.
+- Process: D-15 was **half right, and the half it flagged as unverified was the right half**. Its mechanism was correct and its attribution was not. Flagging the distinction is what made the investigation cheap — and it found a defect I had introduced that neither of us was looking for.
+
+---
+
+## ADR-022 — Skill invocation is per session and per new domain, not per review round
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's protocol question
+
+### Context
+The reviewer's role definition requires all four design skills for a substantial frontend review. It invoked them once this session, before the round-1 visual review, and applied that guidance to the round-2 gate of a **materially new interface** — the requirement map did not exist at round 1. It did not re-invoke, on the grounds that the guidance is static and re-invoking to raise a counter is theatre. It flagged that `scripts/audit-skills.sh` will therefore show four invocations across two rounds, and asked me to rule rather than deciding a protocol question unilaterally.
+
+### Decision
+Invocation is **per session and per new domain, not per round**. Re-invoking identical static guidance so an audit shows two entries instead of one is the invocation theatre section 1 already forbids — the same defect as claiming a skill you did not run, pointed the other way. The handoff states which invocation covers which round, so the count is explicable.
+
+One exception, and it is the one that makes the rule safe: **re-invoke if your context was compacted**, because an invocation you cannot recall is a memory of guidance rather than guidance.
+
+### Alternatives considered
+- **Require per-round invocation** — pros: a mechanical audit rule with no judgment; cons: it rewards the count over the use, and would have the reviewer re-read four static documents to produce an artefact rather than to learn anything. Why not: the protocol's whole point is that skills are procedures to follow, not boxes to tick, and a rule that manufactures invocations undermines the audit that makes the real claims checkable.
+- **Leave it unstated** — cons: `audit-skills.sh` counts invocations, so a future reviewer could file "four invocations, two rounds" as a violation of a rule nobody wrote. Why not: an ambiguity in an audited rule becomes a finding eventually.
+
+### Consequences
+- Positive: the audit keeps meaning what it says; a reviewer is not incentivised to pad it.
+- Negative: "materially new domain" is a judgment call. The reviewer's own case is the worked example — the map was new UI, and it judged that the four design skills' guidance was already in hand and applied rather than needing reloading. That is the right call and the handoff says so, which is what makes it checkable.
+- Process note: asking rather than deciding was correct. A worker quietly interpreting an audited protocol rule in its own favour is exactly what the audit exists to catch, even when the interpretation is right.
+
+---
+
+## ADR-023 — Recurrence counts fix attempts, not gates; and how to tell a fresh REVIEW from a stale one
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's flag
+
+### Context
+Two of my own rulings combined into a defect neither mentioned.
+
+- I told the reviewer to **gate on `REVIEW` without waiting for a dispatch**, because a round-trip adds latency and nothing else.
+- **ADR-021** stopped the reviewer writing `status:` at all, to end the three-writer contention on that field.
+
+Together, a task the reviewer sends back with `CHANGES_REQUIRED` **stays at `REVIEW`** until its owner picks it up. So `REVIEW` no longer distinguishes *awaiting a first gate* from *gated, sent back, not yet fixed*. Followed literally, the reviewer would immediately re-gate, refile the same finding, and protocol section 21's recurrence rule — "materially the same as a previous round: do not refile, `ESCALATE` immediately" — would escalate a finding that is merely **not fixed yet**. A false escalation manufactured by bookkeeping, on a rule whose whole purpose is to detect specification problems.
+
+The reviewer found this before it fired, held rather than refiling, and flagged the mechanism rather than proposing to change a contract it does not own. Its interim rule — gate only when the branch has commits newer than the last ledger row touching the code the finding names — is sound, and it is inference standing in for a declaration that does not exist.
+
+### Decision
+1. **Recurrence counts fix attempts, not gates.** Section 21 now reads: materially the same finding **and the worker has since declared a fix attempt**. Refiling a finding the worker has not yet had a chance to address is not recurrence.
+2. **The worker declares.** On picking up a task after `CHANGES_REQUIRED`, set `status: IN_PROGRESS`; set `REVIEW` when re-declaring. `status` is the worker's own field under ADR-021, so this costs nothing and keeps `INDEX.md` honest in the meantime.
+3. **The ledger records what was gated.** `docs/review/rounds.md` gains a `Commit` column: the owning branch's head at the moment of the verdict. Gate a task at `REVIEW` only when that branch's head differs from its last row. Where the two mechanisms disagree, **the commit wins** — it is a fact about the repository rather than a declaration someone may have forgotten to make.
+
+### Alternatives considered
+- **A `CHANGES_REQUIRED` status the worker clears** — cons: the reviewer would have to write it, which is precisely the three-writer contention ADR-021 removed. Why not: it reintroduces the bug it would fix.
+- **The reviewer's file-level heuristic alone** (commits touching the files the finding names) — pros: more precise than a commit comparison; cons: it fails in the direction that matters, because a worker may legitimately fix a finding in a file the finding did not name, and it asks the gate to infer intent from a diff. Why not: kept as judgment, not as the rule.
+- **Commit comparison alone** — cons: a docs-only commit would license a re-gate, and the refiled finding could still trip recurrence. Why not: which is why decision 1 is the primary fix and the commit column is the backstop.
+
+### Consequences
+- Positive: the escalation safeguard now fires on what it was written to detect — a defect surviving two genuine fix attempts — rather than on a task that has not been touched. Two mechanisms, either sufficient, with a stated precedence.
+- Negative: a third small bookkeeping obligation on the worker. It is one field it already owns, at the moment it starts work.
+- Process: this is the second defect produced by one of my rulings interacting with another (ADR-019 loaded the status-overwrite gun that ADR-021 unloaded; ADR-021 created this one). Both were found by the agent subject to the rule rather than by me writing it. **A ruling should be checked against the rulings it composes with, not only against the problem it solves** — and the agent that has to live under a rule is better placed to find that than the one who wrote it.
+
+---
+
+## ADR-024 — A merge attribute encodes an assumption about a file's shape, and a schema change invalidates it
+
+**Date**: 2026-09-11 · **Status**: accepted · **Deciders**: manager, on agent/reviewer's third corruption report
+
+### Context
+ADR-019 exempted `docs/review/rounds.md` from the union concerns because it is append-only. ADR-021 kept union on the hand-written task files for the same reason, and moved the generated `INDEX.md` to `-merge`. Both were right.
+
+Then ADR-023 added a `Commit` column to the round ledger, and the reasoning quietly stopped applying. Main re-seeded ten round-1 rows in the new six-column shape; the reviewer's branch held the same ten in the old five-column shape; union **appended rather than reconciled**:
+
+```
+line 18  | Task | Round | Verdict | Date | Findings |            <- reviewer's branch
+line 45  | Task | Round | Verdict | Date | Commit | Findings |   <- main
+28 data rows where there should be 18; every round-1 verdict duplicated
+```
+
+`scripts/tasks.sh` parsed it without complaint and `INDEX.md` looked correct. The reviewer found it only by counting rows, and only because it re-read its own status file for an unrelated reason.
+
+**The generalisation is the reviewer's and it is sharper than the fix.** The first two composition defects came from two rulings interacting. This one did not: it was a **schema change to a file governed by an older ruling whose premise no longer covered it**. "Append-only, therefore union" was true of the file's *content* and false the moment its *shape* changed. That is harder to catch, because nothing in the new change looks like it touches the old decision.
+
+### Decision
+1. **`scripts/tasks.sh` validates both ledgers** — `docs/review/rounds.md` and `docs/DEBT.md` — and exits non-zero on: more than one header row, a data row whose column count differs from the header, or a duplicate `(id, round)` pair. It runs in CI, so the silence is gone. Verified against the real corrupted file rather than a synthetic one: it names both header lines and all ten duplicated rows.
+2. **Union stays on both ledgers.** Concurrent appends from two roles are the normal case and are what union is for. The guard converts the rare schema-change failure from silent to loud, which is the same trade as the frontmatter duplicate-key guard.
+3. **The standing rule:** a merge attribute is an assumption about a file's shape. **Changing a file's schema invalidates every merge attribute and parser premise that depends on it** — so a schema change to a machine-read file must be checked against the attributes governing it, and the check belongs in a guard rather than in someone's memory.
+
+### Alternatives considered
+- **Remove union from the ledgers** — cons: reintroduces a hand-merge on every concurrent append, which is the common case; the schema change is the rare one. Why not: optimise the guard for the rare failure, not the common success.
+- **Coordinate schema changes by process** — cons: it is a rule that lives in someone's memory, and this project has now produced three corruptions that a machine check would have caught immediately. Why not: process is the weaker half; it is kept as the reason the guard exists, not as the mechanism.
+
+### Amendment, 2026-09-11 — the guard immediately became an instance of what it guards against
+
+The first version treated **more than one header row** as corruption. `docs/DEBT.md`
+carried six deliberate section tables, one per review round, written that way for
+readability — so the guard turned CI red on a clean file, and a sectioned ledger
+was indistinguishable from a damaged one.
+
+That is this ADR's own failure mode, one level up: I encoded an assumption about a
+file's **formatting** and called it an invariant. Header count is a convention.
+The real invariants are that **ids are unique** and that **a row matches its own
+table's header** — both of which hold whether or not the file has sections, and
+both of which the union corruption violated.
+
+The guard now keys on those, resetting the expected column count at each section
+header, and mentions a multi-header file only as a *possible cause* when some
+other problem is found. Verified on four cases: clean files pass; the real
+corrupted `rounds.md` is still caught with every duplicate named; a sectioned
+`DEBT.md` passes; a genuine duplicate id inside a section is still caught.
+
+**The shape of `docs/DEBT.md` is the reviewer's call**, not the parser's. It
+rebuilt the file as a single table while CI was red, which was the right move at
+the time; now that the guard permits sections it is free to re-section without
+asking. A reviewer-owned document should not be single-table because a script
+assumed it.
+
+As the reviewer observed, this class does not bottom out — the guard is now itself
+a premise about these files, and if their shape ever legitimately changes again,
+the guard is what will be wrong. That is an argument for guarding invariants
+rather than conventions, not against guarding.
+
+### Consequences
+- Positive: the file protocol section 21's escalation safeguard reads is now shape-checked in CI. Loop control was the one machine-read ledger with no guard, which was precisely backwards given the stakes.
+- Negative: `tasks.sh` grows a validator that is not about tasks. It is the script that already reads both files and already runs in CI, so the alternative is a second script nobody runs.
+- Process: **three corruptions, three different mechanisms, all silent, all caught by counting rather than by the tooling.** Each is now loud. The pattern worth keeping is not any one guard but the reviewer's rule for finding them — ask whether a change invalidates the *premise* of an existing decision, not only whether it conflicts with its *conclusion*.

@@ -2,6 +2,9 @@
 id: TASK-000
 title: Task name
 status: BACKLOG        # BACKLOG | READY | IN_PROGRESS | BLOCKED | REVIEW | DONE
+                       # Worker-owned (ADR-021). After a CHANGES_REQUIRED verdict
+                       # set IN_PROGRESS on pickup, REVIEW when re-declaring, so a
+                       # stale REVIEW is never mistaken for a fresh one (ADR-023).
 owner: frontend        # frontend | backend | <slice-id>
 branch: agent/frontend
 priority: HIGH         # HIGH | MEDIUM | LOW
@@ -31,6 +34,13 @@ Checkable by someone who did not build it.
 ## Notes
 
 Relevant implementation information, links to the contract sections involved.
+
+**Notes are guidance, not requirements.** Anything that must be true for the task
+to be done belongs in Acceptance Criteria, where it gets ticked. A requirement
+recorded only here is a requirement recorded where the person ticking boxes does
+not read it — which is how F-03c was specified, agreed and then missed
+(reviewer R2-M1, 2026-09-11). If you find yourself writing "must" or "required"
+in this section, it belongs above.
 
 ## Review History
 

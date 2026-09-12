@@ -325,6 +325,24 @@ Skills are invoked at the stage where they matter, not at startup:
 Do not invoke all skills at project startup and then ignore them. The audit in
 section 2 records invocation position and will show it.
 
+### Invocation is per session and per new domain, not per round
+
+A skill is invoked when you need its guidance, **never to raise a counter**.
+Re-invoking identical static guidance inside one session, so that an audit shows
+two invocations instead of one, is the invocation theatre section 1 forbids — it
+is the same defect as claiming a skill you did not run, pointed the other way.
+
+- Invoke when the stage is new to you in this session, or the material is a kind
+  you have not applied the skill to.
+- Do **not** re-invoke for round 2 of the same material. Say in the handoff which
+  invocation covers which round, so the audit's count is explicable.
+- **Do** re-invoke if your context was compacted since, because then you no
+  longer have the guidance and the earlier invocation is only a memory of one.
+
+A handoff claiming a skill it did not invoke is a CRITICAL finding. A handoff
+invoking a skill it did not need is a quieter failure of the same kind, and the
+reviewer should say so rather than reward the count.
+
 ---
 
 ## 19. VISUAL CONSTRAINTS
@@ -389,14 +407,49 @@ manager-owned, and section 15 keeps the reviewer on a branch that
 fire. `scripts/integrate.sh` now merges `agent/reviewer` last, and
 `scripts/tasks.sh` reads the ledger for `docs/tasks/INDEX.md` (ADR-019).
 
+**One field, one owner.** The reviewer records its verdict in `docs/review/rounds.md`
+and **does not edit task frontmatter at all** — not `status`, not `round`. The
+worker owns `status:` (its declaration of what it has done); the manager owns the
+rest of the file. Two owners writing one field through `merge=union` produces a
+duplicate key that `scripts/tasks.sh` resolves silently, which is measured and
+real (ADR-021); `tasks.sh` now fails loudly if it ever happens. `INDEX.md` shows
+the worker's status and the reviewer's last verdict side by side, so neither has
+to overwrite the other to be seen.
+
 - **Rounds 1-2:** normal verdicts.
 - **Round 3:** `CHANGES_REQUIRED` is no longer available. The reviewer must issue
   `APPROVED-WITH-DEBT` (Medium/Low remaining, moved to `docs/DEBT.md`) or
   `ESCALATE` (a Critical/High defect survived three rounds).
 - **Recurrence:** if a finding is materially the same as one filed in a previous
-  round for the same task, do not refile it. Issue `ESCALATE` immediately. A
-  finding that survives two fix attempts is a specification or comprehension
-  problem, not a fix problem, and a fourth attempt will not resolve it.
+  round for the same task, **and the worker has since declared a fix attempt**,
+  do not refile it. Issue `ESCALATE` immediately. A finding that survives two
+  fix attempts is a specification or comprehension problem, not a fix problem,
+  and a fourth attempt will not resolve it.
+
+  **Recurrence counts fix attempts, not gates.** Refiling a finding the worker
+  has not yet had a chance to address is not recurrence, and escalating it would
+  be an artefact of bookkeeping rather than a fact about the code (ADR-023).
+
+### Telling a fresh REVIEW from a stale one
+
+Since ADR-021 the reviewer does not write `status:`, so a task it sends back
+stays at `REVIEW` until its owner picks it up. `REVIEW` alone therefore cannot
+distinguish *awaiting a first gate* from *gated, sent back, not yet fixed*. Two
+mechanisms settle it, and the second is sound even when the first is forgotten:
+
+1. **The worker declares.** On picking up a task after `CHANGES_REQUIRED`, set
+   `status: IN_PROGRESS`; set it back to `REVIEW` when re-declaring. This is the
+   worker's own field, so it costs nothing and makes `INDEX.md` truthful in the
+   meantime.
+2. **The ledger records what was gated.** Each row in `docs/review/rounds.md`
+   carries the **commit** of the owning branch at the moment of the verdict. The
+   reviewer gates a task at `REVIEW` only when that branch's head differs from
+   its last ledger row for the task. Same head means nothing has happened since
+   the gate, so the `REVIEW` is stale.
+
+Where both are available and disagree, the ledger commit wins: it is a fact
+about the repository rather than a declaration someone may have forgotten to
+make.
 
 An `ESCALATE` must state the defect, the attempted fixes, and a hypothesis for why
 they failed.
