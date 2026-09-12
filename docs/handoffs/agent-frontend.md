@@ -1224,4 +1224,5 @@ every fix bites only on unknown terms, repeated courses or transfer records.
 - The map's twelve nodes still assume a first-year student; see HANDOFF-5.
 
 ### Commit
-See below.
+`271ed36` — the review fixes. Round 2 as a whole: `4f4142f`, `079ab7d`,
+`3305119`, `271ed36`.
