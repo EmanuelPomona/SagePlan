@@ -1,4 +1,4 @@
-# Pomona GradGuide (unofficial)
+# SagePlan (unofficial)
 
 An unofficial, browser-local web app that tells a Pomona College student which
 graduation and general-education requirements they have satisfied, which
