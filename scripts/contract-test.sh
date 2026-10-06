@@ -20,8 +20,8 @@ npx tsx packages/shared/scripts/validate-artefacts.ts; rc=$?
 
 if [ -f .env ]; then set -a; . ./.env; set +a; fi
 PORT="${FRONTEND_PORT:-}"
-if [ -n "$PORT" ] && curl -fsS --max-time 3 "http://localhost:$PORT/data/manifest.json" -o /tmp/gradguide-manifest.json 2>/dev/null; then
-  echo; echo "--- dev server at :$PORT serves /data/manifest.json ($(wc -c < /tmp/gradguide-manifest.json) bytes)"
+if [ -n "$PORT" ] && curl -fsS --max-time 3 "http://localhost:$PORT/data/manifest.json" -o /tmp/sageplan-manifest.json 2>/dev/null; then
+  echo; echo "--- dev server at :$PORT serves /data/manifest.json ($(wc -c < /tmp/sageplan-manifest.json) bytes)"
 else
   echo; echo "NOTE dev server not running (FRONTEND_PORT=${PORT:-unset}); served-path check skipped. Files on disk were checked above."
 fi

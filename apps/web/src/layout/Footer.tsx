@@ -11,7 +11,7 @@ export function Footer({ children }: { children?: React.ReactNode }) {
         <a href="https://hyperschedule.io" rel="noreferrer noopener">
           Hyperschedule
         </a>{" "}
-        (BSD-3-Clause) and the Pomona College Catalog. GradGuide is a student
+        (BSD-3-Clause) and the Pomona College Catalog. SagePlan is a student
         project and is not affiliated with, endorsed by, or operated by Pomona
         College.
       </p>

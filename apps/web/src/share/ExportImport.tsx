@@ -78,7 +78,7 @@ export function ExportImport({ plan }: { plan: PlanStore }) {
               const url = URL.createObjectURL(new Blob([raw], { type: "text/plain" }));
               const a = document.createElement("a");
               a.href = url;
-              a.download = "gradguide-unreadable-record.txt";
+              a.download = "sageplan-unreadable-record.txt";
               document.body.appendChild(a);
               a.click();
               a.remove();

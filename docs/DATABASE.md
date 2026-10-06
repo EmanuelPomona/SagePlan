@@ -56,7 +56,7 @@ Rules:
 
 ## 2. Export file
 
-`gradguide-plan-<catalogYear>-<YYYY-MM-DD>.json`, MIME `application/json`,
+`sageplan-plan-<catalogYear>-<YYYY-MM-DD>.json`, MIME `application/json`,
 content exactly the `StudentPlan` JSON, pretty-printed with two spaces. Import
 accepts any file that parses and passes `StudentPlanSchema` after migration,
 and previews the plan (course count, matriculation term, student type) before
@@ -96,7 +96,7 @@ a share link for the on-track plan so the reviewer never sees an empty app.
 `schemaVersion` is `1`. Frontend maintains `migratePlan(raw: unknown): StudentPlan`:
 
 1. Read `raw.schemaVersion`. If it is greater than `PLAN_SCHEMA_VERSION`,
-   refuse with "This plan was made with a newer version of GradGuide" and offer
+   refuse with "This plan was made with a newer version of SagePlan" and offer
    the download of the raw string.
 2. Apply migrations `v1 → v2 → …` in order (none exist yet; the function and
    its test exist from day one so the first real migration is a diff, not a

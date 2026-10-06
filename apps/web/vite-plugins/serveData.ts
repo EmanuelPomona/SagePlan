@@ -33,7 +33,7 @@ export function serveData({ repoRoot, webRoot }: ServeDataOptions): Plugin {
   const generatedRoot = real ? repoData : fixtures;
 
   return {
-    name: "gradguide-serve-data",
+    name: "sageplan-serve-data",
 
     configureServer(server) {
       server.middlewares.use((req, res, next) => {

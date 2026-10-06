@@ -547,7 +547,7 @@
     {
       "id": "gpa",
       "label": "Minimum grade point average",
-      "text": "A cumulative grade point average of at least 2.00 is required to graduate. GradGuide does not check this, which is why it never asks you for your grades. Your GPA is on your official record in the portal.",
+      "text": "A cumulative grade point average of at least 2.00 is required to graduate. SagePlan does not check this, which is why it never asks you for your grades. Your GPA is on your official record in the portal.",
       "sourceQuote": "In order to graduate, a student must attain an overall Pomona College grade point average of at least 2.00 (C).",
       "sourceRef": {
         "slug": "degree-requirements-tab-grade-point-average-requirement",

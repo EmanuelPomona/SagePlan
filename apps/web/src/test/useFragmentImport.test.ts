@@ -29,7 +29,7 @@ describe("a share link that arrives without a page load", () => {
     await waitFor(() => expect(result.current.state.status).toBe("offered"));
   });
 
-  // Pasting a share link into the address bar while GradGuide is already open
+  // Pasting a share link into the address bar while SagePlan is already open
   // is a same-document navigation: the document never reloads, so a mount-only
   // read sees nothing and the link appears to do nothing at all.
   test("a fragment that arrives after mount is offered too", async () => {

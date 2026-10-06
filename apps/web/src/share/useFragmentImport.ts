@@ -16,7 +16,7 @@ export type FragmentState =
  * with someone else's coursework in it.
  *
  * The fragment is read on mount AND on hashchange. Pasting a share link into
- * the address bar of a tab that already has GradGuide open is a same-document
+ * the address bar of a tab that already has SagePlan open is a same-document
  * navigation: nothing reloads and nothing remounts, so a mount-only read makes
  * the link look broken. Clearing the fragment uses replaceState, which fires no
  * hashchange, so accepting or dismissing cannot re-trigger the offer.

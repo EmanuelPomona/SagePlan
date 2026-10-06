@@ -13,7 +13,7 @@ const demo = (name: string): StudentPlan =>
 describe("exportFilename", () => {
   test("names the catalog year and the day it was exported", () => {
     expect(exportFilename(demo("F-01-on-track"), new Date("2026-09-08T12:00:00Z")))
-      .toBe("gradguide-plan-2026-2027-2026-09-08.json");
+      .toBe("sageplan-plan-2026-2027-2026-09-08.json");
   });
 
   test("pads single-digit months and days", () => {

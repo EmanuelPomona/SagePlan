@@ -20,7 +20,7 @@ export function migratePlan(raw: unknown): MigrateResult {
     return {
       ok: false,
       reason: "newer",
-      detail: `This plan was saved by a newer version of GradGuide (format ${version}, this app reads ${PLAN_SCHEMA_VERSION}). Open it in the newer version instead.`,
+      detail: `This plan was saved by a newer version of SagePlan (format ${version}, this app reads ${PLAN_SCHEMA_VERSION}). Open it in the newer version instead.`,
     };
   }
 

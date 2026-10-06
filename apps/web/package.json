@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The single-page GradGuide app. Owner: frontend.",
+  "description": "The single-page SagePlan app. Owner: frontend.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json && vite build",

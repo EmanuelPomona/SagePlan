@@ -38,7 +38,7 @@ export function Masthead({ manifest, fixture }: { manifest: Manifest | null; fix
     <header className="masthead">
       <div className="masthead-top">
         <h1 className="masthead-name">
-          Pomona GradGuide <span className="masthead-unofficial">unofficial</span>
+          SagePlan <span className="masthead-unofficial">unofficial</span>
         </h1>
         <ThemeToggle />
       </div>

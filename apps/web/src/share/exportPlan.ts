@@ -7,7 +7,7 @@ export function planToJson(plan: StudentPlan): string {
 
 export function exportFilename(plan: StudentPlan, date: Date): string {
   const iso = `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}`;
-  return `gradguide-plan-${plan.catalogYear}-${iso}.json`;
+  return `sageplan-plan-${plan.catalogYear}-${iso}.json`;
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
