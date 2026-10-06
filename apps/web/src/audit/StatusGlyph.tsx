@@ -1,4 +1,4 @@
-import type { RequirementStatus } from "@gradguide/shared";
+import type { RequirementStatus } from "@sageplan/shared";
 
 /**
  * The four verdicts, drawn rather than typed.

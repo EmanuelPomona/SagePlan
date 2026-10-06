@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseCourseKey } from "@gradguide/shared";
+import { parseCourseKey } from "@sageplan/shared";
 import { provenanceFor } from "../record/inferProvenance.ts";
 
 const of = (key: string) => provenanceFor(parseCourseKey(key)!);

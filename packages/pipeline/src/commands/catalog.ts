@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { CatalogArtefactSchema } from "@gradguide/shared";
+import { CatalogArtefactSchema } from "@sageplan/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import type { FetchImpl } from "../http.ts";

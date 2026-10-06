@@ -1,5 +1,5 @@
 /**
- * @gradguide/shared — THE CONTRACT.
+ * @sageplan/shared — THE CONTRACT.
  *
  * zod schemas are the single machine-checkable artifact for every boundary on
  * this project: pipeline -> /data files -> web app, and engine -> web app.

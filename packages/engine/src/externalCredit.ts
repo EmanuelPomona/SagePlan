@@ -7,8 +7,8 @@ import type {
   ExternalCreditInput,
   ExternalCreditRules,
   GeAttribute,
-} from "@gradguide/shared";
-import { courseKey, sameCourse } from "@gradguide/shared";
+} from "@sageplan/shared";
+import { courseKey, sameCourse } from "@sageplan/shared";
 import type { EvalContext } from "./context.ts";
 import { round2 } from "./ordering.ts";
 import type { ResolvedCourse } from "./resolvedCourse.ts";

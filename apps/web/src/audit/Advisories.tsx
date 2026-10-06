@@ -1,4 +1,4 @@
-import type { Program } from "@gradguide/shared";
+import type { Program } from "@sageplan/shared";
 
 /**
  * Rules the engine does not evaluate. They are shown because they are real

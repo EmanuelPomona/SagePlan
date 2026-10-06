@@ -1,5 +1,5 @@
-import { courseKey } from "@gradguide/shared";
-import type { CourseFilter, Rule } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { CourseFilter, Rule } from "@sageplan/shared";
 import { ATTRIBUTE_LABEL } from "../record/attributeLabels.ts";
 
 const NUMBER_WORD = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"];

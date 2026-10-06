@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { ValidationCheck } from "@gradguide/shared";
+import type { ValidationCheck } from "@sageplan/shared";
 import { generatedArtefacts } from "./artefactFiles.ts";
 
 /**

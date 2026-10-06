@@ -1,5 +1,5 @@
-import { compareTerms, courseKey, sameCourse, sameTerm } from "@gradguide/shared";
-import type { CourseId, OfferingHistory, Result, Section, TermId } from "@gradguide/shared";
+import { compareTerms, courseKey, sameCourse, sameTerm } from "@sageplan/shared";
+import type { CourseId, OfferingHistory, Result, Section, TermId } from "@sageplan/shared";
 
 /** Candidates that actually have a section in the chosen term, keyed by course key. */
 export function offeredIn(candidates: CourseId[], sections: Section[]): Map<string, Section[]> {

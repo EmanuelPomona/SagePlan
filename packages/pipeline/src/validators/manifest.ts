@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ManifestSchema, type ValidationCheck } from "@gradguide/shared";
+import { ManifestSchema, type ValidationCheck } from "@sageplan/shared";
 
 /** Resolve a manifest path ("/data/catalog.json") to a file inside dataDir. */
 function resolveArtefactPath(dataDir: string, listed: string): string {

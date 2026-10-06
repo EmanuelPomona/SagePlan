@@ -35,7 +35,7 @@ session by the manager, who is its only editor.
 
 ## Notes
 
-Workers consume it as `@gradguide/shared` (source exports, no build step).
+Workers consume it as `@sageplan/shared` (source exports, no build step).
 Changes go through `docs/AGENT_PROTOCOL.md` §6.
 
 ## Review History

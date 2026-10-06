@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, test } from "vitest";
-import { evaluate } from "@gradguide/engine";
-import { CatalogArtefactSchema, ProgramSchema, emptyPlan } from "@gradguide/shared";
-import type { Course, Program, StudentPlan, StudentType } from "@gradguide/shared";
+import { evaluate } from "@sageplan/engine";
+import { CatalogArtefactSchema, ProgramSchema, emptyPlan } from "@sageplan/shared";
+import type { Course, Program, StudentPlan, StudentType } from "@sageplan/shared";
 import { ADMINISTRATIVE, FAMILIES, familyOf, isAdministrative, mapFamilies } from "../map/families.ts";
 
 const at = (rel: string) => resolve(__dirname, rel);

@@ -1,4 +1,4 @@
-import { courseKey, type Course, type GeAttribute, type Section, type ValidationCheck } from "@gradguide/shared";
+import { courseKey, type Course, type GeAttribute, type Section, type ValidationCheck } from "@sageplan/shared";
 import { mapGeCodes } from "../hyperschedule/geCodes.ts";
 
 const fmt = (a: readonly GeAttribute[]) => (a.length > 0 ? [...a].sort().join(", ") : "—");

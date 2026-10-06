@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { Result } from "@gradguide/shared";
+import type { Result } from "@sageplan/shared";
 
 /**
  * Every result, available to any row.

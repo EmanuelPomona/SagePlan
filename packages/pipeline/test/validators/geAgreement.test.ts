@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { Course, GeAttribute } from "@gradguide/shared";
+import type { Course, GeAttribute } from "@sageplan/shared";
 import { checkGeAgreement } from "../../src/validators/geAgreement.ts";
 import type { RegistrarCourse } from "../../src/registrar/pivot.ts";
 

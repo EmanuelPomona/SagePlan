@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
-import { compareTerms, termCode } from "@gradguide/shared";
-import type { StudentPlan, StudentType, TermId } from "@gradguide/shared";
+import { compareTerms, termCode } from "@sageplan/shared";
+import type { StudentPlan, StudentType, TermId } from "@sageplan/shared";
 
 /**
  * One question, not three.

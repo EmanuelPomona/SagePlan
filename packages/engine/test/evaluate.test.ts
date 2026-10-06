@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
-import { CatalogArtefactSchema, ProgramSchema, ResultSchema, courseKey } from "@gradguide/shared";
-import type { Course, Program, Result } from "@gradguide/shared";
+import { CatalogArtefactSchema, ProgramSchema, ResultSchema, courseKey } from "@sageplan/shared";
+import type { Course, Program, Result } from "@sageplan/shared";
 import { evaluate } from "../src/index.ts";
 import { completed, planWith, program, requirement, term } from "./helpers.ts";
 

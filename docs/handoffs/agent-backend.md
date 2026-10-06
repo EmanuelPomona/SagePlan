@@ -267,7 +267,7 @@ are implemented against my proposals on the owner's instruction to proceed.
   `docs/tasks/INDEX.md` (shared + generated)
 
 ### Contracts
-Consumed unchanged from `@gradguide/shared`. **Produced for the frontend:**
+Consumed unchanged from `@sageplan/shared`. **Produced for the frontend:**
 
 | Artefact | Shape | Live size |
 |---|---|---|

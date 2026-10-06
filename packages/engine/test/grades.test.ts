@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { courseKey } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
 import { buildContext } from "../src/context.ts";
 import { evaluate } from "../src/index.ts";
 import { catalogCourse, completed, planWith, program, requirement, attributeRule } from "./helpers.ts";

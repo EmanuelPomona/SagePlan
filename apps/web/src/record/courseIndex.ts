@@ -1,5 +1,5 @@
-import { courseKey } from "@gradguide/shared";
-import type { Course } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Course } from "@sageplan/shared";
 
 export type CourseIndex = {
   courses: Course[];

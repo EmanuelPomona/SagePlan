@@ -1,4 +1,4 @@
-import { termCode } from "@gradguide/shared";
+import { termCode } from "@sageplan/shared";
 import type { RibbonCell } from "./selectors.ts";
 
 /**

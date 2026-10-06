@@ -1,5 +1,5 @@
 import { useId, useRef, useState } from "react";
-import type { StudentPlan } from "@gradguide/shared";
+import type { StudentPlan } from "@sageplan/shared";
 import { migratePlan } from "../plan/migratePlan.ts";
 import type { PlanStore } from "../plan/planStore.ts";
 import { ImportPreview } from "./ImportPreview.tsx";

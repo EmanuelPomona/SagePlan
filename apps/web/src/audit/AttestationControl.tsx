@@ -1,5 +1,5 @@
 import { useId } from "react";
-import type { Requirement } from "@gradguide/shared";
+import type { Requirement } from "@sageplan/shared";
 
 /**
  * The escape hatch. Some requirements are met in ways no data source records,

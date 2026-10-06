@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { readFileSync } from "node:fs";
-import { CourseSchema, courseKey } from "@gradguide/shared";
+import { CourseSchema, courseKey } from "@sageplan/shared";
 import { normaliseCourse, isIssue, normaliseAll } from "../../src/coursedog/normalise.ts";
 
 const CTX = { catalogYear: "2026-2027" as const, fetchedAt: "2026-09-08T12:00:00Z" };

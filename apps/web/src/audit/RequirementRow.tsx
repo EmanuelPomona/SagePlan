@@ -1,7 +1,7 @@
 import { forwardRef, useId, type ReactNode } from "react";
-import { courseKey, sameCourse } from "@gradguide/shared";
-import { EXAM_PSEUDO_ID } from "@gradguide/engine";
-import type { CourseId, ExternalCredit, Requirement, Result } from "@gradguide/shared";
+import { courseKey, sameCourse } from "@sageplan/shared";
+import { EXAM_PSEUDO_ID } from "@sageplan/engine";
+import type { CourseId, ExternalCredit, Requirement, Result } from "@sageplan/shared";
 import { STATUS_WORD, StatusGlyph, verdictOf } from "./StatusGlyph.tsx";
 import { ProgressCount } from "./ProgressCount.tsx";
 

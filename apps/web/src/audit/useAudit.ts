@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { evaluate } from "@gradguide/engine";
-import type { Course, Program, Result, StudentPlan } from "@gradguide/shared";
+import { evaluate } from "@sageplan/engine";
+import type { Course, Program, Result, StudentPlan } from "@sageplan/shared";
 
 /**
  * Derived state, computed during render rather than in an effect: the engine is

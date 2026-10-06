@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { Course, Program, Result } from "@gradguide/shared";
+import type { Course, Program, Result } from "@sageplan/shared";
 import type { PlanStore } from "../plan/planStore.ts";
 import { RequirementMap } from "../map/RequirementMap.tsx";
 import { buildCourseIndex } from "../record/courseIndex.ts";

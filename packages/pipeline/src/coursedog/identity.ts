@@ -1,4 +1,4 @@
-import type { CourseId } from "@gradguide/shared";
+import type { CourseId } from "@sageplan/shared";
 
 /**
  * Campus / affiliation codes used by Hyperschedule and the Registrar.

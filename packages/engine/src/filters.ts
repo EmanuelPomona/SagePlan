@@ -1,5 +1,5 @@
-import type { CourseFilter } from "@gradguide/shared";
-import { compareTerms } from "@gradguide/shared";
+import type { CourseFilter } from "@sageplan/shared";
+import { compareTerms } from "@sageplan/shared";
 import type { EvalContext } from "./context.ts";
 import { isExamPseudo } from "./externalCredit.ts";
 import type { ResolvedCourse } from "./resolvedCourse.ts";

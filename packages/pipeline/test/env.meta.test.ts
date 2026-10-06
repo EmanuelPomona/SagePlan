@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { ArtefactMetaSchema } from "@gradguide/shared";
+import { ArtefactMetaSchema } from "@sageplan/shared";
 import { readEnv } from "../src/env.ts";
 import { makeMeta } from "../src/meta.ts";
 
@@ -37,7 +37,7 @@ describe("makeMeta", () => {
 
   test("names the pipeline and the command in the generator string", () => {
     const meta = makeMeta({ generator: "catalog", sourceUrl: "https://x.test/a", fetchedAt: "2026-09-08T12:00:00Z", catalogYear: "2026-2027" });
-    expect(meta.generator).toContain("@gradguide/pipeline");
+    expect(meta.generator).toContain("@sageplan/pipeline");
     expect(meta.generator).toContain("catalog");
   });
 

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { termCode } from "@gradguide/shared";
-import type { CourseId, OfferingHistory, Result, Section, TermId } from "@gradguide/shared";
+import { termCode } from "@sageplan/shared";
+import type { CourseId, OfferingHistory, Result, Section, TermId } from "@sageplan/shared";
 import { dualPurpose, offeredIn, ribbon } from "../candidates/selectors.ts";
 
 const cid = (dept: string, n: number, aff = "PO"): CourseId => ({ department: dept, courseNumber: n, suffix: "", affiliation: aff });

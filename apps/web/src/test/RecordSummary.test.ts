@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { emptyPlan } from "@gradguide/shared";
-import type { CompletedCourse, Course, StudentPlan } from "@gradguide/shared";
+import { emptyPlan } from "@sageplan/shared";
+import type { CompletedCourse, Course, StudentPlan } from "@sageplan/shared";
 import { summarise } from "../record/RecordSummary.tsx";
 
 function course(key: string, credits: number): Course {

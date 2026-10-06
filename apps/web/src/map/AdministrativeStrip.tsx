@@ -1,4 +1,4 @@
-import type { Requirement, Result } from "@gradguide/shared";
+import type { Requirement, Result } from "@sageplan/shared";
 import { ADMINISTRATIVE } from "./families.ts";
 
 /**

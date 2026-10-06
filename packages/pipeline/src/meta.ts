@@ -1,4 +1,4 @@
-import { ARTEFACT_SCHEMA_VERSION, type ArtefactMeta, type CatalogYear } from "@gradguide/shared";
+import { ARTEFACT_SCHEMA_VERSION, type ArtefactMeta, type CatalogYear } from "@sageplan/shared";
 
 export const PIPELINE_VERSION = "0.1.0";
 
@@ -14,7 +14,7 @@ export function makeMeta(input: {
 }): ArtefactMeta {
   return {
     schemaVersion: ARTEFACT_SCHEMA_VERSION,
-    generator: `@gradguide/pipeline@${PIPELINE_VERSION} ${input.generator}`,
+    generator: `@sageplan/pipeline@${PIPELINE_VERSION} ${input.generator}`,
     generatedAt: new Date().toISOString(),
     fetchedAt: input.fetchedAt,
     sourceUrl: input.sourceUrl,

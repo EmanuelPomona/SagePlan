@@ -3,7 +3,7 @@ import { join } from "node:path";
 import {
   CatalogArtefactSchema, ManifestSchema, OfferingHistoryArtefactSchema, SectionsArtefactSchema,
   ARTEFACT_SCHEMA_VERSION, compareTerms, parseTermCode, termCode, type Manifest,
-} from "@gradguide/shared";
+} from "@sageplan/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import { log } from "../reports.ts";

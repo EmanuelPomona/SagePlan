@@ -1,4 +1,4 @@
-import { courseKey, parseCourseKey, REGISTRAR_GE_LABELS, type GeAttribute } from "@gradguide/shared";
+import { courseKey, parseCourseKey, REGISTRAR_GE_LABELS, type GeAttribute } from "@sageplan/shared";
 import { courseIdFromRaw } from "../coursedog/identity.ts";
 import type { RegistrarRow } from "./parseCsv.ts";
 

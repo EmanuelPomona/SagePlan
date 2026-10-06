@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, test } from "vitest";
-import { StudentPlanSchema } from "@gradguide/shared";
-import type { StudentPlan } from "@gradguide/shared";
+import { StudentPlanSchema } from "@sageplan/shared";
+import type { StudentPlan } from "@sageplan/shared";
 import { exportFilename, planToJson } from "../share/exportPlan.ts";
 import { migratePlan } from "../plan/migratePlan.ts";
 

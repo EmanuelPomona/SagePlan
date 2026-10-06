@@ -1,6 +1,6 @@
 import type { RegistrarRow } from "../registrar/parseCsv.ts";
 import { parseRegistrarCourseNumber } from "../registrar/pivot.ts";
-import { courseKey } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
 
 /**
  * D-12 (ADR-020) — the open question about `Measure Values = 2`.

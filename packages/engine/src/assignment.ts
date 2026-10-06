@@ -1,5 +1,5 @@
-import type { Program, Requirement } from "@gradguide/shared";
-import { sameTerm, termCode } from "@gradguide/shared";
+import type { Program, Requirement } from "@sageplan/shared";
+import { sameTerm, termCode } from "@sageplan/shared";
 import type { EvalContext } from "./context.ts";
 import { violatesConstraint, type Assignment } from "./constraints.ts";
 import { mayShare } from "./overlap.ts";

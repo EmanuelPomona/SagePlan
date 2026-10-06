@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { readFileSync } from "node:fs";
-import { SectionSchema, OfferingHistorySchema, CourseSchema, compareTerms, courseKey } from "@gradguide/shared";
+import { SectionSchema, OfferingHistorySchema, CourseSchema, compareTerms, courseKey } from "@sageplan/shared";
 import { normaliseSection, normaliseHistory, courseFromSection, isSectionIssue } from "../../src/hyperschedule/normalise.ts";
 
 const sections = JSON.parse(readFileSync(new URL("../fixtures/hs-sections-sample.json", import.meta.url), "utf8")) as Record<string, unknown>[];

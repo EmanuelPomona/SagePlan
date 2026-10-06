@@ -1,4 +1,4 @@
-import { PLAN_SCHEMA_VERSION, StudentPlanSchema, type StudentPlan } from "@gradguide/shared";
+import { PLAN_SCHEMA_VERSION, StudentPlanSchema, type StudentPlan } from "@sageplan/shared";
 
 export type MigrateResult =
   | { ok: true; plan: StudentPlan }

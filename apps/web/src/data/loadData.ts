@@ -12,7 +12,7 @@ import {
   type Program,
   type SectionsArtefact,
   type TermCode,
-} from "@gradguide/shared";
+} from "@sageplan/shared";
 import type { ZodType } from "zod";
 
 export type DataError = {

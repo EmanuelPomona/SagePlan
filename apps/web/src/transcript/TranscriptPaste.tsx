@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
-import { courseKey, termCode } from "@gradguide/shared";
-import type { CompletedCourse } from "@gradguide/shared";
+import { courseKey, termCode } from "@sageplan/shared";
+import type { CompletedCourse } from "@sageplan/shared";
 import type { CourseIndex } from "../record/courseIndex.ts";
 import { parseTranscriptText, type TranscriptResult } from "./parseTranscriptText.ts";
 

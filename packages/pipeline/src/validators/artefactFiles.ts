@@ -2,7 +2,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import {
   CatalogArtefactSchema, OfferingHistoryArtefactSchema, SectionsArtefactSchema, ManifestSchema,
-} from "@gradguide/shared";
+} from "@sageplan/shared";
 import type { z } from "zod";
 
 export interface ArtefactFile { path: string; rel: string; schema: z.ZodType; hasMeta: boolean }

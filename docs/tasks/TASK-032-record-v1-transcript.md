@@ -92,7 +92,7 @@ from any source and proving it on hand-typed blobs.
 ## Interfaces
 
 **Consumes:** `usePlan()`, `buildCourseIndex` / `search` (TASK-022), the
-nullable `CompletedCourse` from `@gradguide/shared`.
+nullable `CompletedCourse` from `@sageplan/shared`.
 
 **Produces:** `parseTranscriptText`, `provenanceFor`, `RecordSummary` (consumed
 by `Page.tsx` in TASK-033).

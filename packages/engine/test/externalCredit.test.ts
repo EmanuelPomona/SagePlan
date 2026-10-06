@@ -1,10 +1,10 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
-import { ExternalCreditRulesSchema, type ExternalCreditInput, type ExternalCreditRules } from "@gradguide/shared";
+import { ExternalCreditRulesSchema, type ExternalCreditInput, type ExternalCreditRules } from "@sageplan/shared";
 import { resolveExternalCredit } from "../src/externalCredit.ts";
 import { evaluate } from "../src/index.ts";
-import { CatalogArtefactSchema, ProgramSchema, StudentPlanSchema } from "@gradguide/shared";
+import { CatalogArtefactSchema, ProgramSchema, StudentPlanSchema } from "@sageplan/shared";
 import { resolve } from "node:path";
 
 const GE_PROGRAM = ProgramSchema.parse(

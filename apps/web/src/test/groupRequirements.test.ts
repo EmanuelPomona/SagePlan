@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
-import { evaluate } from "@gradguide/engine";
-import { CatalogArtefactSchema, ProgramSchema, emptyPlan } from "@gradguide/shared";
-import type { Course, Program, StudentPlan, StudentType } from "@gradguide/shared";
+import { evaluate } from "@sageplan/engine";
+import { CatalogArtefactSchema, ProgramSchema, emptyPlan } from "@sageplan/shared";
+import type { Course, Program, StudentPlan, StudentType } from "@sageplan/shared";
 import { groupRequirements } from "../audit/groupRequirements.ts";
 
 const read = (rel: string) => JSON.parse(readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8"));

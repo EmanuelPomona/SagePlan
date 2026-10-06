@@ -164,7 +164,7 @@ These supersede any v0 criterion they contradict. Measurements are taken at
 - [ ] **AC-I01** `scripts/contract-test.sh` exits 0: `openapi.yaml` current, every artefact valid, every quote verbatim.
 - [ ] **AC-I02** `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` all pass at the root. Evidence: pasted output.
 - [ ] **AC-I03** `packages/shared` was not modified by any worker branch (`git log main..agent/* -- packages/shared` is empty) unless a `CONTRACT CHANGE REQUEST` was resolved by the manager with an ADR.
-- [ ] **AC-I04** `engine` has no DOM or `Date.now()` reference and imports only `@gradguide/shared`. Evidence: `grep -rn "document\.\|window\.\|Date.now" packages/engine/src` is empty.
+- [ ] **AC-I04** `engine` has no DOM or `Date.now()` reference and imports only `@sageplan/shared`. Evidence: `grep -rn "document\.\|window\.\|Date.now" packages/engine/src` is empty.
 
 ## Demo
 

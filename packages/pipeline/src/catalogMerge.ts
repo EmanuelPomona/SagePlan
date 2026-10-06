@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
-import { CatalogArtefactSchema, courseKey, type ArtefactMeta, type Course } from "@gradguide/shared";
+import { CatalogArtefactSchema, courseKey, type ArtefactMeta, type Course } from "@sageplan/shared";
 import { PipelineError } from "./errors.ts";
 
 /**

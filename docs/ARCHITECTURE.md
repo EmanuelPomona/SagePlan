@@ -111,7 +111,7 @@ shared   ← pipeline
 | Persistence | `localStorage` key `gradguide:plan:v1` holding a `StudentPlan` (see `docs/DATABASE.md`) |
 | Data loading | `fetch()` of same-origin `/data/manifest.json`, then `/data/catalog.json`, `/data/programs/*.json`, `/data/external-credit-rules.json`, and lazily `/data/sections-{TERM}.json` and `/data/offering-history.json` when "What satisfies this?" first opens |
 | Serving `/data` | In dev, a small Vite plugin serves the repo's `/data` directory at `/data/*` (excluding `sources/` and `reports/`). At build, the same set is copied into `dist/data/`. Frontend implements; the contract is the paths in `docs/API.md`. |
-| Engine use | Calls `evaluate(plan, programs, catalog)` from `@gradguide/engine` on every plan change. Synchronous; the search is microseconds at this scale. |
+| Engine use | Calls `evaluate(plan, programs, catalog)` from `@sageplan/engine` on every plan change. Synchronous; the search is microseconds at this scale. |
 | Privacy enforcement | `index.html` ships a Content-Security-Policy meta with `connect-src 'self'`, `img-src 'self' data:`, `font-src 'self'`, `script-src 'self'`, `style-src 'self' 'unsafe-inline'`. Any accidental external request fails loudly in the console. |
 | Testing | Vitest for hooks, parsers (paste import, share-link codec), selectors; Playwright optional. Browser evidence per protocol §22. |
 

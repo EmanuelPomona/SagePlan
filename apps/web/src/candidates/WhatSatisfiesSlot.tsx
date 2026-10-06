@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { courseKey, parseTermCode, termCode } from "@gradguide/shared";
-import type { ExternalCredit, Requirement, Result, TermCode } from "@gradguide/shared";
+import { courseKey, parseTermCode, termCode } from "@sageplan/shared";
+import type { ExternalCredit, Requirement, Result, TermCode } from "@sageplan/shared";
 import { useData } from "../data/DataProvider.tsx";
 import { useHistory, useSections } from "../data/useLazyData.ts";
 import { useAuditResults } from "../audit/auditContext.ts";

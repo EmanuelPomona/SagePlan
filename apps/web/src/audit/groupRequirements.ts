@@ -1,4 +1,4 @@
-import type { Program, Requirement, RequirementStatus, Result, StudentPlan } from "@gradguide/shared";
+import type { Program, Requirement, RequirementStatus, Result, StudentPlan } from "@sageplan/shared";
 
 export type AuditRow = { requirement: Requirement; result: Result };
 export type Group = { title: string; rows: AuditRow[]; /** Set when "n of m" is a real count. */ countable: boolean };

@@ -1,5 +1,5 @@
-import { courseKey, parseCourseKey, termCode } from "@gradguide/shared";
-import type { CompletedCourse, CourseId, GradeMode, TermId } from "@gradguide/shared";
+import { courseKey, parseCourseKey, termCode } from "@sageplan/shared";
+import type { CompletedCourse, CourseId, GradeMode, TermId } from "@sageplan/shared";
 import type { CourseIndex } from "../record/courseIndex.ts";
 import { CLAREMONT, provenanceFor } from "../record/inferProvenance.ts";
 

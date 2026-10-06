@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { Course } from "@gradguide/shared";
+import type { Course } from "@sageplan/shared";
 import { classifyCourse, applyMembership } from "../src/placeholders.ts";
 
 const course = (over: Partial<Course> & { dept?: string; title?: string }): Course => ({

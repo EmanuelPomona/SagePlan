@@ -1,5 +1,5 @@
-import { termCode } from "@gradguide/shared";
-import type { StudentPlan } from "@gradguide/shared";
+import { termCode } from "@sageplan/shared";
+import type { StudentPlan } from "@sageplan/shared";
 
 /**
  * Replacing a record is destructive, so the student sees what is about to

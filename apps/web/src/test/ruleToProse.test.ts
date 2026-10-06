@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { Rule } from "@gradguide/shared";
+import type { Rule } from "@sageplan/shared";
 import { ruleToProse } from "../audit/ruleToProse.ts";
 
 const prose = (rule: Rule) => ruleToProse(rule);

@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { PLAN_SCHEMA_VERSION } from "@gradguide/shared";
-import type { CompletedCourse } from "@gradguide/shared";
+import { PLAN_SCHEMA_VERSION } from "@sageplan/shared";
+import type { CompletedCourse } from "@sageplan/shared";
 import { PLAN_STORAGE_KEY, usePlan } from "../plan/planStore.ts";
 
 const course = (dept: string, n: number): CompletedCourse => ({

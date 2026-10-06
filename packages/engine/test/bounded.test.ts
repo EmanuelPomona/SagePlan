@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
-import { CatalogArtefactSchema, ProgramSchema } from "@gradguide/shared";
-import type { Course, Program, Result } from "@gradguide/shared";
+import { CatalogArtefactSchema, ProgramSchema } from "@sageplan/shared";
+import type { Course, Program, Result } from "@sageplan/shared";
 import { settleBounded } from "../src/bounded.ts";
 import type { Settlement } from "../src/rules/settlement.ts";
 import { buildContext, withMode } from "../src/context.ts";

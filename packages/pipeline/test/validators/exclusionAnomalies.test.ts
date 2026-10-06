@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { Course, GeAttribute } from "@gradguide/shared";
+import type { Course, GeAttribute } from "@sageplan/shared";
 import { checkExclusionAnomalies } from "../../src/validators/exclusionAnomalies.ts";
 
 const course = (dept: string, n: number, attrs: GeAttribute[], credits = 1): Course => ({

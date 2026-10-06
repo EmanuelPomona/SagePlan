@@ -1,4 +1,4 @@
-import type { Requirement, StudentPlan } from "@gradguide/shared";
+import type { Requirement, StudentPlan } from "@sageplan/shared";
 import type { Settlement } from "./rules/settlement.ts";
 
 /**

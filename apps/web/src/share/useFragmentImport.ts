@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { StudentPlan } from "@gradguide/shared";
+import type { StudentPlan } from "@sageplan/shared";
 import { FRAGMENT_PREFIX, decodePlan } from "./shareLink.ts";
 
 export type FragmentState =

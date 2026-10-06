@@ -5,7 +5,7 @@ import { z } from "zod";
  *
  * Deliberately permissive: Coursedog is not our contract and we do not want a
  * new upstream field, or a missing optional one, to fail the build. The strict
- * shape is `Course` in @gradguide/shared, and normalise.ts is the only bridge.
+ * shape is `Course` in @sageplan/shared, and normalise.ts is the only bridge.
  * (contract-first: never let a provider's storage row become the contract.)
  */
 export const RawCreditHoursSchema = z

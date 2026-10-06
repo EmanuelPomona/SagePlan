@@ -1,4 +1,4 @@
-import type { GeAttribute } from "@gradguide/shared";
+import type { GeAttribute } from "@sageplan/shared";
 
 /** Short labels for the attribute chips. The Registrar's names, abbreviated. */
 export const ATTRIBUTE_LABEL: Record<GeAttribute, string> = {

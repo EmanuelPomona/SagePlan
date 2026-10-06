@@ -5,7 +5,7 @@ the contract for the two boundaries that exist:
 
 1. **Pipeline → web app:** static JSON artefacts in `/data`, served by the web
    app from its own origin.
-2. **Engine → web app:** two pure functions exported by `@gradguide/engine`.
+2. **Engine → web app:** two pure functions exported by `@sageplan/engine`.
 
 ## The authoritative artifact (contract-first)
 
@@ -121,7 +121,7 @@ Every generated artefact carries `meta: ArtefactMeta`:
 ```json
 {
   "schemaVersion": 1,
-  "generator": "@gradguide/pipeline@0.1.0 catalog",
+  "generator": "@sageplan/pipeline@0.1.0 catalog",
   "generatedAt": "2026-09-09T06:12:03Z",
   "fetchedAt": "2026-09-09T06:11:41Z",
   "sourceUrl": "https://app.coursedog.com/api/v1/cm/pomona/courses/search/$filters?catalogId=eziiW38FfLsoDlBqEZgV&…",
@@ -216,7 +216,7 @@ resolution semantics.
 
 ---
 
-## 2. Engine contract (`@gradguide/engine`)
+## 2. Engine contract (`@sageplan/engine`)
 
 Pure. Deterministic. No I/O, no `Date.now()`, no randomness, no DOM. Runs
 identically under vitest in Node and in the browser.

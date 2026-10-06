@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { compareTerms, OfferingHistoryArtefactSchema, parseTermCode, type TermId } from "@gradguide/shared";
+import { compareTerms, OfferingHistoryArtefactSchema, parseTermCode, type TermId } from "@sageplan/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import type { FetchImpl } from "../http.ts";

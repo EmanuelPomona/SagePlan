@@ -1,4 +1,4 @@
-import { HYPERSCHEDULE_GE_CODES, type GeAttribute } from "@gradguide/shared";
+import { HYPERSCHEDULE_GE_CODES, type GeAttribute } from "@sageplan/shared";
 
 /**
  * Pomona codes that are real but are NOT general-education attributes.

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { OfferingHistoryArtefact, SectionsArtefact, TermCode } from "@gradguide/shared";
+import type { OfferingHistoryArtefact, SectionsArtefact, TermCode } from "@sageplan/shared";
 import { loadHistory, loadSections, type DataError } from "./loadData.ts";
 
 export type LazyState<T> =

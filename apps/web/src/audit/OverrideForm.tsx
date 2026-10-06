@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
-import { courseKey } from "@gradguide/shared";
-import type { Course, CourseId, Override } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Course, CourseId, Override } from "@sageplan/shared";
 import { CourseSearch } from "../record/CourseSearch.tsx";
 import type { CourseIndex } from "../record/courseIndex.ts";
 

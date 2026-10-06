@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { CatalogArtefact, ExternalCreditRules, Manifest, Program } from "@gradguide/shared";
+import type { CatalogArtefact, ExternalCreditRules, Manifest, Program } from "@sageplan/shared";
 import { loadCatalog, loadManifest, loadPrograms, loadRules, type DataError } from "./loadData.ts";
 
 export type DataState =

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { courseKey } from "@gradguide/shared";
-import type { Rule } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Rule } from "@sageplan/shared";
 import { buildContext } from "../../src/context.ts";
 import { settleAttested } from "../../src/rules/attested.ts";
 import { eligibleForCourseRule, settleCourse } from "../../src/rules/course.ts";

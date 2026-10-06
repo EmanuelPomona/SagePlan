@@ -1,5 +1,5 @@
-import type { Course, ExternalCredit, StudentPlan, StudentType, TermId } from "@gradguide/shared";
-import { compareTerms, courseKey } from "@gradguide/shared";
+import type { Course, ExternalCredit, StudentPlan, StudentType, TermId } from "@sageplan/shared";
+import { compareTerms, courseKey } from "@sageplan/shared";
 import { resolveCompleted, type ResolvedCourse } from "./resolvedCourse.ts";
 
 /**

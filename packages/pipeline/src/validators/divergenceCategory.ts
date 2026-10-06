@@ -1,4 +1,4 @@
-import type { GeAttribute } from "@gradguide/shared";
+import type { GeAttribute } from "@sageplan/shared";
 
 /**
  * Divergence categories for AC-P09 (ADR-016).

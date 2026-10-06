@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { courseKey } from "@gradguide/shared";
-import type { Rule } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Rule } from "@sageplan/shared";
 import { buildContext } from "../../src/context.ts";
 import { EXAM_PSEUDO_ID } from "../../src/externalCredit.ts";
 import { eligibleCourses, settleAttribute } from "../../src/rules/attribute.ts";

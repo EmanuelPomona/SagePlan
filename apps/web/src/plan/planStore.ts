@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { emptyPlan } from "@gradguide/shared";
+import { emptyPlan } from "@sageplan/shared";
 import type {
   CompletedCourse,
   ExternalCredit,
@@ -7,7 +7,7 @@ import type {
   StudentPlan,
   StudentType,
   TermId,
-} from "@gradguide/shared";
+} from "@sageplan/shared";
 import { migratePlan } from "./migratePlan.ts";
 
 /** Versioned key: a future format change gets its own key and cannot corrupt this one. */

@@ -1,4 +1,4 @@
-import type { StudentPlan } from "@gradguide/shared";
+import type { StudentPlan } from "@sageplan/shared";
 
 /** Readable on purpose: a student may open this file to check what it holds. */
 export function planToJson(plan: StudentPlan): string {

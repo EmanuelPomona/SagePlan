@@ -1,5 +1,5 @@
-import { StudentPlanSchema } from "@gradguide/shared";
-import type { StudentPlan } from "@gradguide/shared";
+import { StudentPlanSchema } from "@sageplan/shared";
+import type { StudentPlan } from "@sageplan/shared";
 import { migratePlan } from "../plan/migratePlan.ts";
 
 /**

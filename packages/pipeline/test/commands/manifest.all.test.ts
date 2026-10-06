@@ -2,7 +2,7 @@ import { describe, expect, test, beforeEach, afterEach, vi } from "vitest";
 import { mkdtempSync, rmSync, writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { ManifestSchema, compareTerms, parseTermCode } from "@gradguide/shared";
+import { ManifestSchema, compareTerms, parseTermCode } from "@sageplan/shared";
 import { runManifest } from "../../src/commands/manifest.ts";
 import { runAll, defaultSteps, assertNoFailures, type Step } from "../../src/commands/all.ts";
 import { PipelineError } from "../../src/errors.ts";

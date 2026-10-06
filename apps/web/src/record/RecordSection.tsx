@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { Course, ExternalCreditRules } from "@gradguide/shared";
+import type { Course, ExternalCreditRules } from "@sageplan/shared";
 import type { PlanStore } from "../plan/planStore.ts";
 import { TranscriptPaste } from "../transcript/TranscriptPaste.tsx";
 import { buildCourseIndex } from "./courseIndex.ts";

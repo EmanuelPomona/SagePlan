@@ -71,7 +71,7 @@ export function buildOpenApi(): Record<string, unknown> {
     },
     components: { schemas: components },
     "x-engine-contract": {
-      description: "Pure functions exported by @gradguide/engine. Not HTTP. Documented in docs/API.md §Engine contract.",
+      description: "Pure functions exported by @sageplan/engine. Not HTTP. Documented in docs/API.md §Engine contract.",
       evaluate: "evaluate(plan: StudentPlan, programs: Program[], catalog: Course[]): Result[]",
       resolveExternalCredit: "resolveExternalCredit(input: ExternalCreditInput, rules: ExternalCreditRules): ExternalCredit",
     },

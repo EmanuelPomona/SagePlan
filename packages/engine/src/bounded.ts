@@ -1,4 +1,4 @@
-import { courseKey } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
 import { withMode, type EvalContext } from "./context.ts";
 import type { ResolvedCourse } from "./resolvedCourse.ts";
 import type { Settlement } from "./rules/settlement.ts";

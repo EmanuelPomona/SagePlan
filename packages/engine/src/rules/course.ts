@@ -1,5 +1,5 @@
-import type { Rule } from "@gradguide/shared";
-import { gradeAtLeast, sameCourse } from "@gradguide/shared";
+import type { Rule } from "@sageplan/shared";
+import { gradeAtLeast, sameCourse } from "@sageplan/shared";
 import type { EvalContext } from "../context.ts";
 import { byResolved, sortIds } from "../ordering.ts";
 import type { ResolvedCourse } from "../resolvedCourse.ts";

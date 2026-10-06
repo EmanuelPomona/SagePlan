@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { courseKey } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
 import { courseIdFromRaw } from "../../src/coursedog/identity.ts";
 
 const key = (subject?: string, code?: string, num?: string) => {

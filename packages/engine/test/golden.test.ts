@@ -1,8 +1,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
-import { CatalogArtefactSchema, ProgramSchema, ResultSchema, StudentPlanSchema } from "@gradguide/shared";
-import type { Course, Program, Result, StudentPlan } from "@gradguide/shared";
+import { CatalogArtefactSchema, ProgramSchema, ResultSchema, StudentPlanSchema } from "@sageplan/shared";
+import type { Course, Program, Result, StudentPlan } from "@sageplan/shared";
 import { evaluate } from "../src/index.ts";
 
 const at = (rel: string) => fileURLToPath(new URL(rel, import.meta.url));

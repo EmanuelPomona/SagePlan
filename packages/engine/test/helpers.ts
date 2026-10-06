@@ -9,8 +9,8 @@ import type {
   Requirement,
   StudentPlan,
   TermId,
-} from "@gradguide/shared";
-import { emptyPlan, parseCourseKey } from "@gradguide/shared";
+} from "@sageplan/shared";
+import { emptyPlan, parseCourseKey } from "@sageplan/shared";
 import type { ResolvedCourse } from "../src/resolvedCourse.ts";
 import { resolveCompleted } from "../src/resolvedCourse.ts";
 

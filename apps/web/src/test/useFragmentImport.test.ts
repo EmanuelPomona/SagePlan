@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, test, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
-import { StudentPlanSchema } from "@gradguide/shared";
-import type { StudentPlan } from "@gradguide/shared";
+import { StudentPlanSchema } from "@sageplan/shared";
+import type { StudentPlan } from "@sageplan/shared";
 import { useFragmentImport } from "../share/useFragmentImport.ts";
 import { encodePlan, FRAGMENT_PREFIX } from "../share/shareLink.ts";
 

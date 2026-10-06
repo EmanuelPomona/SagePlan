@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { CreditCaps, ExternalCredit, Rule } from "@gradguide/shared";
+import type { CreditCaps, ExternalCredit, Rule } from "@sageplan/shared";
 import { buildContext } from "../../src/context.ts";
 import { countExternalCredits } from "../../src/externalCredit.ts";
 import { settleCredits } from "../../src/rules/credits.ts";

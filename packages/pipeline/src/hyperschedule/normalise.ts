@@ -1,7 +1,7 @@
 import {
   compareTerms, courseKey, type CatalogYear, type Course, type Meeting,
   type OfferingHistory, type Section, type TermId,
-} from "@gradguide/shared";
+} from "@sageplan/shared";
 import { mapGeCodes } from "./geCodes.ts";
 import { RawSectionSchema, RawHistorySchema } from "./raw.ts";
 

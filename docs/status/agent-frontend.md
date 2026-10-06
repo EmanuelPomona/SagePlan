@@ -71,7 +71,7 @@ reporter to find. F-09 requires the row to name the constraint. (3068de8)
 - AC-P15 (F-09), AC-P16 (F-03 + F-03b), F-06, F-07, F-10, F-11, F-12 -> golden
 - AC-I03 -> git log base..HEAD -- packages/shared is empty; contract untouched
 - AC-I04 -> grep for document./window./Date.now/Math.random in src is empty; no
-  "dom" lib in tsconfig; engine imports only @gradguide/shared
+  "dom" lib in tsconfig; engine imports only @sageplan/shared
 - Determinism -> evaluate twice byte-identical; shuffled record identical
 - Scope -> no source file outside packages/engine/ (package-lock.json changed,
   see the handoff: npm workspaces requires it to register the new package)

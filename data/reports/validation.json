@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-11T23:21:39.377Z",
-  "generator": "@gradguide/pipeline@0.1.0 validate",
+  "generator": "@sageplan/pipeline@0.1.0 validate",
   "checks": [
     {
       "id": "ge-agreement",

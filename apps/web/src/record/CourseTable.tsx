@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
-import { courseKey, termCode } from "@gradguide/shared";
-import type { CompletedCourse, Provenance } from "@gradguide/shared";
+import { courseKey, termCode } from "@sageplan/shared";
+import type { CompletedCourse, Provenance } from "@sageplan/shared";
 import type { CourseIndex } from "./courseIndex.ts";
 
 const GRADES = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "CR", "P", "NC", "NP", "IP"];

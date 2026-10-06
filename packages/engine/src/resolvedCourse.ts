@@ -1,5 +1,5 @@
-import type { CompletedCourse, Course, GeAttribute } from "@gradguide/shared";
-import { courseKey, gradePoints, isPassing } from "@gradguide/shared";
+import type { CompletedCourse, Course, GeAttribute } from "@sageplan/shared";
+import { courseKey, gradePoints, isPassing } from "@sageplan/shared";
 
 /**
  * A completed course joined to its catalog entry.

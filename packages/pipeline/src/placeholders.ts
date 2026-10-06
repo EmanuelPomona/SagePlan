@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { courseKey, type Course } from "@gradguide/shared";
+import { courseKey, type Course } from "@sageplan/shared";
 import { PipelineError } from "./errors.ts";
 
 /**

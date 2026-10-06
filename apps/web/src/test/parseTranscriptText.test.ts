@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { courseKey, termCode } from "@gradguide/shared";
-import type { CompletedCourse, Course } from "@gradguide/shared";
+import { courseKey, termCode } from "@sageplan/shared";
+import type { CompletedCourse, Course } from "@sageplan/shared";
 import { buildCourseIndex } from "../record/courseIndex.ts";
 import { parseTranscriptText } from "../transcript/parseTranscriptText.ts";
 

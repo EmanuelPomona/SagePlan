@@ -6,8 +6,8 @@
  * resolved by the real rules table rather than hand-copied.
  */
 import { writeFileSync, readFileSync } from "node:fs";
-import { ExternalCreditRulesSchema } from "@gradguide/shared";
-import type { CompletedCourse, ExternalCreditInput, StudentPlan, TermId } from "@gradguide/shared";
+import { ExternalCreditRulesSchema } from "@sageplan/shared";
+import type { CompletedCourse, ExternalCreditInput, StudentPlan, TermId } from "@sageplan/shared";
 import { resolveExternalCredit } from "../../src/externalCredit.ts";
 
 const RULES = ExternalCreditRulesSchema.parse(JSON.parse(readFileSync("../../data/external-credit-rules.json", "utf8")));

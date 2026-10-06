@@ -1,5 +1,5 @@
 import { useId, useState } from "react";
-import type { CompletedCourse, GeAttribute, Provenance, StudentType, TermId } from "@gradguide/shared";
+import type { CompletedCourse, GeAttribute, Provenance, StudentType, TermId } from "@sageplan/shared";
 
 import { ATTRIBUTE_LABEL } from "./attributeLabels.ts";
 

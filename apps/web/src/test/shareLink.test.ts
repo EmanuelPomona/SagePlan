@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, test } from "vitest";
-import { StudentPlanSchema } from "@gradguide/shared";
-import type { StudentPlan } from "@gradguide/shared";
+import { StudentPlanSchema } from "@sageplan/shared";
+import type { StudentPlan } from "@sageplan/shared";
 import { SHARE_LINK_WARN_LENGTH, decodePlan, encodePlan } from "../share/shareLink.ts";
 
 const DEMO_DIR = resolve(__dirname, "..", "..", "public", "demo");

@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { SectionsArtefactSchema, type Section } from "@gradguide/shared";
+import { SectionsArtefactSchema, type Section } from "@sageplan/shared";
 
 export interface ReadSectionsResult {
   sections: Section[];

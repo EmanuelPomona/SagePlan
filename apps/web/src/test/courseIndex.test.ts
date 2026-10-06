@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { courseKey } from "@gradguide/shared";
-import type { Course } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Course } from "@sageplan/shared";
 import { buildCourseIndex, search } from "../record/courseIndex.ts";
 
 function course(key: string, title: string, attributes: Course["attributes"] = []): Course {

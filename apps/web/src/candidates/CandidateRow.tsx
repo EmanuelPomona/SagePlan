@@ -1,5 +1,5 @@
-import { courseKey } from "@gradguide/shared";
-import type { Course, CourseId, Section } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Course, CourseId, Section } from "@sageplan/shared";
 import { ATTRIBUTE_LABEL } from "../record/attributeLabels.ts";
 import { TermRibbon } from "./TermRibbon.tsx";
 import type { RibbonCell } from "./selectors.ts";

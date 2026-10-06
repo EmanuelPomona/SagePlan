@@ -1,6 +1,6 @@
 import { useId, useMemo, useState } from "react";
-import { resolveExternalCredit } from "@gradguide/engine";
-import type { ExamKind, ExternalCredit, ExternalCreditRules, IbLevel } from "@gradguide/shared";
+import { resolveExternalCredit } from "@sageplan/engine";
+import type { ExamKind, ExternalCredit, ExternalCreditRules, IbLevel } from "@sageplan/shared";
 import { ATTRIBUTE_LABEL } from "./attributeLabels.ts";
 
 const KIND_LABEL: Record<ExamKind, string> = {

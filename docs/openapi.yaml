@@ -1284,7 +1284,7 @@ components:
         generator:
           type: string
           minLength: 1
-          description: '"@gradguide/pipeline@0.1.0 catalog"'
+          description: '"@sageplan/pipeline@0.1.0 catalog"'
         generatedAt:
           type: string
           format: date-time
@@ -1740,6 +1740,6 @@ components:
       description: data/reports/validation.json. For humans and CI, never loaded by the app.
       title: ValidationReport
 x-engine-contract:
-  description: Pure functions exported by @gradguide/engine. Not HTTP. Documented in docs/API.md §Engine contract.
+  description: Pure functions exported by @sageplan/engine. Not HTTP. Documented in docs/API.md §Engine contract.
   evaluate: "evaluate(plan: StudentPlan, programs: Program[], catalog: Course[]): Result[]"
   resolveExternalCredit: "resolveExternalCredit(input: ExternalCreditInput, rules: ExternalCreditRules): ExternalCredit"

@@ -1,5 +1,5 @@
 /**
- * @gradguide/engine — the requirement evaluator.
+ * @sageplan/engine — the requirement evaluator.
  *
  * Pure, deterministic, no I/O and no DOM: it runs identically under vitest in
  * Node and in the browser. The contract is docs/API.md section 2.

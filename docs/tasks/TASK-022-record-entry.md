@@ -41,7 +41,7 @@ apps/web/src/test/{courseIndex,parsePaste}.test.ts
 ## Interfaces
 
 **Consumes:** `usePlan()` and `useData()` from TASK-021 (exact API in that task);
-`resolveExternalCredit` from `@gradguide/engine`; `parseCourseKey`, `courseKey`,
+`resolveExternalCredit` from `@sageplan/engine`; `parseCourseKey`, `courseKey`,
 `parseTermCode`, `LETTER_GRADE_ORDER` from shared.
 
 **Produces:** `buildCourseIndex` / `search` (TASK-024 reuses the index for

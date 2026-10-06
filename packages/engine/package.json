@@ -1,5 +1,5 @@
 {
-  "name": "@gradguide/engine",
+  "name": "@sageplan/engine",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,5 +11,5 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
-  "dependencies": { "@gradguide/shared": "*" }
+  "dependencies": { "@sageplan/shared": "*" }
 }

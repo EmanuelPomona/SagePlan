@@ -1,4 +1,4 @@
-import type { Manifest } from "@gradguide/shared";
+import type { Manifest } from "@sageplan/shared";
 import { ThemeToggle } from "./ThemeToggle.tsx";
 
 /** Exact wording required by AC-P13. Not paraphrased anywhere. */

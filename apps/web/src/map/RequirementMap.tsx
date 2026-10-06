@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { courseKey, parseTermCode } from "@gradguide/shared";
-import type { ExternalCredit, Program, Result, StudentPlan, TermCode } from "@gradguide/shared";
+import { courseKey, parseTermCode } from "@sageplan/shared";
+import type { ExternalCredit, Program, Result, StudentPlan, TermCode } from "@sageplan/shared";
 import { useData } from "../data/DataProvider.tsx";
 import { useSections } from "../data/useLazyData.ts";
 import { AdministrativeStrip } from "./AdministrativeStrip.tsx";

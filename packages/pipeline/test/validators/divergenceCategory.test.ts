@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { GeAttribute } from "@gradguide/shared";
+import type { GeAttribute } from "@sageplan/shared";
 import { categoriseDivergence, DIVERGENCE_CATEGORIES } from "../../src/validators/divergenceCategory.ts";
 
 const cat = (coursedog: GeAttribute[], registrar: GeAttribute[], present = true) =>

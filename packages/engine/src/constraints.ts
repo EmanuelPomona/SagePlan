@@ -1,4 +1,4 @@
-import type { Program } from "@gradguide/shared";
+import type { Program } from "@sageplan/shared";
 import type { ResolvedCourse } from "./resolvedCourse.ts";
 
 export type Assignment = Map<string, ResolvedCourse[]>;

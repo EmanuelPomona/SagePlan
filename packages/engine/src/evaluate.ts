@@ -1,5 +1,5 @@
-import type { Course, Program, Requirement, Result, StudentPlan } from "@gradguide/shared";
-import { courseKey } from "@gradguide/shared";
+import type { Course, Program, Requirement, Result, StudentPlan } from "@sageplan/shared";
+import { courseKey } from "@sageplan/shared";
 import { assignCourses, isCourseSelecting } from "./assignment.ts";
 import { settleBounded } from "./bounded.ts";
 import { buildContext, type EvalContext } from "./context.ts";

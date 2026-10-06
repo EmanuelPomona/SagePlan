@@ -34,7 +34,7 @@ Four changes, all specified in `docs/API.md` and `docs/DECISIONS.md`:
    tests what it claims, and add F-14 for the deferred path.
 3. **Optional terms and grades (ADR-015).** `CompletedCourse.term`, `.grade`,
    `.gradeMode` and `StudentPlan.matriculationTerm` are now nullable in
-   `@gradguide/shared`. `grade: null` means **passed**.
+   `@sageplan/shared`. `grade: null` means **passed**.
 4. **Bounded evaluation under unknowns (`docs/API.md` 2.7).** Any rule whose
    answer depends on a field that is `null` for a relevant course is evaluated
    optimistically and pessimistically; equal statuses return that status,
@@ -66,7 +66,7 @@ Do not touch `packages/shared` (it is already changed) or `apps/web`.
 
 ## Interfaces
 
-**Consumes:** the updated `@gradguide/shared` — `CompletedCourse.term: TermId | null`,
+**Consumes:** the updated `@sageplan/shared` — `CompletedCourse.term: TermId | null`,
 `.grade: string | null`, `.gradeMode: GradeMode | null`,
 `StudentPlan.matriculationTerm: TermId | null`.
 

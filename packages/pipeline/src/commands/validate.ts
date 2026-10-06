@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { CatalogArtefactSchema, type Course, type ValidationCheck } from "@gradguide/shared";
+import { CatalogArtefactSchema, type Course, type ValidationCheck } from "@sageplan/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
 import { PipelineError } from "../errors.ts";
 import { log, writeReport } from "../reports.ts";
@@ -18,7 +18,7 @@ import { checkNonEmpty } from "../validators/nonEmpty.ts";
 import { doubleCreditPeReport } from "../validators/peDoubleCredit.ts";
 import { readSections } from "../readSections.ts";
 import type { FetchImpl } from "../http.ts";
-import { ValidationReportSchema } from "@gradguide/shared";
+import { ValidationReportSchema } from "@sageplan/shared";
 import { PIPELINE_VERSION } from "../meta.ts";
 
 export interface ValidateOptions {
@@ -119,7 +119,7 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
 
   const report = {
     generatedAt: new Date().toISOString(),
-    generator: `@gradguide/pipeline@${PIPELINE_VERSION} validate`,
+    generator: `@sageplan/pipeline@${PIPELINE_VERSION} validate`,
     checks,
     ok: checks.every((c) => c.status !== "fail"),
   };

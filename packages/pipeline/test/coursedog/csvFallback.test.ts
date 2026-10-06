@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { readFileSync } from "node:fs";
-import { courseKey } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
 import { parseCoursedogCsv, parseCsvRows } from "../../src/coursedog/csvFallback.ts";
 import { normaliseAll } from "../../src/coursedog/normalise.ts";
 import { dedupeCourses } from "../../src/coursedog/dedupe.ts";

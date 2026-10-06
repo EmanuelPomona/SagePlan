@@ -1,4 +1,4 @@
-import type { OverlapPolicy, Requirement } from "@gradguide/shared";
+import type { OverlapPolicy, Requirement } from "@sageplan/shared";
 
 /** Does this policy let the course also count for `otherId`? */
 export function allowsSharingWith(policy: OverlapPolicy, otherId: string): boolean {

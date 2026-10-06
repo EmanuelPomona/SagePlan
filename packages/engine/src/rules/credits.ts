@@ -1,4 +1,4 @@
-import type { Rule } from "@gradguide/shared";
+import type { Rule } from "@sageplan/shared";
 import type { EvalContext } from "../context.ts";
 import { countExternalCredits } from "../externalCredit.ts";
 import { courseMatchesFilter } from "../filters.ts";

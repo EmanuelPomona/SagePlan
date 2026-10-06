@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { courseKey } from "@gradguide/shared";
-import type { Requirement } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Requirement } from "@sageplan/shared";
 import { assignCourses } from "../src/assignment.ts";
 import { buildContext } from "../src/context.ts";
 import { mayShare } from "../src/overlap.ts";

@@ -16,7 +16,7 @@ blocked_on: ""
 
 Create `packages/pipeline` and make `npm run pipeline:catalog` fetch every
 Pomona course from the Coursedog catalog API, normalise it to
-`Course` (`@gradguide/shared`), validate it, and write
+`Course` (`@sageplan/shared`), validate it, and write
 `data/catalog.json` as a `CatalogArtefact`, failing loudly and leaving the
 previous file untouched on HTTP 401/403 or zero courses. A `--from-csv <file>`
 flag substitutes the catalog UI's "Export all results as CSV" for the API.
@@ -29,7 +29,7 @@ Express, no FastAPI (`docs/ARCHITECTURE.md` §Pipeline). Propose none.
 Create only:
 
 ```
-packages/pipeline/package.json          name @gradguide/pipeline, type module, scripts below, dep @gradguide/shared
+packages/pipeline/package.json          name @sageplan/pipeline, type module, scripts below, dep @sageplan/shared
 packages/pipeline/tsconfig.json         extends ../../tsconfig.base.json, types node
 packages/pipeline/src/env.ts            reads COURSEDOG_CATALOG_ID, COURSEDOG_ORIGIN, PIPELINE_TERMS, ... from process.env with defaults from .env.example
 packages/pipeline/src/http.ts           fetchJson(url, {headers}) with timeout, retries (3, backoff), and a PipelineError carrying status
@@ -56,7 +56,7 @@ Do not touch `packages/shared`, `apps/web`, `data/programs`, `data/sources`.
 
 ## Interfaces
 
-**Consumes** (from `@gradguide/shared`): `CourseSchema`, `CatalogArtefactSchema`,
+**Consumes** (from `@sageplan/shared`): `CourseSchema`, `CatalogArtefactSchema`,
 `ArtefactMetaSchema`, `CourseId`, `GeAttribute`, `parseCourseKey`, `courseKey`.
 
 **Produces:**

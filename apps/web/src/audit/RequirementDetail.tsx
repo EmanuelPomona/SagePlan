@@ -1,5 +1,5 @@
-import { courseKey } from "@gradguide/shared";
-import type { ExternalCredit, Override, Requirement, Result } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { ExternalCredit, Override, Requirement, Result } from "@sageplan/shared";
 import type { CourseIndex } from "../record/courseIndex.ts";
 import { AttestationControl } from "./AttestationControl.tsx";
 import { OverrideForm } from "./OverrideForm.tsx";

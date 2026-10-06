@@ -1,4 +1,4 @@
-import type { Requirement, Result, StudentPlan } from "@gradguide/shared";
+import type { Requirement, Result, StudentPlan } from "@sageplan/shared";
 
 export type FamilyName = "Breadth" | "Overlays" | "Foundations";
 

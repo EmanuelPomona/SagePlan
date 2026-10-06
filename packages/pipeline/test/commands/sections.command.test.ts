@@ -2,7 +2,7 @@ import { describe, expect, test, beforeEach, afterEach, vi } from "vitest";
 import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { SectionsArtefactSchema, OfferingHistoryArtefactSchema, CatalogArtefactSchema, courseKey, compareTerms, type Course } from "@gradguide/shared";
+import { SectionsArtefactSchema, OfferingHistoryArtefactSchema, CatalogArtefactSchema, courseKey, compareTerms, type Course } from "@sageplan/shared";
 import { runSections } from "../../src/commands/sections.ts";
 import { runHistory } from "../../src/commands/history.ts";
 import { PipelineError } from "../../src/errors.ts";

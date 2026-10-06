@@ -1,4 +1,4 @@
-import { courseKey, type Course, type GeAttribute } from "@gradguide/shared";
+import { courseKey, type Course, type GeAttribute } from "@sageplan/shared";
 
 export interface DiscardedCourse {
   key: string;

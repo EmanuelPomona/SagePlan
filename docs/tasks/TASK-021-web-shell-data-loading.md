@@ -30,7 +30,7 @@ This task establishes the UI system, so the full mandatory design pipeline in
 Create only:
 
 ```
-apps/web/package.json              name @gradguide/web; deps react ^19, react-dom ^19, @gradguide/shared, @gradguide/engine, @fontsource/source-serif-4, @fontsource/ibm-plex-sans, @fontsource/ibm-plex-mono; devDeps vite ^7, @vitejs/plugin-react, @types/react, @types/react-dom, vitest, @testing-library/react, @testing-library/user-event, jsdom; scripts dev (vite --port $FRONTEND_PORT --strictPort), build (tsc -p tsconfig.json && vite build), preview, test, typecheck
+apps/web/package.json              name @sageplan/web; deps react ^19, react-dom ^19, @sageplan/shared, @sageplan/engine, @fontsource/source-serif-4, @fontsource/ibm-plex-sans, @fontsource/ibm-plex-mono; devDeps vite ^7, @vitejs/plugin-react, @types/react, @types/react-dom, vitest, @testing-library/react, @testing-library/user-event, jsdom; scripts dev (vite --port $FRONTEND_PORT --strictPort), build (tsc -p tsconfig.json && vite build), preview, test, typecheck
 apps/web/tsconfig.json             extends base; lib ["ES2022","DOM","DOM.Iterable"]; jsx react-jsx; types vite/client
 apps/web/vite.config.ts            react plugin + serveData plugin; define __FIXTURE_DATA__
 apps/web/vite-plugins/serveData.ts DEV: serve /data/manifest.json, catalog.json, sections-*.json, offering-history.json from <repo>/data when <repo>/data/manifest.json exists, else from apps/web/dev-fixtures/ and set __FIXTURE_DATA__=true; ALWAYS serve /data/programs/* and /data/external-credit-rules.json from <repo>/data. BUILD: copy the same set into dist/data; throw if <repo>/data/manifest.json is missing (fixture data never ships).
@@ -56,7 +56,7 @@ apps/web/src/test/{migratePlan,planStore,loadData}.test.ts
 
 ## Interfaces
 
-**Consumes:** `evaluate`, `EXAM_PSEUDO_ID` from `@gradguide/engine`; all shared
+**Consumes:** `evaluate`, `EXAM_PSEUDO_ID` from `@sageplan/engine`; all shared
 schemas; `data/programs/*.json`, `data/external-credit-rules.json` (exist).
 
 **Produces** (TASK-022/023/024/025 rely on these exact names):

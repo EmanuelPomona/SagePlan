@@ -1,5 +1,5 @@
-import type { CourseId, Rule } from "@gradguide/shared";
-import { courseKey, termCode } from "@gradguide/shared";
+import type { CourseId, Rule } from "@sageplan/shared";
+import { courseKey, termCode } from "@sageplan/shared";
 import type { EvalContext } from "../context.ts";
 import { examGrantCourses, isExamPseudo } from "../externalCredit.ts";
 import { courseMatchesFilter } from "../filters.ts";

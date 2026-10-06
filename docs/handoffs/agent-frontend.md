@@ -132,7 +132,7 @@ See the commit that adds this file.
 
 ### Summary
 
-`packages/engine` (`@gradguide/engine`) is complete: a pure, deterministic
+`packages/engine` (`@sageplan/engine`) is complete: a pure, deterministic
 requirement evaluator with 138 tests and 13 committed golden fixtures. The
 round-0 blockers are gone (the manager landed the plan in 5c3d4e8), so this
 supersedes HANDOFF-1's BLOCKED state.
@@ -155,7 +155,7 @@ line against `docs/ACCEPTANCE.md`'s "Must show" column.
   F-11, F-12 asserted by golden.
 - **AC-I03** `packages/shared` untouched by this branch.
 - **AC-I04** no DOM, no `Date.now()`, no `Math.random()`; no `dom` lib; the
-  engine imports only `@gradguide/shared`.
+  engine imports only `@sageplan/shared`.
 
 ### Files Changed
 
@@ -169,11 +169,11 @@ this file.
   fixtures, 2 fixture programs, 13 goldens
 - **`package-lock.json` (1 file, +11 lines).** Outside the letter of TASK-020's
   scope clause. npm workspaces requires it to register the new package; the diff
-  is only the `@gradguide/engine` entry. Flagged rather than hidden.
+  is only the `@sageplan/engine` entry. Flagged rather than hidden.
 
 ### Contracts
 
-`@gradguide/engine` exports, consumed by TASK-021 to TASK-025:
+`@sageplan/engine` exports, consumed by TASK-021 to TASK-025:
 
 ```ts
 evaluate(plan: StudentPlan, programs: Program[], catalog: Course[]): Result[]
@@ -212,8 +212,8 @@ $ npx vitest run --root packages/engine
       Tests  138 passed (138)
 
 $ npm test          # root, all workspaces
- @gradguide/engine  138 passed
- @gradguide/shared   13 passed
+ @sageplan/engine  138 passed
+ @sageplan/shared   13 passed
 
 $ npm run typecheck   # engine + shared, tsc -p, no output = clean
 $ npm run lint        # eslint ., no output = clean

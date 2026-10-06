@@ -1,4 +1,4 @@
-import { courseKey, type Course, type GeAttribute, type ValidationCheck } from "@gradguide/shared";
+import { courseKey, type Course, type GeAttribute, type ValidationCheck } from "@sageplan/shared";
 import type { RegistrarCourse } from "../registrar/pivot.ts";
 
 const isArea = (a: string) => a.startsWith("AREA_");

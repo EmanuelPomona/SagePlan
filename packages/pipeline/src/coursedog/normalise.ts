@@ -1,4 +1,4 @@
-import { courseKey, type CatalogYear, type Course } from "@gradguide/shared";
+import { courseKey, type CatalogYear, type Course } from "@sageplan/shared";
 import { mapAttributes } from "./attributeMap.ts";
 import { courseIdFromRaw } from "./identity.ts";
 import { KNOWN_AFFILIATIONS } from "./identity.ts";

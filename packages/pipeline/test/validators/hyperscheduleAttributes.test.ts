@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import type { Course, GeAttribute, Section } from "@gradguide/shared";
+import type { Course, GeAttribute, Section } from "@sageplan/shared";
 import { checkHyperscheduleAttributes } from "../../src/validators/hyperscheduleAttributes.ts";
 
 const course = (dept: string, n: number, aff: string, attrs: GeAttribute[]): Course => ({

@@ -1,6 +1,6 @@
 import { useId, useMemo, useRef, useState } from "react";
-import { courseKey } from "@gradguide/shared";
-import type { Course } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Course } from "@sageplan/shared";
 import { search, type CourseIndex } from "./courseIndex.ts";
 import { ATTRIBUTE_LABEL } from "./attributeLabels.ts";
 

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
-import { CatalogArtefactSchema, courseKey, type Course } from "@gradguide/shared";
+import { CatalogArtefactSchema, courseKey, type Course } from "@sageplan/shared";
 import { fromRepoRoot } from "../src/env.ts";
 
 /**

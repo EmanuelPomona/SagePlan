@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { ArtefactMetaSchema, type ValidationCheck } from "@gradguide/shared";
+import { ArtefactMetaSchema, type ValidationCheck } from "@sageplan/shared";
 import { generatedArtefacts } from "./artefactFiles.ts";
 
 /**

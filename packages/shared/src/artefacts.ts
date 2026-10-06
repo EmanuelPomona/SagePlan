@@ -11,7 +11,7 @@ export const ARTEFACT_SCHEMA_VERSION = 1 as const;
 export const ArtefactMetaSchema = z
   .object({
     schemaVersion: z.literal(ARTEFACT_SCHEMA_VERSION),
-    generator: z.string().min(1).describe('"@gradguide/pipeline@0.1.0 catalog"'),
+    generator: z.string().min(1).describe('"@sageplan/pipeline@0.1.0 catalog"'),
     generatedAt: z.iso.datetime().describe("When this file was written. The UI shows 'data as of'."),
     fetchedAt: z.iso.datetime().describe("When the upstream source was fetched."),
     sourceUrl: z.url().describe("The upstream request that produced this file."),

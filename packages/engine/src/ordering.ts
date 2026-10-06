@@ -1,5 +1,5 @@
-import type { CourseId } from "@gradguide/shared";
-import { courseKey, termCode } from "@gradguide/shared";
+import type { CourseId } from "@sageplan/shared";
+import { courseKey, termCode } from "@sageplan/shared";
 import type { ResolvedCourse } from "./resolvedCourse.ts";
 
 /** Canonical ordering for every array the engine emits (docs/API.md 2.6). */

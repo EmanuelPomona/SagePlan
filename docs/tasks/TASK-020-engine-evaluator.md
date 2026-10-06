@@ -14,7 +14,7 @@ blocked_on: ""
 
 ## Objective
 
-Implement `@gradguide/engine` exactly as specified in `docs/API.md` §2: a pure,
+Implement `@sageplan/engine` exactly as specified in `docs/API.md` §2: a pure,
 deterministic `evaluate(plan, programs, catalog): Result[]` and
 `resolveExternalCredit(input, rules): ExternalCredit`, with golden-file tests for
 fixtures F-01 to F-12 in `docs/ACCEPTANCE.md`. **Start this task first**; it
@@ -28,7 +28,7 @@ worst failure mode (brief §6). TDD is mandatory for every module here.
 Create only:
 
 ```
-packages/engine/package.json                 name @gradguide/engine, type module, "main"/"types"/"exports" -> ./src/index.ts, dependency @gradguide/shared, scripts test (vitest run) and typecheck (tsc -p tsconfig.json)
+packages/engine/package.json                 name @sageplan/engine, type module, "main"/"types"/"exports" -> ./src/index.ts, dependency @sageplan/shared, scripts test (vitest run) and typecheck (tsc -p tsconfig.json)
 packages/engine/tsconfig.json                extends ../../tsconfig.base.json; NO "dom" in lib
 packages/engine/src/index.ts                 export { evaluate } from "./evaluate.ts"; export { resolveExternalCredit } from "./externalCredit.ts"; export { EXAM_PSEUDO_ID } ...
 packages/engine/src/context.ts               buildContext(plan, catalog): EvalContext  (resolved courses, externalCredits, matriculationTerm, studentType, catalog index by courseKey)
@@ -63,7 +63,7 @@ file a `## CONTRACT CHANGE REQUEST` (protocol §6) with the failing fixture.
 
 ## Interfaces
 
-**Consumes:** every type and schema in `@gradguide/shared`; `GRADE_POINTS`,
+**Consumes:** every type and schema in `@sageplan/shared`; `GRADE_POINTS`,
 `gradePoints`, `isPassing`, `gradeAtLeast`, `compareTerms`, `sameCourse`,
 `sameTerm`, `courseKey`, `HYPERSCHEDULE_GE_CODES` is not needed here.
 Data: `data/programs/general-education-2026.json`, `data/external-credit-rules.json`.

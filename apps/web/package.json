@@ -1,5 +1,5 @@
 {
-  "name": "@gradguide/web",
+  "name": "@sageplan/web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -15,8 +15,8 @@
     "@fontsource-variable/source-serif-4": "^5.1.0",
     "@fontsource/ibm-plex-mono": "^5.1.0",
     "@fontsource/ibm-plex-sans": "^5.1.0",
-    "@gradguide/engine": "*",
-    "@gradguide/shared": "*",
+    "@sageplan/engine": "*",
+    "@sageplan/shared": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

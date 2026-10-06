@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { readExistingCourses, readExistingMeta, mergeCourses } from "../src/catalogMerge.ts";
 import { PipelineError } from "../src/errors.ts";
-import type { Course } from "@gradguide/shared";
+import type { Course } from "@sageplan/shared";
 
 let dir: string;
 beforeEach(() => { dir = mkdtempSync(join(tmpdir(), "gg-merge-")); });

@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
-import { CatalogArtefactSchema, ProgramSchema, StudentPlanSchema, courseKey } from "@gradguide/shared";
-import type { Course, Program, Result, Rule } from "@gradguide/shared";
+import { CatalogArtefactSchema, ProgramSchema, StudentPlanSchema, courseKey } from "@sageplan/shared";
+import type { Course, Program, Result, Rule } from "@sageplan/shared";
 import { buildContext } from "../src/context.ts";
 import { evaluate } from "../src/index.ts";
 import { eligibleCourses } from "../src/rules/attribute.ts";

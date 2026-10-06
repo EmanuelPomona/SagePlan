@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { PLAN_SCHEMA_VERSION, emptyPlan } from "@gradguide/shared";
+import { PLAN_SCHEMA_VERSION, emptyPlan } from "@sageplan/shared";
 import { migratePlan } from "../plan/migratePlan.ts";
 
 const valid = () => emptyPlan("2026-2027", { year: 2025, term: "FA" }, "firstYear");

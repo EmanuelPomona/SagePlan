@@ -1,5 +1,5 @@
 import { readEnv, type PipelineEnv } from "../env.ts";
-import type { ValidationCheck } from "@gradguide/shared";
+import type { ValidationCheck } from "@sageplan/shared";
 import { PipelineError } from "../errors.ts";
 import { log } from "../reports.ts";
 import { runCatalog } from "./catalog.ts";

@@ -1,4 +1,4 @@
-import type { CourseId, Provenance } from "@gradguide/shared";
+import type { CourseId, Provenance } from "@sageplan/shared";
 
 /** The Claremont campus codes. Anything else came from outside. */
 const CLAREMONT = new Set(["PO", "HM", "SC", "CM", "PZ", "CG", "KS", "JT"]);

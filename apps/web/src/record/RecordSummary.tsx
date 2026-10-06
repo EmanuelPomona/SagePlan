@@ -1,5 +1,5 @@
-import { courseKey } from "@gradguide/shared";
-import type { Course, StudentPlan } from "@gradguide/shared";
+import { courseKey } from "@sageplan/shared";
+import type { Course, StudentPlan } from "@sageplan/shared";
 
 /**
  * What the record adds up to, computed the way the engine counts it: the
