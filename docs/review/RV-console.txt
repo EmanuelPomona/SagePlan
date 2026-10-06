@@ -1,0 +1,19 @@
+RV-console.txt — v1 interface, console for the primary flow
+Reviewer: agent/reviewer   TASK-031/032/033 round 1   2026-09-11
+Instrument: headless Chrome driven over raw CDP (NOT the chrome-devtools MCP,
+which is disconnected in this session), viewport read back from the page.
+
+Flow: load with empty localStorage -> open "Edit your record" -> paste a
+portal-style transcript blob -> "Check what this will add" -> "Add N courses"
+-> map renders -> click a map node -> requirement detail expands.
+
+Full console output, unfiltered:
+  [DEBUG] [vite] connecting...
+  [DEBUG] [vite] connected.
+  [INFO ] Download the React DevTools for a better development experience
+
+Application errors:   0
+Application warnings: 0
+Uncaught exceptions:  0
+
+All three are dev-server / React-DevTools notices. Console clean.

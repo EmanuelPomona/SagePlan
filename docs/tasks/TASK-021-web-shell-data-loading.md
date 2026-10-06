@@ -1,7 +1,7 @@
 ---
 id: TASK-021
 title: Web app shell — single page, data loading and failure states, masthead, theme and type, persistence, useful empty state
-status: REVIEW
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
@@ -114,3 +114,4 @@ Exact disclaimer string (house copy rule: no em dashes in UI strings):
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | APPROVED | Approved. Advisory only: M-6 audit 1774px vs the brief's one-viewport claim; M-8 checkboxes render 13x32 dark blocks. Moved to DEBT.md. |

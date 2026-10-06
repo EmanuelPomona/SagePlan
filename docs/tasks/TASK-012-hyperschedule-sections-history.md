@@ -1,11 +1,11 @@
 ---
 id: TASK-012
 title: Hyperschedule sections and offering-history ingestion; merge non-Pomona courses into the catalog
-status: REVIEW
+status: READY
 owner: backend
 branch: agent/backend
 priority: HIGH
-round: 0
+round: 1
 depends_on: [TASK-010]
 blocked_on: ""
 ---
@@ -91,3 +91,4 @@ from TASK-010 needs a shared helper (put it in `src/catalogMerge.ts`).
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | CHANGES_REQUIRED | H-5 sections-SP2027.json absent so upcomingTerms has one entry; M-5 placeholders via the merge; L-7 geCodes allowlist comment wrong. |

@@ -1,11 +1,11 @@
 ---
 id: TASK-011
 title: Registrar GE CSV parser, cross-source GE validator, exclusion-anomaly report
-status: REVIEW
+status: READY
 owner: backend
 branch: agent/backend
 priority: HIGH
-round: 0
+round: 1
 depends_on: [TASK-010]
 blocked_on: ""
 ---
@@ -80,3 +80,4 @@ Modify: `packages/pipeline/src/cli.ts` (wire `validate` to run these two checks;
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | CHANGES_REQUIRED | H-3 all 282 GE divergences unexplained; H-4 exclusion report is 4/5 not 3/10 (credits.max<1 bug); H-6 Measure Values=2 collapsed, spec says 0/1. |

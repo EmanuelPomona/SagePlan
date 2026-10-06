@@ -1,17 +1,74 @@
-# Accepted Debt
+# Accepted, Unfixed Findings
 
-Findings the reviewer accepted rather than blocking on, and protocol violations
-recorded during integration.
+Owned by the reviewer (`docs/AGENT_PROTOCOL.md` §3). A row lands here when a
+finding is real, reported, and deliberately not blocking the gate — under §11
+visual findings are advisory and never withhold approval on their own. Taste
+disputes belong to the human, who owns them.
 
-Nothing is deleted from this file during a project. It is an input to
-`docs/RETRO.md` at the end.
+Nothing here is a defect the reviewer failed to find. Everything here was
+measured, and the measurement is in the row.
 
-| Date | Task | Severity | Finding | Why accepted |
-|---|---|---|---|---|
+---
+
+## From Round 1 (2026-09-08) — advisory, attached to APPROVED tasks
+
+### Documentation drift, low cost, easy to lose track of
+
+---
+
+## Not debt — routed as blocking findings in Round 1
+
+For the avoidance of doubt, these were **not** accepted and are not in the table
+above. See `docs/handoffs/agent-reviewer.md`: H-1 (unresolved contract change
+request), H-2 (AC-B01), H-3 (282 unexplained GE divergences), H-4 (AC-B03's
+exclusion report), H-5 (missing `sections-SP2027.json`), H-6 (`Measure Values = 2`
+PE courses collapsed to a boolean — the one finding that changes an answer a
+student would see), and M-1…M-5.
 
 ## From Round 2 (2026-09-11) — unverifiable, not failed
 
-| ID | Task | Kind | Finding | Measurement | Suggested fix |
-|---|---|---|---|---|---|
-| D-11 | TASK-013 | UNVERIFIED | AC-B07 (the nightly workflow opens a PR) has never executed anywhere. | `git remote -v` is empty on 2026-09-11: the repository exists only on this machine. `actionlint` and `act` are absent, so only YAML validity and structure could be checked. | **Owner action:** create the GitHub remote and push. Until then the reviewer records BLOCKED on AC-B07 rather than APPROVED (ADR-020). |
-| D-12 | TASK-011 | OPEN QUESTION | `Measure Values = 2` on nineteen Physical Education rows: verified to exist, meaning unknown. | A literal `=== "1"` pivot yields PE 222; the `>= 1` rule yields the expected 241. | Ask the Registrar what `2` means. If it means "counts as two PE courses", add the optional `attributeWeights` field backend proposed - additive, no `schemaVersion` bump (ADR-020). |
+## From Round 2 (2026-09-11) — TASK-030 engine gate, advisory
+
+## From the v1 interface gate (2026-09-11) — advisory
+
+## Status, and what it is worth
+
+`Status` records what I could **measure on 2026-09-11**, not what I remember
+closing. Five rows were re-checked with a command that day and are marked
+`re-checked`; three were measured fixed during the v1 gate; one (`D-09`) I did
+**not** re-verify and it says so. A row marked OPEN in capitals needs someone:
+`D-11` and `D-12` need the owner, the rest are task work.
+
+## The ledger
+
+One table with a `Source` column, rather than the per-round sections this file
+carried until the v1 gate. The sections were flattened while the first version of
+the ADR-024 guard read any second header as union damage; that guard was corrected
+to key on unique ids instead, so sections are allowed again.
+
+I did not restore them. Provenance as a column beats provenance as position: it
+survives reformatting, it sorts and filters, and a reader asking "what came out of
+the v1 gate?" gets an answer from the data rather than from where a row happens to
+sit. Each `Source` value was derived from the commit that introduced that row
+(`git log -S'| D-nn |' -- docs/DEBT.md`), not from memory.
+
+| ID | Status | Source | Task | Kind | Finding | Measurement | Suggested fix |
+|---|---|---|---|---|---|---|---|
+| D-01 | fixed — v1 gate, measured | round 1 | TASK-021 | VISUAL | The brief states twice that "the entire audit … fits in one viewport at 1440px" with row height "about 32px". It does not. | At 1440×900 with the F-01 plan the audit block is **1774px** tall against an 823–900px viewport; sample row heights 57, 57, 32. Evidence: `docs/review/R-01-desktop-1440-full.png` | Tighten the requirement row to the brief's ~32px mono line, or amend `DESIGN_BRIEF.md` if 15 rows in one viewport is no longer the intent. |
+| D-02 | fixed — v1 gate, measured | round 1 | TASK-022 | VISUAL | At 390px, opening "Add an exam" widens the whole page and zooms the document out. | True 390×844 mobile viewport: layout viewport goes **390 → 595px** on open (scrollWidth 595, visualViewport 390) because the exam `<select>` sizes to its longest option at **541px**. Evidence: `docs/review/R-07-mobile-390-exam-select-DEFECT.png` | `select { max-width: 100% }` (the field is already full-width at that breakpoint). One line. |
+| D-03 | fixed — v1 gate, measured | round 1 | TASK-021 | VISUAL | Every checkbox renders as a 13×32px dark block rather than a checkbox. | `apps/web/src/styles/global.css:252` applies `min-height: 32px` + padding/border/background to `input, select, textarea, button` with no checkbox exemption anywhere; `global.css:9` sets a static `html { color-scheme: light dark }`, so native controls are painted in the dark scheme while `data-theme="light"` is active. 13 checkboxes affected. **WCAG 2.2 AA 2.5.8 still passes** — the wrapping `<label>` hit box measures 77×40. | `input[type=checkbox] { min-height: auto; width: auto; }` and make `color-scheme` follow `data-theme` in both directions. |
+| D-04 | OPEN — re-checked 09-11 | round 1 | — | DOC | README's demo share link hard-codes port 3001. | `bootstrap.sh` assigns a port per worktree; this reviewer's was 3003, so the documented link 404s outside the frontend worktree. | Use `$FRONTEND_PORT`, or document the `#plan=…` fragment on its own. |
+| D-05 | OPEN — re-checked 09-11 | round 1 | TASK-001 | DOC | `validate-artefacts.ts` under-reports its own coverage. | `checkQuote` pushes an outcome only on failure, so the summary prints "6 check(s), 0 failed" while **34** quote checks actually ran. ACCEPTANCE cites this artifact for AC-P02. | Count passing quote checks so the number means something. |
+| D-06 | OPEN — re-checked 09-11 | round 1 | — | DOC | `scripts/slop-check.sh` defaults to a `frontend/` directory that does not exist in this layout. | `./scripts/slop-check.sh` → `no such directory: frontend`; the app is at `apps/web`. The reviewer's own mechanical check does not run out of the box. | Default the argument to `apps packages`. |
+| D-07 | fixed — re-checked 09-11 | round 1 | TASK-010 | DOC | Handoff figures drift from the shipped artefacts. | "2,087 Pomona courses" vs 2,005 PO / 2,067 Coursedog-sourced in `data/catalog.json`; sections 2,159 vs 2,160. | Regenerate the figures from the artefacts at handoff time. |
+| D-08 | fixed — re-checked 09-11 | round 1 | TASK-012 | DOC | `geCodes.ts:8-13` allowlists `1DDP` and `1P1…1P10` on a factually wrong comment ("these subdivide 1PE"). | 122 FA2026 sections carry a `1P*` code with no `1PE`. No GE attribute is lost — all 12 live Pomona codes map — but AC-B04's "or is reported" clause is unsatisfied and the reported "0 unrecognised Pomona code(s)" is an artefact of the allowlist. | Report unrecognised codes instead of allowlisting them silently, and fix the comment. |
+| D-09 | open — NOT re-verified | round 1 | TASK-020 | DOC | `docs/ACCEPTANCE.md:103` (F-12) conflicts with ADR-007 on waived rows. | ACCEPTANCE says "every requirement `unmet` or `unverifiable`"; two rows are `satisfied` with `waived: true`, which is what ADR-007 and API.md §2.4 require. The engine is right; the doc is stale. | Reconcile the ACCEPTANCE row to ADR-007. |
+| D-10 | fixed — re-checked 09-11 | round 1 | TASK-011 | `parseCsv.ts:62` coerces a garbled `Measure Values` to 0 ("overlay absent") with no count. | `Number((f[i.measureValue] ?? "0").trim())  | 0`. No live impact: only 0, 1 and 2 occur in the committed export. | Count and report unparseable measure values. |
+| D-11 | OPEN — owner: no git remote | manager | TASK-013 | UNVERIFIED | AC-B07 (the nightly workflow opens a PR) has never executed anywhere. | `git remote -v` is empty on 2026-09-11: the repository exists only on this machine. `actionlint` and `act` are absent, so only YAML validity and structure could be checked. | **Owner action:** create the GitHub remote and push. Until then the reviewer records BLOCKED on AC-B07 rather than APPROVED (ADR-020). |
+| D-12 | OPEN — owner: ask the Registrar | manager | TASK-011 | OPEN QUESTION | `Measure Values = 2` on nineteen Physical Education rows: verified to exist, meaning unknown. | A literal `=== "1"` pivot yields PE 222; the `>= 1` rule yields the expected 241. | Ask the Registrar what `2` means. If it means "counts as two PE courses", add the optional `attributeWeights` field backend proposed - additive, no `schemaVersion` bump (ADR-020). |
+| D-13 | OPEN — TASK-034 | TASK-030 gate | TASK-030 | FUNCTIONAL | A one-site regression of ADR-013's minimize-sharing is invisible to the whole golden suite. | Minimize-sharing lives at two independent sites: `localBetter` (greedy, `assignment.ts:~211`) and `betterScore` (backtracking, `~172`). Inverting **either alone** leaves all 21 goldens green; only inverting **both** fails F-06. F-06 short-circuits in the greedy phase (`optimal()` requires `shared === 0`), so it never exercises `betterScore`. | Add a fixture where sharing is unavoidable so greedy is non-optimal and the backtracking path is forced, guarding each site independently. |
+| D-14 | OPEN — re-checked 09-11, TASK-034 | TASK-030 gate | TASK-030 | DOC | A stale comment describes the superseded tie-break directly above the code that replaced it. | `packages/engine/src/assignment.ts:57-60` (Phase 1 header): "add the fewest NEW courses, so a course that already counts elsewhere is reused before a fresh one is spent (docs/API.md 2.3 step 4)" — the superseded rule, citing the API.md section ADR-013 rewrote. The `localBetter` comment 145 lines later is correct and contrasts the old rule explicitly. | Rewrite the Phase 1 comment to ADR-013's rule and drop the stale 2.3-step-4 citation. |
+| D-15 | resolved via ADR-021/023, not by the fix suggested here | backend r2 | — (tooling) | PROTOCOL | `docs/tasks/*.md merge=union` silently drops a status declaration on merge. Third instance of cross-branch declaration loss, after the round counter and the review evidence. | Measured on the round-2 backend merge: merge-base `READY`, my side `READY`, `agent/backend` `REVIEW`, merged result **`READY`** — backend's declaration gone, no conflict raised. `git check-attr merge docs/tasks/TASK-010-*.md` -> `merge: union`. Union is right for append-only ledgers and wrong for frontmatter, which is a unique-key map; on a both-sides edit it emits both lines and `scripts/tasks.sh` takes the first. (The duplicate-key half is reasoned from union's documented behaviour, **not measured** — three attempts to demonstrate it in a throwaway repo were blocked by the sandbox's destructive-command gate.) | Drop `docs/tasks/*.md` from the union list in `.gitattributes`. Task files are manager-owned; a real conflict there is information, not noise. |
+| D-16 | open — watch only | backend r2 | TASK-011 | FUNCTIONAL | The `mixed` divergence shape (22 of 282) is the one category that yields no which-source answer. | `data/reports/ge-divergences.md`: `mixed` 22 -> "neither — needs a row-by-row answer". Honest, and a genuine structural description rather than a restatement, so AC-P09's letter is met with `Unclassified: 0`. But it is the same residual-bucket pattern as the old "attribute sets differ", at 8% instead of 74%. | Watch the count. If it grows, subdivide it the way the 210 were subdivided. |
+| D-17 | OPEN — TASK-034 | v1 gate | TASK-033 | VISUAL | The desktop map wraps raggedly where mobile does not. | At 1440x800 the families wrap Breadth 5+1, Overlays 2+1, Foundations 2+1, leaving a wide empty band inside the Breadth panel and breaking "Physical Education" across two lines. At 390px the same map is a clean 3-column grid per family. No criterion is breached — the map is 274px against a 320px bar — but the desktop layout reads less crisply than the mobile one it derives from. | Let the Breadth family lay out 6 across at >=1440, or give the three panels a shared column count. |
+| D-18 | OPEN — manager, spec | v1 gate | — (spec) | DOC | AC-V01 says "twelve nodes"; the map ships fifteen. | Measured: `family-breadth` 6, `family-overlays` 3, `family-foundations` 3 — exactly the twelve the criterion names — plus a separate 3-node credits group ("32 course credits", "30 credits after matriculation", "16 credits at Pomona") outside the three labelled families. The criterion is met as written; the extra group is an addition, and a useful one with good aria-labels. | Update AC-V01 to describe the credits group rather than trimming the map. The implementation looks like the better design. |

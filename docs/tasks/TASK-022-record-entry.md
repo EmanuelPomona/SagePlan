@@ -1,7 +1,7 @@
 ---
 id: TASK-022
 title: Record section — profile, course autocomplete, spreadsheet paste, non-catalog courses, external credit entry
-status: REVIEW
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
@@ -85,3 +85,4 @@ Anything else is rejected with a reason naming the field.
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | APPROVED | Approved. Advisory only: M-7 at 390px the 541px exam select expands the layout viewport to 595px. Moved to DEBT.md. |

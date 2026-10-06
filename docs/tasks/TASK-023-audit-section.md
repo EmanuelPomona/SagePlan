@@ -1,7 +1,7 @@
 ---
 id: TASK-023
 title: Audit section — requirement rows with four states, margin of evidence, in-place detail, overrides and attestations
-status: REVIEW
+status: READY
 owner: frontend
 branch: agent/frontend
 priority: HIGH
@@ -79,3 +79,4 @@ replaces; `data-status` attribute on rows for the reviewer's screenshots.
 
 | Round | Verdict | Summary |
 |---|---|---|
+| 1 | APPROVED | Approved. Requirement detail, verbatim quote, draft disclosure, override and attestation paths verified live at 1440/768/390. |

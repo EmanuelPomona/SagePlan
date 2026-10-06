@@ -1,0 +1,54 @@
+R-network.txt — network audit (AC-P07), performed by the reviewer
+Reviewer: agent/reviewer   Round 1   2026-09-08
+
+AC-P07 requires that no student data leaves the browser. This was measured by
+the reviewer directly from the browser's own network log, NOT copied from
+docs/handoffs/agent-frontend.md.
+
+Flow: load -> share-link fragment import offer -> accept (20-course plan) ->
+expand a requirement -> open "What satisfies this?" (triggers the lazy
+sections + offering-history fetch).
+
+MEASURED, 97 recorded requests:
+
+  HTTP(S) requests ............................. 96
+  non-HTTP entries ............................. 1   (a data: URI, the
+                                                     reviewer's own screenshot,
+                                                     not app traffic)
+  distinct hosts ............................... {'localhost:3003'}   <- own origin only
+  methods ...................................... {'GET': 96}          <- no POST/PUT/PATCH
+  status codes ................................. {'200': 96}
+  requests with a query string ................. 7
+  distinct query parameter names ............... ['v']   (vite dep cache-busting)
+  query strings containing plan-like data ...... 0
+    (regex /plan|grade|student|record|FA20|SP20|CSCI|ENGL/i over every query string)
+  request bodies ............................... none (all GET)
+
+Application data fetches, all same-origin GET:
+  /data/manifest.json
+  /data/catalog.json
+  /data/programs/general-education-2026.json
+  /data/external-credit-rules.json
+  /data/sections-FA2026.json        (lazy, on opening a candidate list)
+  /data/offering-history.json       (lazy, term ribbon)
+
+Share link: the plan travels in the URL FRAGMENT (#plan=...), which browsers
+never transmit. Verified in the browser: after accepting the import the app
+called history.replaceState and location.hash was cleared to "" while the
+record stayed loaded (apps/web/src/share/useFragmentImport.ts:41).
+
+Defence in depth, verified in the served document:
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src 'self'; img-src 'self' data:;
+                 font-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';
+                 base-uri 'none'; form-action 'none'">
+  connect-src 'self' + form-action 'none' means the browser itself blocks an
+  off-origin fetch or form post, rather than the promise resting on code review.
+  Fonts are self-hosted via @fontsource (no Google Fonts request).
+
+VERDICT AC-P07: PASS. No off-origin request, no request body, no plan data in
+any URL or query string.
+
+NOT covered by this measurement: the "open the share link in a private window"
+clause of AC-P07 (a fragment is not sent by construction, and the same-origin
+result above holds, but a separate private-window session was not recorded).

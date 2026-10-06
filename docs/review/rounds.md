@@ -15,12 +15,6 @@ safeguard could never fire (ADR-019).
 
 Append a row per verdict. Never edit a past row; a task at round 3 has three rows.
 
-**`Commit` is the owning branch's head at the moment of the verdict.** It is what
-distinguishes a fresh `REVIEW` from a task sent back and not yet picked up: gate a
-task at `REVIEW` only when its branch head differs from its last row here
-(`docs/AGENT_PROTOCOL.md` section 21, ADR-023). Rows seeded before this column
-existed carry `—`.
-
 | Task | Round | Verdict | Date | Commit | Findings |
 |---|---|---|---|---|---|
 | TASK-010 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | H-1, H-2, M-5 |
@@ -33,3 +27,12 @@ existed carry `—`.
 | TASK-023 | 1 | APPROVED | 2026-09-08 | — | verified live |
 | TASK-024 | 1 | APPROVED | 2026-09-08 | — | verified live |
 | TASK-025 | 1 | CHANGES_REQUIRED | 2026-09-08 | — | AC-D02 evidence gap, not a defect |
+| TASK-010 | 2 | APPROVED | 2026-09-11 | 9013eb5 | H-2 superseded (PO 2004 >= 1900); M-5 closed by denylist; ENGL 170R PO retains both attrs |
+| TASK-011 | 2 | APPROVED | 2026-09-11 | 9013eb5 | H-3 closed (7 shapes, Unclassified 0); H-4 rescoped to PO; H-6 recorded as open question D-12 |
+| TASK-012 | 2 | APPROVED | 2026-09-11 | 9013eb5 | H-5 closed by AC-B04 amendment (SP2027 unpublished upstream); L-7 codes now reported |
+| TASK-013 | 2 | APPROVED | 2026-09-11 | 9013eb5 | M-4 closed; AC-B07 UNVERIFIABLE — no git remote (D-12), not ticked |
+| TASK-030 | 2 | APPROVED | 2026-09-11 | 049f55d | R2-M1 F-03c absent (AC-P16 still unevidenced); R2-L1 one-site tie-break regression invisible; R2-L2 stale phase-1 comment |
+| TASK-031 | 1 | APPROVED | 2026-09-11 | 079ab7d | AC-V08 met in full; reviewer D-01/D-02/D-03 all closed and re-measured |
+| TASK-032 | 1 | CHANGES_REQUIRED | 2026-09-11 | 079ab7d | V1-H1: AC-V07 unmet — a malformed course line is silently dropped, no rejection reported |
+| TASK-033 | 1 | APPROVED | 2026-09-11 | 079ab7d | AC-V01/V02/V03/V04/V09/V10/V11 measured and met; map 274px, rows 38px, above the fold at 1440x800 |
+| — | — | FINDING | 2026-09-11 | — | R2-M2 docs/tasks/*.md merge=union silently dropped backend's REVIEW status; third instance of cross-branch declaration loss |
