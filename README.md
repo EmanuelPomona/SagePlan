@@ -1,5 +1,7 @@
 # SagePlan (unofficial)
 
+**Live:** https://sageplan.vercel.app
+
 An unofficial, browser-local web app that tells a Pomona College student which
 graduation and general-education requirements they have satisfied, which
 remain, and which specific courses, actually offered in an upcoming term, would
