@@ -15,9 +15,12 @@ jobs:
           echo "copies: $n"
           test "$n" -le 1 || { echo "Design constraints duplicated. docs/DESIGN_CONSTRAINTS.md is the only copy."; exit 1; }
 
+      # Keyed on the template placeholder, which only the definition contains.
+      # "### Tasks Completed" is in every handoff that follows the schema, so a
+      # guard on it failed every correct repository once handoffs existed.
       - name: Handoff schema defined once
         run: |
-          n=$(grep -rl "### Tasks Completed" --include="*.md" . | grep -v docs/archive | wc -l | tr -d ' ')
+          n=$(grep -rlF "## HANDOFF-<n>" --include="*.md" . | grep -v docs/archive | wc -l | tr -d ' ')
           test "$n" -le 1 || { echo "Handoff schema duplicated; AGENT_PROTOCOL section 16 is the only copy."; exit 1; }
 
       - name: No shared handoff or task file
