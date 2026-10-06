@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { PLAN_SCHEMA_VERSION } from "@sageplan/shared";
+import { PLAN_SCHEMA_VERSION, emptyPlan } from "@sageplan/shared";
 import type { CompletedCourse } from "@sageplan/shared";
 import { PLAN_STORAGE_KEY, usePlan } from "../plan/planStore.ts";
 
@@ -145,5 +145,47 @@ describe("usePlan: editing", () => {
 
     act(() => result.current.addCompleted(course("CSCI", 51)));
     await waitFor(() => expect(result.current.status).toBe("ok"));
+  });
+});
+
+// The app was called GradGuide until 2026-10. A plan saved under its key must
+// survive the rename: losing a student's record to a branding change is the one
+// failure this store exists to prevent.
+describe("usePlan: the GradGuide key is read once and retired", () => {
+  const LEGACY = "gradguide:plan:v1";
+  const savedPlan = (dept: string) =>
+    JSON.stringify({ ...emptyPlan("2026-2027", { year: 2025, term: "FA" }, "firstYear"), completed: [course(dept, 51)] });
+
+  test("the plan is stored under the sageplan key", async () => {
+    const { result } = renderHook(() => usePlan());
+    act(() => result.current.addCompleted(course("CSCI", 51)));
+
+    await waitFor(() => expect(localStorage.getItem("sageplan:plan:v1")).toContain("CSCI"));
+  });
+
+  test("a plan saved under the old key still loads", () => {
+    localStorage.setItem(LEGACY, savedPlan("MATH"));
+    const { result } = renderHook(() => usePlan());
+
+    expect(result.current.status).toBe("ok");
+    expect(result.current.plan.completed[0]?.course.department).toBe("MATH");
+  });
+
+  test("the first save moves it to the new key and leaves nothing under the old one", async () => {
+    localStorage.setItem(LEGACY, savedPlan("MATH"));
+    const { result } = renderHook(() => usePlan());
+    act(() => result.current.addCompleted(course("CSCI", 51)));
+
+    await waitFor(() => expect(localStorage.getItem("sageplan:plan:v1")).toContain("CSCI"));
+    expect(localStorage.getItem("sageplan:plan:v1")).toContain("MATH");
+    expect(localStorage.getItem(LEGACY)).toBeNull();
+  });
+
+  test("when both keys exist the sageplan one wins", () => {
+    localStorage.setItem(LEGACY, savedPlan("MATH"));
+    localStorage.setItem("sageplan:plan:v1", savedPlan("PHYS"));
+    const { result } = renderHook(() => usePlan());
+
+    expect(result.current.plan.completed[0]?.course.department).toBe("PHYS");
   });
 });

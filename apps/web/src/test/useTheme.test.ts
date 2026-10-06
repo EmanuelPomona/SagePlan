@@ -70,3 +70,19 @@ describe("an explicit choice is still honoured", () => {
     expect(renderHook(() => useTheme()).result.current.preference).toBe("light");
   });
 });
+
+describe("the GradGuide key is read once and retired", () => {
+  test("a preference saved under the old key is still honoured", () => {
+    localStorage.setItem("gradguide:ui:v1", "dark");
+    expect(renderHook(() => useTheme()).result.current.preference).toBe("dark");
+  });
+
+  test("a choice is stored under the sageplan key and the old key is dropped", () => {
+    localStorage.setItem("gradguide:ui:v1", "dark");
+    const { result } = renderHook(() => useTheme());
+    act(() => result.current.setPreference("light"));
+
+    expect(localStorage.getItem("sageplan:ui:v1")).toBe("light");
+    expect(localStorage.getItem("gradguide:ui:v1")).toBeNull();
+  });
+});

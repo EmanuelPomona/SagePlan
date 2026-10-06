@@ -41,8 +41,13 @@ There is no `id`, no `createdAt`, no owner: one browser profile holds one plan.
 
 | Key | Value | Notes |
 |---|---|---|
-| `gradguide:plan:v1` | JSON `StudentPlan` | written on every change, debounced ≤ 250 ms; read once on load |
-| `gradguide:ui:v1` | JSON `{ theme?: "light" \| "dark" \| "system", openRequirementIds?: string[], upcomingTerm?: TermCode }` | per-device conveniences; losing it must not lose data |
+| `sageplan:plan:v1` | JSON `StudentPlan` | written on every change, debounced ≤ 250 ms; read once on load |
+| `sageplan:ui:v1` | JSON `{ theme?: "light" \| "dark" \| "system", openRequirementIds?: string[], upcomingTerm?: TermCode }` | per-device conveniences; losing it must not lose data |
+
+Until 2026-10 the app was called GradGuide and used `gradguide:plan:v1` and
+`gradguide:ui:v1`. On load each key falls back to its `gradguide:` predecessor
+when the `sageplan:` key is empty; the first write removes the old key. The
+rename therefore costs nobody a saved plan.
 
 Rules:
 

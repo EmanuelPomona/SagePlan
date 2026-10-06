@@ -11,7 +11,9 @@ import type {
 import { migratePlan } from "./migratePlan.ts";
 
 /** Versioned key: a future format change gets its own key and cannot corrupt this one. */
-export const PLAN_STORAGE_KEY = "gradguide:plan:v1";
+export const PLAN_STORAGE_KEY = "sageplan:plan:v1";
+/** Where plans lived while the app was called GradGuide. Read on load, removed on the first save. */
+const LEGACY_PLAN_STORAGE_KEY = "gradguide:plan:v1";
 
 const SAVE_DEBOUNCE_MS = 250;
 
@@ -45,7 +47,7 @@ type Initial = { plan: StudentPlan; status: PlanStatus; raw: string | null };
 function readInitial(): Initial {
   let raw: string | null = null;
   try {
-    raw = localStorage.getItem(PLAN_STORAGE_KEY);
+    raw = localStorage.getItem(PLAN_STORAGE_KEY) ?? localStorage.getItem(LEGACY_PLAN_STORAGE_KEY);
   } catch {
     // Private mode or storage disabled: behave as though nothing was stored.
     return { plan: defaultPlan(), status: "ok", raw: null };
@@ -88,6 +90,7 @@ export function usePlan(): PlanStore {
     const handle = setTimeout(() => {
       try {
         localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(plan));
+        localStorage.removeItem(LEGACY_PLAN_STORAGE_KEY);
         setStatus((s) => (s === "ok" ? s : "ok"));
       } catch {
         setStatus("quota");

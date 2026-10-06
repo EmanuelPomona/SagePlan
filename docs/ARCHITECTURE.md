@@ -108,7 +108,7 @@ shared   ← pipeline
 | Styling | Frontend's choice (CSS modules or plain CSS with custom properties recommended). Must implement light and dark from `docs/DESIGN_BRIEF.md`. No Tailwind unless frontend records why in the design brief. |
 | Fonts | Self-hosted via `@fontsource/source-serif-4`, `@fontsource/ibm-plex-sans`, `@fontsource/ibm-plex-mono`. No runtime font requests. |
 | State | React state plus one small store for the `StudentPlan` (Zustand or a `useReducer` + context; frontend's choice). The plan is the only client state that persists. |
-| Persistence | `localStorage` key `gradguide:plan:v1` holding a `StudentPlan` (see `docs/DATABASE.md`) |
+| Persistence | `localStorage` key `sageplan:plan:v1` holding a `StudentPlan` (see `docs/DATABASE.md`) |
 | Data loading | `fetch()` of same-origin `/data/manifest.json`, then `/data/catalog.json`, `/data/programs/*.json`, `/data/external-credit-rules.json`, and lazily `/data/sections-{TERM}.json` and `/data/offering-history.json` when "What satisfies this?" first opens |
 | Serving `/data` | In dev, a small Vite plugin serves the repo's `/data` directory at `/data/*` (excluding `sources/` and `reports/`). At build, the same set is copied into `dist/data/`. Frontend implements; the contract is the paths in `docs/API.md`. |
 | Engine use | Calls `evaluate(plan, programs, catalog)` from `@sageplan/engine` on every plan change. Synchronous; the search is microseconds at this scale. |

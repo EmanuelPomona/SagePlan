@@ -2,11 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 
 export type ThemePreference = "system" | "light" | "dark";
 
-export const THEME_STORAGE_KEY = "gradguide:ui:v1";
+export const THEME_STORAGE_KEY = "sageplan:ui:v1";
+/** Where the theme lived while the app was called GradGuide. Read on load, removed on the next choice. */
+const LEGACY_THEME_STORAGE_KEY = "gradguide:ui:v1";
 
 function storedPreference(): ThemePreference {
   try {
-    const raw = localStorage.getItem(THEME_STORAGE_KEY);
+    const raw = localStorage.getItem(THEME_STORAGE_KEY) ?? localStorage.getItem(LEGACY_THEME_STORAGE_KEY);
     if (raw === "light" || raw === "dark" || raw === "system") return raw;
   } catch {
     // Storage unavailable: the system preference is a fine answer.
@@ -36,6 +38,7 @@ export function useTheme(): { preference: ThemePreference; setPreference: (p: Th
     setPreferenceState(next);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
+      localStorage.removeItem(LEGACY_THEME_STORAGE_KEY);
     } catch {
       // A theme we cannot remember is not worth an error message.
     }
