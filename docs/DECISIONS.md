@@ -1,4 +1,4 @@
-# Architectural Decisions — Pomona GradGuide
+# Architectural Decisions — SagePlan
 
 Cross-cutting decisions, in the lightweight ADR format (Nygard). One file, by
 repository convention (`docs/AGENT_PROTOCOL.md` §3). Manager owns it. Workers
@@ -715,3 +715,33 @@ rather than conventions, not against guarding.
 - Positive: the file protocol section 21's escalation safeguard reads is now shape-checked in CI. Loop control was the one machine-read ledger with no guard, which was precisely backwards given the stakes.
 - Negative: `tasks.sh` grows a validator that is not about tasks. It is the script that already reads both files and already runs in CI, so the alternative is a second script nobody runs.
 - Process: **three corruptions, three different mechanisms, all silent, all caught by counting rather than by the tooling.** Each is now loud. The pattern worth keeping is not any one guard but the reviewer's rule for finding them — ask whether a change invalidates the *premise* of an existing decision, not only whether it conflicts with its *conclusion*.
+
+## ADR-025 — The product is SagePlan
+
+**Date**: 2026-10-05 · **Status**: accepted · **Deciders**: project owner
+
+### Context
+"Pomona GradGuide" was a working name (PRODUCT.md said so). The owner named the
+product SagePlan and created its public repository, `EmanuelPomona/SagePlan`.
+
+### Decision
+1. The name is SagePlan everywhere a person reads it: masthead, page title,
+   footer, export file names, docs.
+2. Workspace packages move from `@gradguide/*` to `@sageplan/*`. Nothing is
+   published, so no consumer outside this repository depends on the old scope.
+3. The localStorage keys move to `sageplan:plan:v1` and `sageplan:ui:v1`, and
+   each read falls back to its `gradguide:` predecessor until the first write
+   removes it (DATABASE.md §1). A key is the one place a rename can destroy a
+   student's data, so it is the one place the old name survives in code.
+4. Still "unofficial", still no College marks; the PRODUCT.md rules on that are
+   about the College's brand, not ours, and are unchanged.
+
+### Alternatives considered
+- **Keep the `gradguide:` keys as invisible internals** — cons: the old name
+  lives on in every browser and every future reader of planStore.ts. Why not:
+  the fallback costs one `??` per key and retires the old name for real.
+
+### Consequences
+- Positive: one name across the app, the docs and the repository.
+- Negative: two legacy constants (planStore.ts, useTheme.ts) and their tests stay
+  until no browser holds a `gradguide:` key. Deleting them then is safe.

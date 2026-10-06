@@ -498,7 +498,7 @@ useData(): DataState     // loading | error | ready{manifest,catalog,programs,ru
 useAudit(plan, programs, catalog): Result[]
 loadSections(term), loadHistory()      // for TASK-024's lazy load
 migratePlan(raw)                       // for TASK-025's import and share link
-PLAN_STORAGE_KEY = "gradguide:plan:v1"
+PLAN_STORAGE_KEY = "sageplan:plan:v1"
 StatusGlyph, STATUS_WORD, verdictOf    // the four verdicts plus the manual ones
 ```
 
@@ -945,7 +945,7 @@ dark:      data-theme=dark, color-scheme dark, canvas rgb(27,26,23)
 ```
 
 **Transfer student, measured (`Emulation` + the F-02-transfer demo plan seeded
-into `gradguide:plan:v1`), evidence `F-16-transfer-map.jpg`:**
+into `sageplan:plan:v1`), evidence `F-16-transfer-map.jpg`:**
 ```
 nodeCount 11   mapBottom 536   fitsAboveFold TRUE
 Breadth Area 1..6, Writing Intensive, Speaking Intensive, Analyzing Difference,

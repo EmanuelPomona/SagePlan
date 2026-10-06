@@ -178,7 +178,7 @@ sidenotes, which is the signature element, not expansion output.
 
 ## Defect found and fixed during the evidence pass
 `useFragmentImport` read the fragment on mount only. Pasting a share link into
-a tab that already had GradGuide open is a same-document navigation: nothing
+a tab that already had SagePlan open is a same-document navigation: nothing
 reloads, nothing remounts, so the link did nothing at all and looked broken.
 Reproduced at the CDP level (base URL, then the same URL plus fragment: the
 import preview never appeared), fixed by also reading on `hashchange`. Accept
@@ -288,7 +288,7 @@ row. Everywhere the brief leaves an axis free, it is spent away from the default
    drawn at the mono cap height, each with the status word beside it and an
    aria-label. Never colour alone.
 2. **No middle-dot meta chain in the masthead.** The brief's sketch reads
-   "GradGuide · unofficial · Catalog 2026-27 · data as of 8 Sep"; the dot chain is
+   "SagePlan · unofficial · Catalog 2026-27 · data as of 8 Sep"; the dot chain is
    a named tell and is rationed to one per line. The masthead becomes a colophon:
    name and the word unofficial on one line, then catalog year and data date as a
    labelled pair on the line beneath.

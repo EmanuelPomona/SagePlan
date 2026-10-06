@@ -1,4 +1,4 @@
-# Data and Engine Contract — Pomona GradGuide
+# Data and Engine Contract — SagePlan
 
 **There is no HTTP API on this project.** There is no server. This document is
 the contract for the two boundaries that exist:

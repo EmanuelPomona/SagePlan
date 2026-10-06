@@ -1,4 +1,4 @@
-# Persistence — Pomona GradGuide
+# Persistence — SagePlan
 
 ## Provider
 

@@ -1,4 +1,4 @@
-# Acceptance Criteria — Pomona GradGuide P0
+# Acceptance Criteria — SagePlan P0
 
 The reviewer gates against this file and against the per-task criteria in
 `docs/tasks/`. Every criterion is checkable by someone who did not build it;

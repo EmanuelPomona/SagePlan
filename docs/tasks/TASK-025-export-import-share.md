@@ -26,7 +26,7 @@ Create only:
 
 ```
 apps/web/src/share/shareLink.ts        encodePlan(plan: StudentPlan): Promise<string> /* base64url(deflate-raw(JSON)) */; decodePlan(encoded: string): Promise<{ ok: true; plan: StudentPlan } | { ok: false; reason: "corrupt" | "newer" | "invalid"; detail: string }>; SHARE_LINK_WARN_LENGTH = 8000
-apps/web/src/share/exportPlan.ts       exportFilename(plan, date: Date): string /* gradguide-plan-2026-2027-2026-09-08.json */; download(plan): void (Blob + object URL, revoked after click)
+apps/web/src/share/exportPlan.ts       exportFilename(plan, date: Date): string /* sageplan-plan-2026-2027-2026-09-08.json */; download(plan): void (Blob + object URL, revoked after click)
 apps/web/src/share/ExportImport.tsx    footer controls: Export, Import (file input → parse → migratePlan → preview → Replace), Share link (copy; shows "This link contains your own course record. Share it deliberately."; warns over SHARE_LINK_WARN_LENGTH and offers export)
 apps/web/src/share/ImportPreview.tsx   course count, matriculation term, student type, exam count, override count; Replace / Cancel
 apps/web/src/share/useFragmentImport.ts on mount: if location.hash starts with #plan=, decode → preview → on Replace: replacePlan + history.replaceState(null, "", location.pathname + location.search); on Cancel: replaceState only

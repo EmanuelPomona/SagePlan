@@ -1,4 +1,4 @@
-# System Architecture — Pomona GradGuide
+# System Architecture — SagePlan
 
 ## Architecture Status
 

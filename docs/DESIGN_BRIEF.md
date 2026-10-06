@@ -1,4 +1,4 @@
-# Design Brief — Pomona GradGuide
+# Design Brief — SagePlan
 
 Written by the manager before frontend work begins. This is a product-specific
 design problem, not a style instruction. Frontend reads this together with
@@ -57,7 +57,7 @@ you told us, **where you stand**, and the evidence behind it.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│ MASTHEAD   Pomona GradGuide · unofficial · Catalog 2026-27 · data as of …     │
+│ MASTHEAD   SagePlan · unofficial · Catalog 2026-27 · data as of …             │
 │            "The Registrar's official audit is the source of truth. Confirm    │
 │             with your advisor before registering."  → portal link             │
 ├──────────────────────────────────────────────────────────────────────────────┤
@@ -140,7 +140,7 @@ in Spring 2027", and it is reachable and operable by keyboard.
 3. **Hyperschedule** (the 5C student-built schedule tool this app links to).
    Borrowed quality: density and speed. Keyboard-first course search that returns
    results as you type, light chrome, a page that feels like it was built by the
-   students who use it. GradGuide should feel like Hyperschedule's sibling, not
+   students who use it. SagePlan should feel like Hyperschedule's sibling, not
    like a vendor product.
 
 ## Desired character

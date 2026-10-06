@@ -1,11 +1,11 @@
-# Product Specification — Pomona GradGuide
+# Product Specification — SagePlan
 
 Source: `PROJECT_BRIEF.md` (project owner, 2026-09-08), decomposed by the manager.
 Every figure below was measured against a live source on 2026-09-08 by the owner.
 
 ## Product Name
 
-**Pomona GradGuide** (working name; repository `Pomona-College-GradGuide`).
+**SagePlan** (repository `SagePlan`; called Pomona GradGuide until 2026-10, see ADR-025).
 Always described as *unofficial*. It never uses the College's seal, wordmark, or
 brand blue, so no student can mistake it for a Registrar system.
 

@@ -3,7 +3,7 @@
 ## HANDOFF-1 — main — 2026-09-08
 
 ### Summary
-Planning (Mode A) for Pomona GradGuide P0 is complete. The brief
+Planning (Mode A) for SagePlan P0 is complete. The brief
 (`Pomona-Degree-Planner/docs/PROJECT_BRIEF.md`) is decomposed into contract
 documents, the shared contract package, the GE program encoded as data with
 verbatim catalog quotes, and 13 tasks (10 READY for two workers). Owner

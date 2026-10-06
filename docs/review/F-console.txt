@@ -1,4 +1,4 @@
-Browser console — Pomona GradGuide primary flow
+Browser console — SagePlan primary flow
 Captured: 2026-09-11
 Instrument: Chrome headless driven over CDP (Runtime.consoleAPICalled + Log.entryAdded),
 viewport set with Emulation.setDeviceMetricsOverride, dev server on FRONTEND_PORT=3001.

@@ -35,22 +35,22 @@ apps/web/tsconfig.json             extends base; lib ["ES2022","DOM","DOM.Iterab
 apps/web/vite.config.ts            react plugin + serveData plugin; define __FIXTURE_DATA__
 apps/web/vite-plugins/serveData.ts DEV: serve /data/manifest.json, catalog.json, sections-*.json, offering-history.json from <repo>/data when <repo>/data/manifest.json exists, else from apps/web/dev-fixtures/ and set __FIXTURE_DATA__=true; ALWAYS serve /data/programs/* and /data/external-credit-rules.json from <repo>/data. BUILD: copy the same set into dist/data; throw if <repo>/data/manifest.json is missing (fixture data never ships).
 apps/web/dev-fixtures/manifest.json, catalog.json, sections-SP2027.json, offering-history.json   small, hand-made, consistent with each other and with the engine fixture catalog (copy packages/engine/test/fixtures/catalog.fixture.json into a CatalogArtefact envelope)
-apps/web/index.html                lang en; <title>Pomona GradGuide (unofficial)</title>; CSP meta: default-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'
+apps/web/index.html                lang en; <title>SagePlan (unofficial)</title>; CSP meta: default-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'
 apps/web/src/main.tsx, App.tsx
 apps/web/src/data/loadData.ts      loadManifest(), loadCatalog(), loadPrograms(manifest), loadRules(), loadSections(termCode), loadHistory(): each returns Promise<Loaded<T>> = { ok: true, value } | { ok: false, error: DataError }; DataError = { path: string; kind: "notFound" | "badJson" | "schema" | "network"; detail: string }
 apps/web/src/data/DataProvider.tsx useData(): { status: "loading" } | { status: "error"; error: DataError } | { status: "ready"; manifest; catalog; programs; rules; fixture: boolean }
-apps/web/src/plan/planStore.ts     usePlan() (API below); localStorage key gradguide:plan:v1; debounced save ≤250ms; status ok|corrupt|quota
+apps/web/src/plan/planStore.ts     usePlan() (API below); localStorage key sageplan:plan:v1; debounced save ≤250ms; status ok|corrupt|quota
 apps/web/src/plan/migratePlan.ts   migratePlan(raw: unknown): { ok: true; plan: StudentPlan } | { ok: false; reason: "newer" | "invalid"; detail: string }
 apps/web/src/audit/useAudit.ts     useAudit(): Result[] = useMemo(evaluate(plan, [ge, ...declared], catalog.courses))
 apps/web/src/layout/Page.tsx       the ONE page: <Masthead/> <RecordSection/> <AuditSection/> <Footer/>; section slots for later tasks
-apps/web/src/layout/Masthead.tsx   "Pomona GradGuide" + "unofficial", catalog year, "data as of", staleness banner, disclaimer (exact text below, link to https://my.pomona.edu), FIXTURE DATA banner when __FIXTURE_DATA__
+apps/web/src/layout/Masthead.tsx   "SagePlan" + "unofficial", catalog year, "data as of", staleness banner, disclaimer (exact text below, link to https://my.pomona.edu), FIXTURE DATA banner when __FIXTURE_DATA__
 apps/web/src/layout/Footer.tsx     slot for TASK-025 controls; attribution: "Course and section data from Hyperschedule (BSD-3-Clause) and the Pomona College Catalog." with the Hyperschedule copyright notice; succession line from README
 apps/web/src/audit/AuditSection.tsx  THIS TASK: empty-state list of requirement groups and rows (glyph ○, label, "n courses could satisfy this" from Result.candidates.length, summary line "0 of 6 breadth areas"); TASK-023 replaces the row internals
 apps/web/src/audit/StatusGlyph.tsx   ● ◐ ○ ◌ with aria-label = status word
 apps/web/src/record/RecordSection.tsx  THIS TASK: heading + placeholder text "Add your courses to see your audit." + profile summary; TASK-022 fills it
 apps/web/src/styles/tokens.css       --canvas, --rule, --ink, --ink-2, --satisfied, --partial, --unmet, --unverifiable, --manual, --focus, type scale, spacing; light on :root, dark under [data-theme=dark] and prefers-color-scheme
 apps/web/src/styles/global.css       reset, fonts (@fontsource imports in main.tsx), focus ring, row hairlines
-apps/web/src/theme/useTheme.ts       system | light | dark, stored in gradguide:ui:v1
+apps/web/src/theme/useTheme.ts       system | light | dark, stored in sageplan:ui:v1
 apps/web/src/test/{migratePlan,planStore,loadData}.test.ts
 ```
 
