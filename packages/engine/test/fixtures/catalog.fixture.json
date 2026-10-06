@@ -1,0 +1,1047 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "generator": "hand-written fixture for packages/engine",
+    "generatedAt": "2026-09-08T00:00:00Z",
+    "fetchedAt": "2026-09-08T00:00:00Z",
+    "sourceUrl": "https://catalog.pomona.edu/",
+    "catalogYear": "2026-2027"
+  },
+  "courses": [
+    {
+      "id": {
+        "department": "ID",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Critical Inquiry Seminar",
+      "description": "",
+      "department": "Interdisciplinary",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ID%20001%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Literary Theory",
+      "description": "",
+      "department": "English",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_1",
+        "WRITING_INTENSIVE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ENGL%20067%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "DANC",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Dance History and Criticism",
+      "description": "",
+      "department": "Dance",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_1"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/DANC%20051%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "ARTH",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Art History",
+      "description": "",
+      "department": "Art History",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_1"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ARTH%20051%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "MUS",
+        "courseNumber": 81,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Music of the Twentieth Century",
+      "description": "",
+      "department": "Music",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_1",
+        "WRITING_INTENSIVE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/MUS%20081%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "PSYC",
+        "courseNumber": 52,
+        "suffix": "",
+        "affiliation": "SC"
+      },
+      "title": "Introduction to Psychology",
+      "description": "",
+      "department": "Psychology",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_2"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/PSYC%20052%20SC",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "ECON",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Principles of Economic Analysis",
+      "description": "",
+      "department": "Economics",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_2"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ECON%20051%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "SOC",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Sociology",
+      "description": "",
+      "department": "Sociology",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_2",
+        "ANALYZING_DIFFERENCE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/SOC%20001%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "POLI",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to American Politics",
+      "description": "",
+      "department": "Politics",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_2"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/POLI%20001%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Modern Europe since 1789",
+      "description": "",
+      "department": "History",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_3"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/HIST%20101%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "PHIL",
+        "courseNumber": 32,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Ethics",
+      "description": "",
+      "department": "Philosophy",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_3",
+        "WRITING_INTENSIVE",
+        "SPEAKING_INTENSIVE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/PHIL%20032%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "AMST",
+        "courseNumber": 110,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Race and Nation in American Culture",
+      "description": "",
+      "department": "American Studies",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_3",
+        "ANALYZING_DIFFERENCE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/AMST%20110%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "RLST",
+        "courseNumber": 40,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Religious Studies",
+      "description": "",
+      "department": "Religious Studies",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_3"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/RLST%20040%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "BIOL",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Biology",
+      "description": "",
+      "department": "Biology",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_4"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/BIOL%20041%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "CHEM",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "General Chemistry",
+      "description": "",
+      "department": "Chemistry",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_4"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/CHEM%20051%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "PHYS",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Mechanics and Wave Motion",
+      "description": "",
+      "department": "Physics",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_4"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/PHYS%20041%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "GEOL",
+        "courseNumber": 20,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Earth Systems",
+      "description": "",
+      "department": "Geology",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_4"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/GEOL%20020%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Computer Science",
+      "description": "",
+      "department": "Computer Science",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_5"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/CSCI%20051%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "MATH",
+        "courseNumber": 30,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Calculus I",
+      "description": "",
+      "department": "Mathematics",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_5"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/MATH%20030%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "MATH",
+        "courseNumber": 60,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Linear Algebra",
+      "description": "",
+      "department": "Mathematics",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_5"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/MATH%20060%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "CSCI",
+        "courseNumber": 62,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Data Structures and Advanced Programming",
+      "description": "",
+      "department": "Computer Science",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_5"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/CSCI%20062%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "THEA",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Acting",
+      "description": "",
+      "department": "Theatre",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_6"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/THEA%20001%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "DANC",
+        "courseNumber": 120,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Choreography Workshop",
+      "description": "",
+      "department": "Dance",
+      "credits": {
+        "min": 0.5,
+        "max": 0.5,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_6"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/DANC%20120%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "MUS",
+        "courseNumber": 60,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Applied Music Study",
+      "description": "",
+      "department": "Music",
+      "credits": {
+        "min": 0.25,
+        "max": 0.25,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_6"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/MUS%20060%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "ARTS",
+        "courseNumber": 21,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Drawing",
+      "description": "",
+      "department": "Art",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "AREA_6"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ARTS%20021%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "RHET",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Public Speaking",
+      "description": "",
+      "department": "Rhetoric",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "SPEAKING_INTENSIVE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/RHET%20010%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "ENGL",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Writing Seminar",
+      "description": "",
+      "department": "English",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "WRITING_INTENSIVE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ENGL%20010%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "ANTH",
+        "courseNumber": 25,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Cultures of the Pacific",
+      "description": "",
+      "department": "Anthropology",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "ANALYZING_DIFFERENCE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/ANTH%20025%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "GWS",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Gender and Women's Studies",
+      "description": "",
+      "department": "Gender and Women's Studies",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "ANALYZING_DIFFERENCE",
+        "AREA_2"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/GWS%20010%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "SPAN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Introduction to Hispanic Literature",
+      "description": "",
+      "department": "Spanish",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "LANGUAGE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/SPAN%20033%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "FREN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Readings in French",
+      "description": "",
+      "department": "French",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "LANGUAGE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/FREN%20033%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "CHIN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Readings in Modern Chinese",
+      "description": "",
+      "department": "Chinese",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "LANGUAGE"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/CHIN%20033%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "SPAN",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Elementary Spanish",
+      "description": "",
+      "department": "Spanish",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/SPAN%20001%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Beginning Swimming",
+      "description": "",
+      "department": "Physical Education",
+      "credits": {
+        "min": 0.25,
+        "max": 0.25,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "PHYSICAL_EDUCATION"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/PE%20001%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "PE",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Yoga",
+      "description": "",
+      "department": "Physical Education",
+      "credits": {
+        "min": 0.25,
+        "max": 0.25,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "PHYSICAL_EDUCATION"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/PE%20002%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "PE",
+        "courseNumber": 3,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Rock Climbing",
+      "description": "",
+      "department": "Physical Education",
+      "credits": {
+        "min": 0.25,
+        "max": 0.25,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [
+        "PHYSICAL_EDUCATION"
+      ],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/PE%20003%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "CSCI",
+        "courseNumber": 195,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Senior Thesis in Computer Science",
+      "description": "",
+      "department": "Computer Science",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/CSCI%20195%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "GEOL",
+        "courseNumber": 112,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Structural Geology",
+      "description": "",
+      "department": "Geology",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/GEOL%20112%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "MATH",
+        "courseNumber": 199,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Senior Exercise in Mathematics",
+      "description": "",
+      "department": "Mathematics",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/MATH%20199%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    },
+    {
+      "id": {
+        "department": "HIST",
+        "courseNumber": 190,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "title": "Junior Research Seminar",
+      "description": "",
+      "department": "History",
+      "credits": {
+        "min": 1.0,
+        "max": 1.0,
+        "repeatable": false,
+        "maxRepeats": 0
+      },
+      "attributes": [],
+      "gradeMode": "Letter",
+      "prereqText": null,
+      "prereqRule": null,
+      "catalogYear": "2026-2027",
+      "sourceUrl": "https://catalog.pomona.edu/courses/HIST%20190%20PO",
+      "lastVerified": "2026-09-08T06:11:41Z"
+    }
+  ]
+}

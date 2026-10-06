@@ -1,7 +1,7 @@
 ---
 id: TASK-032
 title: Record v1 — codes are the only required input, collapsed record, transcript paste
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

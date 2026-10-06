@@ -1,7 +1,7 @@
 ---
 id: TASK-020
 title: Requirement engine — P0 rule kinds, constrained-first assignment, external credit, golden fixtures
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

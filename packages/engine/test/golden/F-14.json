@@ -1,0 +1,24 @@
+[
+  {
+    "programId": "gpa-scopes",
+    "requirementId": "overall-gpa",
+    "status": "satisfied",
+    "satisfiedBy": [],
+    "remaining": null,
+    "candidates": [],
+    "children": [],
+    "confidence": "draft",
+    "note": "Grade point average 3.50 over 2 graded credits."
+  },
+  {
+    "programId": "gpa-scopes",
+    "requirementId": "major-gpa",
+    "status": "unverifiable",
+    "satisfiedBy": [],
+    "remaining": null,
+    "candidates": [],
+    "children": [],
+    "confidence": "draft",
+    "note": "A grade point average within a program is not evaluated yet, because the engine cannot yet tell which courses count toward a program."
+  }
+]

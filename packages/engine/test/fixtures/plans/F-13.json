@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": null,
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "ID",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PSYC",
+        "courseNumber": 52,
+        "suffix": "",
+        "affiliation": "SC"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "claremont"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "BIOL",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ANTH",
+        "courseNumber": 25,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 30,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "GEOL",
+        "courseNumber": 112,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 62,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ECON",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "RLST",
+        "courseNumber": 40,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "CHEM",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "SPAN",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ARTH",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "SOC",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "PHYS",
+        "courseNumber": 41,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 60,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

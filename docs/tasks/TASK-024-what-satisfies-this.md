@@ -1,7 +1,7 @@
 ---
 id: TASK-024
 title: "What satisfies this?" — candidates filtered to an upcoming term, dual-purpose marking, term ribbon
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

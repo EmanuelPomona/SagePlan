@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "AMST",
+        "courseNumber": 110,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

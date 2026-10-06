@@ -1,0 +1,676 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "generator": "apps/web dev fixture sections",
+    "generatedAt": "2026-09-08T06:12:03Z",
+    "fetchedAt": "2026-09-08T06:11:41Z",
+    "sourceUrl": "https://catalog.pomona.edu/",
+    "catalogYear": "2026-2027"
+  },
+  "term": {
+    "year": 2027,
+    "term": "SP"
+  },
+  "sections": [
+    {
+      "course": {
+        "department": "ID",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 12,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "DANC",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 14,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "MUS",
+        "courseNumber": 81,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 16,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "ECON",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 18,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "POLI",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 13,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "PHIL",
+        "courseNumber": 32,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 15,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "RLST",
+        "courseNumber": 40,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 17,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "CHEM",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 12,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "GEOL",
+        "courseNumber": 20,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 14,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 30,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 16,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 62,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 18,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "DANC",
+        "courseNumber": 120,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 13,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "ARTS",
+        "courseNumber": 21,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 15,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 17,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "GWS",
+        "courseNumber": 10,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 12,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "FREN",
+        "courseNumber": 33,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 14,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "SPAN",
+        "courseNumber": 1,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 16,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "PE",
+        "courseNumber": 2,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 18,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 195,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 13,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    },
+    {
+      "course": {
+        "department": "MATH",
+        "courseNumber": 199,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "sectionNumber": 1,
+      "term": {
+        "year": 2027,
+        "term": "SP"
+      },
+      "half": null,
+      "instructors": [
+        "Staff"
+      ],
+      "meetings": [
+        {
+          "days": [
+            "M",
+            "W"
+          ],
+          "startSec": 39600,
+          "endSec": 44100,
+          "location": "Edmunds 101"
+        }
+      ],
+      "seatsTotal": 20,
+      "seatsFilled": 15,
+      "permCount": 0,
+      "status": "open",
+      "geCodes": []
+    }
+  ]
+}

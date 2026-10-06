@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": {
+    "year": 2025,
+    "term": "FA"
+  },
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "ENGL",
+        "courseNumber": 67,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": {
+        "year": 2025,
+        "term": "FA"
+      },
+      "grade": "A-",
+      "gradeMode": "letter",
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [
+    {
+      "kind": "AP",
+      "subjectKey": "ap-calculus-ab",
+      "score": 5,
+      "grade": null,
+      "level": null,
+      "label": "AP Calculus AB",
+      "credits": 1,
+      "grantsAttributes": [],
+      "qualifies": true,
+      "duplicateKey": "calculus",
+      "ruleIds": [
+        "ap-advanced-standing-credit"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "AP",
+      "subjectKey": "ap-calculus-bc",
+      "score": 5,
+      "grade": null,
+      "level": null,
+      "label": "AP Calculus BC",
+      "credits": 1,
+      "grantsAttributes": [],
+      "qualifies": true,
+      "duplicateKey": "calculus",
+      "ruleIds": [
+        "ap-advanced-standing-credit"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "AP",
+      "subjectKey": "ap-biology",
+      "score": 4,
+      "grade": null,
+      "level": null,
+      "label": "AP Biology",
+      "credits": 1,
+      "grantsAttributes": [],
+      "qualifies": true,
+      "duplicateKey": "biology",
+      "ruleIds": [
+        "ap-advanced-standing-credit"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "IB",
+      "subjectKey": "ib-chemistry",
+      "score": 7,
+      "grade": null,
+      "level": "HL",
+      "label": "IB Chemistry",
+      "credits": 1,
+      "grantsAttributes": [],
+      "qualifies": true,
+      "duplicateKey": "chemistry",
+      "ruleIds": [
+        "ib-hl-advanced-standing-credit"
+      ],
+      "notes": []
+    },
+    {
+      "kind": "IB",
+      "subjectKey": "ib-history",
+      "score": 7,
+      "grade": null,
+      "level": "SL",
+      "label": "IB History",
+      "credits": 0,
+      "grantsAttributes": [],
+      "qualifies": false,
+      "duplicateKey": "world-history",
+      "ruleIds": [],
+      "notes": [
+        "IB Standard Level earns no advanced standing credit."
+      ]
+    },
+    {
+      "kind": "AP",
+      "subjectKey": "ap-spanish-language",
+      "score": 5,
+      "grade": null,
+      "level": null,
+      "label": "AP Spanish Language and Culture",
+      "credits": 1,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "spanish-language",
+      "ruleIds": [
+        "ap-advanced-standing-credit",
+        "ap-language-requirement"
+      ],
+      "notes": []
+    }
+  ],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

@@ -1,0 +1,692 @@
+/*
+ * The page is a document: ruled rows, a reserved margin for the College's own
+ * words, and no cards anywhere. Elevation appears only on things that genuinely
+ * float, which at this stage is nothing.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/*
+ * color-scheme must follow OUR theme, not the OS, or a student who picks Light
+ * on a dark-mode laptop gets dark native controls on a cream page: dark
+ * dropdown menus, dark autofill, a dark scrollbar. Light is the default here,
+ * and "System" is the only setting that defers to the OS.
+ */
+:root { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) { color-scheme: dark; }
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--face-ui);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Every number on this page changes as the student types: credits owed, seats
+ * filled, "5 of 6". Proportional digits make the whole row twitch on each
+ * keystroke, which on a page whose job is to be trusted reads as instability.
+ */
+.course-code, .row-owed, .row-candidates, .progress-figures,
+.summary-count, .ws-count, .candidate-sections, .import-facts dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ragged endings on a two-line quote or heading look like a mistake. */
+h1, h2, h3, .row-label, .search-title, .candidate-title { text-wrap: balance; }
+.quote, .row-note, .detail-explanation, .detail-prose, .empty,
+.advisory-text, .ws-note, .ws-empty, .import-warning, .share-note { text-wrap: pretty; }
+
+h1, h2, h3 { font-family: var(--face-quote); font-weight: 600; margin: 0; }
+
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { background: var(--canvas-hover); }
+
+/* One focus treatment everywhere, and it is never removed. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--s-6) var(--s-12);
+}
+
+/* ---- Masthead ------------------------------------------------------------ */
+
+.masthead {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-6) var(--s-4);
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+
+.masthead-name { font-size: var(--t-title); letter-spacing: -0.01em; }
+
+/* Not a badge and not a pill: the word is part of the name. */
+.masthead-unofficial {
+  font-family: var(--face-ui);
+  font-size: var(--t-small);
+  font-weight: 400;
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.colophon { display: flex; gap: var(--s-6); margin: var(--s-3) 0 0; flex-wrap: wrap; }
+.colophon div { display: flex; gap: var(--s-2); align-items: baseline; }
+.colophon dt { font-size: var(--t-small); color: var(--ink-2); margin: 0; }
+.colophon dd { font-family: var(--face-code); font-size: var(--t-small); margin: 0; }
+
+.disclaimer { margin: var(--s-3) 0 0; font-size: var(--t-small); color: var(--ink-2); max-width: 64ch; }
+
+.banner {
+  margin: var(--s-3) 0 0;
+  padding: var(--s-2) var(--s-3);
+  border-left: 3px solid var(--unverifiable);
+  background: var(--canvas-hover);
+  font-size: var(--t-small);
+  max-width: 72ch;
+}
+.banner-fixture { border-left-color: var(--partial); }
+.banner-stale { border-left-color: var(--partial); }
+.banner-problem { border-left-color: var(--unmet); }
+
+.theme-toggle { display: flex; gap: 0; border: 1px solid var(--rule); }
+.theme-option {
+  font: inherit;
+  font-size: var(--t-small);
+  padding: var(--s-1) var(--s-3);
+  min-height: 32px;
+  background: transparent;
+  color: var(--ink-2);
+  border: 0;
+  cursor: pointer;
+}
+.theme-option + .theme-option { border-left: 1px solid var(--rule); }
+.theme-option:hover { background: var(--canvas-hover); }
+.theme-option:active { background: var(--canvas-pressed); }
+.theme-option[aria-pressed="true"] { color: var(--ink); font-weight: 600; background: var(--canvas-hover); }
+
+/* ---- Sections ------------------------------------------------------------ */
+
+.section { margin-top: var(--s-12); }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+.section-head h2 { font-size: var(--t-heading); }
+
+.profile, .empty { color: var(--ink-2); font-size: var(--t-small); margin: var(--s-1) 0 0; }
+.empty { max-width: 62ch; margin-top: var(--s-4); }
+
+.summary { display: flex; gap: var(--s-6); margin: var(--s-2) 0 var(--s-4); font-size: var(--t-small); color: var(--ink-2); flex-wrap: wrap; }
+.summary strong { font-family: var(--face-code); color: var(--ink); font-weight: 400; }
+
+.rows { list-style: none; margin: 0; padding: 0; }
+
+/* ---- The requirement row, and its margin of evidence ---------------------- */
+
+/*
+ * One line, 40px. The quote left the collapsed row (v1 brief revision) and the
+ * evidence column with it, so the row is a single grid line again. Padding is
+ * what came down; the type scale is the brief's and does not move.
+ */
+.row {
+  display: block;
+  padding: var(--s-1) 0;
+  border-top: 1px solid var(--rule);
+}
+.row:hover { background: var(--canvas-hover); }
+
+/* The only heavier rule on the page marks a change of requirement kind. */
+.row-cluster { border-top-width: 2px; margin-top: var(--s-4); }
+
+.row-main {
+  display: grid;
+  /* status | label | what closed it | what could | confidence, all on one line. */
+  grid-template-columns: 9rem minmax(0, 1fr) auto auto auto;
+  gap: var(--s-3);
+  align-items: baseline;
+  min-height: 1.75rem;
+  line-height: var(--lh-row);
+}
+
+.row-status { display: inline-flex; align-items: baseline; gap: var(--s-2); }
+.glyph { flex: none; transform: translateY(1px); }
+.row-word { font-size: var(--t-small); color: var(--ink-2); }
+
+.row-satisfied .row-word { color: var(--satisfied); }
+.row-partial .row-word { color: var(--partial); }
+.row-unmet .row-word { color: var(--unmet); }
+.row-unverifiable .row-word { color: var(--unverifiable); }
+.row-waived .row-word, .row-override .row-word, .row-attested .row-word { color: var(--manual); }
+/* A requirement that does not apply is not an achievement: it recedes. */
+.row-waived { opacity: 0.72; }
+/* Doubt looks different at a glance, not in a footnote. */
+.row-unverifiable { border-top-style: dashed; }
+
+.row-label { font-family: var(--face-quote); }
+
+.row-answer, .row-candidates, .row-owed, .row-confidence {
+  font-size: var(--t-small);
+  color: var(--ink-2);
+  justify-self: end;
+  text-align: right;
+}
+.course-code { font-family: var(--face-code); color: var(--ink); }
+.row-confidence { font-style: italic; }
+
+/* The signature element: the catalog speaks in the margin, in its own voice. */
+.row-evidence { border-left: 1px solid var(--rule); padding-left: var(--s-4); }
+.quote {
+  margin: 0;
+  font-family: var(--face-quote);
+  font-size: var(--t-quote);
+  line-height: var(--lh-quote);
+  color: var(--ink-2);
+}
+.row-note { margin: var(--s-2) 0 0; font-size: var(--t-small); color: var(--ink-2); }
+
+/* ---- Record -------------------------------------------------------------- */
+
+.record-row {
+  display: grid;
+  grid-template-columns: 12rem 5rem 1fr;
+  gap: var(--s-3);
+  padding: var(--s-1) 0;
+  border-top: 1px solid var(--rule);
+  min-height: var(--row-h);
+  align-items: baseline;
+}
+.record-term, .record-grade { font-family: var(--face-code); font-size: var(--t-small); color: var(--ink-2); }
+
+/* ---- States and footer --------------------------------------------------- */
+
+.loading, .error-detail, .error-detail-technical { max-width: 62ch; }
+.loading { color: var(--ink-2); margin-top: var(--s-12); }
+.error-detail-technical { font-family: var(--face-code); font-size: var(--t-small); color: var(--ink-2); }
+code { font-family: var(--face-code); font-size: var(--t-small); }
+
+.footer {
+  max-width: var(--page-max);
+  margin: var(--s-12) auto 0;
+  padding: var(--s-4) var(--s-6) var(--s-8);
+  border-top: 1px solid var(--rule);
+}
+.attribution { font-size: var(--t-small); color: var(--ink-2); max-width: 72ch; margin: var(--s-2) 0 0; }
+
+/* ---- Responsive ---------------------------------------------------------- */
+
+/* Tablet: the margin cannot hold a column, so the quote falls beneath its row
+   and stays with it. */
+@media (max-width: 60rem) {
+  .row { grid-template-columns: 1fr; gap: var(--s-2); }
+  .row-evidence { border-left: 0; border-top: 1px dotted var(--rule); padding-left: 0; padding-top: var(--s-2); margin-left: 10rem; }
+  .quote { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+/* Phone: read-mostly, one thumb, outside an advisor's office. The row keeps
+   status, label and answer legible by stacking rather than shrinking. */
+@media (max-width: 30rem) {
+  .page, .masthead, .footer { padding-left: var(--s-4); padding-right: var(--s-4); }
+  .row-main { grid-template-columns: 9rem minmax(0, 1fr); gap: var(--s-1) var(--s-3); }
+  .row-answer, .row-candidates, .row-confidence { grid-column: 2; }
+  .row-answer, .row-candidates, .row-owed, .row-confidence { justify-self: start; text-align: left; }
+  .row-evidence { margin-left: 0; }
+  .record-row { grid-template-columns: 1fr; gap: 0; }
+  .colophon { gap: var(--s-3); }
+}
+
+/* The ribbon is the densest thing on the page; its marks must not blur. */
+.ribbon-mark { shape-rendering: crispEdges; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---- Controls ------------------------------------------------------------ */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+input, select, textarea, button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--canvas);
+  border: 1px solid var(--rule);
+  padding: var(--s-1) var(--s-2);
+  min-height: 32px;
+  border-radius: 0;
+}
+
+/*
+ * Checkboxes and radios are not text fields. The rule above stretched them into
+ * 13 tall empty rectangles on the attribute list, because min-height and padding
+ * apply to a replaced control too. They opt out and keep their native box.
+ */
+input[type="checkbox"], input[type="radio"] {
+  min-height: 0;
+  padding: 0;
+  inline-size: auto;
+  accent-color: var(--ink);
+}
+textarea { font-family: var(--face-code); font-size: var(--t-small); width: 100%; min-height: 6rem; }
+
+/*
+ * A select is as wide as its widest option unless told otherwise, and the exam
+ * list holds names like "IB Language A: Literature (Standard Level)". At 390px
+ * that one control pushed the LAYOUT viewport to 595px, so the whole page
+ * scrolled sideways the moment the exam section was opened.
+ */
+select { cursor: pointer; max-inline-size: 100%; }
+
+button {
+  cursor: pointer;
+  border-color: var(--ink);
+  font-size: var(--t-small);
+  padding: var(--s-1) var(--s-3);
+  /* Named properties, never `all`: nothing else here should animate. */
+  transition-property: background-color, transform;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
+}
+button:hover:not(:disabled) { background: var(--canvas-hover); }
+button:active:not(:disabled) { background: var(--canvas-pressed); transform: translateY(1px); }
+button:disabled { color: var(--ink-2); border-color: var(--rule); cursor: not-allowed; }
+
+.link-button {
+  border: 0; background: none;
+  /* The visible text is small, but the target should not be: the row is 32px
+     and this fills it. The audit's density is the brief's, so 44px would cost
+     more than it buys here. */
+  padding: var(--s-1) var(--s-2); min-height: 32px;
+  color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px;
+}
+.link-button:hover { color: var(--ink); background: none; }
+
+/*
+ * min-inline-size: 0 on both the flex container and its controls. Without it a
+ * flex item refuses to shrink below its content width, so one long <option>
+ * pushed the whole page past the 390px viewport and the layout viewport grew to
+ * 412. Grid tracks need the same escape, via min() on the minmax floor.
+ */
+.field { display: flex; align-items: baseline; gap: var(--s-2); min-inline-size: 0; }
+.field > input, .field > select { min-inline-size: 0; max-inline-size: 100%; }
+.field label { font-size: var(--t-small); color: var(--ink-2); white-space: nowrap; }
+.field-wide { grid-column: span 2; }
+@media (max-width: 30rem) { .field-wide { grid-column: span 1; } }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+  gap: var(--s-3);
+  margin: var(--s-3) 0;
+}
+.form-grid > * { min-inline-size: 0; }
+.profile-fields { display: flex; gap: var(--s-3); flex-wrap: wrap; align-items: baseline; }
+
+details { margin-top: var(--s-4); border-top: 1px solid var(--rule); padding-top: var(--s-3); }
+summary { cursor: pointer; font-size: var(--t-small); color: var(--ink-2); }
+summary:hover { color: var(--ink); }
+
+fieldset { border: 1px solid var(--rule); padding: var(--s-3); margin: var(--s-3) 0; }
+fieldset:disabled { opacity: 0.55; }
+legend { font-size: var(--t-small); color: var(--ink-2); padding: 0 var(--s-2); }
+.hint { font-style: italic; }
+
+/* ---- Course search ------------------------------------------------------- */
+
+.course-search { position: relative; margin: var(--s-4) 0; max-width: 44rem; }
+.course-search label { display: block; font-size: var(--t-small); color: var(--ink-2); margin-bottom: var(--s-1); }
+.course-search input { width: 100%; }
+
+.search-results {
+  position: absolute; z-index: 20; left: 0; right: 0;
+  list-style: none; margin: 0; padding: 0;
+  background: var(--canvas);
+  border: 1px solid var(--ink);
+  /* The one place elevation is real: this popover floats over the record. */
+  box-shadow: var(--shadow-popover);
+  max-height: 20rem; overflow-y: auto;
+}
+.search-option {
+  display: grid; grid-template-columns: 9rem 1fr auto; gap: var(--s-3);
+  align-items: baseline; padding: var(--s-2) var(--s-3); cursor: pointer;
+}
+.search-option + .search-option { border-top: 1px solid var(--rule); }
+.search-option.is-active { background: var(--canvas-hover); }
+.search-title { font-family: var(--face-quote); }
+
+.chips { display: flex; gap: var(--s-1); flex-wrap: wrap; }
+.chip {
+  font-size: var(--t-small); color: var(--ink-2);
+  border: 1px solid var(--rule); padding: 0 var(--s-2); white-space: nowrap;
+}
+.chip-check { display: inline-flex; align-items: center; gap: var(--s-1); cursor: pointer; min-height: 28px; }
+
+/* ---- Course table -------------------------------------------------------- */
+
+.course-table { width: 100%; border-collapse: collapse; margin-top: var(--s-4); }
+.course-table th {
+  text-align: left; font-size: var(--t-small); font-weight: 400; color: var(--ink-2);
+  border-bottom: 1px solid var(--rule); padding: var(--s-1) var(--s-2) var(--s-1) 0;
+}
+.course-table td { border-bottom: 1px solid var(--rule); padding: var(--s-1) var(--s-2) var(--s-1) 0; vertical-align: baseline; }
+.course-table tr:hover td { background: var(--canvas-hover); }
+.cell-title { font-family: var(--face-quote); }
+.mark-not-in-catalog { font-family: var(--face-ui); font-size: var(--t-small); color: var(--unverifiable); margin-left: var(--s-2); }
+
+.record-tools > details:first-child { margin-top: var(--s-8); }
+
+/* ---- Paste and exams ----------------------------------------------------- */
+
+.paste-actions { display: flex; gap: var(--s-3); align-items: center; margin-top: var(--s-3); }
+.paste-preview { margin-top: var(--s-4); }
+.paste-preview h4 { font-family: var(--face-ui); font-size: var(--t-small); font-weight: 600; margin: var(--s-3) 0 var(--s-1); }
+.paste-row { display: grid; grid-template-columns: 9rem 7rem 1fr; gap: var(--s-3); padding: var(--s-1) 0; border-top: 1px solid var(--rule); font-size: var(--t-small); }
+.paste-rejected { border-left: 3px solid var(--unmet); padding-left: var(--s-3); }
+.rejected-text { font-family: var(--face-code); color: var(--ink-2); }
+.rejected-reason { color: var(--unmet); }
+
+.exam-verdict { font-size: var(--t-small); color: var(--ink-2); border-left: 3px solid var(--rule); padding-left: var(--s-3); margin: var(--s-3) 0; }
+.exam-qualifies { border-left-color: var(--satisfied); color: var(--ink); }
+.exam-row { display: grid; grid-template-columns: 16rem 5rem 1fr auto; gap: var(--s-3); padding: var(--s-1) 0; border-top: 1px solid var(--rule); font-size: var(--t-small); align-items: baseline; }
+.exam-label { font-family: var(--face-quote); }
+.exam-result { color: var(--ink-2); }
+
+@media (max-width: 30rem) {
+  .course-table thead { display: none; }
+  .course-table tr { display: grid; grid-template-columns: 1fr auto; gap: var(--s-1) var(--s-2); border-bottom: 1px solid var(--rule); padding: var(--s-2) 0; }
+  .course-table td { border: 0; padding: 0; }
+  .cell-title { grid-column: 1 / -1; }
+  .search-option { grid-template-columns: 1fr; gap: 0; }
+  .paste-row, .exam-row { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* ---- Groups, detail, candidates ------------------------------------------ */
+
+.group { margin-top: var(--s-8); }
+.group-title {
+  font-family: var(--face-ui); font-size: var(--t-small); font-weight: 600;
+  color: var(--ink-2); margin: 0 0 var(--s-1);
+}
+
+.summary { align-items: baseline; }
+.progress-count { display: inline-flex; align-items: baseline; gap: var(--s-1); }
+.progress-count strong { font-family: var(--face-code); color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+.row-extra { display: inline-flex; gap: var(--s-3); align-items: baseline; justify-self: end; }
+.row-manual { font-size: var(--t-small); color: var(--manual); }
+
+.row-expand {
+  border: 0; background: none; padding: 0; margin: 0;
+  font: inherit; font-family: var(--face-quote); color: var(--ink);
+  text-align: left; cursor: pointer; min-height: 0;
+}
+.row-expand:hover { text-decoration: underline; text-underline-offset: 3px; }
+.row-expand[aria-expanded="true"] { font-weight: 600; }
+
+.row-detail { grid-column: 1 / -1; }
+.detail {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--s-2); padding: var(--s-4) 0 var(--s-6);
+  /* The one motion in the app: a row opening in place. */
+  animation: open-detail 180ms ease-out;
+}
+@keyframes open-detail { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: none; } }
+
+.detail-columns { display: grid; grid-template-columns: 1fr 22rem; gap: var(--s-8); }
+.detail h4 { font-family: var(--face-ui); font-size: var(--t-small); font-weight: 600; margin: var(--s-4) 0 var(--s-1); }
+.detail h4:first-child { margin-top: 0; }
+.quote-full { font-size: var(--t-body); color: var(--ink); border-left: 2px solid var(--rule); padding-left: var(--s-3); }
+.detail-source, .detail-prose, .detail-explanation { font-size: var(--t-small); margin: var(--s-2) 0; max-width: 62ch; }
+.detail-explanation { color: var(--ink-2); }
+.detail-courses { font-size: var(--t-small); }
+.confidence { font-size: var(--t-small); color: var(--partial); max-width: 62ch; }
+
+.attestation { display: flex; gap: var(--s-2); align-items: baseline; margin-bottom: var(--s-4); }
+.attestation label { font-size: var(--t-small); }
+.override-form h4 { margin-top: 0; }
+.override-row { display: grid; grid-template-columns: 9rem auto 1fr auto; gap: var(--s-2); font-size: var(--t-small); padding: var(--s-1) 0; border-top: 1px solid var(--rule); }
+.override-reason, .override-chosen { color: var(--ink-2); font-size: var(--t-small); }
+
+.advisories { margin-top: var(--s-12); border-top: 1px solid var(--rule); padding-top: var(--s-4); }
+.advisories h3 { font-family: var(--face-ui); font-size: var(--t-small); font-weight: 600; color: var(--ink-2); margin: 0; }
+.advisories-intro { font-size: var(--t-small); color: var(--ink-2); max-width: 62ch; margin: var(--s-1) 0 var(--s-3); }
+.advisory-row .row-main { grid-template-columns: 14rem 1fr; }
+.advisory-text { font-size: var(--t-small); color: var(--ink-2); }
+
+/* ---- What satisfies this ------------------------------------------------- */
+
+.what-satisfies { margin-top: var(--s-6); border-top: 1px solid var(--rule); padding-top: var(--s-4); }
+.ws-head { display: flex; gap: var(--s-6); align-items: baseline; flex-wrap: wrap; }
+.ws-head h4 { margin: 0; }
+.ws-note, .ws-count, .ws-empty { font-size: var(--t-small); color: var(--ink-2); margin: var(--s-2) 0; max-width: 62ch; }
+.ws-note { border-left: 3px solid var(--unverifiable); padding-left: var(--s-3); }
+
+.candidates { margin-top: var(--s-3); }
+.candidate { padding: var(--s-2) 0; border-top: 1px solid var(--rule); }
+.candidate-main { display: grid; grid-template-columns: 9rem minmax(0, 1fr) auto; gap: var(--s-3); align-items: baseline; }
+.candidate-title { font-family: var(--face-quote); }
+.also-closes { font-size: var(--t-small); color: var(--satisfied); margin: var(--s-1) 0 0 calc(9rem + var(--s-3)); }
+.candidate-meta {
+  display: flex; gap: var(--s-4); align-items: center; flex-wrap: wrap;
+  margin: var(--s-1) 0 0 calc(9rem + var(--s-3));
+  font-size: var(--t-small); color: var(--ink-2);
+}
+.candidate-sections { display: inline-flex; gap: var(--s-3); }
+
+.ribbon { display: inline-flex; gap: 2px; }
+.ribbon-cell { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; inline-size: 1.75rem; }
+.ribbon-mark { inline-size: 100%; block-size: 6px; border: 1px solid var(--rule); }
+.ribbon-cell.is-offered .ribbon-mark { background: var(--ink-2); border-color: var(--ink-2); }
+.ribbon-label { font-family: var(--face-code); font-size: 9px; color: var(--ink-2); line-height: 1; }
+
+@media (max-width: 60rem) {
+  .detail-columns { grid-template-columns: 1fr; gap: var(--s-6); }
+}
+@media (max-width: 30rem) {
+  .candidate-main { grid-template-columns: 1fr; gap: 0; }
+  .also-closes, .candidate-meta { margin-left: 0; }
+  .ribbon-cell { inline-size: 2rem; }
+  .ribbon-label { font-size: 10px; }
+  .row-extra { justify-self: start; grid-column: 2; }
+}
+
+/* ---- Export, import, share ----------------------------------------------- */
+
+.export-import { margin-bottom: var(--s-4); }
+.share-actions { display: flex; gap: var(--s-3); flex-wrap: wrap; align-items: center; }
+.file-label {
+  display: inline-flex; align-items: center; min-height: 32px;
+  padding: var(--s-1) var(--s-3); border: 1px solid var(--ink);
+  font-size: var(--t-small); cursor: pointer;
+}
+.file-label:hover { background: var(--canvas-hover); }
+.file-label:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.share-note { font-size: var(--t-small); color: var(--ink-2); max-width: 62ch; margin: var(--s-3) 0 0; }
+.share-warning { border-left: 3px solid var(--unmet); padding-left: var(--s-3); color: var(--ink); }
+
+.import-preview { border: 1px solid var(--ink); padding: var(--s-4); margin-top: var(--s-4); max-width: 44rem; }
+.import-preview h4 { font-family: var(--face-quote); font-size: var(--t-heading); margin: 0 0 var(--s-2); }
+.import-source { font-size: var(--t-small); color: var(--ink-2); margin: 0 0 var(--s-3); }
+.import-facts { display: flex; gap: var(--s-6); flex-wrap: wrap; margin: 0 0 var(--s-3); }
+.import-facts div { display: flex; gap: var(--s-2); align-items: baseline; }
+.import-facts dt { font-size: var(--t-small); color: var(--ink-2); margin: 0; }
+.import-facts dd { font-family: var(--face-code); margin: 0; }
+.import-warning { font-size: var(--t-small); border-left: 3px solid var(--partial); padding-left: var(--s-3); }
+
+/* ---- The requirement map ------------------------------------------------- */
+
+/*
+ * A diagram, not a dashboard. Twelve rings in three families, no percentage, no
+ * donut, no stat tiles. The height budget is the criterion: masthead ~160,
+ * collapsed record ~48, heading ~40, and this <= 320 has to clear an 800px
+ * viewport with room to spare.
+ */
+.map {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-4) var(--s-6) var(--s-3);
+}
+
+.map-families {
+  display: grid;
+  grid-template-columns: 6fr 3fr 3fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.map-family + .map-family { border-left: 1px solid var(--rule); padding-left: var(--s-6); }
+
+.family-name {
+  font-family: var(--face-ui);
+  font-size: var(--t-small);
+  font-weight: 600;
+  margin: 0 0 var(--s-2);
+  padding-bottom: var(--s-1);
+  border-bottom: 1px solid var(--rule);
+}
+/* Family is carried HERE, by the heading and by position. Never on a node: a
+   node's hue already means state, and it can only mean one thing at a time. */
+.family-breadth .family-name { color: var(--family-breadth); border-bottom-color: var(--family-breadth); }
+.family-overlays .family-name { color: var(--family-overlay); border-bottom-color: var(--family-overlay); }
+.family-foundations .family-name { color: var(--family-foundation); border-bottom-color: var(--family-foundation); }
+
+.family-nodes { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-4); }
+
+.node {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-items: center;
+  gap: 2px;
+  inline-size: 5.25rem;
+  min-block-size: 44px;
+  padding: var(--s-1) 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+  transition-property: background-color;
+  transition-duration: 120ms;
+}
+.node:hover { background: var(--canvas-hover); }
+.node:active { background: var(--canvas-pressed); }
+
+.node-ring { inline-size: 22px; block-size: 22px; }
+.node-satisfied { color: var(--satisfied); }
+.node-partial { color: var(--partial); }
+.node-unmet { color: var(--unmet); }
+.node-unverifiable { color: var(--unverifiable); }
+.node-override, .node-attested { color: var(--manual); }
+
+.node-label {
+  font-family: var(--face-quote);
+  font-size: var(--t-small);
+  color: var(--ink);
+  line-height: 1.2;
+}
+.node-beneath {
+  font-family: var(--face-code);
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* Totals, on one line, because nobody plans a semester around them. */
+.admin-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin: var(--s-3) 0 0;
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-small);
+}
+.admin-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  border: 0;
+  background: none;
+  padding: var(--s-1) 0;
+  min-height: 32px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.admin-item:hover { background: none; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.admin-figure { font-family: var(--face-code); color: var(--ink); font-variant-numeric: tabular-nums; margin-inline-start: var(--s-1); }
+.admin-satisfied .admin-figure { color: var(--satisfied); }
+.admin-unverifiable .admin-figure { color: var(--unverifiable); }
+
+/* ---- The collapsed record summary ---------------------------------------- */
+
+.section-record { margin-top: var(--s-4); }
+.record-summary {
+  display: flex;
+  inline-size: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-2) 0;
+  border: 0;
+  border-block: 1px solid var(--rule);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--t-body);
+}
+.record-summary:hover { background: var(--canvas-hover); }
+.record-summary-facts { display: inline-flex; align-items: baseline; gap: var(--s-2); flex-wrap: wrap; }
+.record-summary-facts strong { font-family: var(--face-code); font-weight: 400; font-variant-numeric: tabular-nums; }
+.record-summary-sep { inline-size: 1px; block-size: 0.8em; background: var(--rule); }
+.record-summary-assumed { color: var(--ink-2); font-size: var(--t-small); font-style: italic; }
+.record-summary-action { color: var(--ink-2); font-size: var(--t-small); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- The record, grade free ---------------------------------------------- */
+
+.course-list { margin-top: var(--s-3); }
+.course-row { border-top: 1px solid var(--rule); }
+.course-row-main { display: grid; grid-template-columns: 9rem minmax(0, 1fr) auto auto; gap: var(--s-3); align-items: baseline; padding: var(--s-1) 0; min-height: var(--row-h); }
+.course-row-title { font-family: var(--face-quote); display: inline-flex; gap: var(--s-2); align-items: baseline; flex-wrap: wrap; }
+.course-row-term, .course-row-grade { font-family: var(--face-code); font-size: var(--t-small); color: var(--ink-2); }
+.mark-failed { font-family: var(--face-ui); font-size: var(--t-small); color: var(--unmet); }
+.course-row-detail { padding: 0 0 var(--s-3) 9rem; }
+.did-not-pass { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--t-small); min-height: 32px; }
+.assumed-note { font-size: var(--t-small); color: var(--ink-2); margin: var(--s-3) 0 0; max-width: 62ch; }
+.profile-inferred, .profile-correct { font-size: var(--t-small); color: var(--ink-2); margin: var(--s-2) 0 0; display: flex; gap: var(--s-3); align-items: baseline; flex-wrap: wrap; }
+.transcript-paste { margin-top: var(--s-4); }
+.transcript-paste > label { display: block; font-size: var(--t-small); color: var(--ink-2); margin-bottom: var(--s-2); max-width: 70ch; }
+.privacy-note { font-size: var(--t-small); color: var(--ink-2); border-left: 3px solid var(--satisfied); padding-left: var(--s-3); margin: var(--s-2) 0 0; max-width: 62ch; }
+.preview-detected { font-weight: 400; color: var(--ink-2); }
+
+/* ---- Map responsive ------------------------------------------------------ */
+
+@media (max-width: 60rem) {
+  .map-families { grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+  .map-family + .map-family { border-left: 0; padding-left: 0; }
+  .map-family:first-child { grid-column: 1 / -1; }
+  .course-row-detail { padding-left: 0; }
+}
+
+@media (max-width: 30rem) {
+  .map { padding-left: var(--s-4); padding-right: var(--s-4); }
+  .map-families { grid-template-columns: 1fr; }
+  .map-family:first-child { grid-column: auto; }
+  /* Every node stays a comfortable tap target at 390. */
+  .family-nodes { gap: var(--s-3); }
+  .node { inline-size: 4.75rem; min-block-size: 52px; }
+  .course-row-main { grid-template-columns: 1fr auto auto; }
+}

@@ -1,13 +1,13 @@
 ---
 id: TASK-033
 title: Requirement map — twelve nodes in three families above the fold, denser audit, quotes on expand
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH
 round: 0
 depends_on: [TASK-030, TASK-031, TASK-032]
-blocked_on: ""
+blocked_on: "contract (AC-V09 second clause only; see handoff CCR)"
 ---
 
 # TASK-033 — The requirement map

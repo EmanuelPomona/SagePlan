@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "catalogYear": "2026-2027",
+  "matriculationTerm": null,
+  "studentType": "firstYear",
+  "completed": [
+    {
+      "course": {
+        "department": "CSCI",
+        "courseNumber": 51,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    },
+    {
+      "course": {
+        "department": "HIST",
+        "courseNumber": 101,
+        "suffix": "",
+        "affiliation": "PO"
+      },
+      "term": null,
+      "grade": null,
+      "gradeMode": null,
+      "provenance": "pomona"
+    }
+  ],
+  "planned": [],
+  "externalCredits": [
+    {
+      "kind": "IB",
+      "subjectKey": "ib-spanish-a",
+      "score": 6,
+      "grade": null,
+      "level": "SL",
+      "label": "IB Spanish A",
+      "credits": 0,
+      "grantsAttributes": [
+        "LANGUAGE"
+      ],
+      "qualifies": true,
+      "duplicateKey": "spanish-language",
+      "ruleIds": [
+        "ib-language-a-requirement"
+      ],
+      "notes": [
+        "IB Standard Level earns no advanced standing credit."
+      ]
+    }
+  ],
+  "attestations": {},
+  "overrides": [],
+  "declarations": []
+}

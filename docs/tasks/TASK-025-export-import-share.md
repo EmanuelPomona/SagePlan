@@ -1,7 +1,7 @@
 ---
 id: TASK-025
 title: Export, import, share link (URL fragment), demo plans, and the no-student-data-leaves-the-browser proof
-status: READY
+status: REVIEW
 owner: frontend
 branch: agent/frontend
 priority: HIGH

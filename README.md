@@ -52,9 +52,30 @@ npm run pipeline:all          # catalog -> sections -> history -> validate -> ma
 
 ## Demo
 
-Import any plan from `apps/web/public/demo/` through the app's Import control.
-A share link for the on-track demo student will be added here by the frontend
-once TASK-025 lands.
+Six demo plans live in `apps/web/public/demo/`. Import any of them through the
+app's **Import a file** control, in the footer.
+
+| File | Shows |
+|---|---|
+| `F-01-on-track.json` | A second-year on track: five Breadth areas closed, Area 6, Speaking Intensive and Language still owed |
+| `F-02-transfer.json` | A transfer student, with Critical Inquiry waived and pre-matriculation transfer work counting toward Breadth |
+| `F-03-exams.json` | AP and IB credit, a duplicate exam pair, and advanced standing capped at 2 |
+| `F-04-override.json` | A chair-granted substitution |
+| `F-05-one-short.json` | One course short of graduating |
+| `F-06-conflict.json` | An assignment conflict between two requirements competing for one course |
+
+**Share link for the on-track student (F-01).** Start the dev server, then open:
+
+```
+http://localhost:3001/#plan=zZdNb4JAEIb_y16LidiKCTekVE0UiZgmxnjYwmhJ-MqyNG1I_3uH7cehoK3tkPaC7Luzu09mZ4axYkVwDwm_BVFEWcpMXWMBlzzODhvggpls0B8YPXyMmMYSLkUUlDGXaLsGkTCzYk_KDi2GGpNKYzcWe9ZYIcsQUrl-ygG1fSQKqfbEE7Ikj0FCyMxthaNSFFBvFULOhUxwES6YXSvLes4tkzsQCq4o9_voEadxkuNrHCkYFLxlfaj8iuogeFjzWD32NlhkSkAgNEQxF9kDpDwNajXPkizluPAop-NO5g1SY0SJSkTq-Ru7QTocnCL17bNIxxffQg1iLgBp5Sla27dnTVrSEKDyq9NppNqrT5yBgDCSbmar3_N5pzN_3STu_4TZ-GD2vU6yazxbNrPrihJ1TERquetpg7S-VDqnEpEurBbSyz6lT79XB75GnTgt16_rJ2vWuaxUodpasIzfoXZTsBx76dKU1mOkZAGwmrfUqqvfxWpHjYA9dRYde5WI1Pes5v1TgpL51Fq1lCpSn5LlVFsbqP_LQPWXzTbwXya_N9341B__bjKq9ZNq_OHt71CPeZqq_1g4gEc0Tnn82jMWryLHHQqpgFCp8DTcSYgohDeDEOpW_d1gu3t-AQ
+```
+
+The plan travels in the URL **fragment**, which browsers never send to a server,
+so opening this link puts no coursework in anyone's access log. The app previews
+it and asks before replacing whatever record is already in the browser, and
+clears the fragment afterwards. Replace the origin if you are serving the app
+somewhere other than the default dev port.
+
 
 ## Data sources and attribution
 

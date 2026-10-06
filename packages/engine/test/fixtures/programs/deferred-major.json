@@ -1,0 +1,39 @@
+{
+  "id": "deferred-major",
+  "name": "Deferred-kinds fixture major",
+  "kind": "major",
+  "catalogYear": "2026-2027",
+  "confidence": "draft",
+  "sourceUrl": "https://catalog.pomona.edu/fixture-deferred",
+  "encodedBy": "packages/engine fixture — proves F-07",
+  "encodedOn": "2026-09-08",
+  "notes": "Uses rule kinds deferred to P1. The engine must report them as unverifiable with a clear note and must not throw, and the GE results beside them must be unaffected.",
+  "requirements": [
+    {
+      "id": "choose-two-electives",
+      "label": "Two electives from the approved list",
+      "explanation": "Two courses chosen from a list the engine cannot yet evaluate.",
+      "sourceQuote": "Students choose two courses from the approved elective list.",
+      "sourceRef": { "slug": "fixture-deferred", "url": "https://catalog.pomona.edu/fixture-deferred" },
+      "rule": {
+        "kind": "chooseN",
+        "n": 2,
+        "unit": "courses",
+        "rules": [
+          { "kind": "course", "course": { "department": "CSCI", "courseNumber": 62, "suffix": "", "affiliation": "PO" } },
+          { "kind": "course", "course": { "department": "MATH", "courseNumber": 60, "suffix": "", "affiliation": "PO" } }
+        ]
+      },
+      "overlapPolicy": { "kind": "allowAll" }
+    },
+    {
+      "id": "senior-thesis",
+      "label": "Senior thesis",
+      "explanation": "A milestone the engine cannot verify from coursework alone.",
+      "sourceQuote": "Each senior completes a thesis.",
+      "sourceRef": { "slug": "fixture-deferred", "url": "https://catalog.pomona.edu/fixture-deferred" },
+      "rule": { "kind": "milestone", "id": "senior-thesis", "label": "Senior thesis" },
+      "overlapPolicy": { "kind": "allowAll" }
+    }
+  ]
+}

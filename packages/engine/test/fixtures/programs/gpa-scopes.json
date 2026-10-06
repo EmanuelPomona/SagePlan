@@ -1,0 +1,49 @@
+{
+  "id": "gpa-scopes",
+  "name": "GPA scope fixture",
+  "kind": "major",
+  "catalogYear": "2026-2027",
+  "confidence": "draft",
+  "sourceUrl": "https://catalog.pomona.edu/fixture-gpa-scopes",
+  "encodedBy": "packages/engine fixture - proves ADR-014",
+  "encodedOn": "2026-09-11",
+  "notes": "Exists so the deferred program-scoped GPA is asserted somewhere other than fake-major.json, which AC-P11 depends on.",
+  "requirements": [
+    {
+      "id": "overall-gpa",
+      "label": "Overall grade point average",
+      "explanation": "The average over every letter-graded course.",
+      "sourceQuote": "A grade point average of at least 2.00 is required.",
+      "sourceRef": {
+        "slug": "fixture-gpa-scopes",
+        "url": "https://catalog.pomona.edu/fixture-gpa-scopes"
+      },
+      "rule": {
+        "kind": "gpa",
+        "min": 2.0,
+        "scope": "overall"
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
+    },
+    {
+      "id": "major-gpa",
+      "label": "Grade point average in the major",
+      "explanation": "The average over courses counted toward this program. Not evaluated in P0.",
+      "sourceQuote": "A grade point average of at least 2.00 is required in the major.",
+      "sourceRef": {
+        "slug": "fixture-gpa-scopes",
+        "url": "https://catalog.pomona.edu/fixture-gpa-scopes"
+      },
+      "rule": {
+        "kind": "gpa",
+        "min": 2.0,
+        "scope": "program"
+      },
+      "overlapPolicy": {
+        "kind": "allowAll"
+      }
+    }
+  ]
+}

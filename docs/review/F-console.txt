@@ -1,0 +1,26 @@
+Browser console — Pomona GradGuide primary flow
+Captured: 2026-09-11
+Instrument: Chrome headless driven over CDP (Runtime.consoleAPICalled + Log.entryAdded),
+viewport set with Emulation.setDeviceMetricsOverride, dev server on FRONTEND_PORT=3001.
+
+Flow: open a share link -> Replace my record -> reload -> expand a requirement row
+      -> switch to dark -> reload at 390x844.
+
+VERBATIM OUTPUT:
+  [console:debug] [vite] connecting...
+  [console:debug] [vite] connected.
+  [console:info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  [console:debug] [vite] connecting...
+  [console:debug] [vite] connected.
+  [console:info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  [console:debug] [vite] connecting...
+  [console:debug] [vite] connected.
+  [console:info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+
+Errors attributable to the application: none.
+The two [console:debug] vite lines and the React DevTools [console:info] notice are
+dev-server output and do not exist in a production build.
+
+Separately captured (docs/review/F-05-state-error-data-unavailable.jpg): blocking
+/data/* with Fetch.failRequest logs 'net::ERR_FAILED http://localhost:3001/data/manifest.json'.
+That error is the induced failure the screenshot is evidence of, not a defect.
