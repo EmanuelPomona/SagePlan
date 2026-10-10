@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T23:21:39.377Z",
+  "generatedAt": "2026-10-10T11:52:02.768Z",
   "generator": "@sageplan/pipeline@0.1.0 validate",
   "checks": [
     {
@@ -33,7 +33,7 @@
     {
       "id": "exclusion-anomalies",
       "status": "warn",
-      "summary": "9 exclusion anomaly/anomalies across 2004 PO courses; 1 variable-credit course(s) reported separately",
+      "summary": "9 exclusion anomaly/anomalies across 2018 PO courses; 1 variable-credit course(s) reported separately",
       "count": 9,
       "details": [
         "CHEM 150 PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_4)",
@@ -88,10 +88,10 @@
       "summary": "every generated artefact is non-empty (5 collection(s))",
       "count": 0,
       "details": [
-        "catalog.json: 2980 courses",
-        "offering-history.json: 1414 history",
+        "catalog.json: 3000 courses",
+        "offering-history.json: 1425 history",
         "manifest.json: 1 sections",
-        "sections-FA2026.json: 2163 sections",
+        "sections-FA2026.json: 2192 sections",
         "sections-SP2027.json: absent (configured in PIPELINE_TERMS)"
       ]
     },

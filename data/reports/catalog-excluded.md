@@ -1,6 +1,6 @@
 # Records excluded from the catalog
 
-2985 candidate course(s) considered; **5** excluded, **0** kept but flagged, 2980 in the catalog.
+3005 candidate course(s) considered; **5** excluded, **0** kept but flagged, 3000 in the catalog.
 
 ## Why this file exists
 

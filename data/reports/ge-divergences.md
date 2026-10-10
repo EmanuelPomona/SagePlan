@@ -5,7 +5,7 @@
 Build threshold: fail above 300 total (`PIPELINE_MAX_DIVERGENCES`), or on any unclassified row.
 
 The raw total is not itself a defect. The two sources have always disagreed:
-~282 of ~2004 Pomona courses is the steady state, and a guard that
+~282 of ~2018 Pomona courses is the steady state, and a guard that
 fires on the steady state is not a guard (ADR-016). What matters is that every
 divergence has a shape somebody has reasoned about.
 
@@ -234,7 +234,7 @@ malformed Course Number in the export.
 | GREK 033 PO | Intermediate Greek | — | LANGUAGE | missing from catalog | |
 | GREK 044 PO | Advanced Greek Readings | — | AREA_1, LANGUAGE | missing from catalog | |
 | GREK 104 PO | Readings in Koine Greek | — | LANGUAGE | missing from catalog | |
-| GRMT 147A PO | German Cinema and Media | — | AREA_1 | attribute sets differ | |
+| GRMT 147A PO | Screening Germany | — | AREA_1 | attribute sets differ | |
 | GRMT 164 PO | Changing Worlds of Work | AREA_1 | AREA_1, SPEAKING_INTENSIVE | attribute sets differ | |
 | GWS 036 PO | Introduction to Queer Studies | — | AREA_3 | attribute sets differ | |
 | GWS 081 PO | Healing Justice and Care Praxis | — | AREA_3 | attribute sets differ | |

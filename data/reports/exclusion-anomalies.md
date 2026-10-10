@@ -2,7 +2,7 @@
 
 ## Population
 
-Courses with `affiliation: "PO"` in the finished catalog: **2004** of 2980 total (AC-B03, ADR-020).
+Courses with `affiliation: "PO"` in the finished catalog: **2018** of 3000 total (AC-B03, ADR-020).
 
 The counts below are **whatever the data says**, recorded as a baseline. They are
 not tuned to reach a figure: the v0 criterion's 3 and 10 came from the project
