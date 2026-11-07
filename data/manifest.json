@@ -1,24 +1,30 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-11T23:21:39.428Z",
+  "generatedAt": "2026-11-07T12:25:22.726Z",
   "catalogYear": "2026-2027",
   "catalog": {
     "path": "/data/catalog.json",
-    "fetchedAt": "2026-09-11T23:21:32.272Z",
-    "courseCount": 2980
+    "fetchedAt": "2026-11-07T12:25:17.175Z",
+    "courseCount": 3653
   },
   "sections": [
     {
       "term": "FA2026",
       "path": "/data/sections-FA2026.json",
-      "fetchedAt": "2026-09-11T23:21:35.699Z",
-      "sectionCount": 2163
+      "fetchedAt": "2026-11-07T12:25:18.344Z",
+      "sectionCount": 2192
+    },
+    {
+      "term": "SP2027",
+      "path": "/data/sections-SP2027.json",
+      "fetchedAt": "2026-11-07T12:25:18.344Z",
+      "sectionCount": 2153
     }
   ],
   "offeringHistory": {
     "path": "/data/offering-history.json",
-    "fetchedAt": "2026-09-11T23:21:36.049Z",
-    "courseCount": 1414
+    "fetchedAt": "2026-11-07T12:25:19.478Z",
+    "courseCount": 1425
   },
   "programs": [
     {
@@ -33,6 +39,7 @@
     "path": "/data/external-credit-rules.json"
   },
   "upcomingTerms": [
-    "FA2026"
+    "FA2026",
+    "SP2027"
   ]
 }

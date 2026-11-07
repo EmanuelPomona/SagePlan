@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T23:21:39.377Z",
+  "generatedAt": "2026-11-07T12:25:22.655Z",
   "generator": "@sageplan/pipeline@0.1.0 validate",
   "checks": [
     {
@@ -33,7 +33,7 @@
     {
       "id": "exclusion-anomalies",
       "status": "warn",
-      "summary": "9 exclusion anomaly/anomalies across 2004 PO courses; 1 variable-credit course(s) reported separately",
+      "summary": "9 exclusion anomaly/anomalies across 2061 PO courses; 1 variable-credit course(s) reported separately",
       "count": 9,
       "details": [
         "CHEM 150 PO: partial credit with a non-Area-6 Area tag (always partial) (AREA_4)",
@@ -50,35 +50,35 @@
     {
       "id": "hyperschedule-attributes",
       "status": "warn",
-      "summary": "77 catalog/Hyperschedule GE disagreement(s), 10 unrecognised Pomona code(s)",
-      "count": 87,
+      "summary": "174 catalog/Hyperschedule GE disagreement(s), 10 unrecognised Pomona code(s)",
+      "count": 184,
       "details": [
-        "unrecognised Pomona course-area code \"1P1\" on 3 course(s), e.g. CHNT 168 PO, RUST 079 PO, SPAN 101 PO",
-        "unrecognised Pomona course-area code \"1P10\" on 10 course(s), e.g. PHIL 001 PO, PHIL 030 PZ, PHIL 031 PO",
-        "unrecognised Pomona course-area code \"1P2\" on 3 course(s), e.g. ASTR 001 PO, BIOL 040 PO, PSYC 160 PO",
+        "unrecognised Pomona course-area code \"1P1\" on 8 course(s), e.g. CHNT 168 PO, RUST 079 PO, SPAN 101 PO",
+        "unrecognised Pomona course-area code \"1P10\" on 18 course(s), e.g. PHIL 001 PO, PHIL 030 PZ, PHIL 031 PO",
+        "unrecognised Pomona course-area code \"1P2\" on 5 course(s), e.g. ASTR 001 PO, BIOL 040 PO, PSYC 160 PO",
         "unrecognised Pomona course-area code \"1P3\" on 17 course(s), e.g. ECON 052 PO, ECON 102 PO, MATH 030 CM",
-        "unrecognised Pomona course-area code \"1P4\" on 9 course(s), e.g. ASTR 101 PO, ECON 057 PO, ECON 107 PO",
-        "unrecognised Pomona course-area code \"1P5\" on 10 course(s), e.g. ARHI 150 SC, ARHI 154 SC, ARHI 185 SC",
-        "unrecognised Pomona course-area code \"1P6\" on 12 course(s), e.g. ART 005 PO, ART 010 PO, ART 020 PO",
+        "unrecognised Pomona course-area code \"1P4\" on 11 course(s), e.g. ASTR 101 PO, ECON 057 PO, ECON 107 PO",
+        "unrecognised Pomona course-area code \"1P5\" on 14 course(s), e.g. ARHI 150 SC, ARHI 154 SC, ARHI 185 SC",
+        "unrecognised Pomona course-area code \"1P6\" on 15 course(s), e.g. ART 005 PO, ART 010 PO, ART 020 PO",
         "unrecognised Pomona course-area code \"1P7\" on 11 course(s), e.g. ECON 051 PO, ECON 101 PO, LGCS 010 PO",
-        "unrecognised Pomona course-area code \"1P8\" on 2 course(s), e.g. HIST 020 PO, HIST 031 CH",
-        "unrecognised Pomona course-area code \"1P9\" on 5 course(s), e.g. HIST 017 CH, POLI 005 PO, PSYC 084 CH",
+        "unrecognised Pomona course-area code \"1P8\" on 9 course(s), e.g. HIST 020 PO, HIST 031 CH, HIST 011 PO",
+        "unrecognised Pomona course-area code \"1P9\" on 7 course(s), e.g. HIST 017 CH, POLI 005 PO, PSYC 084 CH",
         "AFRI 145 PO: catalog=— sections=AREA_3",
+        "AFRI 155 PO: catalog=— sections=AREA_3",
+        "AMST 103 PO: catalog=— sections=AREA_3",
+        "AMST 121 PO: catalog=— sections=AREA_3",
         "ANTH 080 PO: catalog=— sections=AREA_2",
+        "ANTH 105 PO: catalog=AREA_2, SPEAKING_INTENSIVE sections=AREA_2",
+        "ANTH 107 PO: catalog=ANALYZING_DIFFERENCE, AREA_2 sections=ANALYZING_DIFFERENCE, AREA_2, SPEAKING_INTENSIVE",
         "ANTH 125 PO: catalog=— sections=AREA_2",
-        "ARHI 186Q PO: catalog=— sections=AREA_1",
-        "ARHI 186R PO: catalog=— sections=AREA_1",
-        "ART 110 PO: catalog=— sections=AREA_6",
-        "ART 123 PO: catalog=— sections=AREA_6",
-        "ASAM 070 PO: catalog=— sections=AREA_3",
-        "BIOL 104A PO: catalog=— sections=AREA_4, SPEAKING_INTENSIVE",
-        "BIOL 189S PO: catalog=— sections=AREA_4"
+        "ANTH 151 PO: catalog=— sections=AREA_2",
+        "ARHI 114 PO: catalog=— sections=AREA_1"
       ]
     },
     {
       "id": "artefact-schemas",
       "status": "pass",
-      "summary": "4 generated artefact(s) checked, 0 schema issue(s)",
+      "summary": "5 generated artefact(s) checked, 0 schema issue(s)",
       "count": 0,
       "details": []
     },
@@ -88,17 +88,17 @@
       "summary": "every generated artefact is non-empty (5 collection(s))",
       "count": 0,
       "details": [
-        "catalog.json: 2980 courses",
-        "offering-history.json: 1414 history",
+        "catalog.json: 3653 courses",
+        "offering-history.json: 1425 history",
         "manifest.json: 1 sections",
-        "sections-FA2026.json: 2163 sections",
-        "sections-SP2027.json: absent (configured in PIPELINE_TERMS)"
+        "sections-FA2026.json: 2192 sections",
+        "sections-SP2027.json: 2153 sections"
       ]
     },
     {
       "id": "provenance",
       "status": "pass",
-      "summary": "3 artefact(s) checked for provenance, 0 issue(s)",
+      "summary": "4 artefact(s) checked for provenance, 0 issue(s)",
       "count": 0,
       "details": []
     },
