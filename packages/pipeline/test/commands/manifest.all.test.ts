@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ManifestSchema, compareTerms, parseTermCode } from "@sageplan/shared";
 import { runManifest } from "../../src/commands/manifest.ts";
+import { runValidate } from "../../src/commands/validate.ts";
 import { runAll, defaultSteps, assertNoFailures, type Step } from "../../src/commands/all.ts";
 import { PipelineError } from "../../src/errors.ts";
 import { readEnv } from "../../src/env.ts";
@@ -185,5 +186,29 @@ describe("assertNoFailures", () => {
 
   test("passes on an empty check list", () => {
     expect(() => assertNoFailures([])).not.toThrow();
+  });
+});
+
+describe("validator 8 inside pipeline:all (ADR-026)", () => {
+  // Rolling the term window deletes the sections file that left it. Until the
+  // manifest step rewrites manifest.json, the copy on disk is the PREVIOUS run's
+  // and still lists that file. Checking it then verifies nothing that survives.
+  const rollWindow = async () => {
+    seed([[2026, "FA"]]);
+    await runManifest([], { env: env("FA2026") });
+    rmSync(join(data, "sections-FA2026.json"));
+    seed([[2027, "SP"]]);
+  };
+
+  test("defers to the final verify step when the manifest on disk is the previous run's", async () => {
+    await rollWindow();
+    const checks = await runValidate([], { env: env("SP2027"), manifestPending: true, skipNetwork: true });
+    expect(checks.find((c) => c.id === "manifest")?.status).toBe("warn");
+  });
+
+  test("still fails a stale manifest when validate runs on its own", async () => {
+    await rollWindow();
+    const checks = await runValidate([], { env: env("SP2027"), skipNetwork: true });
+    expect(checks.find((c) => c.id === "manifest")?.status).toBe("fail");
   });
 });
