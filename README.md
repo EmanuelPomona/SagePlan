@@ -93,9 +93,11 @@ somewhere other than the default dev port.
 
 ## Privacy
 
-No server, no accounts, no analytics. The student's plan lives in
-`localStorage`, in files they export, and in share links whose payload is in
-the URL fragment (never sent to any host). The page ships a
+No server, no accounts. The student's plan lives in `localStorage`, in files
+they export, and in share links whose payload is in the URL fragment (never
+sent to any host). The deployed site counts page views with Vercel Web
+Analytics, which sets no cookies; the fragment and query string are stripped
+before a view is reported, so only the page path is counted. The page ships a
 Content-Security-Policy with `connect-src 'self'` so an accidental request
 fails loudly.
 

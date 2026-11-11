@@ -745,3 +745,41 @@ product SagePlan and created its public repository, `EmanuelPomona/SagePlan`.
 - Positive: one name across the app, the docs and the repository.
 - Negative: two legacy constants (planStore.ts, useTheme.ts) and their tests stay
   until no browser holds a `gradguide:` key. Deleting them then is safe.
+
+## ADR-026 — The term window rolls each semester, and the UI defaults to its newest term
+
+**Date**: 2026-11-10 · **Status**: accepted · **Deciders**: project owner
+
+### Context
+Hyperschedule published SP2027 in early November, ahead of spring registration.
+`PIPELINE_TERMS` was `FA2026,SP2027`, so a refresh would have listed both, and
+both the requirement map and "What satisfies this?" chose `upcomingTerms[0]`:
+FA2026, a term already half over, in the very week students register for spring.
+
+### Decision
+1. `PIPELINE_TERMS` is the registration window: the term being registered for,
+   plus the next one. Now `SP2027,FA2027`. FA2027 answers 404 until Hyperschedule
+   publishes it, which the sections step already warns about and skips (AC-B04).
+2. The UI defaults to the **newest** upcoming term, not the oldest. Hyperschedule
+   publishes a term shortly before its registration, so the newest published
+   term is the one students are choosing courses for. When FA2027 appears in
+   April, the default moves to it without a code change; SP2027 stays selectable.
+3. Rolling the window, once a semester (the next roll is SP2028 in the fall):
+   set the new pair in `packages/pipeline/src/env.ts`, `.env.example`,
+   `.github/workflows/pipeline.yml` and ARCHITECTURE.md; delete the
+   `data/sections-<old>.json` that left the window; run `npm run pipeline:all`.
+   The deletion matters: the manifest lists every sections file on disk, and
+   AC-B04 holds `upcomingTerms` equal to that set.
+
+### Alternatives considered
+- **Keep FA2026 in the window** — cons: a past term in the "Offered in" menu.
+  Why not: the menu exists to answer "what can I take next".
+- **Derive the window from `/v4/term/all`** — pros: no semester roll. Why not:
+  a guess about which terms are "upcoming" drawn from a list that carries every
+  term back to 2021, and a manual roll costs one edit a semester.
+
+### Consequences
+- Positive: SP2027 is the default everywhere today, and FA2027 takes over on its
+  own when published.
+- Negative: FA2026 sections leave `/data`. The non-Pomona courses they brought
+  into the catalog stay (no prune; see `commands/sections.ts`).

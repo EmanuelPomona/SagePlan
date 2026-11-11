@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { CatalogArtefactSchema, type Course, type ValidationCheck } from "@sageplan/shared";
 import { readEnv, type PipelineEnv } from "../env.ts";
@@ -107,10 +107,13 @@ export async function runValidate(_argv: readonly string[] = [], opts: ValidateO
 
   // 8 — manifest consistency
   const man = checkManifest(env.dataDir);
-  if (opts.manifestPending === true && !existsSync(join(env.dataDir, "manifest.json"))) {
+  // Pending means the manifest is about to be rewritten, so whatever is on disk
+  // is the previous run's. It may name a sections file that just left the term
+  // window (ADR-026); judging it here would block the very run that replaces it.
+  if (opts.manifestPending === true) {
     man.check = {
       id: "manifest", status: "warn", count: 0,
-      summary: "manifest not generated yet; re-checked as the final step of pipeline:all",
+      summary: "manifest is rewritten after validation; re-checked as the final step of pipeline:all",
       details: [],
     };
   }

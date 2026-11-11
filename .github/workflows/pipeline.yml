@@ -38,7 +38,7 @@ jobs:
           COURSEDOG_CATALOG_ID: eziiW38FfLsoDlBqEZgV
           COURSEDOG_ORIGIN: https://catalog.pomona.edu
           HYPERSCHEDULE_BASE_URL: https://banana.hyperschedule.io
-          PIPELINE_TERMS: FA2026,SP2027
+          PIPELINE_TERMS: SP2027,FA2027
         run: npm run pipeline:all
 
       # Only reached when pipeline:all succeeded, so a failed run leaves

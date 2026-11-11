@@ -9,7 +9,7 @@ describe("readEnv", () => {
     expect(env.coursedogCatalogId).toBe("eziiW38FfLsoDlBqEZgV");
     expect(env.coursedogOrigin).toBe("https://catalog.pomona.edu");
     expect(env.hyperscheduleBaseUrl).toBe("https://banana.hyperschedule.io");
-    expect(env.terms).toEqual(["FA2026", "SP2027"]);
+    expect(env.terms).toEqual(["SP2027", "FA2027"]);
     expect(env.maxDivergences).toBe(300);
   });
 

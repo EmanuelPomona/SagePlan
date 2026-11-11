@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import { CatalogArtefactSchema, courseKey, type Course } from "@sageplan/shared";
-import { fromRepoRoot } from "../src/env.ts";
+import { fromRepoRoot, readEnv } from "../src/env.ts";
 
 /**
  * Acceptance guards on the SHIPPED artefact (AC-B00, AC-B01, AC-B01b).
@@ -95,16 +95,25 @@ describe("AC-B04 — a file per term upstream actually publishes (ADR-020)", () 
     expect([...manifest.upcomingTerms].sort()).toEqual(manifest.sections.map((s) => s.term).sort());
   });
 
-  test("a requested term upstream does not publish is absent, not a failure", () => {
-    // SP2027 is in PIPELINE_TERMS but Hyperschedule returns 404 for it: spring
-    // schedules land shortly before spring registration. Warned and skipped.
-    expect(manifest.upcomingTerms).not.toContain("SP2027");
-    expect(existsSync(fromRepoRoot("data/sections-SP2027.json"))).toBe(false);
+  // Derived from the configured window (ADR-026) rather than naming terms, so
+  // these hold through every semester's roll instead of going stale with it.
+  const configured = readEnv().terms;
+
+  test("upcomingTerms lists only configured terms", () => {
+    for (const term of manifest.upcomingTerms) expect(configured).toContain(term);
   });
 
-  test("FA2026 carries at least 2,000 sections", () => {
-    const fa = manifest.sections.find((s) => s.term === "FA2026");
-    expect(fa).toBeDefined();
-    expect(fa!.sectionCount).toBeGreaterThanOrEqual(2000);
+  test("a requested term upstream does not publish is absent, not a failure", () => {
+    // The window carries next term ahead of time; Hyperschedule answers 404
+    // until it publishes, shortly before that term's registration (FA2027 until
+    // about April 2027). Warned and skipped.
+    for (const term of configured.filter((t) => !manifest.upcomingTerms.includes(t))) {
+      expect(existsSync(fromRepoRoot(`data/sections-${term}.json`)), `sections-${term}.json`).toBe(false);
+    }
+  });
+
+  test("at least one term is published, and each carries at least 2,000 sections", () => {
+    expect(manifest.sections.length).toBeGreaterThan(0);
+    for (const s of manifest.sections) expect(s.sectionCount, s.term).toBeGreaterThanOrEqual(2000);
   });
 });

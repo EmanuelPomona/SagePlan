@@ -6,7 +6,7 @@ import { useHistory, useSections } from "../data/useLazyData.ts";
 import { useAuditResults } from "../audit/auditContext.ts";
 import type { CourseIndex } from "../record/courseIndex.ts";
 import { CandidateRow } from "./CandidateRow.tsx";
-import { dualPurpose, offeredIn, ribbon } from "./selectors.ts";
+import { dualPurpose, newestTerm, offeredIn, ribbon } from "./selectors.ts";
 
 /**
  * "What satisfies this?" answered the way a student asks it in registration
@@ -28,7 +28,7 @@ export function WhatSatisfiesSlot({
   const data = useData();
   const allResults = useAuditResults();
   const upcoming = data.status === "ready" ? data.manifest.upcomingTerms : [];
-  const [term, setTerm] = useState<TermCode | null>(upcoming[0] ?? null);
+  const [term, setTerm] = useState<TermCode | null>(() => newestTerm(upcoming));
   const [showAll, setShowAll] = useState(false);
 
   const sections = useSections(term);

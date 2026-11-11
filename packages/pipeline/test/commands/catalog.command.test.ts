@@ -2,6 +2,7 @@ import { describe, expect, test, beforeEach, afterEach, vi } from "vitest";
 import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { CatalogArtefactSchema, courseKey, type Course } from "@sageplan/shared";
 import { runCatalog } from "../../src/commands/catalog.ts";
 import { PipelineError } from "../../src/errors.ts";
@@ -130,7 +131,7 @@ describe("runCatalog", () => {
   });
 
   test("--from-csv reads the export instead of calling the API", async () => {
-    const csv = new URL("../fixtures/coursedog-sample.csv", import.meta.url).pathname;
+    const csv = fileURLToPath(new URL("../fixtures/coursedog-sample.csv", import.meta.url));
     const fetchImpl = vi.fn();
     await runCatalog(["--from-csv", csv], { env: env(), fetchImpl, minPoCourses: 1 });
     expect(fetchImpl).not.toHaveBeenCalled();

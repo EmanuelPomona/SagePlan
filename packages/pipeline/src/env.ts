@@ -36,7 +36,10 @@ const DEFAULTS = {
   COURSEDOG_ORIGIN: "https://catalog.pomona.edu",
   COURSEDOG_BASE_URL: "https://app.coursedog.com",
   HYPERSCHEDULE_BASE_URL: "https://banana.hyperschedule.io",
-  PIPELINE_TERMS: "FA2026,SP2027",
+  // The registration window: the term students are picking courses for, plus the
+  // next one, which Hyperschedule answers 404 for until it is published and the
+  // sections step skips. Roll it each semester (ADR-026).
+  PIPELINE_TERMS: "SP2027,FA2027",
   REGISTRAR_GE_CSV: "data/sources/registrar-ge-export-2026-09-08.csv",
   // 300, ratified in ADR-016 and mirrored in .env.example and docs/API.md section 4.
   // The measured steady state is ~260 divergences across ~2,000 PO courses; a guard

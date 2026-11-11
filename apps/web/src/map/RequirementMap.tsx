@@ -3,6 +3,7 @@ import { courseKey, parseTermCode } from "@sageplan/shared";
 import type { ExternalCredit, Program, Result, StudentPlan, TermCode } from "@sageplan/shared";
 import { useData } from "../data/DataProvider.tsx";
 import { useSections } from "../data/useLazyData.ts";
+import { newestTerm } from "../candidates/selectors.ts";
 import { AdministrativeStrip } from "./AdministrativeStrip.tsx";
 import { mapFamilies } from "./families.ts";
 import { RequirementNode } from "./RequirementNode.tsx";
@@ -30,7 +31,7 @@ export function RequirementMap({
 }) {
   const data = useData();
   const upcoming: TermCode[] = data.status === "ready" ? data.manifest.upcomingTerms : [];
-  const term = upcoming[0] ?? null;
+  const term = newestTerm(upcoming);
   const sections = useSections(term);
 
   // "2 in SP27" is the only actionable number on an unmet node.
