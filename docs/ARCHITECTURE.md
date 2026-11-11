@@ -254,7 +254,7 @@ Pipeline variables (no secrets anywhere in this project):
 COURSEDOG_CATALOG_ID=eziiW38FfLsoDlBqEZgV
 COURSEDOG_ORIGIN=https://catalog.pomona.edu
 HYPERSCHEDULE_BASE_URL=https://banana.hyperschedule.io
-PIPELINE_TERMS=FA2026,SP2027
+PIPELINE_TERMS=SP2027,FA2027
 REGISTRAR_GE_CSV=data/sources/registrar-ge-export-2026-09-08.csv
 ```
 
