@@ -1,6 +1,6 @@
 # Records excluded from the catalog
 
-2985 candidate course(s) considered; **5** excluded, **0** kept but flagged, 2980 in the catalog.
+3648 candidate course(s) considered; **0** excluded, **0** kept but flagged, 3648 in the catalog.
 
 ## Why this file exists
 
@@ -12,13 +12,7 @@ suspicious to be reported rather than silently dropped.
 
 ## Excluded
 
-| Course | Affiliation | Title | Rule |
-|---|---|---|---|
-| TEST 001 PZ | PZ | Test Course-Disregard | department TEST is a scheduling placeholder (ADR-016) |
-| TEST 001 SC | SC | DNR: Add No Restrictions | department TEST is a scheduling placeholder (ADR-016) |
-| TEST 002 PZ | PZ | Test Course--Disregard | department TEST is a scheduling placeholder (ADR-016) |
-| TEST 002 SC | SC | DNR: All Restrictions Cleared | department TEST is a scheduling placeholder (ADR-016) |
-| TEST 003 SC | SC | DNR: Unless Section is Closed | department TEST is a scheduling placeholder (ADR-016) |
+_None._
 
 ## Kept, but flagged for a human
 
