@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Analytics } from "@vercel/analytics/react";
 
 // Self-hosted, so the page makes no font request and works offline once loaded.
 import "@fontsource-variable/source-serif-4";
@@ -17,5 +18,6 @@ if (!container) throw new Error("index.html is missing its #root element");
 createRoot(container).render(
   <StrictMode>
     <App />
+    <Analytics />
   </StrictMode>,
 );
