@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { termCode } from "@sageplan/shared";
 import type { CourseId, OfferingHistory, Result, Section, TermId } from "@sageplan/shared";
-import { dualPurpose, offeredIn, ribbon } from "../candidates/selectors.ts";
+import { dualPurpose, newestTerm, offeredIn, ribbon } from "../candidates/selectors.ts";
 
 const cid = (dept: string, n: number, aff = "PO"): CourseId => ({ department: dept, courseNumber: n, suffix: "", affiliation: aff });
 const SP2027: TermId = { year: 2027, term: "SP" };
@@ -100,5 +100,21 @@ describe("ribbon", () => {
 
   test("no known terms yields an empty ribbon", () => {
     expect(ribbon(cid("HIST", 101), [], [], 8)).toEqual([]);
+  });
+});
+
+describe("newestTerm", () => {
+  test("defaults to the newest published term, the one students register for", () => {
+    expect(newestTerm(["SP2027", "FA2027"])).toBe("FA2027");
+  });
+
+  test("does not trust the manifest's order", () => {
+    expect(newestTerm(["FA2027", "SP2027"])).toBe("FA2027");
+    expect(newestTerm(["SP2027", "FA2026"])).toBe("SP2027");
+  });
+
+  test("a single term is the default; none means no default", () => {
+    expect(newestTerm(["SP2027"])).toBe("SP2027");
+    expect(newestTerm([])).toBeNull();
   });
 });

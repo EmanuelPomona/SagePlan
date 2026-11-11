@@ -1,5 +1,20 @@
-import { compareTerms, courseKey, sameCourse, sameTerm } from "@sageplan/shared";
-import type { CourseId, OfferingHistory, Result, Section, TermId } from "@sageplan/shared";
+import { compareTerms, courseKey, parseTermCode, sameCourse, sameTerm } from "@sageplan/shared";
+import type { CourseId, OfferingHistory, Result, Section, TermCode, TermId } from "@sageplan/shared";
+
+/**
+ * The term to show by default. Hyperschedule publishes a term shortly before its
+ * registration, so the newest upcoming term is the one students are choosing
+ * courses for (ADR-026). Order-independent: the manifest sorts, but this does not
+ * rely on it.
+ */
+export function newestTerm(upcoming: readonly TermCode[]): TermCode | null {
+  let best: { code: TermCode; id: TermId } | null = null;
+  for (const code of upcoming) {
+    const id = parseTermCode(code);
+    if (id && (best === null || compareTerms(id, best.id) > 0)) best = { code, id };
+  }
+  return best?.code ?? null;
+}
 
 /** Candidates that actually have a section in the chosen term, keyed by course key. */
 export function offeredIn(candidates: CourseId[], sections: Section[]): Map<string, Section[]> {
