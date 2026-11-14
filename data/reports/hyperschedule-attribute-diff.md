@@ -1,6 +1,6 @@
 # Hyperschedule GE codes vs catalog attributes
 
-**110** course(s) offered this term disagree between the catalog and the schedule.
+**111** course(s) offered this term disagree between the catalog and the schedule.
 **10** unrecognised Pomona course-area code(s).
 
 ## Unrecognised Pomona codes
@@ -18,7 +18,7 @@ non-attribute list in `src/hyperschedule/geCodes.ts`, before the next run.
 - unrecognised Pomona course-area code "1P6" on 7 course(s), e.g. ART 010 PO, ART 021 PO, DANC 150A PO
 - unrecognised Pomona course-area code "1P7" on 9 course(s), e.g. ECON 051 PO, ECON 101 PO, LGCS 010 PO
 - unrecognised Pomona course-area code "1P8" on 8 course(s), e.g. HIST 011 PO, HIST 021 PO, HIST 031 CH
-- unrecognised Pomona course-area code "1P9" on 2 course(s), e.g. ANTH 107 PO, POLI 162 PO
+- unrecognised Pomona course-area code "1P9" on 3 course(s), e.g. ANTH 107 PO, POLI 162 PO, POLI 005 PO
 
 ## How to resolve
 
@@ -62,7 +62,7 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | CSCI 181AG PO | Algorithmic Game Theory | — | AREA_5 |
 | CSCI 181DV PO | Advanced Data Visualization | — | AREA_5 |
 | DANC 182 PO | Dance Production Practicum | — | AREA_6 |
-| EA 077 PO | The Environmental Polycrisis | — | AREA_2 |
+| EA 077 PO | Facing  Environmental Collapse | — | AREA_2 |
 | EA 095 PO | Philosophies of Place | — | AREA_2 |
 | ECON 113 PO | Economics of Financial Markets | — | AREA_2 |
 | ECON 143 PO | Economics and Film | — | AREA_2 |
@@ -118,6 +118,7 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | PHYS 075 PO | Foundations of Elec and Mag | — | AREA_4 |
 | POLI 033B PO | Amer Constit II: Rights/Liberty | ANALYZING_DIFFERENCE, AREA_2, WRITING_INTENSIVE | ANALYZING_DIFFERENCE, AREA_2 |
 | POLI 089C PO | Ideology & Political Ideologies | — | AREA_2 |
+| POLI 166 PO | Comp Politics of East Asia | — | AREA_2 |
 | POLI 189D PO | Latino Politics | — | AREA_2 |
 | POLI 189E PO | Major Issues in Foreign Policy | — | AREA_2 |
 | POLI 189J PO | Political Psychology | — | AREA_2 |

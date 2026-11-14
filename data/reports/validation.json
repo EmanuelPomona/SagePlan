@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T07:56:46.049Z",
+  "generatedAt": "2026-11-14T12:56:39.207Z",
   "generator": "@sageplan/pipeline@0.1.0 validate",
   "checks": [
     {
@@ -50,8 +50,8 @@
     {
       "id": "hyperschedule-attributes",
       "status": "warn",
-      "summary": "110 catalog/Hyperschedule GE disagreement(s), 10 unrecognised Pomona code(s)",
-      "count": 120,
+      "summary": "111 catalog/Hyperschedule GE disagreement(s), 10 unrecognised Pomona code(s)",
+      "count": 121,
       "details": [
         "unrecognised Pomona course-area code \"1P1\" on 6 course(s), e.g. CHNT 167 PO, ENGL 074 PO, JPNT 176 PO",
         "unrecognised Pomona course-area code \"1P10\" on 10 course(s), e.g. PHIL 030 PZ, CLAS 064 PO, PHIL 001 PO",
@@ -62,7 +62,7 @@
         "unrecognised Pomona course-area code \"1P6\" on 7 course(s), e.g. ART 010 PO, ART 021 PO, DANC 150A PO",
         "unrecognised Pomona course-area code \"1P7\" on 9 course(s), e.g. ECON 051 PO, ECON 101 PO, LGCS 010 PO",
         "unrecognised Pomona course-area code \"1P8\" on 8 course(s), e.g. HIST 011 PO, HIST 021 PO, HIST 031 CH",
-        "unrecognised Pomona course-area code \"1P9\" on 2 course(s), e.g. ANTH 107 PO, POLI 162 PO",
+        "unrecognised Pomona course-area code \"1P9\" on 3 course(s), e.g. ANTH 107 PO, POLI 162 PO, POLI 005 PO",
         "AFRI 145 PO: catalog=— sections=AREA_3",
         "AFRI 155 PO: catalog=— sections=AREA_3",
         "AMST 103 PO: catalog=— sections=AREA_3",
@@ -88,10 +88,10 @@
       "summary": "every generated artefact is non-empty (5 collection(s))",
       "count": 0,
       "details": [
-        "catalog.json: 3648 courses",
-        "offering-history.json: 1523 history",
+        "catalog.json: 3652 courses",
+        "offering-history.json: 1542 history",
         "manifest.json: 1 sections",
-        "sections-SP2027.json: 2154 sections",
+        "sections-SP2027.json: 2209 sections",
         "sections-FA2027.json: absent (configured in PIPELINE_TERMS)"
       ]
     },
