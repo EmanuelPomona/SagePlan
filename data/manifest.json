@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T07:56:46.091Z",
+  "generatedAt": "2026-11-21T14:10:46.811Z",
   "catalogYear": "2026-2027",
   "catalog": {
     "path": "/data/catalog.json",
-    "fetchedAt": "2026-11-11T07:56:37.215Z",
-    "courseCount": 3648
+    "fetchedAt": "2026-11-21T14:10:43.034Z",
+    "courseCount": 3663
   },
   "sections": [
     {
       "term": "SP2027",
       "path": "/data/sections-SP2027.json",
-      "fetchedAt": "2026-11-11T07:56:41.542Z",
-      "sectionCount": 2154
+      "fetchedAt": "2026-11-21T14:10:44.151Z",
+      "sectionCount": 2250
     }
   ],
   "offeringHistory": {
     "path": "/data/offering-history.json",
-    "fetchedAt": "2026-11-11T07:56:41.921Z",
-    "courseCount": 1523
+    "fetchedAt": "2026-11-21T14:10:44.641Z",
+    "courseCount": 1563
   },
   "programs": [
     {

@@ -1,6 +1,6 @@
 # Hyperschedule GE codes vs catalog attributes
 
-**110** course(s) offered this term disagree between the catalog and the schedule.
+**116** course(s) offered this term disagree between the catalog and the schedule.
 **10** unrecognised Pomona course-area code(s).
 
 ## Unrecognised Pomona codes
@@ -18,7 +18,7 @@ non-attribute list in `src/hyperschedule/geCodes.ts`, before the next run.
 - unrecognised Pomona course-area code "1P6" on 7 course(s), e.g. ART 010 PO, ART 021 PO, DANC 150A PO
 - unrecognised Pomona course-area code "1P7" on 9 course(s), e.g. ECON 051 PO, ECON 101 PO, LGCS 010 PO
 - unrecognised Pomona course-area code "1P8" on 8 course(s), e.g. HIST 011 PO, HIST 021 PO, HIST 031 CH
-- unrecognised Pomona course-area code "1P9" on 2 course(s), e.g. ANTH 107 PO, POLI 162 PO
+- unrecognised Pomona course-area code "1P9" on 3 course(s), e.g. ANTH 107 PO, POLI 162 PO, POLI 005 PO
 
 ## How to resolve
 
@@ -44,6 +44,8 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | ART 001 PO | Art of Attention | — | AREA_6 |
 | ART 101 PO | Weaving as Art: Tapestry & Loom | — | AREA_6 |
 | ART 177 PO | Rethinking Painting | — | AREA_6 |
+| ASIA 001 PO | East Asian Humanities | — | AREA_3 |
+| ASIA 087 PO | Arts of Japan | — | AREA_3 |
 | BIOL 173 PO | Genomics & Bioinformatics w/Lab | AREA_4, SPEAKING_INTENSIVE | AREA_4 |
 | CHEM 010B PO | General Chemistry w/Laboratory | — | AREA_4 |
 | CHEM 020B PO | Discovering Chemistry w/ Lab | — | AREA_4 |
@@ -61,14 +63,16 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | CSCI 126 PO | Programming Interactivity | — | AREA_5 |
 | CSCI 181AG PO | Algorithmic Game Theory | — | AREA_5 |
 | CSCI 181DV PO | Advanced Data Visualization | — | AREA_5 |
+| DANC 177 PO | Presentation Performance Lab | AREA_6 | AREA_6, SPEAKING_INTENSIVE |
 | DANC 182 PO | Dance Production Practicum | — | AREA_6 |
-| EA 077 PO | The Environmental Polycrisis | — | AREA_2 |
+| EA 077 PO | Facing  Environmental Collapse | — | AREA_2 |
 | EA 095 PO | Philosophies of Place | — | AREA_2 |
 | ECON 113 PO | Economics of Financial Markets | — | AREA_2 |
 | ECON 143 PO | Economics and Film | — | AREA_2 |
 | ENGL 029 PO | American Misfits: Short Stories | — | AREA_1 |
 | ENGL 033 PO | Some Versions of The Tempest | — | AREA_1 |
 | ENGL 039 PO | Plague and Literature | — | AREA_1 |
+| ENGL 071 PO | Varieties of Tragedy | — | AREA_1 |
 | ENGL 082 PO | Futurecraft | — | AREA_1 |
 | ENGL 095 PO | Latinx Speculative Fictions | — | ANALYZING_DIFFERENCE, AREA_1 |
 | ENGL 170X PO | Asian Am Lit & Cultural Critique | AREA_1 | ANALYZING_DIFFERENCE, AREA_1 |
@@ -81,7 +85,7 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | GEOL 177 PO | Chemical Oceanography | — | AREA_4 |
 | GRMT 147A PO | Screening Germany | — | AREA_1 |
 | GWS 081 PO | Healing Justice and Care Praxis | — | AREA_3 |
-| GWS 146 PO | QF Science & Technology Studies | — | AREA_3 |
+| GWS 146 PO | QF Science & Technology Studies | — | AREA_3, SPEAKING_INTENSIVE |
 | GWS 166 PO | Witchcraft | AREA_3 | AREA_3, SPEAKING_INTENSIVE |
 | GWS 183 PO | Transnational Feminist Theories | AREA_3 | AREA_3, WRITING_INTENSIVE |
 | GWS 188 PO | More-than-Human Worlds | — | AREA_3 |
@@ -104,6 +108,7 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | MUS 014 PO | Individual Instruction, Level I+ | — | AREA_6 |
 | MUS 040 PO | Chamber Music | AREA_6 | — |
 | MUS 092 PO | Linguistic Elements of Music | — | AREA_1 |
+| MUS 093 PO | Music Comp in Trad and Pop Forms | — | AREA_1 |
 | MUS 140 PO | Chamber Music | AREA_6 | — |
 | NEUR 042 PO | Seeing & Believing | — | AREA_4 |
 | NEUR 048 PO | The Hungry Brain | — | AREA_4 |
@@ -113,11 +118,12 @@ up here first. Advisory only — the pipeline changes nothing automatically.
 | PE 030 PO | Line Dancing | — | PHYSICAL_EDUCATION |
 | PHIL 049 PO | Classical Buddhist Philosophy | — | AREA_3 |
 | PHIL 163 PO | Advanced Logic | — | AREA_3 |
-| PHIL 186A PO | Topics in Aristotelianism | — | AREA_2 |
+| PHIL 186A PO | Topics in Aristotle: Eth & Pol | — | AREA_2 |
 | PHYS 073 PO | Enhanced Intro Mechanics | — | AREA_4 |
 | PHYS 075 PO | Foundations of Elec and Mag | — | AREA_4 |
 | POLI 033B PO | Amer Constit II: Rights/Liberty | ANALYZING_DIFFERENCE, AREA_2, WRITING_INTENSIVE | ANALYZING_DIFFERENCE, AREA_2 |
 | POLI 089C PO | Ideology & Political Ideologies | — | AREA_2 |
+| POLI 166 PO | Comp Politics of East Asia | — | AREA_2 |
 | POLI 189D PO | Latino Politics | — | AREA_2 |
 | POLI 189E PO | Major Issues in Foreign Policy | — | AREA_2 |
 | POLI 189J PO | Political Psychology | — | AREA_2 |

@@ -1,6 +1,6 @@
 # Records dropped during catalog ingestion
 
-2886 upstream record(s) -> 2145 course(s).
+2890 upstream record(s) -> 2145 course(s).
 
 - not Active (administrative placeholders and test rows): **578**
 - refused by the normaliser: **2**
