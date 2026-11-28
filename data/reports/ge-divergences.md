@@ -5,7 +5,7 @@
 Build threshold: fail above 300 total (`PIPELINE_MAX_DIVERGENCES`), or on any unclassified row.
 
 The raw total is not itself a defect. The two sources have always disagreed:
-~282 of ~2061 Pomona courses is the steady state, and a guard that
+~282 of ~2062 Pomona courses is the steady state, and a guard that
 fires on the steady state is not a guard (ADR-016). What matters is that every
 divergence has a shape somebody has reasoned about.
 
